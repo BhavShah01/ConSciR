@@ -7,9 +7,9 @@
 calcDewPoint(Temp = Temp, RH = RH)
 }
 \arguments{
-\item{RH}{Relative humidity (0-100\%)}
+\item{Temp}{Temperature (Celsius)}
 
-\item{TempC}{Temperature (Celsius)}
+\item{RH}{Relative humidity (0-100\%)}
 }
 \value{
 Dew point (Celsius)

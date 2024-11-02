@@ -4,7 +4,7 @@
 #' Function to calculate dew point in Celsius from temperature in Celsius and relative humidity in \% (0-100).
 #' Dataframe columns should ideally be named "Temp" and "RH".
 #'
-#' @param TempC Temperature (Celsius)
+#' @param Temp Temperature (Celsius)
 #' @param RH Relative humidity (0-100\%)
 #'
 #' @return Dew point (Celsius)
