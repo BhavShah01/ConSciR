@@ -1,0 +1,65 @@
+---
+title: "Using R for the first time"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(ConSciR)
+```
+
+
+## Installation
+
+To get started with R, you need to install both R and RStudio, which is a user-friendly interface for R. First, download R from the Comprehensive R Archive Network (CRAN), then follow the installation instructions for your operating system. After installing R, download RStudio and follow the prompts to complete the installation. There are plenty of online resources available to guide you through each step.
+
+- R: [https://cloud.r-project.org/](https://cloud.r-project.org/)
+- RStudio: [https://posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/)
+
+
+## Loading a Package and Basic Introduction to RStudio
+
+When you first open RStudio, you'll see a layout with multiple panes. The main areas are the Console (where you can type and execute R commands), the Source Editor (where you write and edit R scripts), the Environment/History pane, and the Files/Plots/Packages/Help pane.
+
+### Loading a Package for the First Time
+
+To load a package in R for the first time, follow these two steps:
+
+1. **Installing a package:**
+   Open the Console in RStudio and type:
+
+   ```{r, eval=FALSE}
+   install.packages("ggplot")
+   ```
+
+2. **Loading the package:**
+   After installation, load the package into your R session using the `library()` function:
+
+   ```{r, eval=FALSE}
+   library(ggplot)
+   ```
+
+### Basic RStudio Features
+
+1. **Creating a new R script:** Click on File > New File > R Script.
+
+2. **Running code:** Place your cursor on a line of code and press Ctrl+Enter (Cmd+Enter on Mac).
+
+3. **Viewing installed packages:** In the bottom-right pane, click on the "Packages" tab.
+
+4. **Getting help:** Type `?function_name` in the Console. For example:
+
+   ```{r, eval=FALSE}
+   ?mean
+   ```
+
+5. **Viewing plots:** Created plots appear in the "Plots" tab in the bottom-right pane.
+
+6. **Managing files:** Use the "Files" tab in the bottom-right pane to navigate your project directory.
+
+
