@@ -12,7 +12,7 @@ calcRH(Temp = Temp, Abs = Abs)
 \item{Abs}{Absolute Humidity (g/m^3)}
 }
 \value{
-Relative Humidity (0-100\%)
+Relative Humidity (0-100\%) with about a 0.1\%RH error
 }
 \description{
 Calculate relative humidity from temperature (C) and absolute humidity (g/m^3)

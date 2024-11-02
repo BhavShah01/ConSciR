@@ -7,12 +7,12 @@
 calcAH(Temp = Temp, RH = RH)
 }
 \arguments{
-\item{Temp}{number: Temperature (Celsius)}
+\item{Temp}{Temperature (Celsius)}
 
-\item{RH}{number: Relative Humidity (0-100\%)}
+\item{RH}{Relative Humidity (0-100\%)}
 }
 \value{
-number: Absolute Humidity (g/m^3)
+Absolute Humidity (g/m^3)
 }
 \description{
 Function to calculate absolute humidity in g per m^3 from temperature in Celsius and relative humidity in \% (0-100).
@@ -22,5 +22,5 @@ If using a dataframe, columns should ideally be named "Temp" and "RH".
 \examples{
 calcAH(20, 50)
 
-mydata |> mutate(DewPoint = calcAH(Temp, RH))
+mydata |> mutate(Abs = calcAH(Temp, RH))
 }

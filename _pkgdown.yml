@@ -1,0 +1,6 @@
+url: https://bhavshah01.github.io/ConSciR/
+template:
+  bootstrap: 5
+  bootswatch: slate
+  light-switch: yes
+

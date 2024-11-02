@@ -7,12 +7,12 @@
 calcDP(Temp = Temp, RH = RH)
 }
 \arguments{
-\item{Temp}{number: Temperature (Celsius)}
+\item{Temp}{Temperature (Celsius)}
 
-\item{RH}{number: Relative Humidity (0-100\%)}
+\item{RH}{Relative Humidity (0-100\%)}
 }
 \value{
-number: Dew Point (Celsius)
+Dew Point (Celsius)
 }
 \description{
 Function to calculate dew point in Celsius from temperature in Celsius and relative humidity in \% (0-100).
