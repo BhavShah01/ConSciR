@@ -1,7 +1,6 @@
 # ConSciR
 
 
-
 ## Introduction
 
 ConSciR is an R package specifically designed to assist conservators and scientists by providing a toolkit for performing essential calculations and streamlining common tasks in conservation. ConSciR is designed for:
