@@ -22,6 +22,5 @@ If using a dataframe, columns should ideally be named "Temp" and "RH".
 \examples{
 calcEnthalpy(20, 50)
 
-mydata |> mutate(Enthalpy = calcEnthalpy(Temp, RH))
 
 }

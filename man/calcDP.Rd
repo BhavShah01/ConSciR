@@ -22,7 +22,6 @@ If using a dataframe, columns should ideally be named "Temp" and "RH".
 Calculations based on NOAA.
 }
 \examples{
-calc_dew_point(20, 50)
+calcDP(20, 50)
 
-mydata |> mutate(DewPoint = calcDP(Temp, RH))
 }

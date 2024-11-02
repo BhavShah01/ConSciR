@@ -19,7 +19,6 @@
 #' @examples
 #' calcLM(20, 50)
 #'
-#' mydata |> calcLM(20, 50, EA = 100)
 #'
 calcLM = function(Temp = Temp, RH = RH, EA = 100) {
   # EA = Activation energy J/mol, R = 8.314 J/Kmol

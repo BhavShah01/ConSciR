@@ -26,6 +26,5 @@ If using a dataframe, columns should ideally be named "Temp" and "RH".
 \examples{
 calcMR(20, 50)
 
-mydata |> mutate(MixingRatio = calcMR(Temp, RH))
 
 }

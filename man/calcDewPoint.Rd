@@ -21,5 +21,4 @@ Dataframe columns should ideally be named "Temp" and "RH".
 \examples{
 calcDewPoint(20, 50)
 
-mydata |> mutate(DewPoint = calc_dew_point(Temp, RH))
 }

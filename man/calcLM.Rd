@@ -27,6 +27,5 @@ If using a dataframe, columns should ideally be named "Temp" and "RH".
 \examples{
 calcLM(20, 50)
 
-mydata |> calcLM(20, 50, EA = 100)
 
 }

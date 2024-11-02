@@ -21,6 +21,4 @@ If using a dataframe, columns should ideally be named "Temp" and "RH".
 }
 \examples{
 calcAH(20, 50)
-
-mydata |> mutate(Abs = calcAH(Temp, RH))
 }

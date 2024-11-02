@@ -17,7 +17,6 @@
 #' @examples
 #' calcMR(20, 50)
 #'
-#' mydata |> mutate(MixingRatio = calcMR(Temp, RH))
 #'
 calcMR <- function(Temp = Temp, RH = RH, P_tot = 1013.3, B = 621.9907) {
   # X Mixing ratio (mass of water vapour / mass of dry gas)

@@ -15,7 +15,6 @@
 #' @examples
 #' calcEnthalpy(20, 50)
 #'
-#' mydata |> mutate(Enthalpy = calcEnthalpy(Temp, RH))
 #'
 calcEnthalpy <- function(Temp = Temp, RH = RH) {
   # h Enthalpy (kJ/kg)
