@@ -1,0 +1,17 @@
+Package: ConSciR
+Type: Package
+Title: Tools for Conservation Science
+Version: 0.1.0
+Author: Bhavesh Shah
+Maintainer: Bhavesh Shah <bhaveshshah01@gmail.com>
+Description: Package for and from conservation science to help conservation.
+    Tools to perform common tasks. 
+    Data accepted so far - temperature, relative humidity, light
+License: CC BY 4.0
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.3.2
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

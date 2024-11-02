@@ -1,0 +1,108 @@
+---
+title: "ConSciR"
+output: rmarkdown::html_vignette
+date: 2024-11-01
+vignette: >
+  %\VignetteIndexEntry{ConSciR-Intro}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+## Introduction
+
+ConSciR is an R package specifically designed to assist conservators and scientists by providing a toolkit for performing essential calculations and streamlining common tasks in conservation. ConSciR is designed for:
+
+-   Conservators working in museums, galleries, and heritage sites
+-   Conservation scientists and researchers
+-   Cultural heritage professionals involved in preventive conservation
+-   Students and educators in conservation and heritage science programs
+
+#### Package Philosophy
+
+The ConSciR package is built on the principle of making complex calculations accessible and reproducible for the cultural heritage community. By providing a standardised set of tools, it aims to:
+
+-   Enhance the accuracy and consistency of conservation-related calculations
+-   Facilitate collaboration and knowledge sharing within the field
+-   Promote the adoption of data-driven approaches in conservation practice 
+
+#### Ongoing Development
+
+ConSciR is a dynamic package that evolves with the field of conservation science to:
+
+-   Update functions to reflect the latest research findings
+-   Incorporate feedback from the user community to improve functionality
+-   Add new tools and features to address emerging needs in the field 
+
+We encourage users to contribute their expertise and suggestions to help shape the future development of ConSciR, ensuring it remains a valuable resource for the cultural heritage community.
+
+
+## Install and load
+
+```{r setup}
+if (!("ConSciR" %in% installed.packages())) {
+  install.packages("ConSciR")
+}
+
+library(ConSciR)
+```
+
+
+## Functions available 
+
+
+-   Calculations: dew point, absolute humidity, water vapour pressure, mixing ratio, enthalpy
+-   Graphs: TRH plots, psychometric chart
+-   Summaries: percentiles 
+-   Analysis: 
+-   Tidying data: 
+
+
+## Tidy data
+
+To ensure optimal functionality of ConSciR functions, it is crucial to maintain your data in a tidy and consistently formatted structure. This allows the code to easily locate and process your variables. Please note the specific naming conventions for the columns as they are essential for the package to work correctly.
+The following formats are recommended:
+
+##### Temperature and Relative Humidity Data
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+data.frame(
+  Site = c("London", "London", "York", "York"),
+  Sensor = c("Gallery", "Gallery", "Room", "Room"),
+  Date = as.POSIXct(c("2023-01-01 00:00:00", "2023-01-01 01:00:00", "2023-01-01 00:00:00", "2023-01-01 02:00:00")),
+  Temp = c(20.5, 21.0, 19.8, 20.2),
+  RH = c(45, 47, 50, 49)
+)
+```
+
+
+##### Light and UV Data
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+data.frame(
+  Site = c("Museum", "Museum", "Store", "Store"),
+  Sensor = c("Paintings", "Paintings", "Shelf", "Shelf"),
+  Date = as.POSIXct(c("2023-01-01 00:00:00", "2023-01-01 01:00:00", "2023-01-01 00:00:00", "2023-01-01 02:00:00")),
+  Lux = c(45, 56, 200, 199),
+  UV = c(0, 0, 20, 49)
+)
+```
+
+
+Key Points:
+
+-   Column Names: Use the exact column names as shown above (Site, Sensor, Date, Temp, RH, Lux, UV). These names are case-sensitive.
+-   Date Format: The Date column should be in a datetime format (YYYY-MM-DD HH:MM:SS). 
+-   Numeric Data: Ensure that Temp, RH, Lux, and UV columns contain only numeric data.
+-   Categorical Data: Site and Sensor are categorical variables and should be character strings.
+-   Tidy Structure: Each row represents a single observation, and each column represents a single variable.
+-   No Missing Columns: Include all relevant columns, even if some data points are missing (use NA for missing values).
+
+
