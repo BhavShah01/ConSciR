@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   articles/ConSciR-FirstTimeR: ConSciR-FirstTimeR.html
   ConSciR-Intro: ConSciR-Intro.html
-last_built: 2024-11-03T14:23Z
+last_built: 2024-11-03T14:36Z
 urls:
   reference: https://bhavshah01.github.io/ConSciR/reference
   article: https://bhavshah01.github.io/ConSciR/articles
