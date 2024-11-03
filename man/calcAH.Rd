@@ -12,7 +12,7 @@ calcAH(Temp, RH)
 \item{RH}{Relative Humidity (0-100\%)}
 }
 \value{
-Absolute Humidity (g/m^3)
+AH, Absolute Humidity (g/m^3)
 }
 \description{
 Function to calculate absolute humidity (g/m^3) from temperature (C) and relative humidity (\%)

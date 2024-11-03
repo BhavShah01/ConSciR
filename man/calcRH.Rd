@@ -20,5 +20,5 @@ Function to calculate relative humidity (\%) from temperature (C) and absolute h
 \examples{
 calcRH(20, 8.645471)
 
-calcRH(20, calcAH(20, 50))
+# calcRH(20, calcAH(20, 50))
 }
