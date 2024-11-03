@@ -30,9 +30,9 @@ ConSciR is an R package specifically designed to assist conservators and scienti
 ## Install and load
 
 ```{r setup}
-if (!("ConSciR" %in% installed.packages())) {
-  install.packages("ConSciR")
-}
+install.packages("devtools")
+
+devtools::install_github("BhavShah01/ConSciR")
 
 library(ConSciR)
 ```
