@@ -7,7 +7,7 @@
 #' @export
 #'
 #' @examples
-#' calcRH(8.645471, 20)
+#' calcRH(20, 8.645471)
 #'
 #' calcRH(20, calcAH(20, 50))
 calcRH <- function(Temp = Temp, Abs = Abs) {

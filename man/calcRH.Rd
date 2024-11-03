@@ -18,7 +18,7 @@ Relative Humidity (0-100\%) with about a 0.1\%RH error
 Calculate relative humidity from temperature (C) and absolute humidity (g/m^3)
 }
 \examples{
-calcRH(8.645471, 20)
+calcRH(20, 8.645471)
 
 calcRH(20, calcAH(20, 50))
 }
