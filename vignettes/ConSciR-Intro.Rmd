@@ -15,6 +15,7 @@ knitr::opts_chunk$set(
 )
 ```
 
+The ConSciR Github page: [ConSciR Github](https://github.com/BhavShah01/ConSciR)
 
 ## Introduction
 

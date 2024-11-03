@@ -17,7 +17,7 @@ The ConSciR package is built on the principle of making complex calculations acc
 
 -   Enhance the accuracy and consistency of conservation-related calculations
 -   Facilitate collaboration and knowledge sharing within the field
--   Promote the adoption of data-driven approaches in conservation practice 
+-   Promote the adoption of data-driven approaches in conservation practice
 
 #### Ongoing Development
 
@@ -25,7 +25,20 @@ ConSciR is a dynamic package that evolves with the field of conservation science
 
 -   Update functions to reflect the latest research findings
 -   Incorporate feedback from the user community to improve functionality
--   Add new tools and features to address emerging needs in the field 
+-   Add new tools and features to address emerging needs in the field
 
 We encourage users to contribute their expertise and suggestions to help shape the future development of ConSciR, ensuring it remains a valuable resource for the cultural heritage community.
 
+## Install and load
+
+``` R
+install.packages("devtools")
+```
+
+``` R
+devtools::install_github("BhavShah01/ConSciR")
+```
+
+``` R
+library(ConSciR)
+```
