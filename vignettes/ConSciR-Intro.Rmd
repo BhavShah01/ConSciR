@@ -13,6 +13,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+
 ```
 
 The ConSciR Github page: [ConSciR Github](https://github.com/BhavShah01/ConSciR)
@@ -30,15 +31,17 @@ ConSciR is an R package specifically designed to assist conservators and scienti
 
 ## Install and load
 
-```{r setup}
-knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+``` R
 install.packages("devtools")
-
-devtools::install_github("BhavShah01/ConSciR")
-
-library(ConSciR)
 ```
 
+``` R
+devtools::install_github("BhavShah01/ConSciR")
+```
+
+``` R
+library(ConSciR)
+```
 
 ## Functions available 
 
