@@ -94,27 +94,11 @@ programs</li>
 <h2 id="install-and-load">Install and load<a class="anchor" aria-label="anchor" href="#install-and-load"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/knitr/man/opts_chunk.html" class="external-link">opts_chunk</a></span><span class="op">$</span><span class="fu">set</span><span class="op">(</span>warning <span class="op">=</span> <span class="cn">FALSE</span>, message <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Installing package into '/home/runner/work/_temp/Library'</span></span>
-<span><span class="co">#&gt; (as 'lib' is unspecified)</span></span>
-<span><span class="co">#&gt; also installing the dependencies 'Rcpp', 'credentials', 'zip', 'gitcreds', 'ini', 'httpuv', 'xtable', 'sourcetools', 'later', 'promises', 'diffobj', 'rematch2', 'clipr', 'crayon', 'gert', 'gh', 'rprojroot', 'rstudioapi', 'shiny', 'htmlwidgets', 'prettyunits', 'xopen', 'brew', 'commonmark', 'stringi', 'stringr', 'cpp11', 'praise', 'waldo', 'usethis', 'ellipsis', 'miniUI', 'pkgbuild', 'pkgload', 'profvis', 'rcmdcheck', 'remotes', 'roxygen2', 'rversions', 'testthat', 'urlchecker'</span></span>
-<span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"BhavShah01/ConSciR"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Using github PAT from envvar GITHUB_PAT. Use `gitcreds::gitcreds_set()` and unset GITHUB_PAT in .Renviron (or elsewhere) if you want to use the more secure git credential store instead.</span></span>
-<span><span class="co">#&gt; Downloading GitHub repo BhavShah01/ConSciR@HEAD</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">──</span> <span style="color: #00BBBB;">R CMD build</span> <span style="color: #00BBBB;">─────────────────────────────────────────────────────────────────</span></span></span>
-<span><span class="co">#&gt; * checking for file ‘/tmp/RtmpGYJKVz/remotes17ad68128065/BhavShah01-ConSciR-adc6814/DESCRIPTION’ ... OK</span></span>
-<span><span class="co">#&gt; * preparing ‘ConSciR’:</span></span>
-<span><span class="co">#&gt; * checking DESCRIPTION meta-information ... OK</span></span>
-<span><span class="co">#&gt; * checking for LF line-endings in source and make files and shell scripts</span></span>
-<span><span class="co">#&gt; * checking for empty or unneeded directories</span></span>
-<span><span class="co">#&gt; Omitted ‘LazyData’ from DESCRIPTION</span></span>
-<span><span class="co">#&gt; * building ‘ConSciR_0.1.0.tar.gz’</span></span>
-<span><span class="co">#&gt; Installing package into '/home/runner/work/_temp/Library'</span></span>
-<span><span class="co">#&gt; (as 'lib' is unspecified)</span></span>
-<span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bhavshah01.github.io/ConSciR/">ConSciR</a></span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"BhavShah01/ConSciR"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bhavshah01.github.io/ConSciR/">ConSciR</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="functions-available">Functions available<a class="anchor" aria-label="anchor" href="#functions-available"></a>
