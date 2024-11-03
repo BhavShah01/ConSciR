@@ -8,9 +8,4 @@ authors:
     href: "https://github.com/BhavShah01/"
   Annelies Coseart:
     href: "https://www.kikirpa.be/en/who-is-who/annelies-cosaert"
-reference:
-- title: Calculations
-  desc: >
-    Functions for performing calculations with temperature, humidity and other datasets
-  contents:
-    -
+
