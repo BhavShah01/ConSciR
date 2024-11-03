@@ -4,31 +4,38 @@
 #' Use this tool to produce a simple temperature and humidity plot
 #'
 #'
-#' @param mydata Dataframe with Date, Temp and RH columns
+#' @param mydata A data frame containing the date, temperature, and relative humidity data.
+#' @param Date The name of the column in mydata containing date information.
+#' @param Temp  The name of the column in mydata containing temperature data.
+#' @param RH The name of the column in mydata containing relative humidity data.
 #'
-#' @return Graph of temperature and humidity data
+#' @return A ggplot graph of temperature and relative humidity.
 #' @export
 #'
-#' @import ggplot2
+#' @importFrom rlang .data check_installed
+#' @importFrom ggplot2 ggplot aes geom_line labs lims scale_y_continuous sec_axis theme_bw theme element_text
 #'
 #' @examples
-#' graph_TRH(mydata)
+#' graph_TRH(mydata, Date = "Date", Temp = "Temp", RH = "RH")
 #'
-graph_TRH <- function(data, x_var, y_var, y2_var) {
-  rlang::check_installed("ggplot", reason = "to produce graphs")
+#' graph_TRH(mydata, Date = "Date", Temp = "Temp", RH = "RH") + labs(title = "Sensor name") # give chart a title
+#'
+graph_TRH <- function(mydata, Date, Temp, RH) {
+  rlang::check_installed("ggplot2", reason = "to produce graphs")
 
-    ggplot(data, aes(x = .data[[x_var]], y = .data[[y_var]])) +
-    geom_line(col = "red", alpha = 0.9) +
-    labs(x = "", y = "Temperature") +
-    geom_line(aes(.data[[x_var]], .data[[y2_var]]),
-              col = "blue", alpha = 0.9) +
-    lims(y = c(0, 100)) +
-    scale_y_continuous(
-      sec.axis = sec_axis(~., name = "Humidity"),
-      limits = c(0,100), n.breaks = 10) +
-    theme_bw() +
-    theme(
-      axis.title.y = element_text(color = "red"),
-      axis.title.y.right = element_text(color = "blue", angle = -90)
+  mydata |>
+    ggplot2::ggplot(ggplot2::aes(x = .data[[Date]], y = .data[[Temp]])) +
+    ggplot2::geom_line(col = "red", alpha = 0.9) +
+    ggplot2::labs(x = "", y = "Temperature") +
+    ggplot2::geom_line(ggplot2::aes(y = .data[[RH]]), col = "blue", alpha = 0.9) +
+    ggplot2::lims(y = c(0, 100)) +
+    ggplot2::scale_y_continuous(
+      sec.axis = ggplot2::sec_axis(~., name = "Humidity"),
+      limits = c(0, 100), n.breaks = 10
+    ) +
+    ggplot2::theme_bw() +
+    ggplot2::theme(
+      axis.title.y = ggplot2::element_text(color = "red"),
+      axis.title.y.right = ggplot2::element_text(color = "blue", angle = -90)
     )
 }

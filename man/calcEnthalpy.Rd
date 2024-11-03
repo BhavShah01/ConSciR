@@ -4,7 +4,7 @@
 \alias{calcEnthalpy}
 \title{Calculate enthalpy from temperature (C) and relative humidity (\%)}
 \usage{
-calcEnthalpy(Temp = Temp, RH = RH)
+calcEnthalpy(Temp, RH)
 }
 \arguments{
 \item{Temp}{Temperature (Celsius)}

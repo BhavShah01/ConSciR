@@ -7,7 +7,7 @@
 Michalski, 2003
 }
 \usage{
-calcLM(Temp = Temp, RH = RH, EA = 100)
+calcLM(Temp, RH, EA = 100)
 }
 \arguments{
 \item{Temp}{Temperature (Celsius)}

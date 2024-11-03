@@ -4,7 +4,7 @@
 \alias{calcDP}
 \title{Calculate dew point from temperature (C) and relative humidity (\%)}
 \usage{
-calcDP(Temp = Temp, RH = RH)
+calcDP(Temp, RH)
 }
 \arguments{
 \item{Temp}{Temperature (Celsius)}

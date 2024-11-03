@@ -18,7 +18,7 @@
 #' calcMR(20, 50)
 #'
 #'
-calcMR <- function(Temp = Temp, RH = RH, P_tot = 1013.3, B = 621.9907) {
+calcMR <- function(Temp, RH, P_tot = 1013.3, B = 621.9907) {
   # X Mixing ratio (mass of water vapour / mass of dry gas)
   # B = 621.9907 # g/kg is valid for air
   # Pw = Pws(40C) = 73.75 hPa

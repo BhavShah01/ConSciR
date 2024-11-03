@@ -17,7 +17,7 @@
 #'
 #' @examples
 #' calcPws(20)
-calcPws <- function(Temp = Temp) {
+calcPws <- function(Temp) {
   # Temperature in K
   TempK = Temp + 273.15
   # Critical temperature, K

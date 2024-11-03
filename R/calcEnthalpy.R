@@ -16,7 +16,7 @@
 #' calcEnthalpy(20, 50)
 #'
 #'
-calcEnthalpy <- function(Temp = Temp, RH = RH) {
+calcEnthalpy <- function(Temp, RH) {
   # h Enthalpy (kJ/kg)
   # Example: The ambient temperature is 20B0C and the relative humidity is 50%.
   # Pw = Pws(20B0C) B7 50/100 = 11.69 hPa

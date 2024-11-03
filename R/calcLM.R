@@ -20,7 +20,7 @@
 #' calcLM(20, 50)
 #'
 #'
-calcLM = function(Temp = Temp, RH = RH, EA = 100) {
+calcLM = function(Temp, RH, EA = 100) {
   # EA = Activation energy J/mol, R = 8.314 J/Kmol
   # EA 100 for cellulosic (paper) # EA 70 varnish yellowing
 

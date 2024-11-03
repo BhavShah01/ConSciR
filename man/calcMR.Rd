@@ -4,7 +4,7 @@
 \alias{calcMR}
 \title{Calculate mixing ratio from temperature (C) and relative humidity (\%)}
 \usage{
-calcMR(Temp = Temp, RH = RH, P_tot = 1013.3, B = 621.9907)
+calcMR(Temp, RH, P_tot = 1013.3, B = 621.9907)
 }
 \arguments{
 \item{Temp}{Temperature (Celsius)}

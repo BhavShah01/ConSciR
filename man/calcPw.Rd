@@ -4,7 +4,7 @@
 \alias{calcPw}
 \title{Calculate water vapour pressure (hPa) from temperature (C) and relative humidity (\%)}
 \usage{
-calcPw(Temp = Temp, RH = RH)
+calcPw(Temp, RH)
 }
 \arguments{
 \item{Temp}{Temperature (Celsius)}

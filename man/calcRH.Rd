@@ -4,7 +4,7 @@
 \alias{calcRH}
 \title{Calculate relative humidity from temperature (C) and absolute humidity (g/m^3)}
 \usage{
-calcRH(Temp = Temp, Abs = Abs)
+calcRH(Temp, Abs)
 }
 \arguments{
 \item{Temp}{Temperature (Celsius)}
@@ -12,10 +12,10 @@ calcRH(Temp = Temp, Abs = Abs)
 \item{Abs}{Absolute Humidity (g/m^3)}
 }
 \value{
-Relative Humidity (0-100\%) with about a 0.1\%RH error
+Relative Humidity (0-100\%). At extreme high and low humidity the error increases.
 }
 \description{
-Calculate relative humidity from temperature (C) and absolute humidity (g/m^3)
+Function to calculate relative humidity (\%) from temperature (C) and absolute humidity (g/m^3)
 }
 \examples{
 calcRH(20, 8.645471)

@@ -15,10 +15,9 @@ calcAH(Temp, RH)
 Absolute Humidity (g/m^3)
 }
 \description{
-Function to calculate absolute humidity in g per m^3 from temperature in Celsius and relative humidity in \% (0-100).
-
-If using a dataframe, columns should ideally be named "Temp" and "RH".
+Function to calculate absolute humidity (g/m^3) from temperature (C) and relative humidity (\%)
 }
 \examples{
 calcAH(20, 50)
+
 }
