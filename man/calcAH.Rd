@@ -4,7 +4,7 @@
 \alias{calcAH}
 \title{Calculate absolute humidity from temperature (C) and relative humidity (\%)}
 \usage{
-calcAH(Temp = Temp, RH = RH)
+calcAH(Temp, RH)
 }
 \arguments{
 \item{Temp}{Temperature (Celsius)}

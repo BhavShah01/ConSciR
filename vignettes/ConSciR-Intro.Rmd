@@ -31,6 +31,7 @@ ConSciR is an R package specifically designed to assist conservators and scienti
 ## Install and load
 
 ```{r setup}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 install.packages("devtools")
 
 devtools::install_github("BhavShah01/ConSciR")
