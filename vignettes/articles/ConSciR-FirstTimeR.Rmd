@@ -30,14 +30,14 @@ To load a package in R for the first time, follow these two steps:
    Open the Console in RStudio and type:
 
    ```{r, eval=FALSE}
-   install.packages("ggplot")
+   install.packages("ggplot2")
    ```
 
 2. **Loading the package:**
    After installation, load the package into your R session using the `library()` function:
 
    ```{r, eval=FALSE}
-   library(ggplot)
+   library(ggplot2)
    ```
 
 ### Basic RStudio Features
