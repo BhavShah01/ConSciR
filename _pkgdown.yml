@@ -3,9 +3,3 @@ template:
   bootstrap: 5
   bootswatch: slate
   light-switch: yes
-authors:
-  Bhavesh Shah:
-    href: "https://github.com/BhavShah01/"
-  Annelies Coseart:
-    href: "https://www.kikirpa.be/en/who-is-who/annelies-cosaert"
-
