@@ -21,4 +21,6 @@ Dataframe columns should ideally be named "Temp" and "RH".
 \examples{
 calcDewPoint(20, 50)
 
+head(mydata) |> dplyr::mutate(DP = calcDP(Temp, RH), DewPoint = calcDewPoint(Temp, RH))
+
 }

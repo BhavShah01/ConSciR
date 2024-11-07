@@ -27,5 +27,7 @@ h = 20 B7 (1.01 + 0.00189 B7 7.26) + 2.5 B7 7.26 = 38.62 kJ/kg
 \examples{
 calcEnthalpy(20, 50)
 
+head(mydata) |> dplyr::mutate(Enthalpy = calcEnthalpy(Temp, RH))
+
 
 }

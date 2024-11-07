@@ -10,12 +10,16 @@ calcPws(Temp)
 \item{Temp}{Temperature (Celsius)}
 }
 \value{
-Pws, Saturation vapor pressure (hPa)
+Pws, Saturation vapor pressure (hPa). 0.083\% error for T range -20 to +50°C
 }
 \description{
 Function to calculate water vapour saturation pressure in hPa between 0C and 373C.
 
 If using a dataframe, columns should ideally be named "Temp".
+
+If lower accuracy or a limited temperature range can be tolerated a simpler formula
+can be used for the water vapour saturation pressure over water (and over ice):
+Pws = A \* 10 \^ ( (m \* Temp) / (Temp + Tn) )
 }
 \examples{
 calcPws(20)
@@ -23,5 +27,7 @@ calcPws(20)
 
 }
 \references{
-W. Wagner and A. Pruß:" The IAPWS Formulation 1995 for the Thermodynamic Properties of Ordinary Water Substance for General and Scientific Use ", Journal of Physical and Chemical Reference Data, June 2002 ,Volume 31, Issue 2, pp.387535
+W. Wagner and A. Pruß:" The IAPWS Formulation 1995 for the Thermodynamic Properties of
+Ordinary Water Substance for General and Scientific Use ", Journal of Physical and
+Chemical Reference Data, June 2002 ,Volume 31, Issue 2, pp.387535
 }

@@ -11,3 +11,4 @@
 #' }
 #'
 #' @source Climate
+"mydata"

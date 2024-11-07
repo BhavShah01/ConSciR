@@ -20,5 +20,7 @@ Function to calculate absolute humidity (g/m^3) from temperature (C) and relativ
 \examples{
 calcAH(20, 50)
 
+head(mydata) |> dplyr::mutate(Abs = calcAH(Temp, RH))
+
 
 }

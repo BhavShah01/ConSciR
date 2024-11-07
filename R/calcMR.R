@@ -24,6 +24,8 @@
 #' @examples
 #' calcMR(20, 50)
 #'
+#' head(mydata) |> dplyr::mutate(MixingRatio = calcMR(Temp, RH))
+#'
 #'
 calcMR <- function(Temp, RH, P_tot = 1013.3, B = 621.9907) {
   Pw = calcPw(Temp, RH)

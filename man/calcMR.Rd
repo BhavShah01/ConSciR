@@ -32,5 +32,7 @@ X = 621.9907 B7 73.75/(998-73.75) = 49.63 g/kg
 \examples{
 calcMR(20, 50)
 
+head(mydata) |> dplyr::mutate(MixingRatio = calcMR(Temp, RH))
+
 
 }

@@ -2,9 +2,9 @@
 % Please edit documentation in R/calcLM.R
 \name{calcLM}
 \alias{calcLM}
-\title{Life-time multiplier (Michalski, 2003) for chemical degradation}
+\title{Life-time multiplier (Michalski, 2002) for chemical degradation}
 \source{
-Michalski, 2003
+Michalski, 2002
 }
 \usage{
 calcLM(Temp, RH, EA = 100)
@@ -27,5 +27,13 @@ If using a dataframe, columns should ideally be named "Temp" and "RH".
 \examples{
 calcLM(20, 50)
 
+head(mydata) |> dplyr::mutate(LifeTime = calcLM(Temp, RH))
 
+
+}
+\references{
+Michalski, S., ‘Double the life for each five-degree drop,
+more than double the life for each halving of relative humidity’,
+in Preprints of the 13th IcOM-cc Triennial Meeting in rio de Janeiro (22–27 September 2002),
+ed. r. Vontobel, James & James, London (2002) Vol. I 66–72.
 }

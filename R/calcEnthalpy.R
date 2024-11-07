@@ -20,6 +20,8 @@
 #' @examples
 #' calcEnthalpy(20, 50)
 #'
+#' head(mydata) |> dplyr::mutate(Enthalpy = calcEnthalpy(Temp, RH))
+#'
 #'
 calcEnthalpy <- function(Temp, RH) {
   X = calcMR(Temp, RH)

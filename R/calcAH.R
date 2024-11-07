@@ -14,9 +14,11 @@
 #' @examples
 #' calcAH(20, 50)
 #'
+#' head(mydata) |> dplyr::mutate(Abs = calcAH(Temp, RH))
+#'
 #'
 calcAH <- function(Temp, RH) {
-  AH <- ((RH * (1.10461E-15 * Temp^10 +
+  AH = ((RH * (1.10461E-15 * Temp^10 +
                 -1.187682E-13 * Temp^9 +
                 3.089754E-12 * Temp^8 +
                 7.150535E-11 * Temp^7 +
