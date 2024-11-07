@@ -11,7 +11,7 @@ calcMR(Temp, RH, P_tot = 1013.3, B = 621.9907)
 
 \item{RH}{Relative Humidity (0-100\%)}
 
-\item{P_tot}{Total pressure (hPa) = 1013.3}
+\item{P_tot}{Total pressure = 1013.3 (hPa)}
 
 \item{B}{B = 621.9907 g/kg is valid for air}
 }
@@ -22,6 +22,12 @@ X Mixing ratio (mass of water vapour / mass of dry gas)
 Function to calculate mixing ratio from temperature in Celsius and relative humidity in \% (0-100).
 
 If using a dataframe, columns should ideally be named "Temp" and "RH".
+
+X Mixing ratio (mass of water vapour / mass of dry gas)
+
+Pw = Pws(40C) = 73.75 hPa
+
+X = 621.9907 B7 73.75/(998-73.75) = 49.63 g/kg
 }
 \examples{
 calcMR(20, 50)

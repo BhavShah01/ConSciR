@@ -5,10 +5,17 @@
 #'
 #' If using a dataframe, columns should ideally be named "Temp" and "RH".
 #'
+#' X Mixing ratio (mass of water vapour / mass of dry gas)
+#'
+#' Pw = Pws(40C) = 73.75 hPa
+#'
+#' X = 621.9907 B7 73.75/(998-73.75) = 49.63 g/kg
+#'
+#'
 #'
 #' @param Temp Temperature (Celsius)
 #' @param RH Relative Humidity (0-100\%)
-#' @param P_tot Total pressure (hPa) = 1013.3
+#' @param P_tot Total pressure = 1013.3 (hPa)
 #' @param B B = 621.9907 g/kg is valid for air
 #'
 #' @return X Mixing ratio (mass of water vapour / mass of dry gas)
@@ -19,12 +26,6 @@
 #'
 #'
 calcMR <- function(Temp, RH, P_tot = 1013.3, B = 621.9907) {
-  # X Mixing ratio (mass of water vapour / mass of dry gas)
-  # B = 621.9907 # g/kg is valid for air
-  # Pw = Pws(40C) = 73.75 hPa
-  # X = 621.9907 B7 73.75/(998-73.75) = 49.63 g/kg
-  # P_tot = 1013.3 # Total pressure (hPa)
-
   Pw = calcPw(Temp, RH)
   X = (B * Pw) / (P_tot - Pw)
   return(X)

@@ -4,7 +4,7 @@
 \alias{graph_TRH}
 \title{Function for graphing temperature and humidity data}
 \usage{
-graph_TRH(mydata, Date, Temp, RH)
+graph_TRH(mydata, Date = "Date", Temp = "Temp", RH = "RH")
 }
 \arguments{
 \item{mydata}{A data frame containing the date, temperature, and relative humidity data.}
@@ -24,6 +24,5 @@ Use this tool to produce a simple temperature and humidity plot
 \examples{
 graph_TRH(mydata, Date = "Date", Temp = "Temp", RH = "RH")
 
-graph_TRH(mydata, Date = "Date", Temp = "Temp", RH = "RH") + labs(title = "Sensor name") # give chart a title
 
 }

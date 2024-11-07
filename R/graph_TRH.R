@@ -18,9 +18,8 @@
 #' @examples
 #' graph_TRH(mydata, Date = "Date", Temp = "Temp", RH = "RH")
 #'
-#' graph_TRH(mydata, Date = "Date", Temp = "Temp", RH = "RH") + labs(title = "Sensor name") # give chart a title
 #'
-graph_TRH <- function(mydata, Date, Temp, RH) {
+graph_TRH <- function(mydata, Date = "Date", Temp = "Temp", RH = "RH") {
   rlang::check_installed("ggplot2", reason = "to produce graphs")
 
   mydata |>
@@ -33,7 +32,6 @@ graph_TRH <- function(mydata, Date, Temp, RH) {
       sec.axis = ggplot2::sec_axis(~., name = "Humidity"),
       limits = c(0, 100), n.breaks = 10
     ) +
-    ggplot2::theme_bw() +
     ggplot2::theme(
       axis.title.y = ggplot2::element_text(color = "red"),
       axis.title.y.right = ggplot2::element_text(color = "blue", angle = -90)

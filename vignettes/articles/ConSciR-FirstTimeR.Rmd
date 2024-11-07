@@ -58,4 +58,3 @@ To load a package in R for the first time, follow these two steps:
 
 6. **Managing files:** Use the "Files" tab in the bottom-right pane to navigate your project directory.
 
-

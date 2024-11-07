@@ -24,4 +24,6 @@ Calculations based on NOAA.
 \examples{
 calcDP(20, 50)
 
+head(mydata) |> dplyr::mutate(DewPoint = calcDP(Temp, RH))
+
 }

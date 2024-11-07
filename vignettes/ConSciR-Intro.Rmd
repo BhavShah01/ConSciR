@@ -37,16 +37,6 @@ devtools::install_github("BhavShah01/ConSciR")
 library(ConSciR)
 ```
 
-## Functions available 
-
-
--   Calculations: dew point, absolute humidity, water vapour pressure, mixing ratio, enthalpy
--   Graphs: TRH plots, psychometric chart
--   Summaries: percentiles 
--   Analysis: 
--   Tidying data: 
-
-
 ## Tidy data
 
 To ensure optimal functionality of ConSciR functions, it is crucial to maintain your data in a tidy and consistently formatted structure. This allows the code to easily locate and process your variables. Please note the specific naming conventions for the columns as they are essential for the package to work correctly.
@@ -69,8 +59,8 @@ data.frame(
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 data.frame(
-  Site = c("Museum", "Museum", "Store", "Store"),
-  Sensor = c("Paintings", "Paintings", "Shelf", "Shelf"),
+  Site = c("Museum", "Museum", "Case", "Case"),
+  Sensor = c("Store", "Store", "Shelf", "Shelf"),
   Date = as.POSIXct(c("2023-01-01 00:00:00", "2023-01-01 01:00:00", "2023-01-01 00:00:00", "2023-01-01 02:00:00")),
   Lux = c(45, 56, 200, 199),
   UV = c(0, 0, 20, 49)
@@ -80,11 +70,50 @@ data.frame(
 
 Key Points:
 
--   Column Names: Use the exact column names as shown above (Site, Sensor, Date, Temp, RH, Lux, UV). These names are case-sensitive.
--   Date Format: The Date column should be in a datetime format (YYYY-MM-DD HH:MM:SS). 
+-   Column Names: Try to use the exact column names as shown above (Site, Sensor, Date, Temp, RH, Lux, UV). These names are case-sensitive. Tools to tidy files are being developed.
+-   Date Format: The Date column should ideally be in a datetime format (YYYY-MM-DD HH:MM:SS). Check the behaviour of dates if this format hasn't been used. 
 -   Numeric Data: Ensure that Temp, RH, Lux, and UV columns contain only numeric data.
 -   Categorical Data: Site and Sensor are categorical variables and should be character strings.
 -   Tidy Structure: Each row represents a single observation, and each column represents a single variable.
--   No Missing Columns: Include all relevant columns, even if some data points are missing (use NA for missing values).
+-   No Missing Columns: Include all relevant columns, even if some data points are missing (leave blank or use NA for missing values).
 
 
+## Functions available 
+
+
+-   Calculations: dew point, absolute humidity, water vapour pressure, mixing ratio, enthalpy
+-   Graphs: TRH plots, psychometric chart
+-   Summaries: percentiles 
+-   Analysis: 
+-   Tidying data: 
+
+Examples of use: 
+
+```{r message=FALSE, warning=FALSE}
+library(ConSciR)
+library(dplyr)
+library(ggplot2)
+
+head(mydata)
+
+head(mydata) |>
+  mutate(
+    AbsHum = calcAH(Temp, RH), 
+    DewPoint = calcDP(Temp, RH),
+    MixingRatio = calcMR(Temp, RH),
+    Enthalpy = calcEnthalpy(Temp, RH)
+  )
+
+mydata |>
+  mutate(
+    AbsHum = calcAH(Temp, RH), 
+    DewPoint = calcDP(Temp, RH)
+  ) |>
+  ggplot() + 
+  geom_line(aes(Date, Temp), col = "red") + 
+  geom_line(aes(Date, RH), col = "blue") +
+  geom_line(aes(Date, AbsHum), col = "green") +
+  geom_line(aes(Date, DewPoint), col = "purple") +
+  theme_bw()
+
+```
