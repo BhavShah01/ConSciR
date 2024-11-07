@@ -17,6 +17,8 @@ To get started with R, you need to install both R and RStudio, which is a user-f
 - R: [https://cloud.r-project.org/](https://cloud.r-project.org/)
 - RStudio: [https://posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/)
 
+Useful starting point from RStudio Education: [Finding Your Way To R]("https://education.rstudio.com/learn/")
+
 
 ## Loading a Package and Basic Introduction to RStudio
 

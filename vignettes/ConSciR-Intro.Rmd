@@ -94,8 +94,6 @@ library(ConSciR)
 library(dplyr)
 library(ggplot2)
 
-head(mydata)
-
 head(mydata) |>
   mutate(
     AbsHum = calcAH(Temp, RH), 
@@ -114,6 +112,8 @@ mydata |>
   geom_line(aes(Date, RH), col = "blue") +
   geom_line(aes(Date, AbsHum), col = "green") +
   geom_line(aes(Date, DewPoint), col = "purple") +
+  labs(x = "Date", y = "Variable", title = "Sensor", 
+       subtitle = "Temperature (red), relative humidity (blue), absolute humidity (green), dew point (purple)") +
   theme_bw()
 
 ```
