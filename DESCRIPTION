@@ -20,10 +20,12 @@ RoxygenNote: 7.3.2
 Suggests: 
     knitr,
     rmarkdown,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    bslib
 Imports:
-    ggplot2,
     rlang,
+    shiny,
+    ggplot2,
     dplyr
 VignetteBuilder: knitr
 URL: https://bhavshah01.github.io/ConSciR/

@@ -1,7 +1,8 @@
 url: https://bhavshah01.github.io/ConSciR/
 template:
   bootstrap: 5
-  bootswatch: slate
+  bslib:
+    bootswatch: shiny
   light-switch: yes
 reference:
 - title: Functions
@@ -27,3 +28,6 @@ reference:
 - title: Data
   desc: In-built data to demonstrate functions.
   contents: mydata
+- title: Shiny app
+  desc: Application to run and test the package.
+  contents: run_ConSciR_app
