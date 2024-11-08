@@ -21,13 +21,9 @@ PI Preservation Index, the expected lifetime 1/k
 Chemical degradation of cellulose acetate – the Preservation Index of the
 Image Permanence Institute (IPI) (Reilly et al., 1995)
 
-\begin{equation}
- \text{calcPI}(Temp, RH) = \frac{1}/{k}
- \end{equation}
+k = [RH%] × 5.9 × 1012 × e(-90300/(8.314 × T))
 
-\begin{equation}
- k = RH \cdot 5.9 \times 10^{-12} \cdot \exp\left(\frac{-90300}{8.314 \cdot (Temp + 273.15)}\right)
-\end{equation}
+PI = 1/k
 }
 \examples{
 calcPI(20, 50)
