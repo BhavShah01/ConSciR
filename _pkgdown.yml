@@ -17,6 +17,7 @@ reference:
     - calcPws
     - calcRH
     - calcPI
+    - calcIPI
 - title: Graphs
   desc: Functions for graphing data.
   contents:
