@@ -22,12 +22,12 @@ Chemical degradation of cellulose acetate – the Preservation Index of the
 Image Permanence Institute (IPI) (Reilly et al., 1995)
 
 \begin{equation}
-\text{calcPI}(Temp, RH) = \frac{1}{k}
-\end{equation}
-\end{equation}
+ \text{calcPI}(Temp, RH) = \frac{1}/{k}
+ \end{equation}
 
 \begin{equation}
-k = RH \cdot 5.9 \times 10^{-12} \cdot \exp\left(\frac{-90300}{8.314 \cdot (Temp + 273.15)}\right)
+ k = RH \cdot 5.9 \times 10^{-12} \cdot \exp\left(\frac{-90300}{8.314 \cdot (Temp + 273.15)}\right)
+\end{equation}
 }
 \examples{
 calcPI(20, 50)
