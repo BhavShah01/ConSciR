@@ -4,9 +4,6 @@ template:
   bootswatch: slate
   light-switch: yes
 reference:
-- title: Data
-  desc: In-built data to demonstrate functions.
-  contents: mydata
 - title: Functions
   desc: Functions for performing calculations.
   contents:
@@ -19,8 +16,12 @@ reference:
     - calcPw
     - calcPws
     - calcRH
+    - calcPI
 - title: Graphs
   desc: Functions for graphing data.
   contents:
     - graph_TRH
     - graph_psychrometric
+- title: Data
+  desc: In-built data to demonstrate functions.
+  contents: mydata
