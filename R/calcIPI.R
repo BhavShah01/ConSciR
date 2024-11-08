@@ -25,7 +25,7 @@
 calcIPI <- function(Temp, RH, EA = 95220) {
 
   # IPI formulation of the reaction kinetics: years to a defined state of deterioration
-  IPI = exp((EA - 134.9 * RH)/(8.314 * Temp) + 0.0284 * RH - 28.023) / 365
+  IPI = exp((EA - 134.9 * RH) / (8.314 * (Temp + 273.15)) + 0.0284 * RH - 28.023) / 365
 
   return(IPI)
 }

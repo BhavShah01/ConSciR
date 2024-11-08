@@ -37,5 +37,6 @@ calcPI <- function(Temp, RH) {
 
   # The expected lifetime, PI, is 1/k
   PI = 1/k
+
   return(PI)
 }
