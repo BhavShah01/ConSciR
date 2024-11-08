@@ -18,7 +18,7 @@ AH Absolute Humidity (g/m^3)
 Function to calculate absolute humidity (g/m^3) from temperature (C) and relative humidity (\%)
 }
 \examples{
-calcAH(20, 50)
+calcAH(Temp = 20, RH = 50)
 
 head(mydata) |> dplyr::mutate(Abs = calcAH(Temp, RH))
 

@@ -13,13 +13,17 @@ reference:
     - calcDewPoint
     - calcEnthalpy
     - calcFtoC
-    - calcLM
     - calcMR
     - calcPw
     - calcPws
     - calcRH
+- title: Risk functions
+  desc: Functions for the analysis of data.
+  contents:
     - calcPI
     - calcIPI
+    - calcLM
+    - calcMould
 - title: Graphs
   desc: Functions for graphing data.
   contents:

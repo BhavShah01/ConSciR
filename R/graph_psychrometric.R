@@ -23,7 +23,7 @@
 #' data <- data.frame(Temp = c(20, 25, 30), RH = c(50, 60, 70))
 #' graph_psychrometric(data, Temp, RH, LowT = 15, HighT = 25, LowRH = 40, HighRH = 60)
 #'
-#' graph_psychrometric(head(mydata), Temp, RH, LowT = 15, HighT = 25, LowRH = 40, HighRH = 60)
+#' # graph_psychrometric(head(mydata), Temp, RH, LowT = 15, HighT = 25, LowRH = 40, HighRH = 60)
 #'
 #'
 graph_psychrometric <- function(mydata, Temp, RH, LowT, HighT, LowRH, HighRH) {

@@ -12,14 +12,13 @@
 #'
 #'
 #' @examples
-#' calcAH(20, 50)
+#' calcAH(Temp = 20, RH = 50)
 #'
 #' head(mydata) |> dplyr::mutate(Abs = calcAH(Temp, RH))
 #'
 #'
 calcAH <- function(Temp, RH) {
 
-  #
   AH = (2165*(RH*((101325*exp((((-0.1299*(1 - (373.15/(273.15 + Temp))) - 0.6445)*(1 - (373.15/(273.15 + Temp))) - 1.976)*(1 - (373.15/(273.15 + Temp))) + 13.3185)*(1 - (373.15/(273.15 + Temp)))))/1000)/100)/(Temp + 273.15) )
 
   # VAISALA
@@ -34,5 +33,6 @@ calcAH <- function(Temp, RH) {
                 0.001223148 * Temp^2 +
                 0.04660427 * Temp +
                 0.6072509) * 1000) / 100 / (Temp + 273.15)) * (18.01528 / 8.31441)
+
   return(AH)
 }
