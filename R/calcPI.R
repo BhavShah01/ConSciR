@@ -4,6 +4,8 @@
 #' Chemical degradation of cellulose acetate – the Preservation Index of the
 #' Image Permanence Institute (IPI) (Reilly et al., 1995)
 #'
+#' $$k = RH \cdot 5.9 \times 10^{-12} \cdot \exp\left(\frac{-90300}{8.314 \cdot (Temp + 273.15)}\right)$$
+#'
 #' @source Tim Padfield, 2004
 #'
 #' @references
@@ -11,7 +13,6 @@
 #'
 #' Padfield, T. 2004. The Preservation Index and The Time Weighted Preservation Index.
 #' https://www.conservationphysics.org/twpi/twpi_01.html
-#'
 #'
 #'
 #'
@@ -30,7 +31,7 @@
 calcPI <- function(Temp, RH) {
 
   # k is expressed as the fraction of expected lifetime per year of the degradation
-  k = RH * 5.9E-12 * exp(-90300 / (8.314 * Temp))
+  k = RH * 5.9E-12 * exp(-90300 / (8.314 * (Temp + 273.15) ))
 
   # The expected lifetime, PI, is 1/k
   PI = 1/k
