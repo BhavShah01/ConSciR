@@ -90,18 +90,28 @@ Key Points:
 Examples of use: 
 
 ```{r message=FALSE, warning=FALSE}
+# Load packages
 library(ConSciR)
 library(dplyr)
 library(ggplot2)
+```
 
+```{r message=FALSE, warning=FALSE}
+# Add calculated values using mutate
 head(mydata) |>
   mutate(
     AbsHum = calcAH(Temp, RH), 
     DewPoint = calcDP(Temp, RH),
     MixingRatio = calcMR(Temp, RH),
-    Enthalpy = calcEnthalpy(Temp, RH)
+    Enthalpy = calcEnthalpy(Temp, RH), 
+    IPI = calcIPI(Temp, RH), 
+    PI = calcPI(Temp, RH)
   )
 
+```
+
+```{r message=FALSE, warning=FALSE}
+# Visualise and explore data
 mydata |>
   mutate(
     AbsHum = calcAH(Temp, RH), 
@@ -112,8 +122,9 @@ mydata |>
   geom_line(aes(Date, RH), col = "blue") +
   geom_line(aes(Date, AbsHum), col = "green") +
   geom_line(aes(Date, DewPoint), col = "purple") +
-  labs(x = "Date", y = "Variable", title = "Sensor", 
-       subtitle = "Temperature (red), relative humidity (blue), absolute humidity (green), dew point (purple)") +
+  lims(y = c(0, 100)) + 
+  labs(x = "Date", y = "Value", title = "Sensor", 
+       subtitle = "Temperature (red), relative humidity (blue), absolute humidity (green), dew point (purple)", caption = "ConSciR") +
   theme_bw()
 
 ```
