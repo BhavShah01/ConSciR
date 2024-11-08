@@ -17,9 +17,9 @@ Convert temperature in Fahrenheit to temperature in Celsius
 }
 \examples{
 calcFtoC(32)
-calcFtoC(32)
+calcFtoC(68)
 
-head(mydata) |> dplyr::mutate(Temp = calcFtoC((Temp * 9/5) + 32))
+head(mydata) |> dplyr::mutate(TempC = calcFtoC((Temp * 9/5) + 32))
 
 
 }
