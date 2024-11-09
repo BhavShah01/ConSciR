@@ -1,9 +1,8 @@
 url: https://bhavshah01.github.io/ConSciR/
 template:
   bootstrap: 5
-  bslib:
-    bootswatch: shiny
-  light-switch: yes
+  bootswatch: shiny
+  light-switch: true
 reference:
 - title: Functions
   desc: Functions for performing calculations.
