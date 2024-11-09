@@ -23,6 +23,7 @@ reference:
     - calcIPI
     - calcLM
     - calcMould
+    - calcMould_models
 - title: Graphs
   desc: Functions for graphing data.
   contents:
@@ -30,7 +31,10 @@ reference:
     - graph_psychrometric
 - title: Data
   desc: In-built data to demonstrate functions.
-  contents: mydata
+  contents:
+    - mydata
+    - TRHdata
+    - mouldtable
 - title: Shiny app
   desc: Application to run and test the package.
   contents: run_ConSciR_app
