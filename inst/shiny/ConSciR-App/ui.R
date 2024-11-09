@@ -1,17 +1,19 @@
 library(shiny)
+library(bslib)
 
 ui <- page_sidebar(
-  title = "Penguins dashboard",
+  title = "A dashboard",
   sidebar = sidebar(
     title = "Histogram controls",
-    varSelectInput(
-      "var", "Select variable",
-      dplyr::select_if(penguins, is.numeric)
-    ),
-    numericInput("bins", "Number of bins", 30)
+    uiOutput("var_select"),
+    uiOutput("bins_select")
   ),
   card(
     card_header("Histogram"),
     plotOutput("p")
+  ),
+  card(
+    card_header("Table"),
+    tableOutput("table")
   )
 )

@@ -1,0 +1,76 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# ConSciR
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+ConSciR is an R package specifically designed to assist conservators and scientists by providing a toolkit for performing essential calculations and streamlining common tasks in conservation. ConSciR is designed for:
+
+-   Conservators working in museums, galleries, and heritage sites
+-   Conservation scientists and researchers
+-   Cultural heritage professionals involved in preventive conservation
+-   Students and educators in conservation and heritage science programs
+
+## Installation
+
+You can install the development version of ConSciR from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("pak")
+pak::pak("BhavShah01/ConSciR")
+```
+
+## Example
+
+This is a basic example of some commons tasks:
+
+-   Load packages
+
+```{r, message=FALSE, warning=FALSE}
+library(ConSciR)
+library(dplyr)
+library(ggplot2)
+```
+
+-   Dataset availabe for testing
+
+```{r, message=FALSE, warning=FALSE}
+# My TRH data
+head(mydata)
+```
+
+-   Use the calculation functions
+
+```{r, message=FALSE, warning=FALSE}
+# Peform calculations
+head(mydata) |>
+  mutate(
+    DewPoint = calcDP(Temp, RH), 
+    AbsHum = calcAH(Temp, RH), 
+    LifeTime = calcLM(Temp, RH, EA = 100), 
+    PreservationIndex = calcPI(Temp, RH))
+```
+
+-   Produce graphs
+
+```{r, message=FALSE, warning=FALSE}
+# Produce graphs 
+mydata |>
+  graph_TRH()
+  
+```
+

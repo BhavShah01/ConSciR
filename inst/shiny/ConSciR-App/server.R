@@ -1,29 +1,34 @@
 library(shiny)
+library(bslib)
+library(ggplot2)
+library(dplyr)
 
-data(penguins, package = "palmerpenguins")
 
 server <- function(input, output) {
+
+  output$var_select <- renderUI({
+    varSelectInput(
+      "var", "Select variable",
+      dplyr::select_if(mydata, is.numeric)
+    )
+  })
+  output$bins_select <- renderUI({
+    numericInput("bins", "Number of bins", 30)
+  })
+
   output$p <- renderPlot({
-    ggplot(penguins) +
+    ggplot(mydata) +
       geom_histogram(aes(!!input$var), bins = input$bins) +
       theme_bw(base_size = 20)
   })
-}
 
-# # Define server logic required to draw a histogram
-# function(input, output, session) {
-#
-#     output$distPlot <- renderPlot({
-#
-#         # generate bins based on input$bins from ui.R
-#         x    <- faithful[, 2]
-#         bins <- seq(min(x), max(x), length.out = input$bins + 1)
-#
-#         # draw the histogram with the specified number of bins
-#         hist(x, breaks = bins, col = 'darkgray', border = 'white',
-#              xlab = 'Waiting time to next eruption (in mins)',
-#              main = 'Histogram of waiting times')
-#
-#     })
-#
-# }
+  output$TRHtable <- renderTable({
+    mydata |>
+      summarise(
+        Min = min(!!input$var, na.rm = TRUE),
+        Mean = mean(!!input$var, na.rm = TRUE),
+        Max = max(!!input$var, na.rm = TRUE)
+      )
+  })
+
+}
