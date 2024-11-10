@@ -33,6 +33,8 @@ To load a package in R for the first time, follow these two steps:
 
    ```{r, eval=FALSE}
    install.packages("ggplot2")
+   install.packages("tidyverse")
+   install.packages("runner")
    ```
 
 2. **Loading the package:**

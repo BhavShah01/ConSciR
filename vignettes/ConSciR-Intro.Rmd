@@ -37,10 +37,18 @@ devtools::install_github("BhavShah01/ConSciR")
 library(ConSciR)
 ```
 
+Or 
+
+``` R
+install.packages("pak")
+pak::pak("BhavShah01/ConSciR")
+```
+
 ## Tidy data
 
 To ensure optimal functionality of ConSciR functions, it is crucial to maintain your data in a tidy and consistently formatted structure. This allows the code to easily locate and process your variables. Please note the specific naming conventions for the columns as they are essential for the package to work correctly.
 The following formats are recommended:
+
 
 ##### Temperature and Relative Humidity Data
 
@@ -117,13 +125,11 @@ mydata |>
     AbsHum = calcAH(Temp, RH), 
     DewPoint = calcDP(Temp, RH)
   ) |>
-  ggplot() + 
-  geom_line(aes(Date, Temp), col = "red") + 
-  geom_line(aes(Date, RH), col = "blue") +
+  graph_TRH() + 
   geom_line(aes(Date, AbsHum), col = "green") +
   geom_line(aes(Date, DewPoint), col = "purple") +
   lims(y = c(0, 100)) + 
-  labs(x = "Date", y = "Value", title = "Sensor", 
+  labs(x = "Date", y = "", title = "Sensor", 
        subtitle = "Temperature (red), relative humidity (blue), absolute humidity (green), dew point (purple)", caption = "ConSciR") +
   theme_bw()
 
