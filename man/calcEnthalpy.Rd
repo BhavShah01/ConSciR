@@ -2,7 +2,7 @@
 % Please edit documentation in R/calcEnthalpy.R
 \name{calcEnthalpy}
 \alias{calcEnthalpy}
-\title{Calculate enthalpy from temperature (C) and relative humidity (\%)}
+\title{Calculate enthalpy}
 \usage{
 calcEnthalpy(Temp, RH)
 }

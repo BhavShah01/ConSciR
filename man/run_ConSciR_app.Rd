@@ -13,6 +13,6 @@ Shiny object
 Run ConSciR Shiny Application
 }
 \examples{
-run_ConSciR_app()
+# run_ConSciR_app()
 
 }

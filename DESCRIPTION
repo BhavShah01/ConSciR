@@ -21,13 +21,13 @@ Suggests:
     knitr,
     rmarkdown,
     testthat (>= 3.0.0),
-    bslib, 
-    runner
+    bslib
 Imports:
     rlang,
     shiny,
     ggplot2,
-    dplyr
+    dplyr, 
+    runner
 VignetteBuilder: knitr
 URL: https://bhavshah01.github.io/ConSciR/
 Config/testthat/edition: 3

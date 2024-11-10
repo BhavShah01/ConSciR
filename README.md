@@ -84,3 +84,14 @@ mydata |>
 ```
 
 <img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+
+``` r
+  
+mydata |>
+  mutate(DewPoint = calcDP(Temp, RH)) |>
+  graph_TRH() + 
+  geom_line(aes(Date, DewPoint), col = "purple", size = 1) + 
+  theme_bw()
+```
+
+<img src="man/figures/README-unnamed-chunk-5-2.png" width="100%" />

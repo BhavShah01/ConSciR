@@ -2,7 +2,7 @@
 % Please edit documentation in R/calcIPI.R
 \name{calcIPI}
 \alias{calcIPI}
-\title{Calculate IPI from temperature (C) and relative humidity (\%)}
+\title{Calculate IPI}
 \source{
 Tim Padfield, 2004
 }

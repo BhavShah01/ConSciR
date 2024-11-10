@@ -2,7 +2,7 @@
 % Please edit documentation in R/calcDP.R
 \name{calcDP}
 \alias{calcDP}
-\title{Calculate dew point from temperature (C) and relative humidity (\%)}
+\title{Calculate dew point}
 \usage{
 calcDP(Temp, RH)
 }

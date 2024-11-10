@@ -1,4 +1,4 @@
-#' Calculate IPI from temperature (C) and relative humidity (\%)
+#' Calculate IPI
 #'
 #' @description
 #'

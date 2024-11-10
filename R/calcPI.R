@@ -1,4 +1,4 @@
-#' Calculate Preservation Index from temperature (C) and relative humidity (\%)
+#' Calculate Preservation Index
 #'
 #' @description
 #' Chemical degradation of cellulose acetate – the Preservation Index of the

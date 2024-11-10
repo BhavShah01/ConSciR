@@ -2,25 +2,23 @@
 % Please edit documentation in R/calcAH.R
 \name{calcAH}
 \alias{calcAH}
-\title{Calculate absolute humidity from temperature (C) and relative humidity (\%)}
+\title{Calculate absolute humidity}
 \usage{
 calcAH(Temp, RH)
 }
 \arguments{
-\item{Temp}{Temperature (Celsius)}
+\item{Temp}{Temperature}
 
-\item{RH}{Relative Humidity (0-100\%)}
+\item{RH}{Relative humidity}
 }
 \value{
-AH Absolute Humidity (g/m^3)
+AH Absolute humidity
 }
 \description{
-Function to calculate absolute humidity (g/m^3) from temperature (C) and relative humidity (\%)
+Calculate absolute humidity
 }
 \examples{
-calcAH(Temp = 20, RH = 50)
-
-head(mydata) |> dplyr::mutate(Abs = calcAH(Temp, RH))
+calcAH(20, 50)
 
 
 }

@@ -1,4 +1,4 @@
-#' Calculate dew point from temperature (C) and relative humidity (\%)
+#' Calculate dew point
 #'
 #' @description
 #' Function to calculate dew point in Celsius from temperature in Celsius and relative humidity in \% (0-100).

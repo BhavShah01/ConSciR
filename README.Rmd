@@ -72,5 +72,10 @@ head(mydata) |>
 mydata |>
   graph_TRH()
   
+mydata |>
+  mutate(DewPoint = calcDP(Temp, RH)) |>
+  graph_TRH() + 
+  geom_line(aes(Date, DewPoint), col = "purple", size = 1) + 
+  theme_bw()
 ```
 

@@ -1,4 +1,4 @@
-#' Calculate enthalpy from temperature (C) and relative humidity (\%)
+#' Calculate enthalpy
 #'
 #' @description
 #' Function to calculate enthalpy from temperature in Celsius and relative humidity in \% (0-100).

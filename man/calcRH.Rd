@@ -2,7 +2,7 @@
 % Please edit documentation in R/calcRH.R
 \name{calcRH}
 \alias{calcRH}
-\title{Calculate relative humidity from temperature (C) and absolute humidity (g/m^3)}
+\title{Calculate relative humidity from temperature and absolute humidity}
 \usage{
 calcRH(Temp, Abs)
 }

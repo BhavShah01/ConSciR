@@ -2,7 +2,7 @@
 % Please edit documentation in R/calcPI.R
 \name{calcPI}
 \alias{calcPI}
-\title{Calculate Preservation Index from temperature (C) and relative humidity (\%)}
+\title{Calculate Preservation Index}
 \source{
 Tim Padfield, 2004
 }
