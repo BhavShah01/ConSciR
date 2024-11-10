@@ -1,4 +1,4 @@
-#' Calculate mixing ratio from temperature (C) and relative humidity (\%)
+#' Calculate mixing ratio
 #'
 #' @description
 #' Function to calculate mixing ratio from temperature in Celsius and relative humidity in \% (0-100).

@@ -25,6 +25,11 @@ ConSciR is an R package specifically designed to assist conservators and scienti
 -   Cultural heritage professionals involved in preventive conservation
 -   Students and educators in conservation and heritage science programs
 
+Learn more about ConSciR here:  [**ConSciR webpage**](https://bhavshah01.github.io/ConSciR/)
+
+The ConSciR Github page: [**ConSciR Github**](https://github.com/BhavShah01/ConSciR)
+
+
 ## Installation
 
 You can install the development version of ConSciR from [GitHub](https://github.com/) with:
@@ -32,6 +37,12 @@ You can install the development version of ConSciR from [GitHub](https://github.
 ``` r
 # install.packages("pak")
 pak::pak("BhavShah01/ConSciR")
+```
+-or- 
+
+``` r
+# install.packages("devtools")
+devtools::install_github("BhavShah01/ConSciR")
 ```
 
 ## Example
@@ -46,14 +57,14 @@ library(dplyr)
 library(ggplot2)
 ```
 
--   Dataset availabe for testing
+-   Pre-loaded dataset is availabe for testing
 
 ```{r, message=FALSE, warning=FALSE}
 # My TRH data
 head(mydata)
 ```
 
--   Use the calculation functions
+-   Use functions to perform calculations, for example use the existing data to add dew point and absolute humidity. Performance metrics are also being added like lifetime multiplier, preservation index and mould calculations. 
 
 ```{r, message=FALSE, warning=FALSE}
 # Peform calculations
@@ -65,13 +76,16 @@ head(mydata) |>
     PreservationIndex = calcPI(Temp, RH))
 ```
 
--   Produce graphs
+-   Graphs 
 
 ```{r, message=FALSE, warning=FALSE}
 # Produce graphs 
 mydata |>
   graph_TRH()
-  
+```
+
+
+```{r, message=FALSE, warning=FALSE}
 mydata |>
   mutate(DewPoint = calcDP(Temp, RH)) |>
   graph_TRH() + 

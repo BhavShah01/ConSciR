@@ -12,7 +12,7 @@
 #'
 #' @return Numeric. The result depends on the chosen model:
 #'   \itemize{
-#'     \item Sedlbauer and VIR: Critical RH for mould growth
+#'     \item Sedlbauer and VIR: Critical RH for mould growth from temperature
 #'     \item DP: Days to mould growth
 #'     \item Isaksson: Daily dose (1/t(ms)) / D(rel/day)
 #'   }
@@ -25,6 +25,11 @@
 #' calcMould_models(30, 75, "DP")
 #' calcMould_models(22, 85, "Isaksson")
 #'
+#' head(mydata) |>
+#'   mutate(
+#'     RH_crit = calcMould_models(Temp, RH, "Sedlbauer"),
+#'     Days_to_mould = calcMould_models(Temp, RH, "DP")
+#'     )
 #'
 calcMould_models <- function(Temp, RH, model = c("Sedlbauer", "VIR", "DP", "Isaksson")) {
 

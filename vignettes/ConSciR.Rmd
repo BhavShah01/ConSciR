@@ -95,7 +95,8 @@ Key Points:
 -   Analysis: 
 -   Tidying data: 
 
-Examples of use: 
+
+## Examples 
 
 ```{r message=FALSE, warning=FALSE}
 # Load packages
@@ -103,6 +104,9 @@ library(ConSciR)
 library(dplyr)
 library(ggplot2)
 ```
+
+
+Add calculated values using mutate
 
 ```{r message=FALSE, warning=FALSE}
 # Add calculated values using mutate
@@ -118,19 +122,34 @@ head(mydata) |>
 
 ```
 
+
+Visualise and explore data
+
 ```{r message=FALSE, warning=FALSE}
-# Visualise and explore data
+
 mydata |>
+  # Calculate Absolute Humidity and Dew Point
   mutate(
-    AbsHum = calcAH(Temp, RH), 
+    AbsHum = calcAH(Temp, RH),
     DewPoint = calcDP(Temp, RH)
   ) |>
-  graph_TRH() + 
-  geom_line(aes(Date, AbsHum), col = "green") +
-  geom_line(aes(Date, DewPoint), col = "purple") +
-  lims(y = c(0, 100)) + 
-  labs(x = "Date", y = "", title = "Sensor", 
-       subtitle = "Temperature (red), relative humidity (blue), absolute humidity (green), dew point (purple)", caption = "ConSciR") +
+  # Create base plot using graph_TRH function
+  graph_TRH() +
+  # Add Absolute Humidity line
+  geom_line(aes(Date, AbsHum), color = "green") +
+  # Add Dew Point line
+  geom_line(aes(Date, DewPoint), color = "purple") +
+  # Set y-axis limits
+  lims(y = c(0, 100)) +
+  # Add labels and title
+  labs(
+    x = "Date",
+    y = "",
+    title = "Sensor",
+    subtitle = "Temperature (red), relative humidity (blue), absolute humidity (green), dew point (purple)",
+    caption = "ConSciR"
+  ) +
+  # Apply black and white theme
   theme_bw()
 
 ```

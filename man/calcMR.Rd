@@ -2,7 +2,7 @@
 % Please edit documentation in R/calcMR.R
 \name{calcMR}
 \alias{calcMR}
-\title{Calculate mixing ratio from temperature (C) and relative humidity (\%)}
+\title{Calculate mixing ratio}
 \usage{
 calcMR(Temp, RH, P_tot = 1013.3, B = 621.9907)
 }

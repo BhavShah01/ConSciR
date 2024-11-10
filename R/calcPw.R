@@ -1,4 +1,4 @@
-#' Calculate water vapour pressure (hPa) from temperature (C) and relative humidity (\%)
+#' Calculate water vapour pressure (hPa)
 #'
 #' @description
 #' Function to calculate water vapour pressure in hPa between 0C and 373C.

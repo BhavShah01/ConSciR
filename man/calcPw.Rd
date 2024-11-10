@@ -2,7 +2,7 @@
 % Please edit documentation in R/calcPw.R
 \name{calcPw}
 \alias{calcPw}
-\title{Calculate water vapour pressure (hPa) from temperature (C) and relative humidity (\%)}
+\title{Calculate water vapour pressure (hPa)}
 \usage{
 calcPw(Temp, RH)
 }
