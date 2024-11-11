@@ -64,16 +64,27 @@
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Relative Humidity (0-100%). At extreme high and low humidity the error increases.</p>
+    <p>Relative Humidity (0-100%). Error increases at extreme temperature and relative humidity.</p>
     </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>The relative humidity is calculated using the following equation:</p>
+<p>$$RH = \frac{1}{2165 \times \frac{P_{vs}}{(Temp + 273.15) \times Abs}}$$</p>
+<p>Where:</p><ul><li><p>\(RH\) is the relative humidity (fraction)</p></li>
+<li><p>\(P_{vs}\) is the saturation vapor pressure (Pa)</p></li>
+<li><p>\(Temp\) is the temperature (°C)</p></li>
+<li><p>\(Abs\) is the absolute humidity (g/m^3)</p></li>
+</ul></div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">calcRH</span><span class="op">(</span><span class="fl">20</span>, <span class="fl">8.645471</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Calculate RH for temperature of 20°C and absolute humidity of 8.645471 g/m^3</span></span></span>
+<span class="r-in"><span><span class="fu">calcRH</span><span class="op">(</span><span class="fl">20</span>, <span class="fl">8.645471</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 50.08653</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">calcRH</span><span class="op">(</span><span class="fl">20</span>, <span class="fu"><a href="calcAH.html">calcAH</a></span><span class="op">(</span><span class="fl">20</span>, <span class="fl">50</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 49.99999</span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
