@@ -7,8 +7,8 @@
 <!-- badges: end -->
 
 ConSciR is an R package specifically designed to assist conservators and
-scientists by providing a toolkit for performing essential calculations
-and streamlining common tasks in conservation. ConSciR is designed for:
+scientists by providing a toolkit for performing calculations and
+streamlining common tasks in conservation. ConSciR is designed for:
 
 - Conservators working in museums, galleries, and heritage sites
 - Conservation scientists and researchers
@@ -47,7 +47,7 @@ pak::pak("BhavShah01/ConSciR")
 devtools::install_github("BhavShah01/ConSciR")
 ```
 
-## Example
+## Examples
 
 This is a basic example of some commons tasks:
 
