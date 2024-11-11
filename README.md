@@ -21,6 +21,15 @@ webpage**](https://bhavshah01.github.io/ConSciR/)
 The ConSciR Github page: [**ConSciR
 Github**](https://github.com/BhavShah01/ConSciR)
 
+## Tools available
+
+- Calculations: dew point, absolute humidity, water vapour pressure,
+  mixing ratio, enthalpy
+- Graphs: TRH plots, psychometric chart
+- Summaries: percentiles
+- Analysis:
+- Tidying data:
+
 ## Installation
 
 You can install the development version of ConSciR from

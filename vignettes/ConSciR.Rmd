@@ -23,6 +23,16 @@ The ConSciR Github page: [ConSciR Github](https://github.com/BhavShah01/ConSciR)
 ConSciR is an R package specifically designed to assist conservators and scientists by providing a toolkit for performing essential calculations and streamlining common tasks in conservation. 
 
 
+## Tools available 
+
+
+-   Calculations: dew point, absolute humidity, water vapour pressure, mixing ratio, enthalpy
+-   Graphs: TRH plots, psychometric chart
+-   Summaries: percentiles 
+-   Analysis: 
+-   Tidying data: 
+
+
 ## Install and load
 
 ``` R
@@ -84,16 +94,6 @@ Key Points:
 -   Categorical Data: Site and Sensor are categorical variables and should be character strings.
 -   Tidy Structure: Each row represents a single observation, and each column represents a single variable.
 -   No Missing Columns: Include all relevant columns, even if some data points are missing (leave blank or use NA for missing values).
-
-
-## Functions available 
-
-
--   Calculations: dew point, absolute humidity, water vapour pressure, mixing ratio, enthalpy
--   Graphs: TRH plots, psychometric chart
--   Summaries: percentiles 
--   Analysis: 
--   Tidying data: 
 
 
 ## Examples 
