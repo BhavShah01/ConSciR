@@ -9,13 +9,14 @@ reference:
   contents:
     - calcAH
     - calcDP
-    - calcDewPoint
     - calcEnthalpy
     - calcFtoC
     - calcMR
     - calcPw
     - calcPws
     - calcRH
+    - calcRH_DP
+    - calcTemp
 - title: Risk functions
   desc: Functions for the analysis of data.
   contents:

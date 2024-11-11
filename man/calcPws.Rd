@@ -2,7 +2,7 @@
 % Please edit documentation in R/calcPws.R
 \name{calcPws}
 \alias{calcPws}
-\title{Calculate water vapour pressure (hPa) from temperature (C)}
+\title{Calculate water vapour pressure (hPa)}
 \usage{
 calcPws(Temp)
 }
@@ -15,11 +15,22 @@ Pws, Saturation vapor pressure (hPa). 0.083\% error for T range -20 to +50°C
 \description{
 Function to calculate water vapour saturation pressure in hPa between 0C and 373C.
 
-If using a dataframe, columns should ideally be named "Temp".
+The saturation vapor pressure (\eqn{P_{ws}}) is calculated using the following equation:
 
+\deqn{P_{ws} = A \times 10^{\left(\frac{m \times Temp}{Temp + Tn}\right)}}
+
+#' Where:
+\itemize{
+  \item \eqn{P_{ws}} is the saturation vapor pressure.
+  \item \eqn{A} is a coefficient.
+  \item \eqn{m} is a coefficient.
+  \item \eqn{Tn} is a constant.
+  \item \eqn{Temp} is the temperature in degrees Celsius.
+}
+}
+\note{
 If lower accuracy or a limited temperature range can be tolerated a simpler formula
 can be used for the water vapour saturation pressure over water (and over ice):
-Pws = A \* 10 \^ ( (m \* Temp) / (Temp + Tn) )
 }
 \examples{
 calcPws(20)

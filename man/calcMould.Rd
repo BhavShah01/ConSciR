@@ -25,4 +25,6 @@ This function calculates the probability of mould growth based on temperature an
 \examples{
 head(mydata) |> calcMould(Temp = "Temp", RH = "RH")
 
+
+
 }

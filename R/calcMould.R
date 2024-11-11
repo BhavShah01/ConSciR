@@ -11,6 +11,8 @@
 #'   \item{mould_prob}{Probability of mould growth for each time step}
 #'   \item{mould}{Cumulative mould growth probability}
 #'
+#'
+#' @import ggplot2
 #' @importFrom dplyr left_join mutate lag
 #' @importFrom runner runner
 #'
@@ -19,10 +21,12 @@
 #' @examples
 #' head(mydata) |> calcMould(Temp = "Temp", RH = "RH")
 #'
+#'
+#'
 calcMould <- function(mydata, Temp, RH) {
   # Check if runner package is available
   if (!requireNamespace("runner", quietly = TRUE)) {
-    stop("Package \"runner\" needed for this function to work. Please install it.",
+    stop("Package \"runner\" needed for this function to work.",
          call. = FALSE)
   }
 

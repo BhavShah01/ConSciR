@@ -3,6 +3,9 @@
 \name{calcDP}
 \alias{calcDP}
 \title{Calculate dew point}
+\source{
+https://bmcnoldy.earth.miami.edu/Humidity.html
+}
 \usage{
 calcDP(Temp, RH)
 }
@@ -12,17 +15,36 @@ calcDP(Temp, RH)
 \item{RH}{Relative Humidity (0-100\%)}
 }
 \value{
-Dew Point (Celsius)
+Td, Dew Point (Celsius)
 }
 \description{
 Function to calculate dew point in Celsius from temperature in Celsius and relative humidity in \% (0-100).
+}
+\details{
+Calculation is based on the August-Roche-Magnus approximation, valid for:
 
-If using a dataframe, columns should ideally be named "Temp" and "RH".
+\itemize{
+   \item 0C < T < 60C
+   \item 1% < RH < 100%
+   \item 0C < Td < 50C
+}
 
-Calculations based on NOAA.
+Where:
+\itemize{
+  \item \eqn{T_d} is the dew point temperature in degrees Celsius.
+  \item \eqn{T} is the air temperature in degrees Celsius.
+  \item \eqn{RH} is the relative humidity in percent 0-100.
+}
+
+\deqn{T_d = \frac{243.04 \times (\log(\frac{RH}{100}) + \frac{17.625 \times T}{243.04 + T})}{17.625 - \log(\frac{RH}{100}) - \frac{17.625 \times T}{243.04 + T}}}
+}
+\note{
+The Arden Buck equation is also available in the source R code. Similar results are obtained over -50-100C.
 }
 \examples{
 calcDP(20, 50)
+
+calcDP(20, calcRH(20, calcAH(20, 50)))
 
 head(mydata) |> dplyr::mutate(DewPoint = calcDP(Temp, RH))
 
