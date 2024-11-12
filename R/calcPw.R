@@ -20,6 +20,7 @@
 #' @examples
 #' calcPw(20, 50)
 #'
+#' 100 * calcPw
 #'
 calcPw <- function(Temp, RH) {
   Pw = calcPws(Temp) * RH / 100

@@ -20,6 +20,7 @@ Function to calculate water vapour pressure in hPa between 0C and 373C.
 \examples{
 calcPw(20, 50)
 
+100 * calcPw
 
 }
 \references{

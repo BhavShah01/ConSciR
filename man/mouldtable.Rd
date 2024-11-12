@@ -7,8 +7,8 @@
 \format{
 A data frame with 1154 rows and 3 columns
 \describe{
-  \item{Temp}{Temperature C}
-  \item{RH}{Relative humidity}
+  \item{TempMould}{Temperature C}
+  \item{RHMould}{Relative humidity}
   \item{days_mould}{Days to start of mould growth}
   ...
 }

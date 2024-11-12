@@ -20,7 +20,9 @@ Function to calculate relative humidity (\%) from temperature (C) and absolute h
 \details{
 The relative humidity is calculated using the following equation:
 
-\deqn{RH = \frac{1}{2165 \times \frac{P_{vs}}{(Temp + 273.15) \times Abs}}}
+\deqn{RH=\frac{1}{2165\times\frac{P_{vs}}{(Temp + 273.15)\timesAbs}}}
+
+\deqn{RH=\frac{1}{2165}}
 
 Where:
 \itemize{
