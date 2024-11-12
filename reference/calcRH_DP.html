@@ -73,7 +73,7 @@
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The relative humidity is calculated using the following equation:</p>
-<p>$$RH = 100 \times \frac{\exp(\frac{17.625 \times DewP}{243.04 + DewP})}{\exp(\frac{17.625 \times Temp}{243.04 + Temp})}$$</p>
+<p>\(RH = 100 \times \frac{\exp(\frac{17.625 \times DewP}{243.04 + DewP})}{\exp(\frac{17.625 \times Temp}{243.04 + Temp})}\)</p>
 <p>Where:</p><ul><li><p>\(RH\) is the relative humidity in percent</p></li>
 <li><p>\(Temp\) is the air temperature in °C</p></li>
 <li><p>\(DewP\) is the dew point temperature in °C</p></li>
@@ -85,8 +85,8 @@
 <span class="r-in"><span><span class="fu">calcRH_DP</span><span class="op">(</span><span class="fl">20</span>, <span class="fl">15</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 72.93877</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">calcRH_DP</span><span class="op">(</span><span class="fl">20</span>, <span class="fu">calcDew</span><span class="op">(</span><span class="fl">20</span>, <span class="fl">50</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in calcDew(20, 50):</span> could not find function "calcDew"</span>
+<span class="r-in"><span><span class="fu">calcRH_DP</span><span class="op">(</span><span class="fl">20</span>, <span class="fu"><a href="calcDP.html">calcDP</a></span><span class="op">(</span><span class="fl">20</span>, <span class="fl">50</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 50</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

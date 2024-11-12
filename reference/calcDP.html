@@ -76,10 +76,11 @@
 <ul><li><p>0C &lt; T &lt; 60C</p></li>
 <li><p>1<!-- % &lt; RH &lt; 100% --></p></li>
 <li><p>0C &lt; Td &lt; 50C</p></li>
-</ul><p>Where:</p><ul><li><p>\(T_d\) is the dew point temperature in degrees Celsius.</p></li>
-<li><p>\(T\) is the air temperature in degrees Celsius.</p></li>
-<li><p>\(RH\) is the relative humidity in percent 0-100.</p></li>
-</ul><p>$$T_d = \frac{243.04 \times (\log(\frac{RH}{100}) + \frac{17.625 \times T}{243.04 + T})}{17.625 - \log(\frac{RH}{100}) - \frac{17.625 \times T}{243.04 + T}}$$</p>
+</ul><p>Where:</p>
+<ul><li><p>T_d is the dew point temperature in degrees Celsius.</p></li>
+<li><p>Temp is the air temperature in degrees Celsius.</p></li>
+<li><p>RH is the relative humidity in percent 0-100.</p></li>
+</ul><p>\(T_d = \frac{243.04 \times \left(\log\left(\frac{RH}{100}\right) + \frac{17.625 \times Temp}{243.04 + Temp}\right)}{17.625 - \log\left(\frac{RH}{100}\right) - \frac{17.625 \times Temp}{243.04 + Temp}}\)</p>
     </div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
