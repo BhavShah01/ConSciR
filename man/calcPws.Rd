@@ -2,7 +2,7 @@
 % Please edit documentation in R/calcPws.R
 \name{calcPws}
 \alias{calcPws}
-\title{Calculate water vapour pressure (hPa)}
+\title{Calculate water vapour saturation pressure (hPa)}
 \usage{
 calcPws(Temp)
 }

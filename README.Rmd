@@ -95,6 +95,7 @@ mydata |>
   graph_TRH()
 ```
 
+-   Combine analysis with graphs
 
 ```{r, message=FALSE, warning=FALSE}
 mydata |>

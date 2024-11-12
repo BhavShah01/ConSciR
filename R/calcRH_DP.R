@@ -6,7 +6,7 @@
 #' @details
 #' The relative humidity is calculated using the following equation:
 #'
-#' \deqn{RH = 100 \times \frac{\exp(\frac{17.625 \times DewP}{243.04 + DewP})}{\exp(\frac{17.625 \times Temp}{243.04 + Temp})}}
+#' \eqn{RH = 100 \times \frac{\exp(\frac{17.625 \times DewP}{243.04 + DewP})}{\exp(\frac{17.625 \times Temp}{243.04 + Temp})}}
 #'
 #' Where:
 #' \itemize{
@@ -27,7 +27,7 @@
 #' # RH at air tempertaure of 20C and dew point of 15C
 #' calcRH_DP(20, 15)
 #'
-#' calcRH_DP(20, calcDew(20, 50))
+#' calcRH_DP(20, calcDP(20, 50))
 #'
 #'
 calcRH_DP <- function(Temp, DewP) {

@@ -16,8 +16,6 @@ Pw, Water Vapour Pressure (hPa)
 }
 \description{
 Function to calculate water vapour pressure in hPa between 0C and 373C.
-
-If using a dataframe, columns should ideally be named "Temp" and "RH".
 }
 \examples{
 calcPw(20, 50)

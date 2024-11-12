@@ -123,7 +123,7 @@ head(mydata) |>
 ```
 
 
-Visualise and explore data
+Perform calculations to visualise and explore data
 
 ```{r message=FALSE, warning=FALSE}
 
@@ -151,5 +151,11 @@ mydata |>
   ) +
   # Apply black and white theme
   theme_bw()
+
+```
+
+
+```{r message=FALSE, warning=FALSE}
+
 
 ```

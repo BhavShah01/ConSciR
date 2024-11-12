@@ -1,4 +1,4 @@
-#' Calculate water vapour pressure (hPa)
+#' Calculate water vapour saturation pressure (hPa)
 #'
 #' @description
 #' Function to calculate water vapour saturation pressure in hPa between 0C and 373C.

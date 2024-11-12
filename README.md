@@ -91,12 +91,12 @@ head(mydata) |>
 #> # A tibble: 6 × 9
 #>   Site   Sensor Date                 Temp    RH DewPoint AbsHum LifeTime
 #>   <chr>  <chr>  <dttm>              <dbl> <dbl>    <dbl>  <dbl>    <dbl>
-#> 1 London Room 1 2024-01-01 00:00:00  21.8  36.8     6.41   7.05     1.85
-#> 2 London Room 1 2024-01-01 00:15:00  21.8  36.7     6.37   7.03     1.85
-#> 3 London Room 1 2024-01-01 00:29:59  21.8  36.6     6.33   7.01     1.85
-#> 4 London Room 1 2024-01-01 00:44:59  21.7  36.6     6.24   6.97     1.85
-#> 5 London Room 1 2024-01-01 00:59:59  21.7  36.5     6.20   6.95     1.86
-#> 6 London Room 1 2024-01-01 01:14:59  21.7  36.2     6.08   6.90     1.86
+#> 1 London Room 1 2024-01-01 00:00:00  21.8  36.8     6.38   7.05     1.85
+#> 2 London Room 1 2024-01-01 00:15:00  21.8  36.7     6.34   7.03     1.85
+#> 3 London Room 1 2024-01-01 00:29:59  21.8  36.6     6.30   7.01     1.85
+#> 4 London Room 1 2024-01-01 00:44:59  21.7  36.6     6.22   6.97     1.85
+#> 5 London Room 1 2024-01-01 00:59:59  21.7  36.5     6.18   6.95     1.86
+#> 6 London Room 1 2024-01-01 01:14:59  21.7  36.2     6.06   6.90     1.86
 #> # ℹ 1 more variable: PreservationIndex <dbl>
 ```
 
@@ -109,6 +109,8 @@ mydata |>
 ```
 
 <img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+
+- Combine analysis with graphs
 
 ``` r
 mydata |>
