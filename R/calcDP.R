@@ -1,29 +1,33 @@
 #' Calculate dew point
 #'
 #' @description
-#' Function to calculate dew point in Celsius from temperature in Celsius and relative humidity in \% (0-100).
+#' Function to calculate dew point (°C) from temperature (°C) and relative humidity (\%).
 #'
 #'
 #' @details
-#' Calculation is based on the August-Roche-Magnus approximation, valid for:
+#' The dew point is calculated using the following equation derived from the August-Roche-Magnus approximation:
 #'
-#' \itemize{
-#'    \item 0C < T < 60C
-#'    \item 1% < RH < 100%
-#'    \item 0C < Td < 50C
-#' }
+#' \deqn{T_d\left(DewP\right)=\frac{234.04\times\log\left(\frac{RH}{100}\right)+\frac{17.625\times Temp}{243.04+Temp}}{17.625-\log\left(\frac{RH}{100}\right)-\frac{17.625\times Temp}{243.04+Temp}}}
+#'
 #'
 #' Where:
 #'
 #' \itemize{
 #'   \item T_d is the dew point temperature in degrees Celsius.
 #'   \item Temp is the air temperature in degrees Celsius.
-#'   \item RH is the relative humidity in percent 0-100.
+#'   \item RH is the relative humidity in percent.
 #' }
 #'
-#' \eqn{T_d = \frac{243.04 \times \left(\log\left(\frac{RH}{100}\right) + \frac{17.625 \times Temp}{243.04 + Temp}\right)}{17.625 - \log\left(\frac{RH}{100}\right) - \frac{17.625 \times Temp}{243.04 + Temp}}}
+#' Calculation is valid for:
 #'
-#' @note The Arden Buck equation is also available in the source R code. Similar results are obtained over -50-100C.
+#' \itemize{
+#'    \item 0°C < T < 60°C
+#'    \item 1\% < RH < 100\%
+#'    \item 0°C < Td < 50°C
+#' }
+#'
+#'
+#' @note The Arden Buck equation is also available in the source R code.
 #'
 #' @source https://bmcnoldy.earth.miami.edu/Humidity.html
 #'
@@ -41,6 +45,7 @@
 #' calcDP(20, calcRH(20, calcAH(20, 50)))
 #'
 #' head(mydata) |> dplyr::mutate(DewPoint = calcDP(Temp, RH))
+#'
 #'
 calcDP <- function(Temp, RH) {
 

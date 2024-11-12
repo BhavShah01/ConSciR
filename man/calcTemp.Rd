@@ -15,24 +15,28 @@ calcTemp(RH, DewP)
 Temp, Temperature (Celsius)
 }
 \description{
-This function calculates the temperature (Celsius) from relative humidity (\%) and dew point temperature (C).
+This function calculates the temperature (°C) from relative humidity (\%) and dew point temperature (°C).
 }
 \details{
 The temperature is calculated using the following equation derived from the August-Roche-Magnus approximation:
 
-\deqn{Temp = \frac{243.04 \times (\frac{17.625 \times DewP}{243.04 + DewP} - \log(\frac{RH}{100}))}{17.625 + \log(\frac{RH}{100}) - \frac{17.625 \times DewP}{243.04 + DewP}}}
+\deqn{TempC=\frac{243.04\times\left(\frac{17.625\times DewP}{243.04+DewP}-\log\left(\frac{RH}{100}\right)\right)}{17.625+\log\left(\frac{RH}{100}\right)-\frac{17.625\times DewP}{243.04+DewP}}}
 
 Where:
+
 \itemize{
-  \item \eqn{Temp} is the calculated temperature in Celsius
-  \item \eqn{RH} is the relative humidity in percent
-  \item \eqn{DewP} is the dew point temperature in Celsius
+  \item Temp is the calculated temperature in Celsius
+  \item RH is the relative humidity in percent
+  \item DewP is the dew point temperature in Celsius
 }
 }
 \examples{
-# Calculate temperature for RH of 50\% and dew point of 15C
+# Calculate temperature for RH of 50\% and dew point of 15°C
 calcTemp(50, 15)
 
-calcTemp(50, calcDP(20, 50) )
+calcTemp(50, calcDP(20, 50))
+
+head(mydata) |> dplyr::mutate(DewPoint = calcDP(Temp, RH), Temp2 = calcTemp(RH, DewPoint))
+
 
 }

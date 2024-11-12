@@ -15,12 +15,29 @@ calcPw(Temp, RH)
 Pw, Water Vapour Pressure (hPa)
 }
 \description{
-Function to calculate water vapour pressure in hPa between 0C and 373C.
+Function to calculate water vapour pressure in hPa from temperature (°C) and relative humidity (\%).
+}
+\details{
+The water vapor pressure (P_w) is calculated using the following equation:
+
+\deqn{P_w=\frac{P_{ws}\left(Temp\right)\times RH}{100}}
+
+Where:
+
+\itemize{
+   \item $P_{ws}$ is the saturation vapor pressure.
+   \item $RH$ is the relative humidity in percent.
+   \item $Temp$ is the temperature in degrees Celsius.
+}
 }
 \examples{
 calcPw(20, 50)
 
-100 * calcPw
+#' #' # Calculate relative humidity at 50\%RH
+calcPw(20, 50) / calcPws(20) * 100
+
+head(mydata) |> dplyr::mutate(Pw = calcPws(Temp, RH))
+
 
 }
 \references{

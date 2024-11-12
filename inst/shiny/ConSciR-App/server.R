@@ -6,29 +6,29 @@ library(dplyr)
 
 server <- function(input, output) {
 
-  output$var_select <- renderUI({
+  output$sel_var <- renderUI({
     varSelectInput(
-      "var", "Select variable",
+      "sel_var", "Select variable",
       dplyr::select_if(mydata, is.numeric)
     )
   })
   output$bins_select <- renderUI({
-    numericInput("bins", "Number of bins", 30)
+    numericInput("bins_select", "Number of bins", 30)
   })
 
-  output$p <- renderPlot({
-    ggplot(mydata) +
-      geom_histogram(aes(!!input$var), bins = input$bins) +
+  output$gg_histogram <- renderPlot({
+    mydata |>
+      ggplot() +
+      geom_histogram(aes(!!input$sel_var), bins = input$bins_select) +
       theme_bw(base_size = 20)
   })
 
-  output$TRHtable <- renderTable({
+  output$gg_mould <- renderPlot({
     mydata |>
-      summarise(
-        Min = min(!!input$var, na.rm = TRUE),
-        Mean = mean(!!input$var, na.rm = TRUE),
-        Max = max(!!input$var, na.rm = TRUE)
-      )
+      calcMould(Temp = "Temp", RH = "RH") |>
+      graph_TRH() +
+      geom_area(aes(Date, mould_prob * 1000), col = "darkgreen") +
+      theme_minimal()
   })
 
 }

@@ -2,18 +2,18 @@ library(shiny)
 library(bslib)
 
 ui <- page_sidebar(
-  title = "A dashboard",
+  title = "ConSciR example",
   sidebar = sidebar(
-    title = "Histogram controls",
-    uiOutput("var_select"),
+    title = "Select",
+    uiOutput("sel_var"),
     uiOutput("bins_select")
   ),
   card(
     card_header("Histogram"),
-    plotOutput("p")
+    plotOutput("gg_histogram")
   ),
   card(
-    card_header("Table"),
-    tableOutput("table")
+    card_header("Mould"),
+    plotOutput("gg_mould")
   )
 )

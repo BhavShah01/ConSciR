@@ -10,26 +10,27 @@ https://bmcnoldy.earth.miami.edu/Humidity.html
 calcRH_DP(Temp, DewP)
 }
 \arguments{
-\item{Temp}{Temperature (Celsius)}
+\item{Temp}{Temperature (°Celsius)}
 
-\item{DewP}{Td, Dew Point (Celsius)}
+\item{DewP}{Td, Dew Point (°Celsius)}
 }
 \value{
 Relative Humidity (0-100\%)
 }
 \description{
-Function to calculate relative humidity (\%) from air temperature (C) and dew point (C)
+Function to calculate relative humidity (\%) from temperature (°C) and dew point (°C)
 }
 \details{
-The relative humidity is calculated using the following equation:
+The relative humidity is calculated using the following equation derived from the August-Roche-Magnus approximation:
 
-\eqn{RH = 100 \times \frac{\exp(\frac{17.625 \times DewP}{243.04 + DewP})}{\exp(\frac{17.625 \times Temp}{243.04 + Temp})}}
+\deqn{RH=100\times\frac{\exp\left(\frac{\left(17.625\times DewP\right)}{\left(243.04+DewP\right)}\right)}{\exp\left(\frac{\left(17.625\times Temp\right)}{\left(243.04+Temp\right)}\right)}}
 
 Where:
+
 \itemize{
-  \item \eqn{RH} is the relative humidity in percent
-  \item \eqn{Temp} is the air temperature in °C
-  \item \eqn{DewP} is the dew point temperature in °C
+  \item RH is the relative humidity in percent
+  \item Temp is the air temperature in °C
+  \item DewP is the dew point temperature in °C
 }
 }
 \examples{
@@ -37,6 +38,8 @@ Where:
 calcRH_DP(20, 15)
 
 calcRH_DP(20, calcDP(20, 50))
+
+head(mydata) |> dplyr::mutate(DewPoint = calcDP(Temp, RH), RH2 = calcRH_DP(Temp, DewPoint))
 
 
 }
