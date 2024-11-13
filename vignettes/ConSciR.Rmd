@@ -62,7 +62,7 @@ The following formats are recommended:
 
 ##### Temperature and Relative Humidity Data
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r dataframe tidy THR data, echo=FALSE, message=FALSE, warning=FALSE}
 data.frame(
   Site = c("London", "London", "York", "York"),
   Sensor = c("Gallery", "Gallery", "Room", "Room"),
@@ -75,7 +75,7 @@ data.frame(
 
 ##### Light and UV Data
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r dataframe tidy data light, echo=FALSE, message=FALSE, warning=FALSE}
 data.frame(
   Site = c("Museum", "Museum", "Case", "Case"),
   Sensor = c("Store", "Store", "Shelf", "Shelf"),
@@ -98,7 +98,7 @@ Key Points:
 
 ## Examples 
 
-```{r message=FALSE, warning=FALSE}
+```{r load the packages, message=FALSE, warning=FALSE}
 # Load packages
 library(ConSciR)
 library(dplyr)
@@ -108,7 +108,7 @@ library(ggplot2)
 
 Add calculated values using mutate
 
-```{r message=FALSE, warning=FALSE}
+```{r table of calculated values, message=FALSE, warning=FALSE}
 # Add calculated values using mutate
 head(mydata) |>
   mutate(
@@ -125,7 +125,7 @@ head(mydata) |>
 
 Perform calculations to visualise and explore data
 
-```{r message=FALSE, warning=FALSE}
+```{r calculations to visualise the data, message=FALSE, warning=FALSE}
 
 mydata |>
   # Calculate Absolute Humidity and Dew Point
@@ -154,8 +154,3 @@ mydata |>
 
 ```
 
-
-```{r message=FALSE, warning=FALSE}
-
-
-```

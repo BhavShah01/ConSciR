@@ -110,7 +110,7 @@ mydata |>
   theme_minimal()
 ```
 
-<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+<img src="man/figures/README-graph the TRH data after adding dew point-1.png" width="100%" />
 
 - Use analysis functions, for example estimate mould growth
 
@@ -123,4 +123,4 @@ mydata |>
   theme_minimal()
 ```
 
-<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+<img src="man/figures/README-use the mould risk function-1.png" width="100%" />

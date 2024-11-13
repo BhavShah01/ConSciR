@@ -14,6 +14,7 @@ Data science toolbox for conservation science. Tools to help conservators, scien
 Useful links:
 \itemize{
   \item \url{https://bhavshah01.github.io/ConSciR/}
+  \item Report bugs at \url{https://github.com/BhavShah01/ConSciR/issues}
 }
 
 }

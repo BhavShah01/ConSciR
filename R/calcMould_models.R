@@ -25,11 +25,13 @@
 #' calcMould_models(30, 75, "DP")
 #' calcMould_models(22, 85, "Isaksson")
 #'
+#' \dontrun{
 #' head(mydata) |>
 #'   mutate(
 #'     RH_crit = calcMould_models(Temp, RH, "Sedlbauer"),
 #'     Days_to_mould = calcMould_models(Temp, RH, "DP")
 #'     )
+#'  }
 #'
 calcMould_models <- function(Temp, RH, model = c("Sedlbauer", "VIR", "DP", "Isaksson")) {
 

@@ -62,7 +62,7 @@ This is a basic example of some commons tasks:
 
 -   Load packages
 
-```{r, message=FALSE, warning=FALSE}
+```{r load the relevant packages, message=FALSE, warning=FALSE}
 library(ConSciR)
 library(dplyr)
 library(ggplot2)
@@ -70,14 +70,14 @@ library(ggplot2)
 
 -   Pre-loaded dataset is availabe for testing
 
-```{r, message=FALSE, warning=FALSE}
+```{r look at the loaded dataset, message=FALSE, warning=FALSE}
 # My TRH data
 head(mydata)
 ```
 
 -   Use functions to perform calculations, for example use the existing data to add dew point and absolute humidity. Performance metrics are also being added like lifetime multiplier, preservation index and mould calculations. 
 
-```{r, message=FALSE, warning=FALSE}
+```{r perform calculations on the dataset, message=FALSE, warning=FALSE}
 # Peform calculations
 head(mydata) |>
   mutate(
@@ -90,7 +90,7 @@ head(mydata) |>
 
 -   Combine analysis with graphs
 
-```{r, message=FALSE, warning=FALSE}
+```{r graph the TRH data after adding dew point, message=FALSE, warning=FALSE}
 mydata |>
   mutate(DewPoint = calcDP(Temp, RH)) |>
   graph_TRH() + 
@@ -100,7 +100,7 @@ mydata |>
 
 -   Use analysis functions, for example estimate mould growth
 
-```{r, message=FALSE, warning=FALSE}
+```{r use the mould risk function, message=FALSE, warning=FALSE}
 mydata |>
   calcMould(Temp = "Temp", RH = "RH") |>
   ggplot() +
