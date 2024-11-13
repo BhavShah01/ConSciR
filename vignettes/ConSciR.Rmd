@@ -149,8 +149,8 @@ mydata |>
     subtitle = "Temperature (red), relative humidity (blue), absolute humidity (green), dew point (purple)",
     caption = "ConSciR"
   ) +
-  # Apply black and white theme
-  theme_bw()
+  # Apply a theme
+  theme_minimal()
 
 ```
 

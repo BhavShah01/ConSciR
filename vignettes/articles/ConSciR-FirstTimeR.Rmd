@@ -17,7 +17,7 @@ To get started with R, you need to install both R and RStudio, which is a user-f
 - R: [https://cloud.r-project.org/](https://cloud.r-project.org/)
 - RStudio: [https://posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/)
 
-Useful starting point from RStudio Education: [Finding Your Way To R]("https://education.rstudio.com/learn/")
+Useful starting point from RStudio Education: [Finding Your Way To R](https://education.rstudio.com/learn/)
 
 
 ## Loading a Package and Basic Introduction to RStudio
@@ -41,7 +41,8 @@ To load a package in R for the first time, follow these two steps:
    After installation, load the package into your R session using the `library()` function:
 
    ```{r, eval=FALSE}
-   library(ggplot2)
+   library(tidyverse)
+   library(runner)
    ```
 
 ### Basic RStudio Features

@@ -81,18 +81,11 @@ head(mydata)
 # Peform calculations
 head(mydata) |>
   mutate(
-    DewPoint = calcDP(Temp, RH), 
-    AbsHum = calcAH(Temp, RH), 
+    DewP = calcDP(Temp, RH), 
+    Abs = calcAH(Temp, RH), 
     LifeTime = calcLM(Temp, RH, EA = 100), 
-    PreservationIndex = calcPI(Temp, RH))
-```
-
--   Graphs 
-
-```{r, message=FALSE, warning=FALSE}
-# Produce graphs 
-mydata |>
-  graph_TRH()
+    PI = calcPI(Temp, RH)
+    )
 ```
 
 -   Combine analysis with graphs
@@ -102,6 +95,17 @@ mydata |>
   mutate(DewPoint = calcDP(Temp, RH)) |>
   graph_TRH() + 
   geom_line(aes(Date, DewPoint), col = "purple", size = 1) + 
-  theme_bw()
+  theme_minimal()
+```
+
+-   Use analysis functions, for example estimate mould growth
+
+```{r, message=FALSE, warning=FALSE}
+mydata |>
+  calcMould(Temp = "Temp", RH = "RH") |>
+  ggplot() +
+  geom_area(aes(Date, mould), fill = "darkgreen", size = 1) +
+  labs(title = "Probabilty of mould", x = "", y = "Mould risk") + 
+  theme_minimal()
 ```
 
