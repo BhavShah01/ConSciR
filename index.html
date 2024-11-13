@@ -138,37 +138,40 @@
 <code class="sourceCode R"><span><span class="co"># Peform calculations</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mydata</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
-<span>    DewPoint <span class="op">=</span> <span class="fu"><a href="reference/calcDP.html">calcDP</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>, </span>
-<span>    AbsHum <span class="op">=</span> <span class="fu"><a href="reference/calcAH.html">calcAH</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>, </span>
+<span>    DewP <span class="op">=</span> <span class="fu"><a href="reference/calcDP.html">calcDP</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>, </span>
+<span>    Abs <span class="op">=</span> <span class="fu"><a href="reference/calcAH.html">calcAH</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>, </span>
 <span>    LifeTime <span class="op">=</span> <span class="fu"><a href="reference/calcLM.html">calcLM</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span>, EA <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>, </span>
-<span>    PreservationIndex <span class="op">=</span> <span class="fu"><a href="reference/calcPI.html">calcPI</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span><span class="op">)</span></span>
+<span>    PI <span class="op">=</span> <span class="fu"><a href="reference/calcPI.html">calcPI</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 6 × 9</span></span>
-<span><span class="co">#&gt;   Site   Sensor Date                 Temp    RH DewPoint AbsHum LifeTime</span></span>
-<span><span class="co">#&gt;   &lt;chr&gt;  &lt;chr&gt;  &lt;dttm&gt;              &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 London Room 1 2024-01-01 00:00:00  21.8  36.8     6.38   7.05     1.85</span></span>
-<span><span class="co">#&gt; 2 London Room 1 2024-01-01 00:15:00  21.8  36.7     6.34   7.03     1.85</span></span>
-<span><span class="co">#&gt; 3 London Room 1 2024-01-01 00:29:59  21.8  36.6     6.30   7.01     1.85</span></span>
-<span><span class="co">#&gt; 4 London Room 1 2024-01-01 00:44:59  21.7  36.6     6.22   6.97     1.85</span></span>
-<span><span class="co">#&gt; 5 London Room 1 2024-01-01 00:59:59  21.7  36.5     6.18   6.95     1.86</span></span>
-<span><span class="co">#&gt; 6 London Room 1 2024-01-01 01:14:59  21.7  36.2     6.06   6.90     1.86</span></span>
-<span><span class="co">#&gt; # ℹ 1 more variable: PreservationIndex &lt;dbl&gt;</span></span></code></pre></div>
-<ul>
-<li>Graphs</li>
-</ul>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Produce graphs </span></span>
-<span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="reference/graph_TRH.html">graph_TRH</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-5-1.png" width="100%"></p>
+<span><span class="co">#&gt;   Site   Sensor Date                 Temp    RH  DewP   Abs LifeTime    PI</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;  &lt;chr&gt;  &lt;dttm&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 London Room 1 2024-01-01 00:00:00  21.8  36.8  6.38  7.05     1.85  45.3</span></span>
+<span><span class="co">#&gt; 2 London Room 1 2024-01-01 00:15:00  21.8  36.7  6.34  7.03     1.85  45.4</span></span>
+<span><span class="co">#&gt; 3 London Room 1 2024-01-01 00:29:59  21.8  36.6  6.30  7.01     1.85  45.5</span></span>
+<span><span class="co">#&gt; 4 London Room 1 2024-01-01 00:44:59  21.7  36.6  6.22  6.97     1.85  46.1</span></span>
+<span><span class="co">#&gt; 5 London Room 1 2024-01-01 00:59:59  21.7  36.5  6.18  6.95     1.86  46.2</span></span>
+<span><span class="co">#&gt; 6 London Room 1 2024-01-01 01:14:59  21.7  36.2  6.06  6.90     1.86  46.6</span></span></code></pre></div>
 <ul>
 <li>Combine analysis with graphs</li>
 </ul>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>DewPoint <span class="op">=</span> <span class="fu"><a href="reference/calcDP.html">calcDP</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="reference/graph_TRH.html">graph_TRH</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">DewPoint</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"purple"</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-5-1.png" width="100%"></p>
+<ul>
+<li>Use analysis functions, for example estimate mould growth</li>
+</ul>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/calcMould.html">calcMould</a></span><span class="op">(</span>Temp <span class="op">=</span> <span class="st">"Temp"</span>, RH <span class="op">=</span> <span class="st">"RH"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html" class="external-link">geom_area</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">mould</span><span class="op">)</span>, fill <span class="op">=</span> <span class="st">"darkgreen"</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Probabilty of mould"</span>, x <span class="op">=</span> <span class="st">""</span>, y <span class="op">=</span> <span class="st">"Mould risk"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-6-1.png" width="100%"></p>
 </div>
 </div>
