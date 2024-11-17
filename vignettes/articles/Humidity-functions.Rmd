@@ -1,5 +1,8 @@
 ---
 title: "Humidity functions"
+editor_options: 
+  markdown: 
+    wrap: sentence
 ---
 
 ```{r, include = FALSE}
@@ -17,15 +20,21 @@ library(dplyr)
 library(ggplot2)
 ```
 
+This study examines and summarises the relationships between humidity functions, which are important for calculations used by engineers and scientists, for example to understand air conditioning systems.
+These functions may play a key role in developing more energy-efficient systems.
+Understanding the stability of these functions is shown, as they underpin many methodologies in this field.
 
-The relationship between the humidity functions is studied and summarised. A grid of temperature and relative humidity values, ranging from -50°C to 100°C and 0% to 100% RH respectively, was used to test the functions. Contour plots were utilized to visualize the interactions between derived variables across this temperature-humidity grid. The analysis includes validation checks for temperature and relative humidity calculations, to identify potential discrepancies. 
+A grid of temperature and relative humidity values, ranging from -50°C to 100°C and 0% to 100% RH respectively, was used to test the functions.
+Contour plots were utilised to visualise the interactions between derived variables across the temperature-humidity grid.
+The analysis includes validation checks for temperature and relative humidity calculations, to identify potential errors.
 
-The humidity functions assume atmospheric pressure. 
+The humidity functions assume atmospheric pressure.
 
+### TRHgrid: Dataset used to visualise the functions
 
-### TRHgrid: Dataset used to visualise the functions 
-
-A grid of temperature and relative humidity values is used to analysis the relationship between derived variables. A grid of temperature and humidity between -50 to 100°C and 0 to 100%RH with 0.25°C and 1%RH spacing. The expand.grid() function creates a complete factorial combination of all temperature and relative humidity values, where each unique temperature-humidity pair is represented..
+A grid of temperature and relative humidity values is used to analysis the relationship between derived variables.
+A grid of temperature and humidity between -50 to 100°C and 0 to 100%RH with 0.25°C and 1%RH spacing.
+The expand.grid() function creates a complete factorial combination of all temperature and relative humidity values, where each unique temperature-humidity pair is represented..
 
 ```{r}
 
@@ -44,27 +53,144 @@ tail(TRHgrid, 3)
 
 ```
 
-Example of use of the functions
+### Examples of use of the functions
+
+Starting with input data of temperature and relative humidity, a wide range of derived variables can be computed.
+These include absolute humidity, dew point temperature, mixing ratio, enthalpy, water vapor saturation pressure, and actual water vapor pressure.
 
 ```{r}
-TRHgrid |> 
+# Functions applied on the mydata dataset
+mydata |> 
   mutate(
     Abs = calcAH(Temp, RH), 
     DewPoint = calcDP(Temp, RH), 
-    Temp_calc = calcTemp(RH, DewPoint),
-    RH_AH_calc = calcRH(Temp, Abs),
-    RH_DP_calc = calcRH_DP(Temp, DewPoint),
     MR = calcMR(Temp, RH), 
     Enthalpy = calcEnthalpy(Temp, RH), 
     Pws = calcPws(Temp), 
-    Pw = calcPw(Temp, RH),
-    LM = calcLM(Temp, RH))
+    Pw = calcPw(Temp, RH), 
+    Temp_calc = calcTemp(RH, DewPoint),
+    RH_AH_calc = calcRH(Temp, Abs),
+    RH_DP_calc = calcRH_DP(Temp, DewPoint)
+    ) |>
+  head() |>
+  glimpse()
+
 ```
 
+Using the relationship between temperature, absolute humidity and dew point can be used to adjust the relative humidity.
+The functions can be used in combination to determine the adjustments needed to reach a target relative humidity.
+This approach assumes constant pressure, which is typical for most indoor situations.
 
-### Temperature
+Adjustment Methods:
 
-The temperature calculations are explored to determine the accuracy of temperature derivation using dew point and relative humidity. Visualisation of the temperature calculation against the original temperature and relative humidity. The temperature calculation is presented as a filled contour plot of the calculated temperature using calcTemp through dew point which is calculated using calcDP. 
+-   a) Changing Absolute Humidity:
+    -   Increasing absolute humidity at a constant temperature will increase RH.
+    -   Decreasing absolute humidity at a constant temperature will decrease RH.
+-   b) Changing Temperature:
+    -   Decreasing temperature at constant absolute humidity will increase RH.
+    -   Increasing temperature at constant absolute humidity will decrease RH.
+-   c) Using Dew Point:
+    -   The difference between air temperature and dew point indicates how close the air is to saturation.
+    -   Adjusting temperature closer to the dew point increases RH, while moving it away decreases RH.
+
+```{r}
+
+# Changing Absolute Humidity 
+mydata |> 
+  mutate(
+    # Absolute humidity, AH
+    AH = calcAH(Temp, RH), 
+    # Dew point, DP
+		DP = calcDP(Temp, RH), 
+		# Target RH
+		tRH = 50, 			
+		# AH*: AHstar new absolute humidity for target relative humidity, using tRH
+		AHstar = calcAH(Temp, tRH), 	
+		# Difference in measured AH and AH* 
+		dAH = AHstar - AH, 
+		# Check
+		AHcheck = AHstar - (AH + dAH), 
+		# RH*: RH star - the new RH using AH* and measured temperature
+		RHstarAH = calcRH(Temp, AHstar), 
+		# Difference from target
+		RHerrorAH = RHstarAH - tRH, 
+		) |>
+  ggplot() +
+  geom_line(aes(Date, Temp), col = "red", alpha = 0.5) +
+  geom_line(aes(Date, RH), col = "blue", alpha = 0.5) + 
+  geom_line(aes(Date, AH), col = "green", alpha = 0.5) + 
+  geom_line(aes(Date, RHstarAH), col = "darkblue") +
+  geom_line(aes(Date, AHstar), col = "darkgreen") + 
+  geom_line(aes(Date, RHerrorAH)) + 
+  labs(title = "Using absolute humidity to adjust relative humidity", 
+       subtitle = "Measure absolute humidity (light green), new absolute humidity (dark green),
+       resultant relative humidity (dark blue)") +
+  theme_bw()
+
+
+# Changing Temperature
+mydata |> 
+  mutate(
+    # Absolute humidity, AH
+    AH = calcAH(Temp, RH), 
+    # Dew point, DP
+		DP = calcDP(Temp, RH), 
+		# Target RH
+		tRH = 50, 			
+		# T*: Tstar new temperature at target RH using dew point
+		Tstar = calcTemp(tRH, DP), 
+		# Difference in measure temperature and new temperature
+		dTemp = Tstar - Temp, 
+		# Check
+		Tcheck = Tstar - (Temp + dTemp), 
+		# RHstarT: New humidity with new temperature 
+		RHstarT = calcRH_DP(Tstar, DP),
+		# Error 
+		RHerrorT = RHstarT - tRH
+		) |>
+  ggplot() +
+  geom_line(aes(Date, Temp), col = "red", alpha = 0.5) +
+  geom_line(aes(Date, RH), col = "blue", alpha = 0.5) + 
+  geom_line(aes(Date, Tstar), col = "darkred") +
+  geom_line(aes(Date, RHstarT), col = "darkblue") +
+  geom_line(aes(Date, RHerrorT)) + 
+  labs(title = "Using temperature to adjust relative humidity") +
+  theme_bw()
+
+# Using Dew Point
+mydata |>
+  mutate(
+    # Absolute humidity, AH
+    AH = calcAH(Temp, RH),
+    # Dew point, DP
+		DP = calcDP(Temp, RH),
+		# Target RH
+		tRH = 50,
+		# DP*: DPstarAH new dew point at target RH using absolute humidity
+		DPstarAH = calcDP(Temp, tRH),
+		# RH*: New relative humidity at new dew point
+		RHstarDP = calcRH_DP(Temp, DPstarAH),
+		# Error 
+		RHerrorDP = RHstarDP - tRH
+		) |>
+  ggplot() +
+  geom_line(aes(Date, Temp), col = "red", alpha = 0.5) +
+  geom_line(aes(Date, RH), col = "blue", alpha = 0.5) +
+  geom_line(aes(Date, DP), col = "hotpink") +
+  geom_line(aes(Date, DPstarAH), col = "purple") +
+  geom_line(aes(Date, RHstarDP), col = "darkblue") +
+  geom_line(aes(Date, RHerrorDP)) +
+  labs(title = "Using dew point to adjust relative humidity") +
+  theme_bw()
+  
+
+```
+
+### Temperature `calcTemp`
+
+The temperature calculations are explored to determine the accuracy of temperature derivation using dew point and relative humidity.
+Visualisation of the temperature calculation against the original temperature and relative humidity.
+The temperature calculation is presented as a filled contour plot of the calculated temperature using calcTemp through dew point which is calculated using calcDP.
 
 ```{r}
 head(mydata) |> dplyr::mutate(DewPoint = calcDP(Temp, RH), Temp2 = calcTemp(RH, DewPoint))
@@ -81,8 +207,8 @@ TRHgrid |>
   theme_minimal()
 ```
 
-
-Visualisation of the temperature calculation against the original temperature and relative humidity. The plot aims to validate the accuracy and consistency of temperature calculations based on relative humidity and dew point.
+Visualisation of the temperature calculation against the original temperature and relative humidity.
+The plot aims to validate the accuracy and consistency of temperature calculations based on relative humidity and dew point.
 
 ```{r}
 TRHgrid |>
@@ -99,10 +225,10 @@ TRHgrid |>
 
 ```
 
+### Relative Humidity `calcRH` and `calcRH_DP`
 
-### Relative Humidity 
-
-This section investigates relative humidity calculations using derivations from dew point and absolute humidity. Contour plots demonstrate the relationships between calculated and original relative humidity values and the errors. 
+This section investigates relative humidity calculations using derivations from dew point and absolute humidity.
+Contour plots demonstrate the relationships between calculated and original relative humidity values and the errors.
 
 ```{r}
 
@@ -133,7 +259,6 @@ TRHgrid |>
 
 ```
 
-
 ```{r}
 
 TRHgrid |>
@@ -154,10 +279,10 @@ TRHgrid |>
   
 ```
 
-Using absolute humidity generates errors at low temperatures and high relative humidities that may become significant or exponentiate if used in machine learning applications. It is not recommended to used the `calcAH` function at low temperature and high relative humidity. 
+Using absolute humidity generates errors at low temperatures and high relative humidities that may become significant or exponentiate if used in machine learning applications.
+It is recommended to be wary when using the `calcAH` function at low temperature and high relative humidity.
 
-
-### Absolute humidity 
+### Absolute humidity `calcAH`
 
 ```{r}
 
@@ -169,7 +294,7 @@ TRHgrid |>
 
 ```
 
-### Dew Point
+### Dew Point `calcDP`
 
 The dew point analysis shows how the dew point temperature varies with changing temperature and relative humidity.
 
@@ -183,8 +308,7 @@ TRHgrid |>
 
 ```
 
-
-### Water vapour saturation pressure
+### Water vapour saturation pressure `calcPws`
 
 -   Saturation vapor pressure calculation
 -   Actual water vapor pressure determination
@@ -199,10 +323,7 @@ TRHgrid |>
 
 ```
 
-
-### Water vapour pressure 
-
-
+### Water vapour pressure `calcPw`
 
 ```{r}
 
@@ -214,8 +335,7 @@ TRHgrid |>
 
 ```
 
-
-### Mixing ratio 
+### Mixing ratio `calcMR`
 
 ```{r}
 
@@ -233,9 +353,7 @@ TRHgrid |>
 
 ```
 
-
-
-### Enthalpy
+### Enthalpy `calcEnthalpy`
 
 ```{r}
 
@@ -248,44 +366,6 @@ TRHgrid |>
 TRHgrid |>
   mutate(Enthalpy_log10 = calcEnthalpy(Temp, RH) |> log10()) |>
   ggplot(aes(Temp, RH, z = Enthalpy_log10)) + 
-  geom_contour_filled(bins = 20) + 
-  theme_minimal()
-
-```
-
-
-### Preservation Index
-
-```{r}
-
-TRHgrid |>
-  mutate(PI = calcPI(Temp, RH)) |>
-  ggplot(aes(Temp, RH, z = PI)) + 
-  geom_contour_filled(bins = 20) + 
-  theme_minimal()
-
-TRHgrid |>
-  mutate(PI_log10 = calcPI(Temp, RH) |> log10()) |>
-  ggplot(aes(Temp, RH, z = PI_log10)) + 
-  geom_contour_filled(bins = 20) + 
-  theme_minimal()
-
-```
-
-
-### Lifetime multiplier
-
-```{r}
-
-TRHgrid |>
-  mutate(LifeTime = calcLM(Temp, RH)) |>
-  ggplot(aes(Temp, RH, z = LifeTime)) + 
-  geom_contour_filled(bins = 20) + 
-  theme_minimal()
-
-TRHgrid |>
-  mutate(LM_log = calcLM(Temp, RH) |> log10()) |>
-  ggplot(aes(Temp, RH, z = LM_log)) + 
   geom_contour_filled(bins = 20) + 
   theme_minimal()
 
