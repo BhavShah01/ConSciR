@@ -1,7 +1,6 @@
 ---
 title: "ConSciR"
 output: rmarkdown::html_vignette
-date: 2024-11-01
 vignette: >
   %\VignetteIndexEntry{ConSciR-Intro}
   %\VignetteEngine{knitr::rmarkdown}
@@ -16,7 +15,6 @@ knitr::opts_chunk$set(
 
 ```
 
-The ConSciR Github page: [ConSciR Github](https://github.com/BhavShah01/ConSciR)
 
 ## Introduction
 
@@ -53,6 +51,8 @@ Or
 install.packages("pak")
 pak::pak("BhavShah01/ConSciR")
 ```
+
+The ConSciR Github page: [ConSciR Github](https://github.com/BhavShah01/ConSciR)
 
 ## Tidy data
 
