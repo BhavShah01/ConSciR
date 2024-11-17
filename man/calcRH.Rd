@@ -15,7 +15,7 @@ calcRH(Temp, Abs)
 Relative Humidity (0-100\%). Error increases at extreme temperature and relative humidity.
 }
 \description{
-Function to calculate relative humidity (\%) from temperature (C) and absolute humidity (g/m^3)
+Function to calculate relative humidity (\%) from temperature (°C) and absolute humidity (g/m^3)
 }
 \details{
 The relative humidity is calculated using the following equation:

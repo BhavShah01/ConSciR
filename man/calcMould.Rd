@@ -4,14 +4,16 @@
 \alias{calcMould}
 \title{Calculate Mould Growth Probability}
 \usage{
-calcMould(mydata, Temp, RH)
+calcMould(mydata, Date = "Date", Temp = "Temp", RH = "RH")
 }
 \arguments{
 \item{mydata}{A data frame containing temperature and relative humidity data.}
 
-\item{Temp}{The name of the column in mydata containing temperature data. Default is "Temp".}
+\item{Date}{The name of the column in the data containing date data. Default is "Date".}
 
-\item{RH}{The name of the column in mydata containing relative humidity data. Default is "RH".}
+\item{Temp}{The name of the column in the data containing temperature data. Default is "Temp".}
+
+\item{RH}{The name of the column in the data containing relative humidity data. Default is "RH".}
 }
 \value{
 A data frame with additional columns:
@@ -23,7 +25,7 @@ A data frame with additional columns:
 This function calculates the probability of mould growth based on temperature and relative humidity data.
 }
 \examples{
-head(mydata) |> calcMould(Temp = "Temp", RH = "RH")
+head(mydata) |> calcMould(Date = "Date", Temp = "Temp", RH = "RH")
 
 
 

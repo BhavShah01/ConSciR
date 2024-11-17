@@ -1,7 +1,7 @@
 #' Calculate relative humidity from temperature and absolute humidity
 #'
 #' @description
-#' Function to calculate relative humidity (\%) from temperature (C) and absolute humidity (g/m^3)
+#' Function to calculate relative humidity (\%) from temperature (°C) and absolute humidity (g/m^3)
 #'
 #' @details
 #' The relative humidity is calculated using the following equation:

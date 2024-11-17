@@ -7,18 +7,20 @@
 calcAH(Temp, RH)
 }
 \arguments{
-\item{Temp}{Temperature}
+\item{Temp}{Temperature (Celsius)}
 
-\item{RH}{Relative humidity}
+\item{RH}{Relative Humidity (0-100\%)}
 }
 \value{
-AH Absolute humidity
+AH Absolute Humidity (g/m^3)
 }
 \description{
-Calculate absolute humidity
+Function to calculate the absolute humidity  from temperature (°C) and relative humidity (\%).
 }
 \examples{
 calcAH(20, 50)
+
+head(mydata) |> dplyr::mutate(Abs = calcAH(Temp, RH))
 
 
 }

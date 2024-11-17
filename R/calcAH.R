@@ -1,13 +1,19 @@
 #' Calculate absolute humidity
 #'
-#' @param Temp Temperature
-#' @param RH Relative humidity
+#' @description
+#' Function to calculate the absolute humidity  from temperature (°C) and relative humidity (\%).
 #'
-#' @return AH Absolute humidity
+#'
+#' @param Temp Temperature (Celsius)
+#' @param RH Relative Humidity (0-100\%)
+#'
+#' @return AH Absolute Humidity (g/m^3)
 #' @export
 #'
 #' @examples
 #' calcAH(20, 50)
+#'
+#' head(mydata) |> dplyr::mutate(Abs = calcAH(Temp, RH))
 #'
 #'
 calcAH <- function(Temp, RH) {
