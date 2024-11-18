@@ -12,13 +12,12 @@ calcMould_models(Temp, RH, model = c("Sedlbauer", "VIR", "DP", "Isaksson"))
 \item{RH}{Numeric. Relative Humidity as a percentage (0-100).}
 
 \item{model}{Character. The model to use for calculation.
-Options are "Sedlbauer", "VIR", "DP", or "Isaksson".}
+Options are "Sedlbauer", "VIR", or "Isaksson".}
 }
 \value{
 Numeric. The result depends on the chosen model:
   \itemize{
     \item Sedlbauer and VIR: Critical RH for mould growth from temperature
-    \item DP: Days to mould growth
     \item Isaksson: Daily dose (1/t(ms)) / D(rel/day)
   }
 }
@@ -32,15 +31,16 @@ The results are very different so take care in interpretation.
 \examples{
 calcMould_models(20, 80, "Sedlbauer")
 calcMould_models(25, 70, "VIR")
-calcMould_models(30, 75, "DP")
 calcMould_models(22, 85, "Isaksson")
 
-\dontrun{
+
 head(mydata) |>
-  mutate(
-    RH_crit = calcMould_models(Temp, RH, "Sedlbauer"),
-    Days_to_mould = calcMould_models(Temp, RH, "DP")
+  dplyr::mutate(
+    RH_crit_Sedlbauer = calcMould_models(Temp, RH, "Sedlbauer"),
+    RH_crit_VIR = calcMould_models(Temp, RH, "VIR"),
+    Mould_daily_dose = calcMould_models(Temp, RH, "Isaksson")
     )
- }
+
+
 
 }

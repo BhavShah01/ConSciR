@@ -25,10 +25,10 @@ These functions may play a key role in developing more energy-efficient systems.
 Understanding the stability of these functions is shown, as they underpin many methodologies in this field.
 
 A grid of temperature and relative humidity values, ranging from -50°C to 100°C and 0% to 100% RH respectively, was used to test the functions.
-Contour plots were utilised to visualise the interactions between derived variables across the temperature-humidity grid.
-The analysis includes validation checks for temperature and relative humidity calculations, to identify potential errors.
+Contour plots are used to visualise interactions between derived variables across the temperature-humidity grid.
+The analysis includes validation checks for temperature and relative humidity calculations, to identify how the function interact with each other. 
 
-The humidity functions assume atmospheric pressure.
+Note: the humidity functions assume atmospheric pressure.
 
 ### TRHgrid: Dataset used to visualise the functions
 
@@ -186,7 +186,9 @@ mydata |>
 
 ```
 
-### Temperature `calcTemp`
+### Temperature 
+
+`calcTemp`
 
 The temperature calculations are explored to determine the accuracy of temperature derivation using dew point and relative humidity.
 Visualisation of the temperature calculation against the original temperature and relative humidity.
@@ -225,7 +227,9 @@ TRHgrid |>
 
 ```
 
-### Relative Humidity `calcRH` and `calcRH_DP`
+### Relative Humidity 
+
+`calcRH` and `calcRH_DP`
 
 This section investigates relative humidity calculations using derivations from dew point and absolute humidity.
 Contour plots demonstrate the relationships between calculated and original relative humidity values and the errors.
@@ -282,7 +286,11 @@ TRHgrid |>
 Using absolute humidity generates errors at low temperatures and high relative humidities that may become significant or exponentiate if used in machine learning applications.
 It is recommended to be wary when using the `calcAH` function at low temperature and high relative humidity.
 
-### Absolute humidity `calcAH`
+### Absolute humidity 
+
+`calcAH`
+
+The graph shows how absolute temperature varies with changing temperature and relative humidity.
 
 ```{r}
 
@@ -294,9 +302,11 @@ TRHgrid |>
 
 ```
 
-### Dew Point `calcDP`
+### Dew Point 
 
-The dew point analysis shows how the dew point temperature varies with changing temperature and relative humidity.
+`calcDP`
+
+The graphs shows how the dew point temperature varies with changing temperature and relative humidity.
 
 ```{r}
 
@@ -308,10 +318,12 @@ TRHgrid |>
 
 ```
 
-### Water vapour saturation pressure `calcPws`
+### Water vapour saturation pressure 
+
+`calcPws`
 
 -   Saturation vapor pressure calculation
--   Actual water vapor pressure determination
+
 
 ```{r}
 
@@ -323,7 +335,11 @@ TRHgrid |>
 
 ```
 
-### Water vapour pressure `calcPw`
+### Water vapour pressure 
+
+`calcPw`
+
+-   Actual water vapor pressure determination
 
 ```{r}
 
@@ -335,7 +351,9 @@ TRHgrid |>
 
 ```
 
-### Mixing ratio `calcMR`
+### Mixing ratio 
+
+`calcMR`
 
 ```{r}
 
@@ -353,7 +371,9 @@ TRHgrid |>
 
 ```
 
-### Enthalpy `calcEnthalpy`
+### Enthalpy 
+
+`calcEnthalpy`
 
 ```{r}
 

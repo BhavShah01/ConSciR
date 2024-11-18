@@ -90,7 +90,7 @@ head(mydata) |>
 
 -   Combine analysis with graphs
 
-```{r graph the TRH data after adding dew point, message=FALSE, warning=FALSE, fig.alt="graph the TRH data after adding dew point"}
+```{r graph the TRH data after adding dew point, message=FALSE, warning=FALSE, fig.alt="graph_TRH_data_dew_point"}
 mydata |>
   mutate(DewPoint = calcDP(Temp, RH)) |>
   graph_TRH() + 
@@ -100,7 +100,7 @@ mydata |>
 
 -   Use analysis functions, for example estimate mould growth
 
-```{r use the mould risk function, message=FALSE, warning=FALSE, fig.alt="use the mould risk function"}
+```{r use the mould risk function, message=FALSE, warning=FALSE, fig.alt="mould_risk_function"}
 mydata |>
   calcMould(Temp = "Temp", RH = "RH") |>
   ggplot() +
