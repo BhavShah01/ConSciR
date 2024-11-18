@@ -92,11 +92,11 @@ systems. Understanding the stability of these functions is shown, as
 they underpin many methodologies in this field.</p>
 <p>A grid of temperature and relative humidity values, ranging from
 -50°C to 100°C and 0% to 100% RH respectively, was used to test the
-functions. Contour plots were utilised to visualise the interactions
-between derived variables across the temperature-humidity grid. The
-analysis includes validation checks for temperature and relative
-humidity calculations, to identify potential errors.</p>
-<p>The humidity functions assume atmospheric pressure.</p>
+functions. Contour plots are used to visualise interactions between
+derived variables across the temperature-humidity grid. The analysis
+includes validation checks for temperature and relative humidity
+calculations, to identify how the function interact with each other.</p>
+<p>Note: the humidity functions assume atmospheric pressure.</p>
 <div class="section level3">
 <h3 id="trhgrid-dataset-used-to-visualise-the-functions">TRHgrid: Dataset used to visualise the functions<a class="anchor" aria-label="anchor" href="#trhgrid-dataset-used-to-visualise-the-functions"></a>
 </h3>
@@ -316,8 +316,9 @@ moving it away decreases RH.</li>
 <p><img src="Humidity-functions_files/figure-html/unnamed-chunk-4-3.png" width="700"></p>
 </div>
 <div class="section level3">
-<h3 id="temperature-calctemp">Temperature <code>calcTemp</code><a class="anchor" aria-label="anchor" href="#temperature-calctemp"></a>
+<h3 id="temperature">Temperature<a class="anchor" aria-label="anchor" href="#temperature"></a>
 </h3>
+<p><code>calcTemp</code></p>
 <p>The temperature calculations are explored to determine the accuracy
 of temperature derivation using dew point and relative humidity.
 Visualisation of the temperature calculation against the original
@@ -366,9 +367,9 @@ humidity and dew point.</p>
 <p><img src="Humidity-functions_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 </div>
 <div class="section level3">
-<h3 id="relative-humidity-calcrh-and-calcrh_dp">Relative Humidity <code>calcRH</code> and
-<code>calcRH_DP</code><a class="anchor" aria-label="anchor" href="#relative-humidity-calcrh-and-calcrh_dp"></a>
+<h3 id="relative-humidity">Relative Humidity<a class="anchor" aria-label="anchor" href="#relative-humidity"></a>
 </h3>
+<p><code>calcRH</code> and <code>calcRH_DP</code></p>
 <p>This section investigates relative humidity calculations using
 derivations from dew point and absolute humidity. Contour plots
 demonstrate the relationships between calculated and original relative
@@ -428,8 +429,11 @@ using the <code>calcAH</code> function at low temperature and high
 relative humidity.</p>
 </div>
 <div class="section level3">
-<h3 id="absolute-humidity-calcah">Absolute humidity <code>calcAH</code><a class="anchor" aria-label="anchor" href="#absolute-humidity-calcah"></a>
+<h3 id="absolute-humidity">Absolute humidity<a class="anchor" aria-label="anchor" href="#absolute-humidity"></a>
 </h3>
+<p><code>calcAH</code></p>
+<p>The graph shows how absolute temperature varies with changing
+temperature and relative humidity.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">TRHgrid</span> <span class="op">|&gt;</span></span>
@@ -440,10 +444,11 @@ relative humidity.</p>
 <p><img src="Humidity-functions_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 </div>
 <div class="section level3">
-<h3 id="dew-point-calcdp">Dew Point <code>calcDP</code><a class="anchor" aria-label="anchor" href="#dew-point-calcdp"></a>
+<h3 id="dew-point">Dew Point<a class="anchor" aria-label="anchor" href="#dew-point"></a>
 </h3>
-<p>The dew point analysis shows how the dew point temperature varies
-with changing temperature and relative humidity.</p>
+<p><code>calcDP</code></p>
+<p>The graphs shows how the dew point temperature varies with changing
+temperature and relative humidity.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">TRHgrid</span> <span class="op">|&gt;</span></span>
@@ -454,11 +459,11 @@ with changing temperature and relative humidity.</p>
 <p><img src="Humidity-functions_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
 </div>
 <div class="section level3">
-<h3 id="water-vapour-saturation-pressure-calcpws">Water vapour saturation pressure <code>calcPws</code><a class="anchor" aria-label="anchor" href="#water-vapour-saturation-pressure-calcpws"></a>
+<h3 id="water-vapour-saturation-pressure">Water vapour saturation pressure<a class="anchor" aria-label="anchor" href="#water-vapour-saturation-pressure"></a>
 </h3>
+<p><code>calcPws</code></p>
 <ul>
 <li>Saturation vapor pressure calculation</li>
-<li>Actual water vapor pressure determination</li>
 </ul>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
@@ -470,8 +475,12 @@ with changing temperature and relative humidity.</p>
 <p><img src="Humidity-functions_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 </div>
 <div class="section level3">
-<h3 id="water-vapour-pressure-calcpw">Water vapour pressure <code>calcPw</code><a class="anchor" aria-label="anchor" href="#water-vapour-pressure-calcpw"></a>
+<h3 id="water-vapour-pressure">Water vapour pressure<a class="anchor" aria-label="anchor" href="#water-vapour-pressure"></a>
 </h3>
+<p><code>calcPw</code></p>
+<ul>
+<li>Actual water vapor pressure determination</li>
+</ul>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">TRHgrid</span> <span class="op">|&gt;</span></span>
@@ -482,8 +491,9 @@ with changing temperature and relative humidity.</p>
 <p><img src="Humidity-functions_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
 </div>
 <div class="section level3">
-<h3 id="mixing-ratio-calcmr">Mixing ratio <code>calcMR</code><a class="anchor" aria-label="anchor" href="#mixing-ratio-calcmr"></a>
+<h3 id="mixing-ratio">Mixing ratio<a class="anchor" aria-label="anchor" href="#mixing-ratio"></a>
 </h3>
+<p><code>calcMR</code></p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">TRHgrid</span> <span class="op">|&gt;</span></span>
@@ -502,8 +512,9 @@ with changing temperature and relative humidity.</p>
 <p><img src="Humidity-functions_files/figure-html/unnamed-chunk-13-2.png" width="700"></p>
 </div>
 <div class="section level3">
-<h3 id="enthalpy-calcenthalpy">Enthalpy <code>calcEnthalpy</code><a class="anchor" aria-label="anchor" href="#enthalpy-calcenthalpy"></a>
+<h3 id="enthalpy">Enthalpy<a class="anchor" aria-label="anchor" href="#enthalpy"></a>
 </h3>
+<p><code>calcEnthalpy</code></p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">TRHgrid</span> <span class="op">|&gt;</span></span>

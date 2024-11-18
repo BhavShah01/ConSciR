@@ -70,13 +70,12 @@ based on temperature and relative humidity, using one of four different models.<
 
 <dt id="arg-model">model<a class="anchor" aria-label="anchor" href="#arg-model"></a></dt>
 <dd><p>Character. The model to use for calculation.
-Options are "Sedlbauer", "VIR", "DP", or "Isaksson".</p></dd>
+Options are "Sedlbauer", "VIR", or "Isaksson".</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>Numeric. The result depends on the chosen model:</p><ul><li><p>Sedlbauer and VIR: Critical RH for mould growth from temperature</p></li>
-<li><p>DP: Days to mould growth</p></li>
 <li><p>Isaksson: Daily dose (1/t(ms)) / D(rel/day)</p></li>
 </ul></div>
     <div class="section level2">
@@ -90,18 +89,28 @@ Options are "Sedlbauer", "VIR", "DP", or "Isaksson".</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 74.4</span>
 <span class="r-in"><span><span class="fu">calcMould_models</span><span class="op">(</span><span class="fl">25</span>, <span class="fl">70</span>, <span class="st">"VIR"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 79.125</span>
-<span class="r-in"><span><span class="fu">calcMould_models</span><span class="op">(</span><span class="fl">30</span>, <span class="fl">75</span>, <span class="st">"DP"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 9028</span>
 <span class="r-in"><span><span class="fu">calcMould_models</span><span class="op">(</span><span class="fl">22</span>, <span class="fl">85</span>, <span class="st">"Isaksson"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.01162899</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mydata</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    RH_crit <span class="op">=</span> <span class="fu">calcMould_models</span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span>, <span class="st">"Sedlbauer"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    Days_to_mould <span class="op">=</span> <span class="fu">calcMould_models</span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span>, <span class="st">"DP"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    RH_crit_Sedlbauer <span class="op">=</span> <span class="fu">calcMould_models</span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span>, <span class="st">"Sedlbauer"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    RH_crit_VIR <span class="op">=</span> <span class="fu">calcMould_models</span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span>, <span class="st">"VIR"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    Mould_daily_dose <span class="op">=</span> <span class="fu">calcMould_models</span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span>, <span class="st">"Isaksson"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>    <span class="op">)</span></span></span>
-<span class="r-in"><span> <span class="op">}</span> <span class="co"># }</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 8</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Site   Sensor Date                 Temp    RH RH_crit_Sedlbauer RH_crit_VIR</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> London Room 1 2024-01-01 <span style="color: #949494;">00:00:00</span>  21.8  36.8              73.5        79.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> London Room 1 2024-01-01 <span style="color: #949494;">00:15:00</span>  21.8  36.7              73.5        79.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> London Room 1 2024-01-01 <span style="color: #949494;">00:29:59</span>  21.8  36.6              73.5        79.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> London Room 1 2024-01-01 <span style="color: #949494;">00:44:59</span>  21.7  36.6              73.5        79.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> London Room 1 2024-01-01 <span style="color: #949494;">00:59:59</span>  21.7  36.5              73.5        79.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> London Room 1 2024-01-01 <span style="color: #949494;">01:14:59</span>  21.7  36.2              73.5        79.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: Mould_daily_dose &lt;dbl&gt;</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
