@@ -68,8 +68,6 @@
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The saturation water vapor pressure (P_ws) is calculated using the following equation:</p>
-
-
 <p>Where:</p>
 <ul><li><p>$P_ws$ is the saturation vapor pressure.</p></li>
 <li><p>$A$ is a coefficient.</p></li>
@@ -82,12 +80,20 @@
     <p>If lower accuracy or a limited temperature range can be tolerated a simpler formula
 can be used for the water vapour saturation pressure over water (and over ice):</p>
 <p>Pws = A \* 10 \^ ( (m \* Temp) / (Temp + Tn) )</p>
+<p>August-Roche-Magnus approximation is also included in the source code.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     <p>W. Wagner and A. Pruß:" The IAPWS Formulation 1995 for the Thermodynamic Properties of
 Ordinary Water Substance for General and Scientific Use ", Journal of Physical and
 Chemical Reference Data, June 2002 ,Volume 31, Issue 2, pp.387535</p>
+    </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p><code><a href="calcMR.html">calcMR</a></code> for calculating mixing ratio</p>
+<p><code><a href="calcAD.html">calcAD</a></code> for calculating air density</p>
+<p><code><a href="calcPw.html">calcPw</a></code> for calculating water vapour pressure</p>
+<p><code>calcPws</code> for calculating water vapour saturation pressure</p></div>
     </div>
 
     <div class="section level2">
