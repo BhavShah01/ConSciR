@@ -18,8 +18,6 @@ Function to calculate water vapour saturation pressure in hPa from temperature (
 \details{
 The saturation water vapor pressure (P_ws) is calculated using the following equation:
 
-
-
 Where:
 
 \itemize{
@@ -35,6 +33,8 @@ If lower accuracy or a limited temperature range can be tolerated a simpler form
 can be used for the water vapour saturation pressure over water (and over ice):
 
 Pws = A \* 10 \^ ( (m \* Temp) / (Temp + Tn) )
+
+August-Roche-Magnus approximation is also included in the source code.
 }
 \examples{
 calcPws(20)
@@ -50,4 +50,13 @@ head(mydata) |> dplyr::mutate(Pws = calcPws(Temp))
 W. Wagner and A. Pruß:" The IAPWS Formulation 1995 for the Thermodynamic Properties of
 Ordinary Water Substance for General and Scientific Use ", Journal of Physical and
 Chemical Reference Data, June 2002 ,Volume 31, Issue 2, pp.387535
+}
+\seealso{
+\code{\link{calcMR}} for calculating mixing ratio
+
+\code{\link{calcAD}} for calculating air density
+
+\code{\link{calcPw}} for calculating water vapour pressure
+
+\code{\link{calcPws}} for calculating water vapour saturation pressure
 }

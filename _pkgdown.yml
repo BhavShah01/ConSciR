@@ -4,38 +4,40 @@ template:
   bootswatch: shiny
   light-switch: true
 reference:
-- title: Functions
-  desc: Functions for performing calculations.
+- title: Shiny application
+  desc: Application to test and demonstrate tools in the package.
+  contents: run_ConSciR_app
+- title: Graphs
+  desc: Tools for graphing data.
   contents:
-    - calcAH
-    - calcDP
-    - calcEnthalpy
-    - calcFtoC
-    - calcMR
-    - calcPw
-    - calcPws
-    - calcRH
-    - calcRH_DP
-    - calcTemp
-- title: Risk functions
-  desc: Functions for the analysis of data.
+    - graph_TRH
+    - graph_psychrometric
+- title: Conservation tools
+  desc: Tools for the analysis of data for conservators.
   contents:
     - calcPI
     - calcIPI
     - calcLM
     - calcMould
     - calcMould_models
-- title: Graphs
-  desc: Functions for graphing data.
+- title: Humidity functions
+  desc: Functions for performing calculations from temperature and humidity data.
   contents:
-    - graph_TRH
-    - graph_psychrometric
+    - calcAH
+    - calcDP
+    - calcFtoC
+    - calcAD
+    - calcMR
+    - calcHR
+    - calcPw
+    - calcPws
+    - calcEnthalpy
+    - calcRH
+    - calcRH_DP
+    - calcTemp
 - title: Data
-  desc: In-built data to demonstrate functions.
+  desc: In-built datasets to demonstrate functions.
   contents:
     - mydata
     - TRHdata
     - mouldtable
-- title: Shiny app
-  desc: Application to run and test the package.
-  contents: run_ConSciR_app

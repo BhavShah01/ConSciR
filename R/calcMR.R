@@ -1,7 +1,7 @@
 #' Calculate mixing ratio
 #'
 #' @description
-#' Function to calculate mixing ratio from temperature in Celsius and relative humidity in \% (0-100).
+#' Function to calculate mixing ratio from temperature (°C) and relative humidity (\%).
 #'
 #' If using a dataframe, columns should ideally be named "Temp" and "RH".
 #'
@@ -15,11 +15,17 @@
 #'
 #' @param Temp Temperature (Celsius)
 #' @param RH Relative Humidity (0-100\%)
-#' @param P_tot Total pressure = 1013.3 (hPa)
-#' @param B B = 621.9907 g/kg is valid for air
+#' @param P_atm Atmospheric pressure = 1013.25 (hPa)
+#' @param B B = 621.9907 g/kg for air
 #'
-#' @return X Mixing ratio (mass of water vapour / mass of dry gas)
+#' @return X Mixing ratio, mass of water vapour / mass of dry gas (g/kg)
 #' @export
+#'
+#' @seealso \code{\link{calcMR}} for calculating mixing ratio
+#' @seealso \code{\link{calcAD}} for calculating air density
+#' @seealso \code{\link{calcPw}} for calculating water vapour pressure
+#' @seealso \code{\link{calcPws}} for calculating water vapour saturation pressure
+#'
 #'
 #' @examples
 #' calcMR(20, 50)
@@ -27,8 +33,8 @@
 #' head(mydata) |> dplyr::mutate(MixingRatio = calcMR(Temp, RH))
 #'
 #'
-calcMR <- function(Temp, RH, P_tot = 1013.3, B = 621.9907) {
+calcMR <- function(Temp, RH, P_atm = 1013.25, B = 621.9907) {
   Pw = calcPw(Temp, RH)
-  X = (B * Pw) / (P_tot - Pw)
+  X = (B * Pw) / (P_atm - Pw)
   return(X)
 }

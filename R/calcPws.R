@@ -7,8 +7,6 @@
 #' @details
 #' The saturation water vapor pressure (P_ws) is calculated using the following equation:
 #'
-#'
-#'
 #' Where:
 #'
 #' \itemize{
@@ -19,11 +17,19 @@
 #'   \item $Temp$ is the temperature in degrees Celsius.
 #' }
 #'
+#' @seealso \code{\link{calcMR}} for calculating mixing ratio
+#' @seealso \code{\link{calcAD}} for calculating air density
+#' @seealso \code{\link{calcPw}} for calculating water vapour pressure
+#' @seealso \code{\link{calcPws}} for calculating water vapour saturation pressure
+#'
 #' @note
 #' If lower accuracy or a limited temperature range can be tolerated a simpler formula
 #' can be used for the water vapour saturation pressure over water (and over ice):
 #'
 #' Pws = A \* 10 \^ ( (m \* Temp) / (Temp + Tn) )
+#'
+#' August-Roche-Magnus approximation is also included in the source code.
+#'
 #'
 #' @references
 #' W. Wagner and A. Pruß:" The IAPWS Formulation 1995 for the Thermodynamic Properties of
@@ -68,14 +74,23 @@ calcPws <- function(Temp) {
   Tn = 240.7263
 
   veta = 1 - (TempK / Tc)
-  lnPwsPc = (Tc / TempK) *
-    (C1 * veta + C2 * (veta^1.5) + C3 * (veta ^ 3) + C4 * (veta ^ 3.5) +
-       C5 * (veta ^ 4) + C6 * (veta^7.5))
+
+  lnPwsPc =
+    (Tc / TempK) *
+    (C1 * veta +
+       C2 * (veta ^ 1.5) +
+       C3 * (veta ^ 3) +
+       C4 * (veta ^ 3.5) +
+       C5 * (veta ^ 4) +
+       C6 * (veta ^ 7.5))
 
   Pws = Pc * exp(lnPwsPc)
 
   # If lower accuracy or a limited temperature range can be tolerated a simpler formula can be used for the water vapour saturation pressure over water (and over ice):
   # Pws = A * 10 ^ ( (m * Temp) / (Temp + Tn) )
+
+  # August-Roche-Magnus approximation
+  # Pws = 610.94 * exp((17.625 * Temp) / (243.04 + Temp))
 
   return(Pws)
 }

@@ -4,22 +4,22 @@
 \alias{calcMR}
 \title{Calculate mixing ratio}
 \usage{
-calcMR(Temp, RH, P_tot = 1013.3, B = 621.9907)
+calcMR(Temp, RH, P_atm = 1013.25, B = 621.9907)
 }
 \arguments{
 \item{Temp}{Temperature (Celsius)}
 
 \item{RH}{Relative Humidity (0-100\%)}
 
-\item{P_tot}{Total pressure = 1013.3 (hPa)}
+\item{P_atm}{Atmospheric pressure = 1013.25 (hPa)}
 
-\item{B}{B = 621.9907 g/kg is valid for air}
+\item{B}{B = 621.9907 g/kg for air}
 }
 \value{
-X Mixing ratio (mass of water vapour / mass of dry gas)
+X Mixing ratio, mass of water vapour / mass of dry gas (g/kg)
 }
 \description{
-Function to calculate mixing ratio from temperature in Celsius and relative humidity in \% (0-100).
+Function to calculate mixing ratio from temperature (°C) and relative humidity (\%).
 
 If using a dataframe, columns should ideally be named "Temp" and "RH".
 
@@ -35,4 +35,13 @@ calcMR(20, 50)
 head(mydata) |> dplyr::mutate(MixingRatio = calcMR(Temp, RH))
 
 
+}
+\seealso{
+\code{\link{calcMR}} for calculating mixing ratio
+
+\code{\link{calcAD}} for calculating air density
+
+\code{\link{calcPw}} for calculating water vapour pressure
+
+\code{\link{calcPws}} for calculating water vapour saturation pressure
 }
