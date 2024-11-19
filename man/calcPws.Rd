@@ -47,7 +47,7 @@ head(mydata) |> dplyr::mutate(Pws = calcPws(Temp))
 
 }
 \references{
-W. Wagner and A. Pruß:" The IAPWS Formulation 1995 for the Thermodynamic Properties of
+W. Wagner and A. Pru\ß:" The IAPWS Formulation 1995 for the Thermodynamic Properties of
 Ordinary Water Substance for General and Scientific Use ", Journal of Physical and
 Chemical Reference Data, June 2002 ,Volume 31, Issue 2, pp.387535
 }

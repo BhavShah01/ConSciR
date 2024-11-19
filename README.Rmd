@@ -18,10 +18,10 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-ConSciR is an R package specifically designed to assist conservators and scientists by providing a toolkit for performing calculations and streamlining common tasks in conservation. ConSciR is designed for:
+ConSciR is an R package specifically designed to assist conservators, scientists and engineers by providing a toolkit for performing calculations and streamlining common tasks in cultural heritage conservation. ConSciR is designed for:
 
 -   Conservators working in museums, galleries, and heritage sites
--   Conservation scientists and researchers
+-   Conservation scientists, engineers and researchers
 -   Cultural heritage professionals involved in preventive conservation
 -   Students and educators in conservation and heritage science programs
 
@@ -62,7 +62,7 @@ This is a basic example of some commons tasks:
 
 -   Load packages
 
-```{r load the relevant packages, message=FALSE, warning=FALSE}
+```{r packages, message=FALSE, warning=FALSE}
 library(ConSciR)
 library(dplyr)
 library(ggplot2)
@@ -70,14 +70,14 @@ library(ggplot2)
 
 -   Pre-loaded dataset is availabe for testing
 
-```{r look at the loaded dataset, message=FALSE, warning=FALSE}
+```{r load_dataset, message=FALSE, warning=FALSE}
 # My TRH data
 head(mydata)
 ```
 
 -   Use functions to perform calculations, for example use the existing data to add dew point and absolute humidity. Performance metrics are also being added like lifetime multiplier, preservation index and mould calculations. 
 
-```{r perform calculations on the dataset, message=FALSE, warning=FALSE}
+```{r add_calcs, message=FALSE, warning=FALSE}
 # Peform calculations
 head(mydata) |>
   mutate(
@@ -90,7 +90,7 @@ head(mydata) |>
 
 -   Combine analysis with graphs
 
-```{r graph the TRH data after adding dew point, message=FALSE, warning=FALSE, fig.alt="graphTRH"}
+```{r graphTRH_DewPoint, message=FALSE, warning=FALSE, fig.alt="graphTRH"}
 mydata |>
   mutate(DewPoint = calcDP(Temp, RH)) |>
   graph_TRH() + 
@@ -100,7 +100,7 @@ mydata |>
 
 -   Use analysis functions, for example estimate mould growth
 
-```{r use the mould risk function, message=FALSE, warning=FALSE, fig.alt="mould"}
+```{r mould_risk, message=FALSE, warning=FALSE, fig.alt="mould"}
 mydata |>
   calcMould(Temp = "Temp", RH = "RH") |>
   ggplot() +

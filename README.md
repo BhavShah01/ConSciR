@@ -6,12 +6,13 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-ConSciR is an R package specifically designed to assist conservators and
-scientists by providing a toolkit for performing calculations and
-streamlining common tasks in conservation. ConSciR is designed for:
+ConSciR is an R package specifically designed to assist conservators,
+scientists and engineers by providing a toolkit for performing
+calculations and streamlining common tasks in cultural heritage
+conservation. ConSciR is designed for:
 
 - Conservators working in museums, galleries, and heritage sites
-- Conservation scientists and researchers
+- Conservation scientists, engineers and researchers
 - Cultural heritage professionals involved in preventive conservation
 - Students and educators in conservation and heritage science programs
 
@@ -110,7 +111,7 @@ mydata |>
   theme_minimal()
 ```
 
-<img src="man/figures/README-graph the TRH data after adding dew point-1.png" alt="graphTRH" width="100%" />
+<img src="man/figures/README-graphTRH_DewPoint-1.png" alt="graphTRH" width="100%" />
 
 - Use analysis functions, for example estimate mould growth
 
@@ -123,4 +124,4 @@ mydata |>
   theme_minimal()
 ```
 
-<img src="man/figures/README-use the mould risk function-1.png" alt="mould" width="100%" />
+<img src="man/figures/README-mould_risk-1.png" alt="mould" width="100%" />
