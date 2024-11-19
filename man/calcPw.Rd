@@ -7,7 +7,7 @@
 calcPw(Temp, RH)
 }
 \arguments{
-\item{Temp}{Temperature (Celsius)}
+\item{Temp}{Temperature (°Celsius)}
 
 \item{RH}{Relative Humidity (0-100\%)}
 }
@@ -25,9 +25,9 @@ The water vapor pressure (P_w) is calculated using the following equation:
 Where:
 
 \itemize{
-   \item $P_{ws}$ is the saturation vapor pressure.
-   \item $RH$ is the relative humidity in percent.
-   \item $Temp$ is the temperature in degrees Celsius.
+   \item P_ws is the saturation vapor pressure.
+   \item RH is the relative humidity in percent.
+   \item Temp is the temperature in degrees Celsius.
 }
 }
 \examples{
@@ -44,4 +44,13 @@ head(mydata) |> dplyr::mutate(Pw = calcPw(Temp, RH))
 W. Wagner and A. Pru\ß:" The IAPWS Formulation 1995 for the Thermodynamic
 Properties of Ordinary Water Substance for General and Scientific Use ",
 Journal of Physical and Chemical Reference Data, June 2002 ,Volume 31, Issue 2, pp.387535
+}
+\seealso{
+\code{\link{calcMR}} for calculating mixing ratio
+
+\code{\link{calcAD}} for calculating air density
+
+\code{\link{calcPw}} for calculating water vapour pressure
+
+\code{\link{calcPws}} for calculating water vapour saturation pressure
 }

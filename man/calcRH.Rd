@@ -7,9 +7,9 @@
 calcRH(Temp, Abs)
 }
 \arguments{
-\item{Temp}{Temperature (Celsius)}
+\item{Temp}{Temperature (°Celsius)}
 
-\item{Abs}{Absolute Humidity (g/m^3)}
+\item{Abs}{Absolute Humidity (g/m³)}
 }
 \value{
 Relative Humidity (0-100\%). Error increases at extreme temperature and relative humidity.
@@ -40,4 +40,13 @@ calcRH(20, calcAH(20, 50))
 
 
 
+}
+\seealso{
+\code{\link{calcTemp}} for calculating temperature
+
+\code{\link{calcRH_DP}} for calculating relative humidity from dew point
+
+\code{\link{calcDP}} for calculating dew point
+
+\code{\link{calcRH}} for calculating relative humidity from absolute humidity
 }

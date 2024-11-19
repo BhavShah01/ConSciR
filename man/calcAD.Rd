@@ -7,7 +7,7 @@
 calcAD(Temp, RH, P_atm = 1013.25, R_dry = 287.058, R_vap = 461.495)
 }
 \arguments{
-\item{Temp}{Temperature (Celsius)}
+\item{Temp}{Temperature (°Celsius)}
 
 \item{RH}{Relative Humidity (0-100\%)}
 

@@ -7,7 +7,7 @@
 calcHR(Temp, RH, P_atm = 1013.25, B = 621.9907)
 }
 \arguments{
-\item{Temp}{Temperature (Celsius)}
+\item{Temp}{Temperature (°Celsius)}
 
 \item{RH}{Relative Humidity (0-100\%)}
 
@@ -21,19 +21,19 @@ HR Humidity ratio (kg/kg)
 \description{
 Function to calculate humidity ratio from temperature (°C) and relative humidity (\%).
 
-Function uses [calcMR]
+Function uses \code{\link{calcMR}}
 }
 \details{
 The function uses the following steps:
 
-1. Calculate the mixing ratio using the `calcMR` function.
+1. Calculate the mixing ratio using the \code{\link{calcMR}} function.
 2. Convert the mixing ratio to humidity ratio using the formula:
 
    HR = MR / (1 + MR)
 
 Where MR is the mixing ratio and HR is the humidity ratio.
 
-Note: This function requires the `calcMR` function to be available in the environment.
+Note: This function requires the \code{\link{calcMR}} function to be available in the environment.
 }
 \examples{
 calcHR(20, 50)

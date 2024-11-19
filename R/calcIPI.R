@@ -9,7 +9,7 @@
 #' @source Tim Padfield, 2004
 #'
 #'
-#' @param Temp Temperature (Celsius)
+#' @param Temp Temperature (°Celsius)
 #' @param RH Relative Humidity (0-100\%)
 #' @param EA Activation energy E, 95220 J/mol to give the best fit to the cellulose triacetate deterioration data
 #'

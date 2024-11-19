@@ -7,7 +7,7 @@
 calcMR(Temp, RH, P_atm = 1013.25, B = 621.9907)
 }
 \arguments{
-\item{Temp}{Temperature (Celsius)}
+\item{Temp}{Temperature (°Celsius)}
 
 \item{RH}{Relative Humidity (0-100\%)}
 
@@ -25,7 +25,7 @@ If using a dataframe, columns should ideally be named "Temp" and "RH".
 
 X Mixing ratio (mass of water vapour / mass of dry gas)
 
-Pw = Pws(40C) = 73.75 hPa
+Pw = Pws(40°C) = 73.75 hPa
 
 X = 621.9907 B7 73.75/(998-73.75) = 49.63 g/kg
 }

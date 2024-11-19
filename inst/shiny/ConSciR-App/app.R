@@ -1,6 +1,7 @@
 # inst/shiny/ConSciR-App/app.R
 library(shiny)
 library(bslib)
+library(ConSciR)
 
 
 # Load UI and server files

@@ -4,7 +4,7 @@
 #' Function to calculate air density based on temperature (°C), relative humidity in (\%), and atmospheric pressure (hPa).
 #'
 #'
-#' @param Temp Temperature (Celsius)
+#' @param Temp Temperature (°Celsius)
 #' @param RH Relative Humidity (0-100\%)
 #' @param P_atm Atmospheric pressure = 1013.25 (hPa)
 #' @param R_dry Specific gas constant for dry air (J/(kg·K))

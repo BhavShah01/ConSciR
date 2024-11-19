@@ -7,7 +7,7 @@
 calcPws(Temp)
 }
 \arguments{
-\item{Temp}{Temperature (Celsius)}
+\item{Temp}{Temperature (°Celsius)}
 }
 \value{
 Pws, Saturation vapor pressure (hPa). 0.083\% error for T range -20 to +50°C

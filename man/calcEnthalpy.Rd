@@ -7,7 +7,7 @@
 calcEnthalpy(Temp, RH)
 }
 \arguments{
-\item{Temp}{Temperature (Celsius)}
+\item{Temp}{Temperature (°Celsius)}
 
 \item{RH}{Relative Humidity (0-100\%)}
 }
@@ -15,7 +15,7 @@ calcEnthalpy(Temp, RH)
 h Enthalpy (kJ/kg)
 }
 \description{
-Function to calculate enthalpy from temperature in Celsius and relative humidity in \% (0-100).
+Function to calculate enthalpy from temperature (°C) and relative humidity (\%).
 
 If using a dataframe, columns should ideally be named "Temp" and "RH".
 

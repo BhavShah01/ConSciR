@@ -37,7 +37,7 @@
 #' Chemical Reference Data, June 2002 ,Volume 31, Issue 2, pp.387535
 #'
 #'
-#' @param Temp Temperature (Celsius)
+#' @param Temp Temperature (°Celsius)
 #'
 #' @return Pws, Saturation vapor pressure (hPa). 0.083\% error for T range -20 to +50°C
 #' @export

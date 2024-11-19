@@ -36,7 +36,7 @@ You can install the development version of ConSciR from
 [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("pak")
+install.packages("pak")
 pak::pak("BhavShah01/ConSciR")
 ```
 
@@ -110,7 +110,7 @@ mydata |>
   theme_minimal()
 ```
 
-<img src="man/figures/README-graph the TRH data after adding dew point-1.png" alt="graph_TRH_data_dew_point" width="100%" />
+<img src="man/figures/README-graph the TRH data after adding dew point-1.png" alt="graphTRH" width="100%" />
 
 - Use analysis functions, for example estimate mould growth
 
@@ -123,4 +123,4 @@ mydata |>
   theme_minimal()
 ```
 
-<img src="man/figures/README-use the mould risk function-1.png" alt="mould_risk_function" width="100%" />
+<img src="man/figures/README-use the mould risk function-1.png" alt="mould" width="100%" />

@@ -1,7 +1,7 @@
 #' Calculate enthalpy
 #'
 #' @description
-#' Function to calculate enthalpy from temperature in Celsius and relative humidity in \% (0-100).
+#' Function to calculate enthalpy from temperature (°C) and relative humidity (\%).
 #'
 #' If using a dataframe, columns should ideally be named "Temp" and "RH".
 #'
@@ -11,7 +11,7 @@
 #' h = 20 B7 (1.01 + 0.00189 B7 7.26) + 2.5 B7 7.26 = 38.62 kJ/kg
 #'
 #'
-#' @param Temp Temperature (Celsius)
+#' @param Temp Temperature (°Celsius)
 #' @param RH Relative Humidity (0-100\%)
 #'
 #' @return h Enthalpy (kJ/kg)

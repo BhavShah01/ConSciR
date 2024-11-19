@@ -12,10 +12,15 @@
 #' Where:
 #'
 #' \itemize{
-#'    \item $P_{ws}$ is the saturation vapor pressure.
-#'    \item $RH$ is the relative humidity in percent.
-#'    \item $Temp$ is the temperature in degrees Celsius.
+#'    \item P_ws is the saturation vapor pressure.
+#'    \item RH is the relative humidity in percent.
+#'    \item Temp is the temperature in degrees Celsius.
 #' }
+#'
+#' @seealso \code{\link{calcMR}} for calculating mixing ratio
+#' @seealso \code{\link{calcAD}} for calculating air density
+#' @seealso \code{\link{calcPw}} for calculating water vapour pressure
+#' @seealso \code{\link{calcPws}} for calculating water vapour saturation pressure
 #'
 #'
 #' @references
@@ -24,7 +29,7 @@
 #' Journal of Physical and Chemical Reference Data, June 2002 ,Volume 31, Issue 2, pp.387535
 #'
 #'
-#' @param Temp Temperature (Celsius)
+#' @param Temp Temperature (°Celsius)
 #' @param RH Relative Humidity (0-100\%)
 #'
 #' @return Pw, Water Vapour Pressure (hPa)

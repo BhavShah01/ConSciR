@@ -7,13 +7,13 @@
 #'
 #' X Mixing ratio (mass of water vapour / mass of dry gas)
 #'
-#' Pw = Pws(40C) = 73.75 hPa
+#' Pw = Pws(40°C) = 73.75 hPa
 #'
 #' X = 621.9907 B7 73.75/(998-73.75) = 49.63 g/kg
 #'
 #'
 #'
-#' @param Temp Temperature (Celsius)
+#' @param Temp Temperature (°Celsius)
 #' @param RH Relative Humidity (0-100\%)
 #' @param P_atm Atmospheric pressure = 1013.25 (hPa)
 #' @param B B = 621.9907 g/kg for air

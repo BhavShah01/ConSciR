@@ -2,19 +2,19 @@ library(shiny)
 library(bslib)
 
 ui <- page_sidebar(
-  title = "ConSciR example",
+  title = "ConSciR: Tools for Conservation",
   sidebar = sidebar(
-    title = "Select",
-    uiOutput("sel_var")
+    title = "mydata",
   ),
   card(
-    card_header("Histogram"),
-    plotOutput("gg_TRHplot"),
-    plotOutput("gg_histogram")
+    card_header("Graph"),
+    plotOutput("gg_TRHplot")
   ),
 
   card(
-    card_header("Mould"),
-    plotOutput("gg_mould")
-  )
+    card_header("Conservation tools"),
+    plotOutput("gg_mould"),
+    plotOutput("gg_LM"),
+    plotOutput("gg_PI")
+  ),
 )

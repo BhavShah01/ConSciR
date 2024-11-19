@@ -16,11 +16,16 @@
 #'   \item DewP is the dew point temperature in Celsius
 #' }
 #'
+#' @seealso \code{\link{calcTemp}} for calculating temperature
+#' @seealso \code{\link{calcRH_DP}} for calculating relative humidity from dew point
+#' @seealso \code{\link{calcDP}} for calculating dew point
+#' @seealso \code{\link{calcRH}} for calculating relative humidity from absolute humidity
+#'
 #'
 #' @param RH Relative Humidity (0-100\%)
 #' @param DewP Td, Dew Point (Celsius)
 #'
-#' @return Temp, Temperature (Celsius)
+#' @return Temp, Temperature (°Celsius)
 #' @export
 #'
 #' @examples

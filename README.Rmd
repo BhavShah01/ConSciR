@@ -46,7 +46,7 @@ The ConSciR Github page: [**ConSciR Github**](https://github.com/BhavShah01/ConS
 You can install the development version of ConSciR from [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("pak")
+install.packages("pak")
 pak::pak("BhavShah01/ConSciR")
 ```
 -or- 
@@ -90,7 +90,7 @@ head(mydata) |>
 
 -   Combine analysis with graphs
 
-```{r graph the TRH data after adding dew point, message=FALSE, warning=FALSE, fig.alt="graph_TRH_data_dew_point"}
+```{r graph the TRH data after adding dew point, message=FALSE, warning=FALSE, fig.alt="graphTRH"}
 mydata |>
   mutate(DewPoint = calcDP(Temp, RH)) |>
   graph_TRH() + 
@@ -100,7 +100,7 @@ mydata |>
 
 -   Use analysis functions, for example estimate mould growth
 
-```{r use the mould risk function, message=FALSE, warning=FALSE, fig.alt="mould_risk_function"}
+```{r use the mould risk function, message=FALSE, warning=FALSE, fig.alt="mould"}
 mydata |>
   calcMould(Temp = "Temp", RH = "RH") |>
   ggplot() +

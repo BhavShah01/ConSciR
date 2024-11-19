@@ -20,7 +20,7 @@ library(dplyr)
 library(ggplot2)
 ```
 
-This study examines and summarises the relationships between humidity functions, which are important for calculations used by engineers and scientists, for example to understand air conditioning systems.
+The relationships between humidity functions are shown below, which are important for calculations used by engineers and scientists, for example to understand air conditioning systems.
 These functions may play a key role in developing more energy-efficient systems.
 Understanding the stability of these functions is shown, as they underpin many methodologies in this field.
 

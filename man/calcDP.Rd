@@ -10,12 +10,12 @@ https://bmcnoldy.earth.miami.edu/Humidity.html
 calcDP(Temp, RH)
 }
 \arguments{
-\item{Temp}{Temperature (Celsius)}
+\item{Temp}{Temperature (°Celsius)}
 
 \item{RH}{Relative Humidity (0-100\%)}
 }
 \value{
-Td, Dew Point (Celsius)
+Td, Dew Point (°Celsius)
 }
 \description{
 Function to calculate dew point (°C) from temperature (°C) and relative humidity (\%).
@@ -53,4 +53,13 @@ calcDP(20, calcRH(20, calcAH(20, 50)))
 head(mydata) |> dplyr::mutate(DewPoint = calcDP(Temp, RH))
 
 
+}
+\seealso{
+\code{\link{calcTemp}} for calculating temperature
+
+\code{\link{calcRH_DP}} for calculating relative humidity from dew point
+
+\code{\link{calcDP}} for calculating dew point
+
+\code{\link{calcRH}} for calculating relative humidity from absolute humidity
 }

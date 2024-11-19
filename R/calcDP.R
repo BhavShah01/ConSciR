@@ -31,10 +31,15 @@
 #'
 #' @source https://bmcnoldy.earth.miami.edu/Humidity.html
 #'
-#' @param Temp Temperature (Celsius)
+#' @seealso \code{\link{calcTemp}} for calculating temperature
+#' @seealso \code{\link{calcRH_DP}} for calculating relative humidity from dew point
+#' @seealso \code{\link{calcDP}} for calculating dew point
+#' @seealso \code{\link{calcRH}} for calculating relative humidity from absolute humidity
+#'
+#' @param Temp Temperature (°Celsius)
 #' @param RH Relative Humidity (0-100\%)
 #'
-#' @return Td, Dew Point (Celsius)
+#' @return Td, Dew Point (°Celsius)
 #' @export
 #'
 #' @importFrom dplyr mutate

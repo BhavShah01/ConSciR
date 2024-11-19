@@ -7,15 +7,15 @@
 calcAH(Temp, RH)
 }
 \arguments{
-\item{Temp}{Temperature (Celsius)}
+\item{Temp}{Temperature (°Celsius)}
 
 \item{RH}{Relative Humidity (0-100\%)}
 }
 \value{
-AH Absolute Humidity (g/m^3)
+AH Absolute Humidity (g/m³)
 }
 \description{
-Function to calculate the absolute humidity  from temperature (°C) and relative humidity (\%).
+Function to calculate the absolute humidity from temperature (°C) and relative humidity (\%).
 }
 \examples{
 calcAH(20, 50)

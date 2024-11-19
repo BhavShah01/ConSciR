@@ -1,13 +1,13 @@
 #' Calculate absolute humidity
 #'
 #' @description
-#' Function to calculate the absolute humidity  from temperature (°C) and relative humidity (\%).
+#' Function to calculate the absolute humidity from temperature (°C) and relative humidity (\%).
 #'
 #'
-#' @param Temp Temperature (Celsius)
+#' @param Temp Temperature (°Celsius)
 #' @param RH Relative Humidity (0-100\%)
 #'
-#' @return AH Absolute Humidity (g/m^3)
+#' @return AH Absolute Humidity (g/m³)
 #' @export
 #'
 #' @examples

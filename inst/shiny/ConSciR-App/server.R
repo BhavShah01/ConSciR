@@ -2,14 +2,13 @@ library(shiny)
 library(bslib)
 library(ggplot2)
 library(dplyr)
-library(magrittr)
 library(ConSciR)
 
 
 server <- function(input, output) {
 
-  mydata <- reactive({
-    mydata %>%
+  mydata_ <- reactive({
+    mydata |>
       mutate(
         AbsHum = calcAH(Temp, RH),
         DewPoint = calcDP(Temp, RH),
@@ -17,36 +16,40 @@ server <- function(input, output) {
         Pw = calcPw(Temp, RH),
         Pws = calcPws(Temp),
         LifeTime = calcLM(Temp, RH),
-        PI = calcPI(Temp,)
+        PI = calcPI(Temp, RH)
       )
   })
 
-  output$sel_var <- renderUI({
-    varSelectInput(
-      "sel_var", "Select variable",
-      dplyr::select_if(mydata(), is.numeric)
-    )
-  })
-
   output$gg_TRHplot <- renderPlot({
-    mydata() %>%
-      ggplot() +
-      geom_line(aes(Date, Temp), col = "red", alpha = 0.7) +
-      geom_line(aes(Date, RH), col = "blue", alpha = 0.7) +
+    mydata |>
+      graph_TRH() +
       theme_bw()
-  })
-  output$gg_histogram <- renderPlot({
-    mydata() %>%
-      ggplot() +
-      geom_histogram(aes(!!input$sel_var)) +
-      theme_bw(base_size = 20)
   })
 
   output$gg_mould <- renderPlot({
-    mydata() %>%
+    mydata |>
       calcMould(Temp = "Temp", RH = "RH") |>
-      graph_TRH() +
-      geom_area(aes(Date, mould_prob * 1000), col = "darkgreen") +
+      ggplot() +
+      geom_line(aes(Date, mould), col = "darkgreen") +
+      labs(title = "Mould risk") +
+      theme_minimal()
+  })
+
+  output$gg_LM <- renderPlot({
+    mydata |>
+      mutate(LifeTime = calcLM(Temp, RH)) |>
+      ggplot() +
+      geom_line(aes(Date, LifeTime, col = LifeTime)) +
+      labs(title = "Lifetime Multiplier") +
+      theme_minimal()
+  })
+
+  output$gg_PI <- renderPlot({
+    mydata |>
+      mutate(PI = calcPI(Temp, RH)) |>
+      ggplot() +
+      geom_line(aes(Date, PI, col = PI)) +
+      labs(title = "Preservation Index") +
       theme_minimal()
   })
 

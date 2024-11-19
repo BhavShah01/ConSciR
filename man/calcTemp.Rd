@@ -12,7 +12,7 @@ calcTemp(RH, DewP)
 \item{DewP}{Td, Dew Point (Celsius)}
 }
 \value{
-Temp, Temperature (Celsius)
+Temp, Temperature (°Celsius)
 }
 \description{
 This function calculates the temperature (°C) from relative humidity (\%) and dew point temperature (°C).
@@ -39,4 +39,13 @@ calcTemp(50, calcDP(20, 50))
 head(mydata) |> dplyr::mutate(DewPoint = calcDP(Temp, RH), Temp2 = calcTemp(RH, DewPoint))
 
 
+}
+\seealso{
+\code{\link{calcTemp}} for calculating temperature
+
+\code{\link{calcRH_DP}} for calculating relative humidity from dew point
+
+\code{\link{calcDP}} for calculating dew point
+
+\code{\link{calcRH}} for calculating relative humidity from absolute humidity
 }
