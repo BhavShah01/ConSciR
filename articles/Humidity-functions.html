@@ -158,7 +158,7 @@ saturation pressure, and actual water vapor pressure.</p>
 <span>    Pws <span class="op">=</span> <span class="fu"><a href="../reference/calcPws.html">calcPws</a></span><span class="op">(</span><span class="va">Temp</span><span class="op">)</span>, </span>
 <span>    Pw <span class="op">=</span> <span class="fu"><a href="../reference/calcPw.html">calcPw</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>, </span>
 <span>    Temp_calc <span class="op">=</span> <span class="fu"><a href="../reference/calcTemp.html">calcTemp</a></span><span class="op">(</span><span class="va">RH</span>, <span class="va">DewPoint</span><span class="op">)</span>,</span>
-<span>    RH_AH_calc <span class="op">=</span> <span class="fu"><a href="../reference/calcRH.html">calcRH</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">Abs</span><span class="op">)</span>,</span>
+<span>    RH_AH_calc <span class="op">=</span> <span class="fu"><a href="../reference/calcRH_AH.html">calcRH_AH</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">Abs</span><span class="op">)</span>,</span>
 <span>    RH_DP_calc <span class="op">=</span> <span class="fu"><a href="../reference/calcRH_DP.html">calcRH_DP</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">DewPoint</span><span class="op">)</span></span>
 <span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -238,7 +238,7 @@ moving it away decreases RH.</li>
 <span>        <span class="co"># Check</span></span>
 <span>        AHcheck <span class="op">=</span> <span class="va">AHstar</span> <span class="op">-</span> <span class="op">(</span><span class="va">AH</span> <span class="op">+</span> <span class="va">dAH</span><span class="op">)</span>, </span>
 <span>        <span class="co"># RH*: RH star - the new RH using AH* and measured temperature</span></span>
-<span>        RHstarAH <span class="op">=</span> <span class="fu"><a href="../reference/calcRH.html">calcRH</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">AHstar</span><span class="op">)</span>, </span>
+<span>        RHstarAH <span class="op">=</span> <span class="fu"><a href="../reference/calcRH_AH.html">calcRH_AH</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">AHstar</span><span class="op">)</span>, </span>
 <span>        <span class="co"># Difference from target</span></span>
 <span>        RHerrorAH <span class="op">=</span> <span class="va">RHstarAH</span> <span class="op">-</span> <span class="va">tRH</span>, </span>
 <span>        <span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -369,7 +369,7 @@ humidity and dew point.</p>
 <div class="section level3">
 <h3 id="relative-humidity">Relative Humidity<a class="anchor" aria-label="anchor" href="#relative-humidity"></a>
 </h3>
-<p><code>calcRH</code> and <code>calcRH_DP</code></p>
+<p><code>calcRH_AH</code> and <code>calcRH_DP</code></p>
 <p>This section investigates relative humidity calculations using
 derivations from dew point and absolute humidity. Contour plots
 demonstrate the relationships between calculated and original relative
@@ -405,7 +405,7 @@ humidity values and the errors.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">TRHgrid</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>RH_AHcalc <span class="op">=</span> <span class="fu"><a href="../reference/calcRH.html">calcRH</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="fu"><a href="../reference/calcAH.html">calcAH</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>RH_AHcalc <span class="op">=</span> <span class="fu"><a href="../reference/calcRH_AH.html">calcRH_AH</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="fu"><a href="../reference/calcAH.html">calcAH</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span>, z <span class="op">=</span> <span class="va">RH_AHcalc</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour_filled</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">20</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Calculated humidity via absolute humidity vs actual"</span>, </span>
@@ -415,7 +415,7 @@ humidity values and the errors.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">TRHgrid</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>RH_AH_error <span class="op">=</span> <span class="fu"><a href="../reference/calcRH.html">calcRH</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="fu"><a href="../reference/calcAH.html">calcAH</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span><span class="op">)</span> <span class="op">-</span> <span class="va">RH</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>RH_AH_error <span class="op">=</span> <span class="fu"><a href="../reference/calcRH_AH.html">calcRH_AH</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="fu"><a href="../reference/calcAH.html">calcAH</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span><span class="op">)</span> <span class="op">-</span> <span class="va">RH</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span>, z <span class="op">=</span> <span class="va">RH_AH_error</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Calculated humidity via absolute humidity vs actual"</span>, </span>
 <span>       subtitle <span class="op">=</span> <span class="st">"calcAH(Temp, RH) &gt; Absolute humidity &gt; RHcalc - RH (original)"</span><span class="op">)</span> <span class="op">+</span></span>
