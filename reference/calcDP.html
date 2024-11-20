@@ -54,10 +54,6 @@
     </div>
 
     <div class="section level2">
-    <h2 id="source">Source<a class="anchor" aria-label="anchor" href="#source"></a></h2>
-    <p>https://bmcnoldy.earth.miami.edu/Humidity.html</p>
-    </div>
-    <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
@@ -77,7 +73,6 @@
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The dew point is calculated using the following equation derived from the August-Roche-Magnus approximation:</p>
 <p>$$T_d\left(DewP\right)=\frac{234.04\times\log\left(\frac{RH}{100}\right)+\frac{17.625\times Temp}{243.04+Temp}}{17.625-\log\left(\frac{RH}{100}\right)-\frac{17.625\times Temp}{243.04+Temp}}$$</p>
-
 <p>Where:</p>
 <ul><li><p>T_d is the dew point temperature in degrees Celsius.</p></li>
 <li><p>Temp is the air temperature in degrees Celsius.</p></li>
@@ -92,11 +87,17 @@
     <p>The Arden Buck equation is also available in the source R code.</p>
     </div>
     <div class="section level2">
+    <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
+    <p>Alduchov, O. A., and R. E. Eskridge, 1996: Improved Magnus' form approximation of saturation
+vapor pressure. J. Appl. Meteor., 35, 601–609</p>
+<p>https://bmcnoldy.earth.miami.edu/Humidity.html</p>
+    </div>
+    <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="calcTemp.html">calcTemp</a></code> for calculating temperature</p>
 <p><code><a href="calcRH_DP.html">calcRH_DP</a></code> for calculating relative humidity from dew point</p>
 <p><code>calcDP</code> for calculating dew point</p>
-<p><code>calcRH</code> for calculating relative humidity from absolute humidity</p></div>
+<p><code><a href="calcRH_AH.html">calcRH_AH</a></code> for calculating relative humidity from absolute humidity</p></div>
     </div>
 
     <div class="section level2">
@@ -104,8 +105,8 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">calcDP</span><span class="op">(</span><span class="fl">20</span>, <span class="fl">50</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 9.261107</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">calcDP</span><span class="op">(</span><span class="fl">20</span>, <span class="fu">calcRH</span><span class="op">(</span><span class="fl">20</span>, <span class="fu"><a href="calcAH.html">calcAH</a></span><span class="op">(</span><span class="fl">20</span>, <span class="fl">50</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in calcRH(20, calcAH(20, 50)):</span> could not find function "calcRH"</span>
+<span class="r-in"><span><span class="fu">calcDP</span><span class="op">(</span><span class="fl">20</span>, <span class="fu"><a href="calcRH_AH.html">calcRH_AH</a></span><span class="op">(</span><span class="fl">20</span>, <span class="fu"><a href="calcAH.html">calcAH</a></span><span class="op">(</span><span class="fl">20</span>, <span class="fl">50</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 9.261107</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mydata</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>DewPoint <span class="op">=</span> <span class="fu">calcDP</span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 6</span></span>

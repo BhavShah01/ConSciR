@@ -50,7 +50,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">calcRH_AH</span><span class="op">(</span><span class="va">Temp</span>, <span class="va">Abs</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">calcRH_AH</span><span class="op">(</span><span class="va">Temp</span>, <span class="va">Abs</span>, P_atm <span class="op">=</span> <span class="fl">1013.25</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -64,28 +64,47 @@
 <dt id="arg-abs">Abs<a class="anchor" aria-label="anchor" href="#arg-abs"></a></dt>
 <dd><p>Absolute Humidity (g/m³)</p></dd>
 
+
+<dt id="arg-p-atm">P_atm<a class="anchor" aria-label="anchor" href="#arg-p-atm"></a></dt>
+<dd><p>Atmospheric pressure = 1013.25 (hPa)</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Relative Humidity (0-100%). Error increases at extreme temperature and relative humidity.</p>
+    <p>Relative Humidity (0-100%)</p>
+    </div>
+    <div class="section level2">
+    <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
+    <p>Buck, A. L. (1981). New equations for computing vapor pressure and enhancement factor.
+Journal of Applied Meteorology, 20(12), 1527-1532.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="calcTemp.html">calcTemp</a></code> for calculating temperature</p>
+    <div class="dont-index"><p><code><a href="calcAH.html">calcAH</a></code> for calculating absolute humidity</p>
+<p><code><a href="calcTemp.html">calcTemp</a></code> for calculating temperature</p>
 <p><code><a href="calcRH_DP.html">calcRH_DP</a></code> for calculating relative humidity from dew point</p>
-<p><code><a href="calcDP.html">calcDP</a></code> for calculating dew point</p>
-<p><code>calcRH</code> for calculating relative humidity from absolute humidity</p></div>
+<p><code><a href="calcDP.html">calcDP</a></code> for calculating dew point</p></div>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Calculate RH for temperature of 20°C and absolute humidity of 8.645471 g/m³</span></span></span>
-<span class="r-in"><span><span class="fu">calcRH_AH</span><span class="op">(</span><span class="fl">20</span>, <span class="fl">8.645471</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 50.08653</span>
+<span class="r-in"><span><span class="fu">calcRH_AH</span><span class="op">(</span><span class="fl">20</span>, <span class="fl">8.630534</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 50</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">calcRH_AH</span><span class="op">(</span><span class="fl">20</span>, <span class="fu"><a href="calcAH.html">calcAH</a></span><span class="op">(</span><span class="fl">20</span>, <span class="fl">50</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 49.99999</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 50</span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mydata</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Abs <span class="op">=</span> <span class="fu"><a href="calcAH.html">calcAH</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>, RH2 <span class="op">=</span> <span class="fu">calcRH_AH</span><span class="op">(</span><span class="va">Temp</span>, <span class="va">Abs</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 7</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Site   Sensor Date                 Temp    RH   Abs   RH2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> London Room 1 2024-01-01 <span style="color: #949494;">00:00:00</span>  21.8  36.8  7.05  36.8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> London Room 1 2024-01-01 <span style="color: #949494;">00:15:00</span>  21.8  36.7  7.03  36.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> London Room 1 2024-01-01 <span style="color: #949494;">00:29:59</span>  21.8  36.6  7.01  36.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> London Room 1 2024-01-01 <span style="color: #949494;">00:44:59</span>  21.7  36.6  6.97  36.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> London Room 1 2024-01-01 <span style="color: #949494;">00:59:59</span>  21.7  36.5  6.95  36.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> London Room 1 2024-01-01 <span style="color: #949494;">01:14:59</span>  21.7  36.2  6.90  36.2</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
