@@ -106,6 +106,6 @@ mydata |>
   ggplot() +
   geom_area(aes(Date, mould), fill = "darkgreen", size = 1) +
   labs(title = "Probabilty of mould", x = "", y = "Mould risk") + 
-  theme_minimal()
+  theme_bw()
 ```
 

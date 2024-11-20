@@ -9,7 +9,7 @@ calcPws(Temp, P_atm = 1013.25, method = "IAPWS")
 \arguments{
 \item{Temp}{Temperature (°Celsius)}
 
-\item{P_atm}{Atmospheric pressure (hPa). Default is 1013.25 hPa.}
+\item{P_atm}{Atmospheric pressure = 1013.25 (hPa)}
 
 \item{method}{Character. Method to use for calculation. Options are "IAPWS" (default) or "Magnus".}
 }

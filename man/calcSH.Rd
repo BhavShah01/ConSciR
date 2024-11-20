@@ -36,7 +36,7 @@ Academic Press, 2nd edition.
 \seealso{
 \code{\link{calcAD}} for calculating air density
 
-\code{\link{calcAh}} for calculating absolute humidity
+\code{\link{calcAH}} for calculating absolute humidity
 
 \code{\link{calcPw}} for calculating water vapour pressure
 

@@ -23,7 +23,12 @@ Useful links:
 
 Authors:
 \itemize{
-  \item Annelies Cosaert (\href{https://orcid.org/0000-0000-0000-0000}{ORCID})
+  \item Annelies Cosaert (\href{https://orcid.org/0009-0004-1269-4465}{ORCID})
+}
+
+Other contributors:
+\itemize{
+  \item test test [contributor]
 }
 
 }

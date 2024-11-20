@@ -121,7 +121,7 @@ mydata |>
   ggplot() +
   geom_area(aes(Date, mould), fill = "darkgreen", size = 1) +
   labs(title = "Probabilty of mould", x = "", y = "Mould risk") + 
-  theme_minimal()
+  theme_bw()
 ```
 
 <img src="man/figures/README-mould_risk-1.png" alt="mould" width="100%" />

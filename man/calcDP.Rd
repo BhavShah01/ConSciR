@@ -3,9 +3,6 @@
 \name{calcDP}
 \alias{calcDP}
 \title{Calculate Dew Point}
-\source{
-https://bmcnoldy.earth.miami.edu/Humidity.html
-}
 \usage{
 calcDP(Temp, RH)
 }
@@ -24,7 +21,6 @@ Function to calculate dew point (°C) from temperature (°C) and relative humidi
 The dew point is calculated using the following equation derived from the August-Roche-Magnus approximation:
 
 \deqn{T_d\left(DewP\right)=\frac{234.04\times\log\left(\frac{RH}{100}\right)+\frac{17.625\times Temp}{243.04+Temp}}{17.625-\log\left(\frac{RH}{100}\right)-\frac{17.625\times Temp}{243.04+Temp}}}
-
 
 Where:
 
@@ -48,11 +44,17 @@ The Arden Buck equation is also available in the source R code.
 \examples{
 calcDP(20, 50)
 
-calcDP(20, calcRH(20, calcAH(20, 50)))
+calcDP(20, calcRH_AH(20, calcAH(20, 50)))
 
 head(mydata) |> dplyr::mutate(DewPoint = calcDP(Temp, RH))
 
 
+}
+\references{
+Alduchov, O. A., and R. E. Eskridge, 1996: Improved Magnus' form approximation of saturation
+vapor pressure. J. Appl. Meteor., 35, 601–609
+
+https://bmcnoldy.earth.miami.edu/Humidity.html
 }
 \seealso{
 \code{\link{calcTemp}} for calculating temperature
@@ -61,5 +63,5 @@ head(mydata) |> dplyr::mutate(DewPoint = calcDP(Temp, RH))
 
 \code{\link{calcDP}} for calculating dew point
 
-\code{\link{calcRH}} for calculating relative humidity from absolute humidity
+\code{\link{calcRH_AH}} for calculating relative humidity from absolute humidity
 }

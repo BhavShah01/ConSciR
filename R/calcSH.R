@@ -11,7 +11,7 @@
 #'
 #'
 #' @seealso \code{\link{calcAD}} for calculating air density
-#' @seealso \code{\link{calcAh}} for calculating absolute humidity
+#' @seealso \code{\link{calcAH}} for calculating absolute humidity
 #' @seealso \code{\link{calcPw}} for calculating water vapour pressure
 #' @seealso \code{\link{calcPws}} for calculating water vapour saturation pressure
 #'

@@ -2,7 +2,7 @@
 title: "ConSciR"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{ConSciR-Intro}
+  %\VignetteIndexEntry{ConSciR}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

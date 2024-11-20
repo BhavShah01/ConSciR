@@ -32,7 +32,7 @@
 #'
 #'
 #' @param Temp Temperature (°Celsius)
-#' @param P_atm Atmospheric pressure (hPa). Default is 1013.25 hPa.
+#' @param P_atm Atmospheric pressure = 1013.25 (hPa)
 #' @param method Character. Method to use for calculation. Options are "IAPWS" (default) or "Magnus".
 #'
 #' @return Pws, Saturation vapor pressure (hPa)

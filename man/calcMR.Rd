@@ -19,7 +19,7 @@ calcMR(Temp, RH, P_atm = 1013.25, B = 621.9907)
 X Mixing ratio, mass of water vapour / mass of dry gas (g/kg)
 }
 \description{
-Function to calculate mixing ratio from temperature (°C) and relative humidity (\%).
+Function to calculate mixing ratio (g/kg) from temperature (°C) and relative humidity (\%).
 
 Mixing Ratio is the ratio of water vapour mass to the mass of dry gas.
 }

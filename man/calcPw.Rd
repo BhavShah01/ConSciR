@@ -35,7 +35,7 @@ Where:
 \examples{
 calcPw(20, 50)
 
-#' #' # Calculate relative humidity at 50\%RH
+# Calculate relative humidity at 50\%RH
 calcPw(20, 50) / calcPws(20) * 100
 
 head(mydata) |> dplyr::mutate(Pw = calcPw(Temp, RH))

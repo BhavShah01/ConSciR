@@ -1,7 +1,7 @@
 #' Calculate Mixing Ratio
 #'
 #' @description
-#' Function to calculate mixing ratio from temperature (°C) and relative humidity (\%).
+#' Function to calculate mixing ratio (g/kg) from temperature (°C) and relative humidity (\%).
 #'
 #' Mixing Ratio is the ratio of water vapour mass to the mass of dry gas.
 #'

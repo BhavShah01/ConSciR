@@ -43,9 +43,9 @@ head(mydata) |> dplyr::mutate(DewPoint = calcDP(Temp, RH), Temp2 = calcTemp(RH, 
 \seealso{
 \code{\link{calcTemp}} for calculating temperature
 
-\code{\link{calcRH_DP}} for calculating relative humidity from dew point
-
 \code{\link{calcDP}} for calculating dew point
 
-\code{\link{calcRH}} for calculating relative humidity from absolute humidity
+\code{\link{calcRH_DP}} for calculating relative humidity from dew point
+
+\code{\link{calcRH_AH}} for calculating relative humidity from absolute humidity
 }

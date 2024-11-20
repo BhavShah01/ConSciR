@@ -206,7 +206,7 @@ TRHgrid |>
   geom_contour_filled(bins = 20, breaks = seq(-50, 100, 10)) +
   labs(title = "Calculated temperature vs actual", 
        subtitle = "calcDP(Temp, RH) > DewPoint > TempCalc") + 
-  theme_minimal()
+  theme_bw()
 ```
 
 Visualisation of the temperature calculation against the original temperature and relative humidity.
@@ -223,7 +223,7 @@ TRHgrid |>
   geom_contour_filled(bins = 20) + 
   labs(title = "Difference between calculated temperature vs actual", 
        subtitle = "calcDP(Temp, RH) > DewPoint > TempCalc - Temp (original)") + 
-  theme_minimal()
+  theme_bw()
 
 ```
 
@@ -245,7 +245,7 @@ TRHgrid |>
   geom_contour_filled(bins = 20, breaks = seq(0, 100, 5)) + 
   labs(title = "Calculated humidity via dew point vs actual", 
        subtitle = "calcDP(Temp, RH) > DewPoint > RHcalc") + 
-  theme_minimal()
+  theme_bw()
 
 
 TRHgrid |>
@@ -258,7 +258,7 @@ TRHgrid |>
   labs(title = "Calculated humidity vs actual", 
        subtitle = "calcDP(Temp, RH) > DewPoint > RHcalc - RH (original)") +
   geom_contour_filled(bins = 20) + 
-  theme_minimal()
+  theme_bw()
 
 
 ```
@@ -271,7 +271,7 @@ TRHgrid |>
   geom_contour_filled(bins = 20, breaks = seq(0, 100, 5)) + 
   labs(title = "Calculated humidity via absolute humidity vs actual", 
        subtitle = "calcAH(Temp, RH) > Absolute humidity > RHcalc - RH (original)") +
-  theme_minimal()
+  theme_bw()
 
 TRHgrid |>
   mutate(RH_AH_error = calcRH_AH(Temp, calcAH(Temp, RH)) - RH) |>
@@ -279,12 +279,10 @@ TRHgrid |>
   labs(title = "Calculated humidity via absolute humidity vs actual", 
        subtitle = "calcAH(Temp, RH) > Absolute humidity > RHcalc - RH (original)") +
   geom_contour_filled(bins = 20) + 
-  theme_minimal()
+  theme_bw()
   
 ```
 
-Using absolute humidity generates errors at low temperatures and high relative humidities that may become significant or exponentiate if used in machine learning applications.
-It is recommended to be wary when using the `calcAH` function at low temperature and high relative humidity.
 
 ### Absolute humidity 
 
@@ -298,7 +296,7 @@ TRHgrid |>
   mutate(AH = calcAH(Temp, RH)) |>
   ggplot(aes(Temp, RH, z = AH)) + 
   geom_contour_filled(bins = 20) + 
-  theme_minimal()
+  theme_bw()
 
 ```
 
@@ -314,7 +312,7 @@ TRHgrid |>
   mutate(DP = calcDP(Temp, RH)) |>
   ggplot(aes(Temp, RH, z = DP)) + 
   geom_contour_filled(bins = 20) + 
-  theme_minimal()
+  theme_bw()
 
 ```
 
@@ -331,7 +329,7 @@ TRHgrid |>
   mutate(Pws = calcPws(Temp)) |>
   ggplot(aes(Temp, RH, z = Pws)) + 
   geom_contour_filled(bins = 20) + 
-  theme_minimal()
+  theme_bw()
 
 ```
 
@@ -347,7 +345,7 @@ TRHgrid |>
   mutate(Pw = calcPw(Temp, RH)) |>
   ggplot(aes(Temp, RH, z = Pw)) + 
   geom_contour_filled(bins = 20) + 
-  theme_minimal()
+  theme_bw()
 
 ```
 
@@ -361,13 +359,13 @@ TRHgrid |>
   mutate(MR = calcMR(Temp, RH)) |>
   ggplot(aes(Temp, RH, z = MR)) + 
   geom_contour_filled(bins = 20) + 
-  theme_minimal()
+  theme_bw()
 
 TRHgrid |>
   mutate(MR_log10 = calcMR(Temp, RH) |> log10()) |>
   ggplot(aes(Temp, RH, z = MR_log10)) + 
   geom_contour_filled(bins = 20) + 
-  theme_minimal()
+  theme_bw()
 
 ```
 
@@ -381,12 +379,12 @@ TRHgrid |>
   mutate(Enthalpy = calcEnthalpy(Temp, RH)) |>
   ggplot(aes(Temp, RH, z = Enthalpy)) + 
   geom_contour_filled(bins = 20) + 
-  theme_minimal()
+  theme_bw()
 
 TRHgrid |>
   mutate(Enthalpy_log10 = calcEnthalpy(Temp, RH) |> log10()) |>
   ggplot(aes(Temp, RH, z = Enthalpy_log10)) + 
   geom_contour_filled(bins = 20) + 
-  theme_minimal()
+  theme_bw()
 
 ```

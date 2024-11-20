@@ -19,7 +19,9 @@ calcHR(Temp, RH, P_atm = 1013.25, B = 621.9907)
 HR Humidity ratio (g/kg)
 }
 \description{
-Function to calculate humidity ratio from temperature (°C) and relative humidity (\%).
+Function to calculate humidity ratio (g/kg) from temperature (°C) and relative humidity (\%).
+
+Humidity ratio is the mass of water vapor present in a given volume of air relative to the mass of dry air.
 
 Function uses \code{\link{calcMR}}
 }

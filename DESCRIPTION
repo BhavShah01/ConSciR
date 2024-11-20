@@ -6,7 +6,9 @@ Authors@R: c(
     person("Bhavesh", "Shah", , "bhaveshshah01@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-8673-0589")),
     person("Annelies", "Cosaert", , "", role = c("aut"),
-           comment = c(ORCID = "0000-0000-0000-0000"))
+           comment = c(ORCID = "0009-0004-1269-4465")), 
+    person("test", "test", , "", role = c("ctb"), 
+           comment = c(ORCID = ""))
   )
 Maintainer: Bhavesh Shah <bhaveshshah01@gmail.com>
 Description: Data science toolbox for conservation science.

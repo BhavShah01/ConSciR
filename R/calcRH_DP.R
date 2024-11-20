@@ -3,6 +3,7 @@
 #' @description
 #' Function to calculate relative humidity (\%) from temperature (°C) and dew point (°C)
 #'
+#'
 #' @details
 #' The relative humidity is calculated using the following equation derived from the August-Roche-Magnus approximation:
 #'
@@ -16,12 +17,16 @@
 #'   \item DewP is the dew point temperature in °C
 #' }
 #'
-#' @source https://bmcnoldy.earth.miami.edu/Humidity.html
+#' @references
+#' Alduchov, O. A., and R. E. Eskridge, 1996: Improved Magnus' form approximation of
+#' saturation vapor pressure. J. Appl. Meteor., 35, 601-609.
+#'
+#' https://bmcnoldy.earth.miami.edu/Humidity.html
 #'
 #' @seealso \code{\link{calcTemp}} for calculating temperature
-#' @seealso \code{\link{calcRH_DP}} for calculating relative humidity from dew point
 #' @seealso \code{\link{calcDP}} for calculating dew point
-#' @seealso \code{\link{calcRH}} for calculating relative humidity from absolute humidity
+#' @seealso \code{\link{calcRH_AH}} for calculating relative humidity from absolute humidity
+#' @seealso \code{\link{calcRH_DP}} for calculating relative humidity from dew point
 #'
 #' @param Temp Temperature (°Celsius)
 #' @param DewP Td, Dew Point (°Celsius)

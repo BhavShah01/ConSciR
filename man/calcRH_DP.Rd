@@ -3,9 +3,6 @@
 \name{calcRH_DP}
 \alias{calcRH_DP}
 \title{Calculate Relative Humidity from temperature and dew point}
-\source{
-https://bmcnoldy.earth.miami.edu/Humidity.html
-}
 \usage{
 calcRH_DP(Temp, DewP)
 }
@@ -43,12 +40,18 @@ head(mydata) |> dplyr::mutate(DewPoint = calcDP(Temp, RH), RH2 = calcRH_DP(Temp,
 
 
 }
+\references{
+Alduchov, O. A., and R. E. Eskridge, 1996: Improved Magnus' form approximation of
+saturation vapor pressure. J. Appl. Meteor., 35, 601-609.
+
+https://bmcnoldy.earth.miami.edu/Humidity.html
+}
 \seealso{
 \code{\link{calcTemp}} for calculating temperature
 
-\code{\link{calcRH_DP}} for calculating relative humidity from dew point
-
 \code{\link{calcDP}} for calculating dew point
 
-\code{\link{calcRH}} for calculating relative humidity from absolute humidity
+\code{\link{calcRH_AH}} for calculating relative humidity from absolute humidity
+
+\code{\link{calcRH_DP}} for calculating relative humidity from dew point
 }

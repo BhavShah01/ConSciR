@@ -9,7 +9,6 @@
 #'
 #' \deqn{T_d\left(DewP\right)=\frac{234.04\times\log\left(\frac{RH}{100}\right)+\frac{17.625\times Temp}{243.04+Temp}}{17.625-\log\left(\frac{RH}{100}\right)-\frac{17.625\times Temp}{243.04+Temp}}}
 #'
-#'
 #' Where:
 #'
 #' \itemize{
@@ -26,15 +25,19 @@
 #'    \item 0°C < Td < 50°C
 #' }
 #'
-#'
 #' @note The Arden Buck equation is also available in the source R code.
 #'
-#' @source https://bmcnoldy.earth.miami.edu/Humidity.html
+#' @references
+#' Alduchov, O. A., and R. E. Eskridge, 1996: Improved Magnus' form approximation of saturation
+#' vapor pressure. J. Appl. Meteor., 35, 601–609
+#'
+#' https://bmcnoldy.earth.miami.edu/Humidity.html
+#'
 #'
 #' @seealso \code{\link{calcTemp}} for calculating temperature
 #' @seealso \code{\link{calcRH_DP}} for calculating relative humidity from dew point
 #' @seealso \code{\link{calcDP}} for calculating dew point
-#' @seealso \code{\link{calcRH}} for calculating relative humidity from absolute humidity
+#' @seealso \code{\link{calcRH_AH}} for calculating relative humidity from absolute humidity
 #'
 #' @param Temp Temperature (°Celsius)
 #' @param RH Relative Humidity (0-100\%)
@@ -47,7 +50,7 @@
 #' @examples
 #' calcDP(20, 50)
 #'
-#' calcDP(20, calcRH(20, calcAH(20, 50)))
+#' calcDP(20, calcRH_AH(20, calcAH(20, 50)))
 #'
 #' head(mydata) |> dplyr::mutate(DewPoint = calcDP(Temp, RH))
 #'
