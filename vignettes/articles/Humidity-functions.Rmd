@@ -387,7 +387,7 @@ TRHgrid |>
 
 ```
 
-### Humidity ration
+### Humidity ratio
 
 `calcHR`
 

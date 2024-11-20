@@ -15,8 +15,8 @@ conservation. ConSciR is designed for:
 - Conservation scientists, engineers and researchers
 - Cultural heritage professionals involved in preventive conservation
 - Students and educators in conservation and heritage science programs
-- FAIR: ConSciR is designed to be findable, accessible, interoperatable
-  and resuable.
+- FAIR: ConSciR is designed to be findable, accessible, interoperable
+  and reusable
 
 Learn more about ConSciR here: [**ConSciR
 webpage**](https://bhavshah01.github.io/ConSciR/)
@@ -26,10 +26,9 @@ Github**](https://github.com/BhavShah01/ConSciR)
 
 ## Tools available
 
-- Calculations: dew point, absolute humidity, water vapour pressure,
-  mixing ratio, enthalpy
+- Calculations: humidity calculations, conservator tools
 - Graphs: TRH plots, psychometric chart
-- Summaries: percentiles
+- Summaries:  
 - Analysis:
 - Tidying data:
 

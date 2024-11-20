@@ -18,15 +18,14 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-ConSciR is an R package specifically designed to assist conservators and scientists by providing a toolkit for performing calculations and streamlining common tasks in conservation. 
+ConSciR is an R package specifically designed to assist conservators, scientists and engineers by providing a toolkit for performing calculations and streamlining common tasks in cultural heritage conservation.
 
 
 ## Tools available 
 
-
--   Calculations: humidity calculations, conservation tools (lifetime, mould, preservation index, etc)
+-   Calculations: humidity calculations, conservator tools 
 -   Graphs: TRH plots, psychometric chart
--   Summaries: percentiles 
+-   Summaries:  
 -   Analysis: 
 -   Tidying data: 
 
