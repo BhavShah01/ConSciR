@@ -24,7 +24,7 @@ ConSciR is an R package specifically designed to assist conservators and scienti
 ## Tools available 
 
 
--   Calculations: dew point, absolute humidity, water vapour pressure, mixing ratio, enthalpy
+-   Calculations: humidity calculations, conservation tools (lifetime, mould, preservation index, etc)
 -   Graphs: TRH plots, psychometric chart
 -   Summaries: percentiles 
 -   Analysis: 

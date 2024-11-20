@@ -15,6 +15,8 @@ conservation. ConSciR is designed for:
 - Conservation scientists, engineers and researchers
 - Cultural heritage professionals involved in preventive conservation
 - Students and educators in conservation and heritage science programs
+- FAIR: ConSciR is designed to be findable, accessible, interoperatable
+  and resuable.
 
 Learn more about ConSciR here: [**ConSciR
 webpage**](https://bhavshah01.github.io/ConSciR/)

@@ -300,6 +300,23 @@ TRHgrid |>
 
 ```
 
+### Specific humidity
+
+`calcSH`
+
+```{r}
+
+TRHgrid |>
+  mutate(SpecificHumidity = calcSH(Temp, RH)) |>
+  ggplot(aes(Temp, RH, z = SpecificHumidity)) + 
+  geom_contour_filled(bins = 20) + 
+  theme_bw()
+
+```
+
+
+
+
 ### Dew Point 
 
 `calcDP`
@@ -315,6 +332,7 @@ TRHgrid |>
   theme_bw()
 
 ```
+
 
 ### Water vapour saturation pressure 
 
@@ -368,6 +386,36 @@ TRHgrid |>
   theme_bw()
 
 ```
+
+### Humidity ration
+
+`calcHR`
+
+```{r}
+
+TRHgrid |>
+  mutate(HumidityRatio = calcHR(Temp, RH)) |>
+  ggplot(aes(Temp, RH, z = HumidityRatio)) + 
+  geom_contour_filled(bins = 20) + 
+  theme_bw()
+
+```
+
+
+### Air density
+
+`calcAD`
+
+```{r}
+
+TRHgrid |>
+  mutate(AirDensity = calcAD(Temp, RH)) |>
+  ggplot(aes(Temp, RH, z = AirDensity)) + 
+  geom_contour_filled(bins = 20) + 
+  theme_bw()
+
+```
+
 
 ### Enthalpy 
 
