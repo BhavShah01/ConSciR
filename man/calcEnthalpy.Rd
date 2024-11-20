@@ -2,7 +2,7 @@
 % Please edit documentation in R/calcEnthalpy.R
 \name{calcEnthalpy}
 \alias{calcEnthalpy}
-\title{Calculate enthalpy}
+\title{Calculate Enthalpy}
 \usage{
 calcEnthalpy(Temp, RH)
 }
@@ -17,12 +17,17 @@ h Enthalpy (kJ/kg)
 \description{
 Function to calculate enthalpy from temperature (°C) and relative humidity (\%).
 
-If using a dataframe, columns should ideally be named "Temp" and "RH".
+Enthalpy is the amount of energy required to bring a gas to its current state
+from a dry gas at 0°C.
+}
+\details{
+Example: The ambient temperature is 20°C and the relative humidity is 50\%.
 
-Example: The ambient temperature is 20B0C and the relative humidity is 50%.
-Pw = Pws(20B0C) B7 50/100 = 11.69 hPa
-X = 621.9907 B7 11.69/(1013-11.69) = 7.26 g/kg
-h = 20 B7 (1.01 + 0.00189 B7 7.26) + 2.5 B7 7.26 = 38.62 kJ/kg
+Pw = Pws(20°C) x 50/100 = 11.69 hPa
+
+X = 621.9907 x 11.69/(1013 - 11.69) = 7.26 g/kg
+
+h = 20 x (1.01 + 0.00189 x 7.26) + 2.5 x 7.26 = 38.62 kJ/kg
 }
 \examples{
 calcEnthalpy(20, 50)

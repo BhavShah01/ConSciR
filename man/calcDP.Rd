@@ -2,7 +2,7 @@
 % Please edit documentation in R/calcDP.R
 \name{calcDP}
 \alias{calcDP}
-\title{Calculate dew point}
+\title{Calculate Dew Point}
 \source{
 https://bmcnoldy.earth.miami.edu/Humidity.html
 }

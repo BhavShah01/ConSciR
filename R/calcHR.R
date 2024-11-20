@@ -1,4 +1,4 @@
-#' Calculate humidity ratio
+#' Calculate Humidity Ratio
 #'
 #' @description
 #' Function to calculate humidity ratio from temperature (°C) and relative humidity (\%).
@@ -10,7 +10,7 @@
 #' @param P_atm Atmospheric pressure = 1013.25 (hPa)
 #' @param B B = 621.9907 g/kg for air
 #'
-#' @return HR Humidity ratio (kg/kg)
+#' @return HR Humidity ratio (g/kg)
 #' @export
 #'
 #' @details
@@ -39,6 +39,6 @@
 #'
 calcHR <- function(Temp, RH, P_atm = 1013.25, B = 621.9907) {
   HR = calcMR(Temp, RH, P_atm, B) / (1 + calcMR(Temp, RH, P_atm, B))
-  HR = HR / 1000 # Convert to kg/kg
+  # HR = HR / 1000 # Convert to kg/kg
   return(HR)
 }

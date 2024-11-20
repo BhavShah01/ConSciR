@@ -2,7 +2,7 @@
 % Please edit documentation in R/calcHR.R
 \name{calcHR}
 \alias{calcHR}
-\title{Calculate humidity ratio}
+\title{Calculate Humidity Ratio}
 \usage{
 calcHR(Temp, RH, P_atm = 1013.25, B = 621.9907)
 }
@@ -16,7 +16,7 @@ calcHR(Temp, RH, P_atm = 1013.25, B = 621.9907)
 \item{B}{B = 621.9907 g/kg for air}
 }
 \value{
-HR Humidity ratio (kg/kg)
+HR Humidity ratio (g/kg)
 }
 \description{
 Function to calculate humidity ratio from temperature (°C) and relative humidity (\%).

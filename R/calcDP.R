@@ -1,4 +1,4 @@
-#' Calculate dew point
+#' Calculate Dew Point
 #'
 #' @description
 #' Function to calculate dew point (°C) from temperature (°C) and relative humidity (\%).

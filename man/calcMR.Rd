@@ -2,7 +2,7 @@
 % Please edit documentation in R/calcMR.R
 \name{calcMR}
 \alias{calcMR}
-\title{Calculate mixing ratio}
+\title{Calculate Mixing Ratio}
 \usage{
 calcMR(Temp, RH, P_atm = 1013.25, B = 621.9907)
 }
@@ -21,13 +21,14 @@ X Mixing ratio, mass of water vapour / mass of dry gas (g/kg)
 \description{
 Function to calculate mixing ratio from temperature (°C) and relative humidity (\%).
 
-If using a dataframe, columns should ideally be named "Temp" and "RH".
-
+Mixing Ratio is the ratio of water vapour mass to the mass of dry gas.
+}
+\details{
 X Mixing ratio (mass of water vapour / mass of dry gas)
 
 Pw = Pws(40°C) = 73.75 hPa
 
-X = 621.9907 B7 73.75/(998-73.75) = 49.63 g/kg
+X = 621.9907 x 73.75 / (998 - 73.75) = 49.63 g/kg
 }
 \examples{
 calcMR(20, 50)

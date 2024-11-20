@@ -69,7 +69,7 @@ mydata |>
     Pws = calcPws(Temp), 
     Pw = calcPw(Temp, RH), 
     Temp_calc = calcTemp(RH, DewPoint),
-    RH_AH_calc = calcRH(Temp, Abs),
+    RH_AH_calc = calcRH_AH(Temp, Abs),
     RH_DP_calc = calcRH_DP(Temp, DewPoint)
     ) |>
   head() |>
@@ -111,7 +111,7 @@ mydata |>
 		# Check
 		AHcheck = AHstar - (AH + dAH), 
 		# RH*: RH star - the new RH using AH* and measured temperature
-		RHstarAH = calcRH(Temp, AHstar), 
+		RHstarAH = calcRH_AH(Temp, AHstar), 
 		# Difference from target
 		RHerrorAH = RHstarAH - tRH, 
 		) |>
@@ -229,7 +229,7 @@ TRHgrid |>
 
 ### Relative Humidity 
 
-`calcRH` and `calcRH_DP`
+`calcRH_AH` and `calcRH_DP`
 
 This section investigates relative humidity calculations using derivations from dew point and absolute humidity.
 Contour plots demonstrate the relationships between calculated and original relative humidity values and the errors.
@@ -266,7 +266,7 @@ TRHgrid |>
 ```{r}
 
 TRHgrid |>
-  mutate(RH_AHcalc = calcRH(Temp, calcAH(Temp, RH))) |>
+  mutate(RH_AHcalc = calcRH_AH(Temp, calcAH(Temp, RH))) |>
   ggplot(aes(Temp, RH, z = RH_AHcalc)) + 
   geom_contour_filled(bins = 20, breaks = seq(0, 100, 5)) + 
   labs(title = "Calculated humidity via absolute humidity vs actual", 
@@ -274,7 +274,7 @@ TRHgrid |>
   theme_minimal()
 
 TRHgrid |>
-  mutate(RH_AH_error = calcRH(Temp, calcAH(Temp, RH)) - RH) |>
+  mutate(RH_AH_error = calcRH_AH(Temp, calcAH(Temp, RH)) - RH) |>
   ggplot(aes(Temp, RH, z = RH_AH_error)) + 
   labs(title = "Calculated humidity via absolute humidity vs actual", 
        subtitle = "calcAH(Temp, RH) > Absolute humidity > RHcalc - RH (original)") +

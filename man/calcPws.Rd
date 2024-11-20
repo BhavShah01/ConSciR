@@ -2,54 +2,55 @@
 % Please edit documentation in R/calcPws.R
 \name{calcPws}
 \alias{calcPws}
-\title{Calculate water vapour saturation pressure (hPa)}
+\title{Calculate Water Vapour Saturation Pressure}
 \usage{
-calcPws(Temp)
+calcPws(Temp, P_atm = 1013.25, method = "IAPWS")
 }
 \arguments{
 \item{Temp}{Temperature (°Celsius)}
+
+\item{P_atm}{Atmospheric pressure (hPa). Default is 1013.25 hPa.}
+
+\item{method}{Character. Method to use for calculation. Options are "IAPWS" (default) or "Magnus".}
 }
 \value{
-Pws, Saturation vapor pressure (hPa). 0.083\% error for T range -20 to +50°C
+Pws, Saturation vapor pressure (hPa)
 }
 \description{
-Function to calculate water vapour saturation pressure in hPa from temperature (°C).
-}
-\details{
-The saturation water vapor pressure (P_ws) is calculated using the following equation:
+Function to calculate water vapour saturation pressure (hPa) from temperature (°C)
+using the International Association for the Properties of Water and Steam (IAPWS as default) or
+August-Roche-Magnus approximation.
 
-Where:
-
-\itemize{
-  \item $P_{ws}$ is the saturation vapor pressure.
-  \item $A$ is a coefficient.
-  \item $m$ is a coefficient.
-  \item $Tn$ is a constant.
-  \item $Temp$ is the temperature in degrees Celsius.
-}
+Water vapour saturation pressure is the maximum partial pressure of water vapour that
+can be present in gas at a given temperature.
 }
 \note{
 If lower accuracy or a limited temperature range can be tolerated a simpler formula
 can be used for the water vapour saturation pressure over water (and over ice):
 
-Pws = A \* 10 \^ ( (m \* Temp) / (Temp + Tn) )
-
-August-Roche-Magnus approximation is also included in the source code.
+Pws = 6.116441 x 10^( (7.591386 x Temp) / (Temp + 240.7263) )
 }
 \examples{
 calcPws(20)
 
-#' # Calculate relative humidity at 50\%RH
-calcPw(20, 50) / calcPws(20) * 100
+calcPws(20, method = "IAPWS")
+calcPws(20, method = "Magnus")
+
+# Calculate relative humidity at 50\%RH
+calcPw(20, 50) / calcPws(20, method = "IAPWS") * 100
+calcPw(20, 50) / calcPws(20, method = "Magnus") * 100
 
 head(mydata) |> dplyr::mutate(Pws = calcPws(Temp))
 
 
 }
 \references{
-W. Wagner and A. Pru\ß:" The IAPWS Formulation 1995 for the Thermodynamic Properties of
-Ordinary Water Substance for General and Scientific Use ", Journal of Physical and
-Chemical Reference Data, June 2002 ,Volume 31, Issue 2, pp.387535
+Wagner, W., & Pru\ß, A. (2002). The IAPWS formulation 1995 for the thermodynamic
+properties of ordinary water substance for general and scientific use. Journal of
+Physical and Chemical Reference Data, 31(2), 387-535.
+
+Alduchov, O. A., and R. E. Eskridge, 1996: Improved Magnus' form approximation of
+saturation vapor pressure. J. Appl. Meteor., 35, 601-609.
 }
 \seealso{
 \code{\link{calcMR}} for calculating mixing ratio

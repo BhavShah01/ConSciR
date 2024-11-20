@@ -27,12 +27,13 @@ reference:
     - calcDP
     - calcFtoC
     - calcAD
+    - calcSH
     - calcMR
     - calcHR
     - calcPw
     - calcPws
     - calcEnthalpy
-    - calcRH
+    - calcRH_AH
     - calcRH_DP
     - calcTemp
 - title: Data

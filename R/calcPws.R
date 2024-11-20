@@ -1,21 +1,14 @@
-#' Calculate water vapour saturation pressure (hPa)
+#' Calculate Water Vapour Saturation Pressure
 #'
 #' @description
-#' Function to calculate water vapour saturation pressure in hPa from temperature (°C).
+#' Function to calculate water vapour saturation pressure (hPa) from temperature (°C)
+#' using the International Association for the Properties of Water and Steam (IAPWS as default) or
+#' August-Roche-Magnus approximation.
+#'
+#' Water vapour saturation pressure is the maximum partial pressure of water vapour that
+#' can be present in gas at a given temperature.
 #'
 #'
-#' @details
-#' The saturation water vapor pressure (P_ws) is calculated using the following equation:
-#'
-#' Where:
-#'
-#' \itemize{
-#'   \item $P_{ws}$ is the saturation vapor pressure.
-#'   \item $A$ is a coefficient.
-#'   \item $m$ is a coefficient.
-#'   \item $Tn$ is a constant.
-#'   \item $Temp$ is the temperature in degrees Celsius.
-#' }
 #'
 #' @seealso \code{\link{calcMR}} for calculating mixing ratio
 #' @seealso \code{\link{calcAD}} for calculating air density
@@ -26,71 +19,80 @@
 #' If lower accuracy or a limited temperature range can be tolerated a simpler formula
 #' can be used for the water vapour saturation pressure over water (and over ice):
 #'
-#' Pws = A \* 10 \^ ( (m \* Temp) / (Temp + Tn) )
-#'
-#' August-Roche-Magnus approximation is also included in the source code.
+#' Pws = 6.116441 x 10^( (7.591386 x Temp) / (Temp + 240.7263) )
 #'
 #'
 #' @references
-#' W. Wagner and A. Pru\ß:" The IAPWS Formulation 1995 for the Thermodynamic Properties of
-#' Ordinary Water Substance for General and Scientific Use ", Journal of Physical and
-#' Chemical Reference Data, June 2002 ,Volume 31, Issue 2, pp.387535
+#' Wagner, W., & Pru\ß, A. (2002). The IAPWS formulation 1995 for the thermodynamic
+#' properties of ordinary water substance for general and scientific use. Journal of
+#' Physical and Chemical Reference Data, 31(2), 387-535.
+#'
+#' Alduchov, O. A., and R. E. Eskridge, 1996: Improved Magnus' form approximation of
+#' saturation vapor pressure. J. Appl. Meteor., 35, 601-609.
 #'
 #'
 #' @param Temp Temperature (°Celsius)
+#' @param P_atm Atmospheric pressure (hPa). Default is 1013.25 hPa.
+#' @param method Character. Method to use for calculation. Options are "IAPWS" (default) or "Magnus".
 #'
-#' @return Pws, Saturation vapor pressure (hPa). 0.083\% error for T range -20 to +50°C
+#' @return Pws, Saturation vapor pressure (hPa)
 #' @export
 #'
 #' @examples
 #' calcPws(20)
 #'
-#' #' # Calculate relative humidity at 50%RH
-#' calcPw(20, 50) / calcPws(20) * 100
+#' calcPws(20, method = "IAPWS")
+#' calcPws(20, method = "Magnus")
+#'
+#' # Calculate relative humidity at 50%RH
+#' calcPw(20, 50) / calcPws(20, method = "IAPWS") * 100
+#' calcPw(20, 50) / calcPws(20, method = "Magnus") * 100
 #'
 #' head(mydata) |> dplyr::mutate(Pws = calcPws(Temp))
 #'
 #'
-calcPws <- function(Temp) {
+calcPws <- function(Temp, P_atm = 1013.25, method = "IAPWS") {
 
-  # Temperature in K
-  TempK = Temp + 273.15
+  if (method == "Magnus") {
 
-  # Critical temperature, K
-  Tc = 647.096
+    # August-Roche-Magnus approximation
+    Pws = 6.1094 * exp((17.625 * Temp) / (243.04 + Temp))
 
-  # Critical pressure, hPa
-  Pc = 220640
+    # Pressure correction factor
+    Pws = Pws * (P_atm / 1013.25)
 
-  # Ci = Coefficients
-  C1 = -7.85951783
-  C2 = 1.84408259
-  C3 = -11.7866497
-  C4 = 22.6807411
-  C5 = -15.9618719
-  C6 = 1.80122502
-  A = 6.116441
-  m = 7.591386
-  Tn = 240.7263
 
-  veta = 1 - (TempK / Tc)
+  } else if (method == "IAPWS") {
 
-  lnPwsPc =
-    (Tc / TempK) *
-    (C1 * veta +
-       C2 * (veta ^ 1.5) +
-       C3 * (veta ^ 3) +
-       C4 * (veta ^ 3.5) +
-       C5 * (veta ^ 4) +
-       C6 * (veta ^ 7.5))
+    # IAPWS formulation
+    TempK <- Temp + 273.15
+    Tc = 647.096
+    Pc = 220640  # Critical pressure
+    C1 = -7.85951783
+    C2 = 1.84408259
+    C3 = -11.7866497
+    C4 = 22.6807411
+    C5 = -15.9618719
+    C6 = 1.80122502
 
-  Pws = Pc * exp(lnPwsPc)
+    veta = 1 - (TempK / Tc)
+
+    lnPwsPc = (Tc / TempK) * (C1 * veta + C2 * (veta^1.5) + C3 * (veta^3) +
+                                 C4 * (veta^3.5) + C5 * (veta^4) + C6 * (veta^7.5))
+
+    Pws = Pc * exp(lnPwsPc)
+
+
+  } else {
+    stop("Invalid method. Choose 'Magnus' or 'IAPWS'.")
+  }
 
   # If lower accuracy or a limited temperature range can be tolerated a simpler formula can be used for the water vapour saturation pressure over water (and over ice):
+  # A = 6.116441
+  # m = 7.591386
+  # Tn = 240.7263
   # Pws = A * 10 ^ ( (m * Temp) / (Temp + Tn) )
-
-  # August-Roche-Magnus approximation
-  # Pws = 610.94 * exp((17.625 * Temp) / (243.04 + Temp))
 
   return(Pws)
 }
+
