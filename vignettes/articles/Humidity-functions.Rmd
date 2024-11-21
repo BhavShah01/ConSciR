@@ -24,7 +24,7 @@ The relationships between humidity functions are shown below, which are importan
 These functions may play a key role in developing more energy-efficient systems.
 Understanding the stability of these functions is shown, as they underpin many methodologies in this field.
 
-A grid of temperature and relative humidity values, ranging from -50°C to 100°C and 0% to 100% RH respectively, was used to test the functions.
+A grid of temperature and relative humidity values, ranging from 0°C to 100°C and 0% to 100% RH respectively, was used to test the functions.
 Contour plots are used to visualise interactions between derived variables across the temperature-humidity grid.
 The analysis includes validation checks for temperature and relative humidity calculations, to identify how the function interact with each other. 
 
@@ -33,12 +33,12 @@ Note: the humidity functions assume atmospheric pressure.
 ### TRHgrid: Dataset used to visualise the functions
 
 A grid of temperature and relative humidity values is used to analysis the relationship between derived variables.
-A grid of temperature and humidity between -50 to 100°C and 0 to 100%RH with 0.25°C and 1%RH spacing.
+A grid of temperature and humidity between 0 to 100°C and 0 to 100%RH with 0.25°C and 1%RH spacing.
 The expand.grid() function creates a complete factorial combination of all temperature and relative humidity values, where each unique temperature-humidity pair is represented..
 
 ```{r}
 
-Temp <- seq(-50, 100, 0.25)
+Temp <- seq(0, 100, 0.25)
 RH <- seq(0, 100, 1)
 
 TRHgrid <- 
@@ -48,30 +48,29 @@ TRHgrid <-
 
 summary(TRHgrid)
 
-head(TRHgrid, 3) 
-tail(TRHgrid, 3)
 
 ```
 
 ### Examples of use of the functions
 
 Starting with input data of temperature and relative humidity, a wide range of derived variables can be computed.
-These include absolute humidity, dew point temperature, mixing ratio, enthalpy, water vapor saturation pressure, and actual water vapor pressure.
 
 ```{r}
 # Functions applied on the mydata dataset
 mydata |> 
   mutate(
-    Abs = calcAH(Temp, RH), 
-    DewPoint = calcDP(Temp, RH), 
-    MR = calcMR(Temp, RH), 
+    Absolute_Humidity = calcAH(Temp, RH), 
+    Dew_Point = calcDP(Temp, RH), 
+    Mixing_Ratio = calcMR(Temp, RH), 
+    Humidity_Ratio = calcHR(Temp, RH),
     Enthalpy = calcEnthalpy(Temp, RH), 
-    Pws = calcPws(Temp), 
-    Pw = calcPw(Temp, RH), 
-    Temp_calc = calcTemp(RH, DewPoint),
-    RH_AH_calc = calcRH_AH(Temp, Abs),
-    RH_DP_calc = calcRH_DP(Temp, DewPoint)
-    ) |>
+    Saturation_Vapour_Pressure = calcPws(Temp), 
+    Actual_Vapour_Pressure = calcPw(Temp, RH), 
+    Air_Density = calcAD(Temp, RH),
+    Temp_calc = calcTemp(RH, Dew_Point),
+    RH_AH_calc = calcRH_AH(Temp, Absolute_Humidity),
+    RH_DP_calc = calcRH_DP(Temp, Dew_Point)
+  ) |>
   head() |>
   glimpse()
 
@@ -83,106 +82,153 @@ This approach assumes constant pressure, which is typical for most indoor situat
 
 Adjustment Methods:
 
--   a) Changing Absolute Humidity:
-    -   Increasing absolute humidity at a constant temperature will increase RH.
-    -   Decreasing absolute humidity at a constant temperature will decrease RH.
--   b) Changing Temperature:
-    -   Decreasing temperature at constant absolute humidity will increase RH.
-    -   Increasing temperature at constant absolute humidity will decrease RH.
--   c) Using Dew Point:
-    -   The difference between air temperature and dew point indicates how close the air is to saturation.
-    -   Adjusting temperature closer to the dew point increases RH, while moving it away decreases RH.
+a)    Changing Absolute Humidity:
+-   Increasing absolute humidity at a constant temperature will increase RH.
+-   Decreasing absolute humidity at a constant temperature will decrease RH.
+b)    Changing Temperature:
+-   Decreasing temperature at constant absolute humidity will increase RH.
+-   Increasing temperature at constant absolute humidity will decrease RH.
+c)    Using Dew Point:
+-   The difference between air temperature and dew point indicates how close the air is to saturation.
+-   Adjusting temperature closer to the dew point increases RH, while moving it away decreases RH.
 
 ```{r}
 
 # Changing Absolute Humidity 
-mydata |> 
+using_calcAH <- mydata |> 
   mutate(
     # Absolute humidity, AH
     AH = calcAH(Temp, RH), 
     # Dew point, DP
-		DP = calcDP(Temp, RH), 
-		# Target RH
-		tRH = 50, 			
-		# AH*: AHstar new absolute humidity for target relative humidity, using tRH
-		AHstar = calcAH(Temp, tRH), 	
-		# Difference in measured AH and AH* 
-		dAH = AHstar - AH, 
-		# Check
-		AHcheck = AHstar - (AH + dAH), 
-		# RH*: RH star - the new RH using AH* and measured temperature
-		RHstarAH = calcRH_AH(Temp, AHstar), 
-		# Difference from target
-		RHerrorAH = RHstarAH - tRH, 
-		) |>
+    DP = calcDP(Temp, RH), 
+    # Target RH
+    tRH = 50, 			
+    # AH*: AHstar new absolute humidity using the target relative humidity (tRH)
+    AHstar = calcAH(Temp, tRH), 	
+    # Difference in measured AH and AH* 
+    dAH = AHstar - AH, 
+    # Check
+    AHcheck = AHstar - (AH + dAH), 
+    # RH*: RH star - the new RH using AH* and measured temperature
+    RHstarAH = calcRH_AH(Temp, AHstar), 
+    # Difference from target
+    RHerrorAH = RHstarAH - tRH, 
+  ) 
+
+# Graph the results 
+using_calcAH |>
   ggplot() +
   geom_line(aes(Date, Temp), col = "red", alpha = 0.5) +
   geom_line(aes(Date, RH), col = "blue", alpha = 0.5) + 
   geom_line(aes(Date, AH), col = "green", alpha = 0.5) + 
-  geom_line(aes(Date, RHstarAH), col = "darkblue") +
+  geom_line(aes(Date, RHstarAH), col = "darkblue") + # should be a straight line (see below)
   geom_line(aes(Date, AHstar), col = "darkgreen") + 
-  geom_line(aes(Date, RHerrorAH)) + 
   labs(title = "Using absolute humidity to adjust relative humidity", 
        subtitle = "Measure absolute humidity (light green), new absolute humidity (dark green),
        resultant relative humidity (dark blue)") +
   theme_bw()
 
+# Plot the difference and check the error
+using_calcAH |>
+  ggplot() +
+  geom_line(aes(Date, dAH), col = "darkgreen") + 
+  geom_line(aes(Date, RHerrorAH), col = "darkblue") + # should be a straight line (see below)
+  geom_smooth(aes(Date, dAH)) + 
+  labs(title = "Using absolute humidity to adjust relative humidity", 
+       subtitle = "Positve values means adding humidity and vice-versa") +
+  theme_bw()
+
+```
+
+
+```{r}
 
 # Changing Temperature
-mydata |> 
+using_calcTemp <- 
+  mydata |> 
   mutate(
     # Absolute humidity, AH
     AH = calcAH(Temp, RH), 
     # Dew point, DP
-		DP = calcDP(Temp, RH), 
-		# Target RH
-		tRH = 50, 			
-		# T*: Tstar new temperature at target RH using dew point
-		Tstar = calcTemp(tRH, DP), 
-		# Difference in measure temperature and new temperature
-		dTemp = Tstar - Temp, 
-		# Check
-		Tcheck = Tstar - (Temp + dTemp), 
-		# RHstarT: New humidity with new temperature 
-		RHstarT = calcRH_DP(Tstar, DP),
-		# Error 
-		RHerrorT = RHstarT - tRH
-		) |>
+    DP = calcDP(Temp, RH), 
+    # Target RH
+    tRH = 50, 			
+    # T*: Tstar new temperature at target RH 
+    Tstar = calcTemp(tRH, DP), 
+    # Difference in measure temperature and new temperature
+    dTemp = Tstar - Temp, 
+    # Check
+    Tcheck = Tstar - (Temp + dTemp), 
+    # RHstarT: New humidity with new temperature 
+    RHstarT = calcRH_DP(Tstar, DP),
+    # Error 
+    RHerrorT = RHstarT - tRH
+  )
+
+# Graph the results 
+using_calcTemp |>
   ggplot() +
   geom_line(aes(Date, Temp), col = "red", alpha = 0.5) +
   geom_line(aes(Date, RH), col = "blue", alpha = 0.5) + 
   geom_line(aes(Date, Tstar), col = "darkred") +
   geom_line(aes(Date, RHstarT), col = "darkblue") +
-  geom_line(aes(Date, RHerrorT)) + 
   labs(title = "Using temperature to adjust relative humidity") +
   theme_bw()
 
+# Plot the difference and check the error
+using_calcTemp |>
+  ggplot() +
+  geom_line(aes(Date, dTemp), col = "darkred") + 
+  geom_line(aes(Date, RHerrorT), col = "darkblue") + # should be a straight line (see below)
+  geom_smooth(aes(Date, dTemp)) + 
+  labs(title = "Using temperature to adjust relative humidity", 
+       subtitle = "Positve values means increasing the temperature and vice-versa") +
+  theme_bw()
+
+```
+
+```{r}
+
 # Using Dew Point
-mydata |>
+
+using_calcDP <- 
+  mydata |>
   mutate(
     # Absolute humidity, AH
     AH = calcAH(Temp, RH),
     # Dew point, DP
-		DP = calcDP(Temp, RH),
-		# Target RH
-		tRH = 50,
-		# DP*: DPstarAH new dew point at target RH using absolute humidity
-		DPstarAH = calcDP(Temp, tRH),
-		# RH*: New relative humidity at new dew point
-		RHstarDP = calcRH_DP(Temp, DPstarAH),
-		# Error 
-		RHerrorDP = RHstarDP - tRH
-		) |>
+    DP = calcDP(Temp, RH),
+    # Target RH
+    tRH = 50,
+    # DP*: DPstar new dew point at target RH 
+    DPstar = calcDP(Temp, tRH),
+    # RH*: New relative humidity at new dew point
+    RHstarDP = calcRH_DP(Temp, DPstar),
+    # Difference in measured dew point and new dew point
+    dDP = DPstar - DP, 
+    # Error 
+    RHerrorDP = RHstarDP - tRH
+  ) 
+
+using_calcDP |>
   ggplot() +
   geom_line(aes(Date, Temp), col = "red", alpha = 0.5) +
   geom_line(aes(Date, RH), col = "blue", alpha = 0.5) +
   geom_line(aes(Date, DP), col = "hotpink") +
-  geom_line(aes(Date, DPstarAH), col = "purple") +
+  geom_line(aes(Date, DPstar), col = "purple") +
   geom_line(aes(Date, RHstarDP), col = "darkblue") +
-  geom_line(aes(Date, RHerrorDP)) +
   labs(title = "Using dew point to adjust relative humidity") +
   theme_bw()
-  
+
+# Plot the difference and check the error
+using_calcDP |>
+  ggplot() +
+  geom_line(aes(Date, dDP), col = "purple") + 
+  geom_line(aes(Date, RHerrorDP), col = "darkblue") + # should be a straight line (see below)
+  geom_smooth(aes(Date, dDP)) + 
+  labs(title = "Using dew point to adjust relative humidity", 
+       subtitle = "Positve values means increasing the dew point and vice-versa") +
+  theme_bw()
 
 ```
 
@@ -201,7 +247,7 @@ TRHgrid |>
   mutate(
     DewPoint = calcDP(Temp, RH),
     TempCalc = calcTemp(RH, DewPoint)
-    ) |>
+  ) |>
   ggplot(aes(Temp, RH, z = TempCalc)) + 
   geom_contour_filled(bins = 20, breaks = seq(-50, 100, 10)) +
   labs(title = "Calculated temperature vs actual", 
@@ -218,7 +264,7 @@ TRHgrid |>
     DewPoint = calcDP(Temp, RH),
     TempCalc = calcTemp(RH, DewPoint), 
     Temp_error = TempCalc - Temp
-    ) |>
+  ) |>
   ggplot(aes(Temp, RH, z = Temp_error)) + 
   geom_contour_filled(bins = 20) + 
   labs(title = "Difference between calculated temperature vs actual", 
@@ -240,7 +286,7 @@ TRHgrid |>
   mutate(
     DewPoint = calcDP(Temp, RH),
     RH_DPcalc = calcRH_DP(Temp, DewPoint)
-    ) |>
+  ) |>
   ggplot(aes(Temp, RH, z = RH_DPcalc)) + 
   geom_contour_filled(bins = 20, breaks = seq(0, 100, 5)) + 
   labs(title = "Calculated humidity via dew point vs actual", 
@@ -253,7 +299,7 @@ TRHgrid |>
     DewPoint = calcDP(Temp, RH),
     RH_DPcalc = calcRH_DP(Temp, DewPoint), 
     RH_DP_error = RH_DPcalc - RH
-    ) |>
+  ) |>
   ggplot(aes(Temp, RH, z = RH_DP_error)) + 
   labs(title = "Calculated humidity vs actual", 
        subtitle = "calcDP(Temp, RH) > DewPoint > RHcalc - RH (original)") +
@@ -280,7 +326,7 @@ TRHgrid |>
        subtitle = "calcAH(Temp, RH) > Absolute humidity > RHcalc - RH (original)") +
   geom_contour_filled(bins = 20) + 
   theme_bw()
-  
+
 ```
 
 
