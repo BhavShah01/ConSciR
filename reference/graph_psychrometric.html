@@ -197,8 +197,16 @@ calcLM: Lifetime
 <span class="r-plt img"><img src="graph_psychrometric-3.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Adjusting the overall temperature range of the chart</span></span></span>
-<span class="r-in"><span><span class="fu">graph_psychrometric</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mydata</span>, <span class="fl">100</span><span class="op">)</span>, <span class="va">Temp</span>, <span class="va">RH</span>, Temp_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">30</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in theme_bw():</span> could not find function "theme_bw"</span>
+<span class="r-in"><span><span class="fu">graph_psychrometric</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mydata</span>, <span class="fl">100</span><span class="op">)</span>, <span class="va">Temp</span>, <span class="va">RH</span>, Temp_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">30</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>All aesthetics have length 1, but the data has 100 rows.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Please consider using `annotate()` or provide this layer with data containing</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   a single row.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>All aesthetics have length 1, but the data has 100 rows.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Please consider using `annotate()` or provide this layer with data containing</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   a single row.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 40 rows containing missing values or values outside the scale range</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_line()`).</span>
+<span class="r-plt img"><img src="graph_psychrometric-4.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
