@@ -5,17 +5,7 @@
 #'
 #' Various psychrometric functions can be used for the y-axis.
 #'
-#' @param mydata A data frame containing temperature and relative humidity data.
-#' @param Temp Column name in mydata for temperature values.
-#' @param RH Column name in mydata for relative humidity values.
-#' @param LowT Numeric value for lower temperature limit of the target range. Default is 16°C.
-#' @param HighT Numeric value for upper temperature limit of the target range. Default is 25°C.
-#' @param LowRH Numeric value for lower relative humidity limit of the target range. Default is 40%.
-#' @param HighRH Numeric value for upper relative humidity limit of the target range. Default is 60%.
-#' @param Temp_range Numeric vector of length 2 specifying the overall temperature range for the chart. Default is c(0, 40).
-#' @param y_func Function to calculate y-axis values. Default is calcMR (mixing ratio).
-#'   Available options include:
-#'   \itemize{
+#' \itemize{
 #'     \item calcHR: Humidity Ratio (g/kg)
 #'     \item calcMR: Mixing Ratio (g/kg)
 #'     \item calcAH: Absolute Humidity (g/m³)
@@ -28,8 +18,18 @@
 #'     \item calcPI: Preservation Index
 #'     \item calcIPI: Years to Degradation of reference material
 #'     \item calcLM: Lifetime
-#'   }
+#' }
+#'
+#' @param mydata A data frame containing temperature and relative humidity data.
+#' @param Temp Column name in mydata for temperature values.
+#' @param RH Column name in mydata for relative humidity values.
+#' @param LowT Numeric value for lower temperature limit of the target range. Default is 16°C.
+#' @param HighT Numeric value for upper temperature limit of the target range. Default is 25°C.
+#' @param LowRH Numeric value for lower relative humidity limit of the target range. Default is 40%.
+#' @param HighRH Numeric value for upper relative humidity limit of the target range. Default is 60%.
+#' @param Temp_range Numeric vector of length 2 specifying the overall temperature range for the chart. Default is c(0, 40).
 #' @param ... Additional arguments passed to y_func.
+#' @param y_func Function to calculate y-axis values. Default is calcMR (mixing ratio).
 #'
 #' @return A ggplot object representing the psychrometric chart.
 #'
@@ -39,6 +39,7 @@
 #' @export
 #'
 #' @examples
+#'
 #' # Basic usage with default settings
 #' graph_psychrometric(head(mydata, 100), Temp, RH)
 #'
