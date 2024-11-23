@@ -6,7 +6,9 @@ template:
 reference:
 - title: Shiny application
   desc: Application to test and demonstrate tools in the package.
-  contents: run_ConSciR_app
+  contents:
+    - run_ConSciR_app
+    - run_Psychrometric_app
 - title: Graphs
   desc: Tools for graphing data.
   contents:

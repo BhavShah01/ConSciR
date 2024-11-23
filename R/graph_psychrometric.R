@@ -8,10 +8,10 @@
 #' \itemize{
 #'    \item calcHR: Humidity Ratio (g/kg)
 #'    \item calcMR: Mixing Ratio (g/kg)
-#'    \item calcAH: Absolute Humidity (g/m³)
+#'    \item calcAH: Absolute Humidity (g/m^3)
 #'    \item calcSH: Specific Humidity (g/kg)
-#'    \item calcAD: Air Density (kg/m³)
-#'    \item calcDP: Dew Point (°C)
+#'    \item calcAD: Air Density (kg/m^3)
+#'    \item calcDP: Dew Point (C)
 #'    \item calcEnthalpy: Enthalpy (kJ/kg)
 #'    \item calcPws: Saturation vapor pressure (hPa)
 #'    \item calcPw: Water Vapour Pressure (hPa)
@@ -24,8 +24,8 @@
 #' @param mydata A data frame containing temperature and relative humidity data.
 #' @param Temp Column name in mydata for temperature values.
 #' @param RH Column name in mydata for relative humidity values.
-#' @param LowT Numeric value for lower temperature limit of the target range. Default is 16°C.
-#' @param HighT Numeric value for upper temperature limit of the target range. Default is 25°C.
+#' @param LowT Numeric value for lower temperature limit of the target range. Default is 16C.
+#' @param HighT Numeric value for upper temperature limit of the target range. Default is 25C.
 #' @param LowRH Numeric value for lower relative humidity limit of the target range. Default is 40\%.
 #' @param HighRH Numeric value for upper relative humidity limit of the target range. Default is 60\%.
 #' @param Temp_range Numeric vector of length 2 specifying the overall temperature range for the chart. Default is c(0, 40).
@@ -107,10 +107,10 @@ graph_psychrometric <- function(mydata, Temp, RH,
     switch(deparse(substitute(y_func)),
            "calcHR" = "Humidity Ratio (g/kg)",
            "calcMR" = "Mixing Ratio (g/kg)",
-           "calcAH" = "Absolute Humidity (g/m³)",
+           "calcAH" = "Absolute Humidity (g/m^3)",
            "calcSH" = "Specific Humidity (g/kg)",
-           "calcAD" = "Air Density (kg/m³)",
-           "calcDP" = "Dew Point (°C)",
+           "calcAD" = "Air Density (kg/m^3)",
+           "calcDP" = "Dew Point (C)",
            "calcEnthalpy" = "Enthalpy (kJ/kg)",
            "calcPws" = "Saturation vapor pressure (hPa)",
            "calcPw" = "Water Vapour Pressure (hPa)",
@@ -154,7 +154,7 @@ graph_psychrometric <- function(mydata, Temp, RH,
     ggplot2::lims(x = c(Temp_range[1], Temp_range[2]), y = c(y_limit_low, y_limit_high)) +
 
     # Add labels to the chart
-    ggplot2::labs(x = "Temperature (°C)", y = y_axis_label) +
+    ggplot2::labs(x = "Temperature (C)", y = y_axis_label) +
 
     # Turn off the legend
     guides(alpha = "none")  # col = "none")

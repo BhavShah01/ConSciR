@@ -24,9 +24,9 @@ graph_psychrometric(
 
 \item{RH}{Column name in mydata for relative humidity values.}
 
-\item{LowT}{Numeric value for lower temperature limit of the target range. Default is 16°C.}
+\item{LowT}{Numeric value for lower temperature limit of the target range. Default is 16C.}
 
-\item{HighT}{Numeric value for upper temperature limit of the target range. Default is 25°C.}
+\item{HighT}{Numeric value for upper temperature limit of the target range. Default is 25C.}
 
 \item{LowRH}{Numeric value for lower relative humidity limit of the target range. Default is 40\%.}
 
@@ -49,10 +49,10 @@ Various psychrometric functions can be used for the y-axis.
 \itemize{
    \item calcHR: Humidity Ratio (g/kg)
    \item calcMR: Mixing Ratio (g/kg)
-   \item calcAH: Absolute Humidity (g/m³)
+   \item calcAH: Absolute Humidity (g/m^3)
    \item calcSH: Specific Humidity (g/kg)
-   \item calcAD: Air Density (kg/m³)
-   \item calcDP: Dew Point (°C)
+   \item calcAD: Air Density (kg/m^3)
+   \item calcDP: Dew Point (C)
    \item calcEnthalpy: Enthalpy (kJ/kg)
    \item calcPws: Saturation vapor pressure (hPa)
    \item calcPw: Water Vapour Pressure (hPa)
