@@ -26,7 +26,7 @@ Understanding the stability of these functions is shown, as they underpin many m
 
 A grid of temperature and relative humidity values, ranging from 0°C to 100°C and 0% to 100% RH respectively, was used to test the functions.
 Contour plots are used to visualise interactions between derived variables across the temperature-humidity grid.
-The analysis includes validation checks for temperature and relative humidity calculations, to identify how the function interact with each other. 
+The analysis includes validation checks for temperature and relative humidity calculations, to identify how the function interact with each other.
 
 Note: the humidity functions assume atmospheric pressure.
 
@@ -82,17 +82,22 @@ This approach assumes constant pressure, which is typical for most indoor situat
 
 Adjustment Methods:
 
-a)    Changing Absolute Humidity:
--   Increasing absolute humidity at a constant temperature will increase RH.
--   Decreasing absolute humidity at a constant temperature will decrease RH.
-b)    Changing Temperature:
--   Decreasing temperature at constant absolute humidity will increase RH.
--   Increasing temperature at constant absolute humidity will decrease RH.
-c)    Using Dew Point:
--   The difference between air temperature and dew point indicates how close the air is to saturation.
--   Adjusting temperature closer to the dew point increases RH, while moving it away decreases RH.
+a)  Changing Absolute Humidity:
+    -   Increasing absolute humidity at a constant temperature will increase RH.
+    -   Decreasing absolute humidity at a constant temperature will decrease RH.
+b)  Changing Temperature:
+    -   Decreasing temperature at constant absolute humidity will increase RH.
+    -   Increasing temperature at constant absolute humidity will decrease RH.
+c)  Using Dew Point:
+    -   The difference between air temperature and dew point indicates how close the air is to saturation.
+    -   Adjusting temperature closer to the dew point increases RH, while moving it away decreases RH.
 
-```{r}
+```{r message=FALSE, warning=FALSE}
+ 
+# Graph Absolute Humidity
+head(mydata) |>
+  graph_psychrometric(y_func = calcAH) +
+  theme_bw()
 
 # Changing Absolute Humidity 
 using_calcAH <- mydata |> 
@@ -140,8 +145,12 @@ using_calcAH |>
 
 ```
 
+```{r message=FALSE, warning=FALSE}
 
-```{r}
+# Graph Air Density
+head(mydata) |>
+  graph_psychrometric(y_func = calcAD) +
+  theme_bw()
 
 # Changing Temperature
 using_calcTemp <- 
@@ -187,7 +196,13 @@ using_calcTemp |>
 
 ```
 
-```{r}
+```{r message=FALSE, warning=FALSE}
+
+# Graph Dew Point
+head(mydata) |>
+  graph_psychrometric(y_func = calcDP) +
+  theme_bw()
+
 
 # Using Dew Point
 
@@ -232,7 +247,7 @@ using_calcDP |>
 
 ```
 
-### Temperature 
+### Temperature
 
 `calcTemp`
 
@@ -273,7 +288,7 @@ TRHgrid |>
 
 ```
 
-### Relative Humidity 
+### Relative Humidity
 
 `calcRH_AH` and `calcRH_DP`
 
@@ -329,14 +344,18 @@ TRHgrid |>
 
 ```
 
-
-### Absolute humidity 
+### Absolute humidity
 
 `calcAH`
 
 The graph shows how absolute temperature varies with changing temperature and relative humidity.
 
-```{r}
+```{r message=FALSE, warning=FALSE}
+
+# Graph Absolute Humidity
+head(mydata) |>
+  graph_psychrometric(y_func = calcAH) +
+  theme_bw()
 
 TRHgrid |>
   mutate(AH = calcAH(Temp, RH)) |>
@@ -350,7 +369,12 @@ TRHgrid |>
 
 `calcSH`
 
-```{r}
+```{r message=FALSE, warning=FALSE}
+
+# Graph Specific Humidity
+head(mydata) |>
+  graph_psychrometric(y_func = calcSH) +
+  theme_bw()
 
 TRHgrid |>
   mutate(SpecificHumidity = calcSH(Temp, RH)) |>
@@ -360,16 +384,18 @@ TRHgrid |>
 
 ```
 
-
-
-
-### Dew Point 
+### Dew Point
 
 `calcDP`
 
 The graphs shows how the dew point temperature varies with changing temperature and relative humidity.
 
-```{r}
+```{r message=FALSE, warning=FALSE}
+
+# Graph Dew Point
+head(mydata) |>
+  graph_psychrometric(y_func = calcDP) +
+  theme_bw()
 
 TRHgrid |>
   mutate(DP = calcDP(Temp, RH)) |>
@@ -379,15 +405,18 @@ TRHgrid |>
 
 ```
 
-
-### Water vapour saturation pressure 
+### Water vapour saturation pressure
 
 `calcPws`
 
 -   Saturation vapor pressure calculation
 
+```{r message=FALSE, warning=FALSE}
 
-```{r}
+# Graph Saturation vapor pressure 
+head(mydata) |>
+  graph_psychrometric(y_func = calcPws) +
+  theme_bw()
 
 TRHgrid |>
   mutate(Pws = calcPws(Temp)) |>
@@ -397,13 +426,18 @@ TRHgrid |>
 
 ```
 
-### Water vapour pressure 
+### Water vapour pressure
 
 `calcPw`
 
 -   Actual water vapor pressure determination
 
-```{r}
+```{r message=FALSE, warning=FALSE}
+
+# Graph Saturation vapor pressure 
+head(mydata) |>
+  graph_psychrometric(y_func = calcPw) +
+  theme_bw()
 
 TRHgrid |>
   mutate(Pw = calcPw(Temp, RH)) |>
@@ -413,11 +447,16 @@ TRHgrid |>
 
 ```
 
-### Mixing ratio 
+### Mixing ratio
 
 `calcMR`
 
-```{r}
+```{r message=FALSE, warning=FALSE}
+
+# Graph Mixing Ratio
+head(mydata) |>
+  graph_psychrometric(y_func = calcMR) +
+  theme_bw()
 
 TRHgrid |>
   mutate(MR = calcMR(Temp, RH)) |>
@@ -437,7 +476,12 @@ TRHgrid |>
 
 `calcHR`
 
-```{r}
+```{r message=FALSE, warning=FALSE}
+
+# Graph Humidity Ratio
+head(mydata) |>
+  graph_psychrometric(y_func = calcHR) +
+  theme_bw()
 
 TRHgrid |>
   mutate(HumidityRatio = calcHR(Temp, RH)) |>
@@ -447,12 +491,16 @@ TRHgrid |>
 
 ```
 
-
 ### Air density
 
 `calcAD`
 
-```{r}
+```{r message=FALSE, warning=FALSE}
+
+# Graph Air Density
+head(mydata) |>
+  graph_psychrometric(y_func = calcAD) +
+  theme_bw()
 
 TRHgrid |>
   mutate(AirDensity = calcAD(Temp, RH)) |>
@@ -462,12 +510,16 @@ TRHgrid |>
 
 ```
 
-
-### Enthalpy 
+### Enthalpy
 
 `calcEnthalpy`
 
-```{r}
+```{r message=FALSE, warning=FALSE}
+
+# Graph Enthalpy
+head(mydata) |>
+  graph_psychrometric(y_func = calcEnthalpy) +
+  theme_bw()
 
 TRHgrid |>
   mutate(Enthalpy = calcEnthalpy(Temp, RH)) |>
