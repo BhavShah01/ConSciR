@@ -6,30 +6,31 @@
 #' Various psychrometric functions can be used for the y-axis.
 #'
 #' \itemize{
-#'     \item calcHR: Humidity Ratio (g/kg)
-#'     \item calcMR: Mixing Ratio (g/kg)
-#'     \item calcAH: Absolute Humidity (g/m³)
-#'     \item calcSH: Specific Humidity (g/kg)
-#'     \item calcAD: Air Density (kg/m³)
-#'     \item calcDP: Dew Point (°C)
-#'     \item calcEnthalpy: Enthalpy (kJ/kg)
-#'     \item calcPws: Saturation vapor pressure (hPa)
-#'     \item calcPw: Water Vapour Pressure (hPa)
-#'     \item calcPI: Preservation Index
-#'     \item calcIPI: Years to Degradation of reference material
-#'     \item calcLM: Lifetime
+#'    \item calcHR: Humidity Ratio (g/kg)
+#'    \item calcMR: Mixing Ratio (g/kg)
+#'    \item calcAH: Absolute Humidity (g/m³)
+#'    \item calcSH: Specific Humidity (g/kg)
+#'    \item calcAD: Air Density (kg/m³)
+#'    \item calcDP: Dew Point (°C)
+#'    \item calcEnthalpy: Enthalpy (kJ/kg)
+#'    \item calcPws: Saturation vapor pressure (hPa)
+#'    \item calcPw: Water Vapour Pressure (hPa)
+#'    \item calcPI: Preservation Index
+#'    \item calcIPI: Years to Degradation of reference material
+#'    \item calcLM: Lifetime
 #' }
+#'
 #'
 #' @param mydata A data frame containing temperature and relative humidity data.
 #' @param Temp Column name in mydata for temperature values.
 #' @param RH Column name in mydata for relative humidity values.
 #' @param LowT Numeric value for lower temperature limit of the target range. Default is 16°C.
 #' @param HighT Numeric value for upper temperature limit of the target range. Default is 25°C.
-#' @param LowRH Numeric value for lower relative humidity limit of the target range. Default is 40%.
-#' @param HighRH Numeric value for upper relative humidity limit of the target range. Default is 60%.
+#' @param LowRH Numeric value for lower relative humidity limit of the target range. Default is 40\%.
+#' @param HighRH Numeric value for upper relative humidity limit of the target range. Default is 60\%.
 #' @param Temp_range Numeric vector of length 2 specifying the overall temperature range for the chart. Default is c(0, 40).
+#' @param y_func Function to calculate y-axis values. See above for options, default is calcMR (mixing ratio).
 #' @param ... Additional arguments passed to y_func.
-#' @param y_func Function to calculate y-axis values. Default is calcMR (mixing ratio).
 #'
 #' @return A ggplot object representing the psychrometric chart.
 #'
@@ -39,7 +40,6 @@
 #' @export
 #'
 #' @examples
-#'
 #' # Basic usage with default settings
 #' graph_psychrometric(head(mydata, 100), Temp, RH)
 #'
@@ -51,6 +51,7 @@
 #'
 #' # Adjusting the overall temperature range of the chart
 #' graph_psychrometric(head(mydata, 100), Temp, RH, Temp_range = c(12, 30))
+#'
 #'
 #'
 graph_psychrometric <- function(mydata, Temp, RH,
@@ -65,7 +66,7 @@ graph_psychrometric <- function(mydata, Temp, RH,
          Run `install.packages(c('ggplot2', 'dplyr'))` ")
   }
 
-  # Create background grid 10-100%RH with 10RH% resolution
+  # Create background grid 10-100\%RH with 10RH\% resolution
   ref_Temp = seq(from = Temp_range[1], to = Temp_range[2], by = 1)
   ref_RH = seq(from = 10, to = 100, by = 10)
 
@@ -98,7 +99,7 @@ graph_psychrometric <- function(mydata, Temp, RH,
   y_limit_right_low = y_func(HighT, LowRH, ...)
   y_limit_right_high = y_func(HighT, HighRH, ...)
   y_limit_low = y_func(Temp_range[1], 10, ...)
-  y_limit_high = y_func(Temp_range[2], 50, ...) # Places 50%RH line at top right corner
+  y_limit_high = y_func(Temp_range[2], 50, ...) # Places 50\%RH line at top right corner
 
   # y-axis label
   y_axis_label =

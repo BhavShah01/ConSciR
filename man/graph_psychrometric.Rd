@@ -28,13 +28,13 @@ graph_psychrometric(
 
 \item{HighT}{Numeric value for upper temperature limit of the target range. Default is 25°C.}
 
-\item{LowRH}{Numeric value for lower relative humidity limit of the target range. Default is 40%.}
+\item{LowRH}{Numeric value for lower relative humidity limit of the target range. Default is 40\%.}
 
-\item{HighRH}{Numeric value for upper relative humidity limit of the target range. Default is 60%.}
+\item{HighRH}{Numeric value for upper relative humidity limit of the target range. Default is 60\%.}
 
 \item{Temp_range}{Numeric vector of length 2 specifying the overall temperature range for the chart. Default is c(0, 40).}
 
-\item{y_func}{Function to calculate y-axis values. Default is calcMR (mixing ratio).}
+\item{y_func}{Function to calculate y-axis values. See above for options, default is calcMR (mixing ratio).}
 
 \item{...}{Additional arguments passed to y_func.}
 }
@@ -47,22 +47,21 @@ This function generates a psychrometric chart based on input temperature and rel
 Various psychrometric functions can be used for the y-axis.
 
 \itemize{
-    \item calcHR: Humidity Ratio (g/kg)
-    \item calcMR: Mixing Ratio (g/kg)
-    \item calcAH: Absolute Humidity (g/m³)
-    \item calcSH: Specific Humidity (g/kg)
-    \item calcAD: Air Density (kg/m³)
-    \item calcDP: Dew Point (°C)
-    \item calcEnthalpy: Enthalpy (kJ/kg)
-    \item calcPws: Saturation vapor pressure (hPa)
-    \item calcPw: Water Vapour Pressure (hPa)
-    \item calcPI: Preservation Index
-    \item calcIPI: Years to Degradation of reference material
-    \item calcLM: Lifetime
+   \item calcHR: Humidity Ratio (g/kg)
+   \item calcMR: Mixing Ratio (g/kg)
+   \item calcAH: Absolute Humidity (g/m³)
+   \item calcSH: Specific Humidity (g/kg)
+   \item calcAD: Air Density (kg/m³)
+   \item calcDP: Dew Point (°C)
+   \item calcEnthalpy: Enthalpy (kJ/kg)
+   \item calcPws: Saturation vapor pressure (hPa)
+   \item calcPw: Water Vapour Pressure (hPa)
+   \item calcPI: Preservation Index
+   \item calcIPI: Years to Degradation of reference material
+   \item calcLM: Lifetime
 }
 }
 \examples{
-
 # Basic usage with default settings
 graph_psychrometric(head(mydata, 100), Temp, RH)
 
@@ -74,6 +73,7 @@ graph_psychrometric(head(mydata, 100), Temp, RH, y_func = calcAH)
 
 # Adjusting the overall temperature range of the chart
 graph_psychrometric(head(mydata, 100), Temp, RH, Temp_range = c(12, 30))
+
 
 
 }
