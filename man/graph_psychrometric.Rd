@@ -2,36 +2,77 @@
 % Please edit documentation in R/graph_psychrometric.R
 \name{graph_psychrometric}
 \alias{graph_psychrometric}
-\title{Psychrometric chart from temperature and humidity}
+\title{Create a Psychrometric Chart}
 \usage{
-graph_psychrometric(mydata, Temp, RH, LowT, HighT, LowRH, HighRH)
+graph_psychrometric(
+  mydata,
+  Temp,
+  RH,
+  LowT = 16,
+  HighT = 25,
+  LowRH = 40,
+  HighRH = 60,
+  Temp_range = c(0, 40),
+  y_func = calcMR,
+  ...
+)
 }
 \arguments{
-\item{mydata}{A data frame containing temperature and humidity data.}
+\item{mydata}{A data frame containing temperature and relative humidity data.}
 
 \item{Temp}{Column name in mydata for temperature values.}
 
 \item{RH}{Column name in mydata for relative humidity values.}
 
-\item{LowT}{Numeric value for low temperature limit.}
+\item{LowT}{Numeric value for lower temperature limit of the target range. Default is 16°C.}
 
-\item{HighT}{Numeric value for high temperature limit.}
+\item{HighT}{Numeric value for upper temperature limit of the target range. Default is 25°C.}
 
-\item{LowRH}{Numeric value for low relative humidity limit.}
+\item{LowRH}{Numeric value for lower relative humidity limit of the target range. Default is 40%.}
 
-\item{HighRH}{Numeric value for high relative humidity limit.}
+\item{HighRH}{Numeric value for upper relative humidity limit of the target range. Default is 60%.}
+
+\item{Temp_range}{Numeric vector of length 2 specifying the overall temperature range for the chart. Default is c(0, 40).}
+
+\item{y_func}{Function to calculate y-axis values. Default is calcMR (mixing ratio).
+Available options include:
+\itemize{
+  \item calcHR: Humidity Ratio (g/kg)
+  \item calcMR: Mixing Ratio (g/kg)
+  \item calcAH: Absolute Humidity (g/m³)
+  \item calcSH: Specific Humidity (g/kg)
+  \item calcAD: Air Density (kg/m³)
+  \item calcDP: Dew Point (°C)
+  \item calcEnthalpy: Enthalpy (kJ/kg)
+  \item calcPws: Saturation vapor pressure (hPa)
+  \item calcPw: Water Vapour Pressure (hPa)
+  \item calcPI: Preservation Index
+  \item calcIPI: Years to Degradation of reference material
+  \item calcLM: Lifetime
+}}
+
+\item{...}{Additional arguments passed to y_func.}
 }
 \value{
 A ggplot object representing the psychrometric chart.
 }
 \description{
-Produces a psychrometric chart from temperature and humidity data.
+This function generates a psychrometric chart based on input temperature and relative humidity data.
+
+Various psychrometric functions can be used for the y-axis.
 }
 \examples{
-data <- data.frame(Temp = c(20, 25, 30), RH = c(50, 60, 70))
-graph_psychrometric(data, Temp, RH, LowT = 15, HighT = 25, LowRH = 40, HighRH = 60)
+# Basic usage with default settings
+graph_psychrometric(head(mydata, 100), Temp, RH)
 
-# graph_psychrometric(head(mydata), Temp, RH, LowT = 15, HighT = 25, LowRH = 40, HighRH = 60)
+# Custom temperature and humidity ranges
+graph_psychrometric(head(mydata, 100), Temp, RH, LowT = 8, HighT = 28, LowRH = 30, HighRH = 70)
+
+# Using a different psychrometric function (e.g., Absolute Humidity)
+graph_psychrometric(head(mydata, 100), Temp, RH, y_func = calcAH)
+
+# Adjusting the overall temperature range of the chart
+graph_psychrometric(head(mydata, 100), Temp, RH, Temp_range = c(12, 30))
 
 
 }
