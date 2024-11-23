@@ -34,6 +34,7 @@
 #'
 #' @return A ggplot object representing the psychrometric chart.
 #'
+#' @importFrom stats quantile
 #' @importFrom ggplot2 ggplot geom_line geom_text geom_segment geom_point lims labs guides aes
 #' @importFrom dplyr rename mutate group_by filter
 #'
@@ -79,7 +80,7 @@ graph_psychrometric <- function(mydata, Temp, RH,
   background_labels =
     background_df |>
     dplyr::group_by(ref_RH) |>
-    dplyr::filter(ref_Temp == quantile(ref_Temp, 0.10)) # label lines near start of Temp
+    dplyr::filter(ref_Temp == stats::quantile(ref_Temp, 0.10)) # label lines near start of Temp
 
   # Create a reference data frame
   ref_df <-
