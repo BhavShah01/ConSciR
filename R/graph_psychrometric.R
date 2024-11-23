@@ -11,7 +11,7 @@
 #'    \item calcAH: Absolute Humidity (g/m^3)
 #'    \item calcSH: Specific Humidity (g/kg)
 #'    \item calcAD: Air Density (kg/m^3)
-#'    \item calcDP: Dew Point (C)
+#'    \item calcDP: Dew Point (°C)
 #'    \item calcEnthalpy: Enthalpy (kJ/kg)
 #'    \item calcPws: Saturation vapor pressure (hPa)
 #'    \item calcPw: Water Vapour Pressure (hPa)
@@ -24,8 +24,8 @@
 #' @param mydata A data frame containing temperature and relative humidity data.
 #' @param Temp Column name in mydata for temperature values.
 #' @param RH Column name in mydata for relative humidity values.
-#' @param LowT Numeric value for lower temperature limit of the target range. Default is 16C.
-#' @param HighT Numeric value for upper temperature limit of the target range. Default is 25C.
+#' @param LowT Numeric value for lower temperature limit of the target range. Default is 16°C.
+#' @param HighT Numeric value for upper temperature limit of the target range. Default is 25°C.
 #' @param LowRH Numeric value for lower relative humidity limit of the target range. Default is 40\%.
 #' @param HighRH Numeric value for upper relative humidity limit of the target range. Default is 60\%.
 #' @param Temp_range Numeric vector of length 2 specifying the overall temperature range for the chart. Default is c(0, 40).
@@ -35,7 +35,7 @@
 #' @return A ggplot object representing the psychrometric chart.
 #'
 #' @importFrom stats quantile
-#' @importFrom ggplot2 ggplot geom_line geom_text geom_segment geom_point lims labs guides aes
+#' @importFrom ggplot2 ggplot geom_line geom_text geom_segment geom_point lims labs guides aes theme_bw
 #' @importFrom dplyr rename mutate group_by filter
 #'
 #' @export
@@ -51,7 +51,7 @@
 #' graph_psychrometric(head(mydata, 100), Temp, RH, y_func = calcAH)
 #'
 #' # Adjusting the overall temperature range of the chart
-#' graph_psychrometric(head(mydata, 100), Temp, RH, Temp_range = c(12, 30))
+#' graph_psychrometric(head(mydata, 100), Temp, RH, Temp_range = c(12, 30)) + theme_bw()
 #'
 #'
 #'
@@ -82,8 +82,8 @@ graph_psychrometric <- function(mydata, Temp, RH,
     dplyr::group_by(ref_RH) |>
     dplyr::filter(ref_Temp == stats::quantile(ref_Temp, 0.10)) # label lines near start of Temp
 
-  # Create a reference data frame
-  ref_df <-
+  # Create a data frame for the envelope
+  envelope_df =
     data.frame(Temp = seq(from = LowT, to = HighT, by = 1)) |>
     dplyr::mutate(
       y_Low = y_func(Temp, LowRH, ...),
@@ -94,13 +94,17 @@ graph_psychrometric <- function(mydata, Temp, RH,
   mydata = mydata |>
     dplyr::mutate(y_Axis = y_func(Temp, RH, ...))
 
-  # Calculate the limits of the TRH box
+  # Calculate the bounds of the TRH envelope and the y-axis
   y_limit_left_low = y_func(LowT, LowRH, ...)
   y_limit_left_high = y_func(LowT, HighRH, ...)
   y_limit_right_low = y_func(HighT, LowRH, ...)
   y_limit_right_high = y_func(HighT, HighRH, ...)
   y_limit_low = y_func(Temp_range[1], 10, ...)
   y_limit_high = y_func(Temp_range[2], 50, ...) # Places 50\%RH line at top right corner
+
+  # Description of the envelope (for caption)
+  limit_description =
+    paste0("Envelope: ", LowT, " to ", HighT, "C and ", LowRH, " to ", HighRH, "%RH")
 
   # y-axis label
   y_axis_label =
@@ -131,30 +135,30 @@ graph_psychrometric <- function(mydata, Temp, RH,
     ggplot2::geom_text(aes(x = ref_Temp, y = y_Axis, label = ref_RH), vjust = -0.5,
                        check_overlap = TRUE, size = 2, data = background_labels) +
 
-    # Temperature Left side
+    # Temperature left bounds of envelope
     ggplot2::geom_segment(alpha = 0.5, col = "red", size = 1,
                           aes(x = LowT, xend = LowT,
                               y = y_limit_left_low, yend = y_limit_left_high)) +
-    # Temperature Right side
+    # Temperature right bounds of envelope
     ggplot2::geom_segment(alpha = 0.5, col = "red", size = 1,
                           aes(x = HighT, xend = HighT,
                               y = y_limit_right_low, yend = y_limit_right_high)) +
 
-    # Humidity Lower
+    # Humidity lower bounds of envelope
     ggplot2::geom_line(aes(x = Temp, y = y_Low),
-                       col = 'blue', alpha = 0.5, size = 1, data = ref_df) +
-    # Humidity Upper
+                       col = 'blue', alpha = 0.5, size = 1, data = envelope_df) +
+    # Humidity upper bounds of envelope
     ggplot2::geom_line(aes(x = Temp, y = y_High),
-                       col = 'blue', alpha = 0.5, size = 1, data = ref_df) +
+                       col = 'blue', alpha = 0.5, size = 1, data = envelope_df) +
 
-    # Overlay TRH data
+    # Overlay your TRH data
     ggplot2::geom_point(aes(x = Temp, y = y_Axis, col = RH), alpha = 0.5) +
 
-    # Add limits
+    # Add limits to x and y axis
     ggplot2::lims(x = c(Temp_range[1], Temp_range[2]), y = c(y_limit_low, y_limit_high)) +
 
     # Add labels to the chart
-    ggplot2::labs(x = "Temperature (C)", y = y_axis_label) +
+    ggplot2::labs(x = "Temperature (C)", y = y_axis_label, caption = limit_description) +
 
     # Turn off the legend
     guides(alpha = "none")  # col = "none")

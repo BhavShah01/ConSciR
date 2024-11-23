@@ -18,7 +18,7 @@
 #'
 #'
 #'
-#' @param Temp Temperature (Celsius)
+#' @param Temp Temperature (°Celsius)
 #' @param RH Relative Humidity (0-100\%)
 #'
 #' @return PI Preservation Index, the expected lifetime 1/k

@@ -10,7 +10,7 @@ Tim Padfield, 2004
 calcPI(Temp, RH)
 }
 \arguments{
-\item{Temp}{Temperature (Celsius)}
+\item{Temp}{Temperature (°Celsius)}
 
 \item{RH}{Relative Humidity (0-100\%)}
 }
