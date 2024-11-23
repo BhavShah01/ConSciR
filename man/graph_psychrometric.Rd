@@ -72,7 +72,7 @@ graph_psychrometric(head(mydata, 100), Temp, RH, LowT = 8, HighT = 28, LowRH = 3
 graph_psychrometric(head(mydata, 100), Temp, RH, y_func = calcAH)
 
 # Adjusting the overall temperature range of the chart
-graph_psychrometric(head(mydata, 100), Temp, RH, Temp_range = c(12, 30)) + theme_bw()
+graph_psychrometric(head(mydata, 100), Temp, RH, Temp_range = c(12, 30))
 
 
 

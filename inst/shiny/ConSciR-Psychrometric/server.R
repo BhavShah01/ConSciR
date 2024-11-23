@@ -8,14 +8,23 @@ library(ConSciR)
 
 server <- function(input, output) {
 
-  func_list_text <- c("calcMR", "calcHR", "calcAH", "calcSH", "calcAD", "calcDP",
-                 "calcEnthalpy", "calcPws", "calcPw", "calcPI", "calcIPI", "calcLM")
-
-  func_list <- c(calcMR, calcHR, calcAH, calcSH, calcAD, calcDP,
-                 calcEnthalpy, calcPws, calcPw, calcPI, calcIPI, calcLM)
+  func_list_text <- c(
+    "Mixing Ratio (g/kg)" = "calcMR",
+    "Humidity Ratio (g/kg)" = "calcHR",
+    "Absolute Humidity (g/m³)" = "calcAH",
+    "Specific Humidity (g/kg)" = "calcSH",
+    "Air Density (kg/m³)" = "calcAD",
+    "Dew Point (°C)" = "calcDP",
+    "Enthalpy (kJ/kg)" = "calcEnthalpy",
+    "Saturation Vapor Pressure (hPa)" = "calcPws",
+    "Water Vapor Pressure (hPa)" = "calcPw",
+    "Preservation Index" = "calcPI",
+    "Years to Degradation" = "calcIPI",
+    "Lifetime Multiplier" = "calcLM"
+  )
 
   output$select_y_func <- renderUI({
-    selectInput("select_y_func", "Select y-axis", selected = func_list_text[1],
+    selectInput("select_y_func", "", selected = func_list_text[1],
                 choices = func_list_text)
   })
 
@@ -35,12 +44,16 @@ server <- function(input, output) {
   })
 
   output$gg_Psychrometric <- renderPlot({
+    req(input$select_y_func)
+
     mydata |>
       graph_psychrometric(
+        y_func = get(input$select_y_func), # return function
         Temp_range = c(input$select_temp_range[1], input$select_temp_range[2]),
-        LowT = input$select_temp[1], HighT = input$select_temp[2],
-        LowRH = input$select_rh[1], HighRH = input$select_rh[2]) +
-      # graph_psychrometric(y_func = !!input$select_y_func) +
+        LowT = input$select_temp[1],
+        HighT = input$select_temp[2],
+        LowRH = input$select_rh[1],
+        HighRH = input$select_rh[2]) +
       theme_bw()
   })
 

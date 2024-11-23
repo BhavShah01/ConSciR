@@ -51,7 +51,7 @@
 #' graph_psychrometric(head(mydata, 100), Temp, RH, y_func = calcAH)
 #'
 #' # Adjusting the overall temperature range of the chart
-#' graph_psychrometric(head(mydata, 100), Temp, RH, Temp_range = c(12, 30)) + theme_bw()
+#' graph_psychrometric(head(mydata, 100), Temp, RH, Temp_range = c(12, 30))
 #'
 #'
 #'
@@ -66,6 +66,14 @@ graph_psychrometric <- function(mydata, Temp, RH,
     stop("Packages 'ggplot2' and 'dplyr' are required to produce graph.
          Run `install.packages(c('ggplot2', 'dplyr'))` ")
   }
+
+  # Convert y_func to a function if it's a string
+  if (is.character(y_func)) {
+    y_func <- match.fun(y_func)
+  }
+
+  # Get the function name as a string for later use
+  y_func_name <- deparse(substitute(y_func))
 
   # Create background grid 10-100\%RH with 10RH\% resolution
   ref_Temp = seq(from = Temp_range[1], to = Temp_range[2], by = 1)
@@ -108,7 +116,7 @@ graph_psychrometric <- function(mydata, Temp, RH,
 
   # y-axis label
   y_axis_label =
-    switch(deparse(substitute(y_func)),
+    switch(y_func_name,
            "calcHR" = "Humidity Ratio (g/kg)",
            "calcMR" = "Mixing Ratio (g/kg)",
            "calcAH" = "Absolute Humidity (g/m^3)",

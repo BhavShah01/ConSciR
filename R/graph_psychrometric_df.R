@@ -35,6 +35,7 @@
 #' @param Temp_range Numeric vector of length 2 specifying the overall temperature range for the chart.
 #'  Default is c(0, 40).
 #' @param y_axis_label Character string for y-axis label. Default is "Y-axis".
+#' @param ... Additional arguments passed to y_func.
 #'
 #' @return A ggplot object representing the psychrometric chart.
 #'
@@ -46,19 +47,25 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' # Basic use, don't need to specify y_func as calcMR is default
-#' head(mydata) |> mutate(MixingRatio = calcMR(Temp, RH)) |> graph_psychrometric_df(y_Axis = MixingRatio)
+#' head(mydata) |>
+#'   mutate(MixingRatio = calcMR(Temp, RH)) |>
+#'   graph_psychrometric_df(y_Axis = MixingRatio)
 #'
 #' # Assuming mydata has Temp and RH columns then use a calculation to mutate the y-axis
 #' # Must supply the y_func argument to ensure this function works
-#' head(mydata) |> mutate(AbsHum = calcAH(Temp, RH)) |> graph_psychrometric_df(y_Axis = AbsHum, y_func = calcAH, y_axis_label = "Absolute Humidity (g/m^3)")
-#'
+#' head(mydata) |>
+#'   mutate(AbsHum = calcAH(Temp, RH)) |>
+#'   graph_psychrometric_df(y_Axis = AbsHum, y_func = calcAH, y_axis_label = "Absolute Humidity (g/m^3)")
+#' }
 #'
 #'
 #'
 graph_psychrometric_df <- function(mydata,
                                    Temp = Temp, RH = RH,
-                                   y_Axis, y_func = calcMR,
+                                   y_Axis,
+                                   y_func = calcMR,
                                    LowT = 16, HighT = 25,
                                    LowRH = 40, HighRH = 60,
                                    Temp_range = c(0, 40),

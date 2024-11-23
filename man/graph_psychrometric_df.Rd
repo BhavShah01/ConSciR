@@ -43,6 +43,8 @@ supplied if different from the default: calcMR (mixing ratio).}
 Default is c(0, 40).}
 
 \item{y_axis_label}{Character string for y-axis label. Default is "Y-axis".}
+
+\item{...}{Additional arguments passed to y_func.}
 }
 \value{
 A ggplot object representing the psychrometric chart.
@@ -69,6 +71,7 @@ Various psychrometric functions can be used for the y-axis if supplied in the da
 }
 }
 \examples{
+\dontrun{
 # Basic use, don't need to specify y_func as calcMR is default
 head(mydata) |>
   mutate(MixingRatio = calcMR(Temp, RH)) |>
@@ -78,9 +81,8 @@ head(mydata) |>
 # Must supply the y_func argument to ensure this function works
 head(mydata) |>
   mutate(AbsHum = calcAH(Temp, RH)) |>
-  graph_psychrometric_df(y_Axis = AbsHum, y_func = calcAH,
-  y_axis_label = "Absolute Humidity (g/m^3)")
-
+  graph_psychrometric_df(y_Axis = AbsHum, y_func = calcAH, y_axis_label = "Absolute Humidity (g/m^3)")
+}
 
 
 
