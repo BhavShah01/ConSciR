@@ -89,9 +89,13 @@
 
 <dt id="arg-lowrh">LowRH<a class="anchor" aria-label="anchor" href="#arg-lowrh"></a></dt>
 <dd><p>Numeric value for lower relative humidity limit of the target range. Default is 40<!-- %.} --></p>
-<p>HighRHNumeric value for upper relative humidity limit of the target range. Default is 60<!-- %.} -->Temp_rangeNumeric vector of length 2 specifying the overall temperature range for the chart. Default is c(0, 40).y_funcFunction to calculate y-axis values. Default is calcMR (mixing ratio).
-Available options include:
-</p><ul><li><p>calcHR: Humidity Ratio (g/kg)</p></li>
+<p>HighRHNumeric value for upper relative humidity limit of the target range. Default is 60<!-- %.} -->Temp_rangeNumeric vector of length 2 specifying the overall temperature range for the chart. Default is c(0, 40).y_funcFunction to calculate y-axis values. Default is calcMR (mixing ratio)....Additional arguments passed to y_func.
+
+
+A ggplot object representing the psychrometric chart.
+
+
+This function generates a psychrometric chart based on input temperature and relative humidity data.Various psychrometric functions can be used for the y-axis.</p><ul><li><p>calcHR: Humidity Ratio (g/kg)</p></li>
 <li><p>calcMR: Mixing Ratio (g/kg)</p></li>
 <li><p>calcAH: Absolute Humidity (g/m³)</p></li>
 <li><p>calcSH: Specific Humidity (g/kg)</p></li>
@@ -103,14 +107,7 @@ Available options include:
 <li><p>calcPI: Preservation Index</p></li>
 <li><p>calcIPI: Years to Degradation of reference material</p></li>
 <li><p>calcLM: Lifetime</p></li>
-</ul>...Additional arguments passed to y_func.
-
-
-A ggplot object representing the psychrometric chart.
-
-
-This function generates a psychrometric chart based on input temperature and relative humidity data.Various psychrometric functions can be used for the y-axis.
-
+</ul>
 
 # Basic usage with default settings
 graph_psychrometric(head(mydata, 100), Temp, RH)# Custom temperature and humidity ranges
