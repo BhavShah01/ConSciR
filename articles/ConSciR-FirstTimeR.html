@@ -152,6 +152,51 @@ bottom-right pane to navigate your project directory.</p></li>
 </ol>
 </div>
 </div>
+<div class="section level2">
+<h2 id="tidy-data">Tidy data<a class="anchor" aria-label="anchor" href="#tidy-data"></a>
+</h2>
+<p>To ensure optimal functionality of ConSciR functions, it is crucial
+to maintain your data in a tidy and consistently formatted structure.
+This allows the code to easily locate and process your variables. Please
+note the specific naming conventions for the columns as they are
+essential for the package to work correctly. The following formats are
+recommended:</p>
+<div class="section level5">
+<h5 id="temperature-and-relative-humidity-data">Temperature and Relative Humidity Data<a class="anchor" aria-label="anchor" href="#temperature-and-relative-humidity-data"></a>
+</h5>
+<pre><code><span><span class="co">#&gt;     Site  Sensor                Date Temp RH</span></span>
+<span><span class="co">#&gt; 1 London Gallery 2023-01-01 00:00:00 20.5 45</span></span>
+<span><span class="co">#&gt; 2 London Gallery 2023-01-01 01:00:00 21.0 47</span></span>
+<span><span class="co">#&gt; 3   York    Room 2023-01-01 00:00:00 19.8 50</span></span>
+<span><span class="co">#&gt; 4   York    Room 2023-01-01 02:00:00 20.2 49</span></span></code></pre>
+</div>
+<div class="section level5">
+<h5 id="light-and-uv-data">Light and UV Data<a class="anchor" aria-label="anchor" href="#light-and-uv-data"></a>
+</h5>
+<pre><code><span><span class="co">#&gt;     Site Sensor                Date Lux UV</span></span>
+<span><span class="co">#&gt; 1 Museum  Store 2023-01-01 00:00:00  45  0</span></span>
+<span><span class="co">#&gt; 2 Museum  Store 2023-01-01 01:00:00  56  0</span></span>
+<span><span class="co">#&gt; 3   Case  Shelf 2023-01-01 00:00:00 200 20</span></span>
+<span><span class="co">#&gt; 4   Case  Shelf 2023-01-01 02:00:00 199 49</span></span></code></pre>
+<p>Key Points:</p>
+<ul>
+<li>Column Names: Try to use the exact column names as shown above
+(Site, Sensor, Date, Temp, RH, Lux, UV). These names are case-sensitive.
+Tools to tidy files are being developed.</li>
+<li>Date Format: The Date column should ideally be in a datetime format
+(YYYY-MM-DD HH:MM:SS). Check the behaviour of dates if this format
+hasn’t been used.</li>
+<li>Numeric Data: Ensure that Temp, RH, Lux, and UV columns contain only
+numeric data.</li>
+<li>Categorical Data: Site and Sensor are categorical variables and
+should be character strings.</li>
+<li>Tidy Structure: Each row represents a single observation, and each
+column represents a single variable.</li>
+<li>No Missing Columns: Include all relevant columns, even if some data
+points are missing (leave blank or use NA for missing values).</li>
+</ul>
+</div>
+</div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>

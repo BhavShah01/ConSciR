@@ -132,7 +132,7 @@ where each unique temperature-humidity pair is represented..</p>
 range of derived variables can be computed.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Functions applied on the mydata dataset</span></span>
-<span><span class="va">mydata</span> <span class="op">|&gt;</span> </span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mydata</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
 <span>    Absolute_Humidity <span class="op">=</span> <span class="fu"><a href="../reference/calcAH.html">calcAH</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>, </span>
 <span>    Dew_Point <span class="op">=</span> <span class="fu"><a href="../reference/calcDP.html">calcDP</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>, </span>
@@ -146,7 +146,6 @@ range of derived variables can be computed.</p>
 <span>    RH_AH_calc <span class="op">=</span> <span class="fu"><a href="../reference/calcRH_AH.html">calcRH_AH</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">Absolute_Humidity</span><span class="op">)</span>,</span>
 <span>    RH_DP_calc <span class="op">=</span> <span class="fu"><a href="../reference/calcRH_DP.html">calcRH_DP</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">Dew_Point</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 6</span></span>
 <span><span class="co">#&gt; Columns: 16</span></span>
