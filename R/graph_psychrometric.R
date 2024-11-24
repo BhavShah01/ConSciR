@@ -24,6 +24,7 @@
 #' @param mydata A data frame containing temperature and relative humidity data.
 #' @param Temp Column name in mydata for temperature values.
 #' @param RH Column name in mydata for relative humidity values.
+#' @param data_colour Column name to use to colour the data points. Default is "RH".
 #' @param LowT Numeric value for lower temperature limit of the target range. Default is 16°C.
 #' @param HighT Numeric value for upper temperature limit of the target range. Default is 25°C.
 #' @param LowRH Numeric value for lower relative humidity limit of the target range. Default is 40\%.
@@ -35,12 +36,14 @@
 #' @return A ggplot object representing the psychrometric chart.
 #'
 #' @importFrom stats quantile
-#' @importFrom ggplot2 ggplot geom_line geom_text geom_segment geom_point lims labs guides aes theme_bw
+#' @importFrom ggplot2 ggplot geom_line geom_text geom_segment geom_point lims labs
+#' guides aes coord_cartesian annotate
 #' @importFrom dplyr rename mutate group_by filter
 #'
 #' @export
 #'
 #' @examples
+#'
 #' # Basic usage with default settings
 #' graph_psychrometric(head(mydata, 100), Temp, RH)
 #'
@@ -53,13 +56,18 @@
 #' # Adjusting the overall temperature range of the chart
 #' graph_psychrometric(head(mydata, 100), Temp, RH, Temp_range = c(12, 30))
 #'
+#' # Change the colour of the points to a variable
+#' graph_psychrometric(head(mydata, 100), Temp, RH, data_colour = "Sensor", y_func = calcDP)
 #'
 #'
-graph_psychrometric <- function(mydata, Temp, RH,
+graph_psychrometric <- function(mydata,
+                                Temp = "Temp", RH = "RH",
+                                data_colour = "RH",
                                 LowT = 16, HighT = 25,
                                 LowRH = 40, HighRH = 60,
                                 Temp_range = c(0, 40),
-                                y_func = calcMR, ...) {
+                                y_func = calcMR,
+                                 ...) {
 
   # Check if required packages are installed
   if (!requireNamespace("ggplot2", quietly = TRUE) || !requireNamespace("dplyr", quietly = TRUE)) {
@@ -69,13 +77,22 @@ graph_psychrometric <- function(mydata, Temp, RH,
 
   # Convert y_func to a function if it's a string
   if (is.character(y_func)) {
-    y_func <- match.fun(y_func)
+    y_func = match.fun(y_func)
   }
+  y_func_name = deparse(substitute(y_func)) # function name as string
 
-  # Get the function name as a string for later use
-  y_func_name <- deparse(substitute(y_func))
+  # Column names are converted to symbols from the data
+  Temp = rlang::ensym(Temp)
+  RH = rlang::ensym(RH)
+  data_colour = rlang::ensym(data_colour)
 
-  # Create background grid 10-100\%RH with 10RH\% resolution
+  # Calculate the variable for the y-axis
+  mydata = mydata |>
+    dplyr::filter(!is.na(!!Temp) & !is.na(!!RH)) |>
+    dplyr::mutate(y_Axis = y_func(!!Temp, !!RH, ...))
+
+
+  # Create background grid 10-100RH with 10RH resolution
   ref_Temp = seq(from = Temp_range[1], to = Temp_range[2], by = 1)
   ref_RH = seq(from = 10, to = 100, by = 10)
 
@@ -98,9 +115,6 @@ graph_psychrometric <- function(mydata, Temp, RH,
       y_High = y_func(Temp, HighRH, ...)
     )
 
-  # Calculate the y-axis variable
-  mydata = mydata |>
-    dplyr::mutate(y_Axis = y_func(Temp, RH, ...))
 
   # Calculate the bounds of the TRH envelope and the y-axis
   y_limit_left_low = y_func(LowT, LowRH, ...)
@@ -129,7 +143,7 @@ graph_psychrometric <- function(mydata, Temp, RH,
            "calcPI" = "Preservation Index",
            "calcIPI" = "Years to Degradation of reference material",
            "calcLM" = "Lifetime",
-           "Y-axis")
+           "value")
 
   # Create the plot
   p <-
@@ -144,13 +158,16 @@ graph_psychrometric <- function(mydata, Temp, RH,
                        check_overlap = TRUE, size = 2, data = background_labels) +
 
     # Temperature left bounds of envelope
-    ggplot2::geom_segment(alpha = 0.5, col = "red", size = 1,
-                          aes(x = LowT, xend = LowT,
-                              y = y_limit_left_low, yend = y_limit_left_high)) +
+    ggplot2::annotate("segment",
+                      x = LowT, xend = LowT,
+                      y = y_limit_left_low, yend = y_limit_left_high,
+                      alpha = 0.5, col = "red", size = 1) +
+
     # Temperature right bounds of envelope
-    ggplot2::geom_segment(alpha = 0.5, col = "red", size = 1,
-                          aes(x = HighT, xend = HighT,
-                              y = y_limit_right_low, yend = y_limit_right_high)) +
+    ggplot2::annotate("segment",
+                      x = HighT, xend = HighT,
+                      y = y_limit_right_low, yend = y_limit_right_high,
+                      alpha = 0.5, col = "red", size = 1) +
 
     # Humidity lower bounds of envelope
     ggplot2::geom_line(aes(x = Temp, y = y_Low),
@@ -160,10 +177,11 @@ graph_psychrometric <- function(mydata, Temp, RH,
                        col = 'blue', alpha = 0.5, size = 1, data = envelope_df) +
 
     # Overlay your TRH data
-    ggplot2::geom_point(aes(x = Temp, y = y_Axis, col = RH), alpha = 0.5) +
+    ggplot2::geom_point(aes(x = !!Temp, y = y_Axis, col = !!data_colour), alpha = 0.5) +
 
     # Add limits to x and y axis
-    ggplot2::lims(x = c(Temp_range[1], Temp_range[2]), y = c(y_limit_low, y_limit_high)) +
+    ggplot2::coord_cartesian(xlim = c(Temp_range[1], Temp_range[2]),
+                             ylim = c(y_limit_low, y_limit_high)) +
 
     # Add labels to the chart
     ggplot2::labs(x = "Temperature (C)", y = y_axis_label, caption = limit_description) +
@@ -172,5 +190,4 @@ graph_psychrometric <- function(mydata, Temp, RH,
     guides(alpha = "none")  # col = "none")
 
   return(p)
-
 }

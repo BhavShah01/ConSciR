@@ -10,7 +10,7 @@ run_Psychrometric_app()
 Shiny object
 }
 \description{
-Run ConSciR Psychrometric Application
+Shiny application is view the psychrometric chart.
 }
 \examples{
 # run_Psychrometric_app()

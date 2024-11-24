@@ -57,7 +57,7 @@ Starting with input data of temperature and relative humidity, a wide range of d
 
 ```{r}
 # Functions applied on the mydata dataset
-mydata |> 
+head(mydata) |> 
   mutate(
     Absolute_Humidity = calcAH(Temp, RH), 
     Dew_Point = calcDP(Temp, RH), 
@@ -71,7 +71,6 @@ mydata |>
     RH_AH_calc = calcRH_AH(Temp, Absolute_Humidity),
     RH_DP_calc = calcRH_DP(Temp, Dew_Point)
   ) |>
-  head() |>
   glimpse()
 
 ```

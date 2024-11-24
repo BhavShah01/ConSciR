@@ -4,3 +4,9 @@ testthat::test_that("Temp conversion check", {
 testthat::test_that("RH partial pressure check", {
   expect_equal(50, 100 * (calcPw(20, 50) / calcPws(20)), tolerance = 0.001)
 })
+testthat::test_that("calcRH_DP check", {
+  expect_equal(50, calcRH_DP(20, calcDP(20, 50)), tolerance = 0.001)
+})
+testthat::test_that("calcRH_AH check", {
+  expect_equal(50, calcRH_AH(20, calcAH(20, 50)), tolerance = 0.001)
+})

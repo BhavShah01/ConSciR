@@ -16,8 +16,8 @@ server <- function(input, output) {
     "Air Density (kg/m³)" = "calcAD",
     "Dew Point (°C)" = "calcDP",
     "Enthalpy (kJ/kg)" = "calcEnthalpy",
-    "Saturation Vapor Pressure (hPa)" = "calcPws",
-    "Water Vapor Pressure (hPa)" = "calcPw",
+    "Saturation Vapour Pressure (hPa)" = "calcPws",
+    "Water Vapour Pressure (hPa)" = "calcPw",
     "Preservation Index" = "calcPI",
     "Years to Degradation" = "calcIPI",
     "Lifetime Multiplier" = "calcLM"

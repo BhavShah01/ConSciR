@@ -14,7 +14,6 @@ reference:
   contents:
     - graph_TRH
     - graph_psychrometric
-    - graph_psychrometric_df
 - title: Conservation tools
   desc: Tools for the analysis of data for conservators.
   contents:

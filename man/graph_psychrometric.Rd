@@ -6,8 +6,9 @@
 \usage{
 graph_psychrometric(
   mydata,
-  Temp,
-  RH,
+  Temp = "Temp",
+  RH = "RH",
+  data_colour = "RH",
   LowT = 16,
   HighT = 25,
   LowRH = 40,
@@ -23,6 +24,8 @@ graph_psychrometric(
 \item{Temp}{Column name in mydata for temperature values.}
 
 \item{RH}{Column name in mydata for relative humidity values.}
+
+\item{data_colour}{Column name to use to colour the data points. Default is "RH".}
 
 \item{LowT}{Numeric value for lower temperature limit of the target range. Default is 16°C.}
 
@@ -62,6 +65,7 @@ Various psychrometric functions can be used for the y-axis.
 }
 }
 \examples{
+
 # Basic usage with default settings
 graph_psychrometric(head(mydata, 100), Temp, RH)
 
@@ -74,6 +78,8 @@ graph_psychrometric(head(mydata, 100), Temp, RH, y_func = calcAH)
 # Adjusting the overall temperature range of the chart
 graph_psychrometric(head(mydata, 100), Temp, RH, Temp_range = c(12, 30))
 
+# Change the colour of the points to a variable
+graph_psychrometric(head(mydata, 100), Temp, RH, data_colour = "Sensor", y_func = calcDP)
 
 
 }

@@ -45,47 +45,6 @@ devtools::install_github("BhavShah01/ConSciR")
 
 The ConSciR Github page: [ConSciR Github](https://github.com/BhavShah01/ConSciR)
 
-## Tidy data
-
-To ensure optimal functionality of ConSciR functions, it is crucial to maintain your data in a tidy and consistently formatted structure. This allows the code to easily locate and process your variables. Please note the specific naming conventions for the columns as they are essential for the package to work correctly.
-The following formats are recommended:
-
-
-##### Temperature and Relative Humidity Data
-
-```{r dataframe tidy THR data, echo=FALSE, message=FALSE, warning=FALSE}
-data.frame(
-  Site = c("London", "London", "York", "York"),
-  Sensor = c("Gallery", "Gallery", "Room", "Room"),
-  Date = as.POSIXct(c("2023-01-01 00:00:00", "2023-01-01 01:00:00", "2023-01-01 00:00:00", "2023-01-01 02:00:00")),
-  Temp = c(20.5, 21.0, 19.8, 20.2),
-  RH = c(45, 47, 50, 49)
-)
-```
-
-
-##### Light and UV Data
-
-```{r dataframe tidy data light, echo=FALSE, message=FALSE, warning=FALSE}
-data.frame(
-  Site = c("Museum", "Museum", "Case", "Case"),
-  Sensor = c("Store", "Store", "Shelf", "Shelf"),
-  Date = as.POSIXct(c("2023-01-01 00:00:00", "2023-01-01 01:00:00", "2023-01-01 00:00:00", "2023-01-01 02:00:00")),
-  Lux = c(45, 56, 200, 199),
-  UV = c(0, 0, 20, 49)
-)
-```
-
-
-Key Points:
-
--   Column Names: Try to use the exact column names as shown above (Site, Sensor, Date, Temp, RH, Lux, UV). These names are case-sensitive. Tools to tidy files are being developed.
--   Date Format: The Date column should ideally be in a datetime format (YYYY-MM-DD HH:MM:SS). Check the behaviour of dates if this format hasn't been used. 
--   Numeric Data: Ensure that Temp, RH, Lux, and UV columns contain only numeric data.
--   Categorical Data: Site and Sensor are categorical variables and should be character strings.
--   Tidy Structure: Each row represents a single observation, and each column represents a single variable.
--   No Missing Columns: Include all relevant columns, even if some data points are missing (leave blank or use NA for missing values).
-
 
 ## Examples 
 
@@ -101,15 +60,21 @@ Add calculated values using mutate
 
 ```{r table of calculated values, message=FALSE, warning=FALSE}
 # Add calculated values using mutate
-head(mydata) |>
+head(mydata) |> 
   mutate(
-    AbsHum = calcAH(Temp, RH), 
-    DewPoint = calcDP(Temp, RH),
-    MixingRatio = calcMR(Temp, RH),
+    Absolute_Humidity = calcAH(Temp, RH), 
+    Dew_Point = calcDP(Temp, RH), 
+    Mixing_Ratio = calcMR(Temp, RH), 
+    Humidity_Ratio = calcHR(Temp, RH),
     Enthalpy = calcEnthalpy(Temp, RH), 
-    IPI = calcIPI(Temp, RH), 
-    PI = calcPI(Temp, RH)
-  )
+    Saturation_Vapour_Pressure = calcPws(Temp), 
+    Actual_Vapour_Pressure = calcPw(Temp, RH), 
+    Air_Density = calcAD(Temp, RH),
+    Temp_calc = calcTemp(RH, Dew_Point),
+    RH_AH_calc = calcRH_AH(Temp, Absolute_Humidity),
+    RH_DP_calc = calcRH_DP(Temp, Dew_Point)
+  ) |>
+  glimpse()
 
 ```
 
@@ -130,18 +95,17 @@ mydata |>
   geom_line(aes(Date, AbsHum), color = "green") +
   # Add Dew Point line
   geom_line(aes(Date, DewPoint), color = "purple") +
-  # Set y-axis limits
-  lims(y = c(0, 100)) +
-  # Add labels and title
-  labs(
-    x = "Date",
-    y = "",
-    title = "Sensor",
-    subtitle = "Temperature (red), relative humidity (blue), absolute humidity (green), dew point (purple)",
-    caption = "ConSciR"
-  ) +
   # Apply a theme
-  theme_minimal()
+  theme_bw()
 
 ```
 
+Built in psychrometric chart
+
+```{r psychrometric chart, message=FALSE, warning=FALSE, fig.align="psychrometric_chart_example"}
+
+head(mydata, 100) |>
+  graph_psychrometric() + 
+  theme_bw()
+
+```

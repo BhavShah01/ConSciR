@@ -1,6 +1,10 @@
 # inst/shiny/ConSciR-Psychrometric/app.R
 #' Run ConSciR Psychrometric Application
 #'
+#' @description
+#' Shiny application is view the psychrometric chart.
+#'
+#'
 #' @return Shiny object
 #' @export
 #'
