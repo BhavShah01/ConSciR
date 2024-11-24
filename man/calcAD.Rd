@@ -4,7 +4,7 @@
 \alias{calcAD}
 \title{Calculate Air Density}
 \usage{
-calcAD(Temp, RH, P_atm = 1013.25, R_dry = 287.058, R_vap = 461.495)
+calcAD(Temp, RH, P_atm = 1013.25, R_dry = 287.058, R_vap = 461.495, ...)
 }
 \arguments{
 \item{Temp}{Temperature (°Celsius)}
@@ -16,6 +16,8 @@ calcAD(Temp, RH, P_atm = 1013.25, R_dry = 287.058, R_vap = 461.495)
 \item{R_dry}{Specific gas constant for dry air (J/(kg·K))}
 
 \item{R_vap}{Specific gas constant for water vapor (J/(kg·K))}
+
+\item{...}{Addtional arguments  to supply to [calcPws]}
 }
 \value{
 Air density in kg/m³

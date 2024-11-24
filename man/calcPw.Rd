@@ -4,12 +4,14 @@
 \alias{calcPw}
 \title{Calculate Water Vapour Pressure}
 \usage{
-calcPw(Temp, RH)
+calcPw(Temp, RH, ...)
 }
 \arguments{
 \item{Temp}{Temperature (°Celsius)}
 
 \item{RH}{Relative Humidity (0-100\%)}
+
+\item{...}{Additional arguments to supply to [calcPws]}
 }
 \value{
 Pw, Water Vapour Pressure (hPa)

@@ -4,7 +4,7 @@
 \alias{calcSH}
 \title{Calculate Specific Humidity}
 \usage{
-calcSH(Temp, RH, P_atm = 1013.25)
+calcSH(Temp, RH, P_atm = 1013.25, ...)
 }
 \arguments{
 \item{Temp}{Temperature (°Celsius)}
@@ -12,6 +12,8 @@ calcSH(Temp, RH, P_atm = 1013.25)
 \item{RH}{Relative Humidity (0-100\%)}
 
 \item{P_atm}{Atmospheric pressure = 1013.25 (hPa)}
+
+\item{...}{Additional arguments to supply to [calcPws]}
 }
 \value{
 SH Specific Humidity (g/kg)

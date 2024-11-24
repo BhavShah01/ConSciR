@@ -37,7 +37,10 @@ server <- function(input, output) {
         showNotification("Data uploaded successfully!", type = "message")
       },
       error = function(e) {
-        showNotification(paste("Error reading file:", e$message), type = "error")
+        showNotification(paste("Error reading file:", e$message,
+                               ". CSV or Excel formatted data with 'Temp' and 'RH' columns
+                               can be uploaded to the application."),
+                         type = "error")
       }
     )
   })
@@ -69,7 +72,7 @@ server <- function(input, output) {
 
   output$select_alpha <- renderUI({
     numericInput("select_alpha", "Transparency",
-                 min = 0, max = 1, value = 0.5)
+                 min = 0, max = 1, value = 0.5, step = 0.02)
   })
 
   output$select_temp_range <- renderUI({
@@ -92,7 +95,7 @@ server <- function(input, output) {
 
     data() |>
       graph_psychrometric(
-        y_func = get(input$select_y_func), # return function
+        y_func = get(input$select_y_func), # Humidity function
         Temp_range = c(input$select_temp_range[1], input$select_temp_range[2]),
         LowT = input$select_temp[1],
         HighT = input$select_temp[2],

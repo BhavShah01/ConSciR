@@ -36,6 +36,7 @@
 #'
 #' @param Temp Temperature (°Celsius)
 #' @param RH Relative Humidity (0-100\%)
+#' @param ... Additional arguments to supply to [calcPws]
 #'
 #' @return Pw, Water Vapour Pressure (hPa)
 #' @export
@@ -49,7 +50,7 @@
 #' head(mydata) |> dplyr::mutate(Pw = calcPw(Temp, RH))
 #'
 #'
-calcPw <- function(Temp, RH) {
-  Pw = calcPws(Temp) * RH / 100
+calcPw <- function(Temp, RH, ...) {
+  Pw = calcPws(Temp, ...) * RH / 100
   return(Pw)
 }

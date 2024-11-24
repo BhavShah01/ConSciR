@@ -19,6 +19,7 @@
 #' @param Temp Temperature (°Celsius)
 #' @param RH Relative Humidity (0-100\%)
 #' @param P_atm Atmospheric pressure = 1013.25 (hPa)
+#' @param ... Additional arguments to supply to [calcPws]
 #'
 #' @return SH Specific Humidity (g/kg)
 #' @export
@@ -30,13 +31,13 @@
 #'
 #'
 #'
-calcSH <- function(Temp, RH, P_atm = 1013.25) {
+calcSH <- function(Temp, RH, P_atm = 1013.25, ...) {
 
   # Calculate saturation vapor pressure
-  Pws = calcPws(Temp)
+  Pws = calcPws(Temp, ...)
 
   # Calculate actual vapor pressure
-  Pw = calcPw(Temp, RH)
+  Pw = calcPws(Temp, ...) * RH / 100
 
   # Calculate absolute humidity
   AH = calcAH(Temp, RH)

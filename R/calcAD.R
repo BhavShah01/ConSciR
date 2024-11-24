@@ -9,6 +9,7 @@
 #' @param P_atm Atmospheric pressure = 1013.25 (hPa)
 #' @param R_dry Specific gas constant for dry air (J/(kg·K))
 #' @param R_vap Specific gas constant for water vapor (J/(kg·K))
+#' @param ... Addtional arguments  to supply to [calcPws]
 #'
 #' @return Air density in kg/m³
 #' @export
@@ -25,7 +26,7 @@
 #' head(mydata) |> dplyr::mutate(AirDensity = calcAD(Temp, RH))
 #'
 #'
-calcAD <- function(Temp, RH, P_atm = 1013.25, R_dry = 287.058, R_vap = 461.495) {
+calcAD <- function(Temp, RH, P_atm = 1013.25, R_dry = 287.058, R_vap = 461.495, ...) {
 
   # Temperature in Kelvin
   TempK = Temp + 273.15
@@ -34,10 +35,10 @@ calcAD <- function(Temp, RH, P_atm = 1013.25, R_dry = 287.058, R_vap = 461.495) 
   P_atm_Pa = P_atm * 100
 
   # Saturation water vapour pressure
-  Pws = calcPws(Temp)
+  Pws = calcPws(Temp, ...)
 
   # Actual water vapour pressure
-  Pw = calcPw(Temp, RH)
+  Pw = calcPws(Temp, ...) * RH / 100
 
   # Partial pressure of dry air
   Pd = P_atm_Pa - Pw

@@ -19,6 +19,7 @@
 #' @param RH Relative Humidity (0-100\%)
 #' @param P_atm Atmospheric pressure = 1013.25 (hPa)
 #' @param B B = 621.9907 g/kg for air
+#' @param ... Additional arguments to supply to [calcPws]
 #'
 #' @return X Mixing ratio, mass of water vapour / mass of dry gas (g/kg)
 #' @export
@@ -35,8 +36,8 @@
 #' head(mydata) |> dplyr::mutate(MixingRatio = calcMR(Temp, RH))
 #'
 #'
-calcMR <- function(Temp, RH, P_atm = 1013.25, B = 621.9907) {
-  Pw = calcPw(Temp, RH)
+calcMR <- function(Temp, RH, P_atm = 1013.25, B = 621.9907, ...) {
+  Pw = calcPws(Temp, ...) * RH / 100
   X = (B * Pw) / (P_atm - Pw)
   return(X)
 }
