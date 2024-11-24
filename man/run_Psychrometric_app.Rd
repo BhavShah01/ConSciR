@@ -11,6 +11,8 @@ Shiny object
 }
 \description{
 Shiny application is view the psychrometric chart.
+
+CSV or Excel formatted data with "Temp" and "RH" columns can be uploaded to the application.
 }
 \examples{
 # run_Psychrometric_app()

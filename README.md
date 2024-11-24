@@ -6,10 +6,10 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-ConSciR is an R package specifically designed to assist conservators,
-scientists and engineers by providing a toolkit for performing
-calculations and streamlining common tasks in cultural heritage
-conservation. ConSciR is designed for:
+ConSciR is an R package designed to assist conservators, scientists and
+engineers by providing a toolkit for performing calculations and
+streamlining common tasks in cultural heritage conservation. ConSciR is
+designed for:
 
 - Conservators working in museums, galleries, and heritage sites
 - Conservation scientists, engineers and researchers
@@ -23,6 +23,10 @@ webpage**](https://bhavshah01.github.io/ConSciR/)
 
 The ConSciR Github page: [**ConSciR
 Github**](https://github.com/BhavShah01/ConSciR)
+
+If using R for the first time, read an article here: [Using R for the
+first
+time](https://bhavshah01.github.io/ConSciR/articles/ConSciR-FirstTimeR.html)
 
 ## Tools available
 

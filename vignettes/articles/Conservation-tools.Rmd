@@ -147,13 +147,13 @@ TRHgrid |>
   mutate(LifeTime = calcLM(Temp, RH)) |>
   ggplot(aes(Temp, RH, z = LifeTime)) +
   geom_contour_filled(bins = 20) +
-  theme_minimal()
+  theme_bw()
 
 TRHgrid |>
   mutate(LM_log = calcLM(Temp, RH) |> log10()) |>
   ggplot(aes(Temp, RH, z = LM_log)) +
   geom_contour_filled(bins = 20) +
-  theme_minimal()
+  theme_bw()
 
 ```
 
@@ -165,13 +165,13 @@ TRHgrid |>
   mutate(PI = calcPI(Temp, RH)) |>
   ggplot(aes(Temp, RH, z = PI)) +
   geom_contour_filled(bins = 20) +
-  theme_minimal()
+  theme_bw()
 
 TRHgrid |>
   mutate(PI_log10 = calcPI(Temp, RH) |> log10()) |>
   ggplot(aes(Temp, RH, z = PI_log10)) +
   geom_contour_filled(bins = 20) +
-  theme_minimal()
+  theme_bw()
 
 ```
 
