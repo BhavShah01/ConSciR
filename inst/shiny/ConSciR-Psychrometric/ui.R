@@ -15,7 +15,8 @@ ui <- page_navbar(
     card_header("Psychrometric Chart"),
     fluidRow(
       uiOutput("select_y_func"),
-      uiOutput("select_data_colour")),
+      uiOutput("select_data_colour"),
+      uiOutput("select_alpha")),
     plotOutput("gg_Psychrometric")
   ),
 )

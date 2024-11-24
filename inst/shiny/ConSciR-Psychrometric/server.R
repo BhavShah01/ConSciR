@@ -58,13 +58,18 @@ server <- function(input, output) {
   )
 
   output$select_y_func <- renderUI({
-    selectInput("select_y_func", "", selected = func_list_text[1],
+    selectInput("select_y_func", "Function", selected = func_list_text[1],
                 choices = func_list_text)
   })
 
   output$select_data_colour <- renderUI({
-    selectInput("select_data_colour", "", selected = names(data())[2],
+    selectInput("select_data_colour", "Colour by", selected = names(data())[2],
                 choices = names(data()))
+  })
+
+  output$select_alpha <- renderUI({
+    numericInput("select_alpha", "Transparency",
+                 min = 0, max = 1, value = 0.5)
   })
 
   output$select_temp_range <- renderUI({
@@ -73,7 +78,7 @@ server <- function(input, output) {
   })
 
   output$select_temp <- renderUI({
-    sliderInput("select_temp", "Temperature ",
+    sliderInput("select_temp", "Temperature",
                 min = 0, max = 50, value = c(12, 25))
   })
 
@@ -93,7 +98,8 @@ server <- function(input, output) {
         HighT = input$select_temp[2],
         LowRH = input$select_rh[1],
         HighRH = input$select_rh[2],
-        data_colour = !!input$select_data_colour
+        data_colour = !!input$select_data_colour,
+        data_alpha = input$select_alpha
       ) +
       theme_bw()
   })
