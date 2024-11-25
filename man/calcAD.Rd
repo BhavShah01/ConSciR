@@ -13,9 +13,9 @@ calcAD(Temp, RH, P_atm = 1013.25, R_dry = 287.058, R_vap = 461.495, ...)
 
 \item{P_atm}{Atmospheric pressure = 1013.25 (hPa)}
 
-\item{R_dry}{Specific gas constant for dry air (J/(kg·K))}
+\item{R_dry}{Specific gas constant for dry air = 287.058 (J/(kg·K))}
 
-\item{R_vap}{Specific gas constant for water vapor (J/(kg·K))}
+\item{R_vap}{Specific gas constant for water vapor = 461.495 (J/(kg·K))}
 
 \item{...}{Addtional arguments  to supply to \code{\link{calcPws}}}
 }

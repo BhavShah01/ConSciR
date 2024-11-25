@@ -24,10 +24,20 @@ calcMould_VTT(
 
 \item{wood}{The wood species; 0 for pine and 1 for spruce. Default is 0.}
 
-\item{surface}{The surface quality; 0 for resawn kiln dried timber and 1 for timber dried under normal kiln drying process. Default is 0.}
+\item{surface}{The surface quality; 0 for resawn kiln dried timber and 1 for timber dried under normal kiln drying process. Default is 0 (worst case).}
 }
 \value{
 Mould growth index
+
+\itemize{
+  \item 0 = No mould growth
+  \item 1 = Small amounts of mould growth on surface visible under microscope
+  \item 2 = Several local mould growth colonies on surface visible under microscope
+  \item 3 = Visual findings of mould on surface <10\% coverage or 50\% coverage under microsocpe
+  \item 4 = Visual findings of mould on surface 10-50\% coverage or >50\% coverage under microscope
+  \item 5 = Plenty of growth on surface >50\% visual coverage
+  \item 6 = Heave and tight growth, coverage almost 100\%
+}
 }
 \description{
 This function calculates the mould growth index on wooden materials based on temperature,
@@ -49,4 +59,13 @@ head(mydata) |> dplyr::mutate(MouldIndex = calcMould_VTT(Temp, RH ))
 Hukka, A., Viitanen, H. A mathematical model of mould growth on wooden material. Wood Science and Technology 33, 475–485 (1999). https://doi.org/10.1007/s002260050131
 
 Viitanen, Hannu, and Tuomo Ojanen. "Improved model to predict mold growth in building materials." Thermal Performance of the Exterior Envelopes of Whole Buildings X–Proceedings CD (2007): 2-7.
+
+Senstivity is related to the material surface, mould will grow on. Options in function avaiable are:
+
+\itemize{
+  \item 'very' sensitive materials include pine and sapwood.
+  \item 'sensitive' materials include glued wooden boards, PUR with paper surface, spruce
+  \item 'medium' resistant materials include concrete, glass wool, polyester wool
+  \item 'resistant' materials include PUR polished surface
+}
 }

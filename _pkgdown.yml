@@ -4,11 +4,12 @@ template:
   bootswatch: shiny
   light-switch: true
 reference:
-- title: Shiny application
-  desc: Application to test and demonstrate tools in the package.
+- title: Shiny applications
+  desc: Applications to test and demonstrate tools in the package.
   contents:
     - run_ConSciR_app
     - run_Psychrometric_app
+    - run_Mould_app
 - title: Graphs
   desc: Tools for graphing data.
   contents:

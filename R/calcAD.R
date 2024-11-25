@@ -7,8 +7,8 @@
 #' @param Temp Temperature (°Celsius)
 #' @param RH Relative Humidity (0-100\%)
 #' @param P_atm Atmospheric pressure = 1013.25 (hPa)
-#' @param R_dry Specific gas constant for dry air (J/(kg·K))
-#' @param R_vap Specific gas constant for water vapor (J/(kg·K))
+#' @param R_dry Specific gas constant for dry air = 287.058 (J/(kg·K))
+#' @param R_vap Specific gas constant for water vapor = 461.495 (J/(kg·K))
 #' @param ... Addtional arguments  to supply to \code{\link{calcPws}}
 #'
 #' @return Air density in kg/m³

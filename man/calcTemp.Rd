@@ -9,7 +9,7 @@ calcTemp(RH, DewP)
 \arguments{
 \item{RH}{Relative Humidity (0-100\%)}
 
-\item{DewP}{Td, Dew Point (Celsius)}
+\item{DewP}{Td, Dew Point (°Celsius)}
 }
 \value{
 Temp, Temperature (°Celsius)

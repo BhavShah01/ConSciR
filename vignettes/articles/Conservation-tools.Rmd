@@ -33,6 +33,28 @@ TRHgrid <-
 
 ### Mould
 
+```{r echo=FALSE}
+
+TRHgrid |>
+  mutate(Mould_VTT = calcMould_VTT(Temp, RH)) |>
+  ggplot(aes(Temp, RH, z = Mould_VTT)) +
+  geom_contour_filled(bins = 20) +
+  labs(title = "VTT Model") + 
+  theme_bw()
+
+mydata |>
+  mutate(Mould_VTT = calcMould_VTT(Temp, RH))
+
+mydata |>
+  mutate(Mould_VTT = calcMould_VTT(Temp, RH)) |>
+  ggplot() +
+  geom_line(aes(Date, Mould_VTT), col = "purple") +
+  geom_line(aes(Date, RH), col = "blue") + 
+  labs(title = "VTT Model: Mould Index") + 
+  theme_bw()
+
+```
+
 ```{r}
 
 TRHgrid |>

@@ -8,10 +8,10 @@ library(ConSciR)
 
 server <- function(input, output) {
 
-  # Add reactive value to store the data
+  # Reactive value to store the data
   data <- reactiveVal(mydata)
 
-  # Add file input and upload button to UI
+  # File input and upload button to UI
   output$file_upload <- renderUI({
     tagList(
       fileInput("file", "Choose CSV or Excel File",
@@ -20,7 +20,7 @@ server <- function(input, output) {
     )
   })
 
-  # Handle file upload
+  # Wait till file upload
   observeEvent(input$upload, {
     req(input$file)
     file_ext <- tools::file_ext(input$file$name)

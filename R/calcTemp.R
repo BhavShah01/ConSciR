@@ -23,7 +23,7 @@
 #'
 #'
 #' @param RH Relative Humidity (0-100\%)
-#' @param DewP Td, Dew Point (Celsius)
+#' @param DewP Td, Dew Point (°Celsius)
 #'
 #' @return Temp, Temperature (°Celsius)
 #' @export

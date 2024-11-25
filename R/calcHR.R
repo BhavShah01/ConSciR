@@ -19,6 +19,7 @@
 #' The function uses the following steps:
 #'
 #' 1. Calculate the mixing ratio using the \code{\link{calcMR}} function.
+#'
 #' 2. Convert the mixing ratio to humidity ratio using the formula:
 #'
 #'    HR = MR / (1 + MR)
