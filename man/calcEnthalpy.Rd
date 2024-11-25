@@ -4,12 +4,14 @@
 \alias{calcEnthalpy}
 \title{Calculate Enthalpy}
 \usage{
-calcEnthalpy(Temp, RH)
+calcEnthalpy(Temp, RH, ...)
 }
 \arguments{
 \item{Temp}{Temperature (°Celsius)}
 
 \item{RH}{Relative Humidity (0-100\%)}
+
+\item{...}{Additional arguments to supply to \code{\link{calcPws}}}
 }
 \value{
 h Enthalpy (kJ/kg)

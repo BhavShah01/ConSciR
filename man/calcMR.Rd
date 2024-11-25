@@ -15,7 +15,7 @@ calcMR(Temp, RH, P_atm = 1013.25, B = 621.9907, ...)
 
 \item{B}{B = 621.9907 g/kg for air}
 
-\item{...}{Additional arguments to supply to [calcPws]}
+\item{...}{Additional arguments to supply to \code{\link{calcPws}}}
 }
 \value{
 X Mixing ratio, mass of water vapour / mass of dry gas (g/kg)

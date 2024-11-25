@@ -36,7 +36,7 @@
 #'
 #' @param Temp Temperature (°Celsius)
 #' @param RH Relative Humidity (0-100\%)
-#' @param ... Additional arguments to supply to [calcPws]
+#' @param ... Additional arguments to supply to \code{\link{calcPws}}
 #'
 #' @return Pw, Water Vapour Pressure (hPa)
 #' @export

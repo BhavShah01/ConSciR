@@ -11,7 +11,7 @@ calcPw(Temp, RH, ...)
 
 \item{RH}{Relative Humidity (0-100\%)}
 
-\item{...}{Additional arguments to supply to [calcPws]}
+\item{...}{Additional arguments to supply to \code{\link{calcPws}}}
 }
 \value{
 Pw, Water Vapour Pressure (hPa)

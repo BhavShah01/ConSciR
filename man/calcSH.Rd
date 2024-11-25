@@ -13,7 +13,7 @@ calcSH(Temp, RH, P_atm = 1013.25, ...)
 
 \item{P_atm}{Atmospheric pressure = 1013.25 (hPa)}
 
-\item{...}{Additional arguments to supply to [calcPws]}
+\item{...}{Additional arguments to supply to \code{\link{calcPws}}}
 }
 \value{
 SH Specific Humidity (g/kg)

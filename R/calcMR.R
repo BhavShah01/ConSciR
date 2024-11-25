@@ -19,7 +19,7 @@
 #' @param RH Relative Humidity (0-100\%)
 #' @param P_atm Atmospheric pressure = 1013.25 (hPa)
 #' @param B B = 621.9907 g/kg for air
-#' @param ... Additional arguments to supply to [calcPws]
+#' @param ... Additional arguments to supply to \code{\link{calcPws}}
 #'
 #' @return X Mixing ratio, mass of water vapour / mass of dry gas (g/kg)
 #' @export

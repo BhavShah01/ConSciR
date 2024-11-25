@@ -27,8 +27,7 @@
 calcMould <- function(mydata, Date = "Date", Temp = "Temp", RH = "RH") {
   # Check if runner package is available
   if (!requireNamespace("runner", quietly = TRUE)) {
-    stop("Package \"runner\" needed for this function to work.",
-         call. = FALSE)
+    stop("Package \"runner\" needed for this function to work.", call. = FALSE)
   }
 
   # Load mouldtable

@@ -4,7 +4,7 @@
 \alias{calcMould_models}
 \title{Calculate Mould Growth Probability Using Various Models}
 \usage{
-calcMould_models(Temp, RH, model = c("Sedlbauer", "VIR", "DP", "Isaksson"))
+calcMould_models(Temp, RH, model = c("Days", "Sedlbauer", "VIR", "Isaksson"))
 }
 \arguments{
 \item{Temp}{Numeric. Temperature in Celsius.}
@@ -12,11 +12,12 @@ calcMould_models(Temp, RH, model = c("Sedlbauer", "VIR", "DP", "Isaksson"))
 \item{RH}{Numeric. Relative Humidity as a percentage (0-100).}
 
 \item{model}{Character. The model to use for calculation.
-Options are "Sedlbauer", "VIR", or "Isaksson".}
+Options are "Days", "Sedlbauer", "VIR", or "Isaksson".}
 }
 \value{
 Numeric. The result depends on the chosen model:
   \itemize{
+    \item Table: returns days to mould
     \item Sedlbauer and VIR: Critical RH for mould growth from temperature
     \item Isaksson: Daily dose (1/t(ms)) / D(rel/day)
   }
@@ -29,6 +30,7 @@ based on temperature and relative humidity, using one of four different models.
 The results are very different so take care in interpretation.
 }
 \examples{
+calcMould_models(20, 80, "Days")
 calcMould_models(20, 80, "Sedlbauer")
 calcMould_models(25, 70, "VIR")
 calcMould_models(22, 85, "Isaksson")
@@ -36,6 +38,7 @@ calcMould_models(22, 85, "Isaksson")
 
 head(mydata) |>
   dplyr::mutate(
+    # Days_mould = calcMould_models(Temp, RH, "Days"),
     RH_crit_Sedlbauer = calcMould_models(Temp, RH, "Sedlbauer"),
     RH_crit_VIR = calcMould_models(Temp, RH, "VIR"),
     Mould_daily_dose = calcMould_models(Temp, RH, "Isaksson")

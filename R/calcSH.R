@@ -19,7 +19,7 @@
 #' @param Temp Temperature (°Celsius)
 #' @param RH Relative Humidity (0-100\%)
 #' @param P_atm Atmospheric pressure = 1013.25 (hPa)
-#' @param ... Additional arguments to supply to [calcPws]
+#' @param ... Additional arguments to supply to \code{\link{calcPws}}
 #'
 #' @return SH Specific Humidity (g/kg)
 #' @export

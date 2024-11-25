@@ -21,6 +21,7 @@ reference:
     - calcIPI
     - calcLM
     - calcMould
+    - calcMould_VTT
     - calcMould_models
 - title: Humidity functions
   desc: Functions for performing calculations from temperature and humidity data.

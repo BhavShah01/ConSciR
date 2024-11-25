@@ -17,7 +17,7 @@ calcAD(Temp, RH, P_atm = 1013.25, R_dry = 287.058, R_vap = 461.495, ...)
 
 \item{R_vap}{Specific gas constant for water vapor (J/(kg·K))}
 
-\item{...}{Addtional arguments  to supply to [calcPws]}
+\item{...}{Addtional arguments  to supply to \code{\link{calcPws}}}
 }
 \value{
 Air density in kg/m³

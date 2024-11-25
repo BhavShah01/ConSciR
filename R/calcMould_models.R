@@ -8,10 +8,11 @@
 #' @param Temp Numeric. Temperature in Celsius.
 #' @param RH Numeric. Relative Humidity as a percentage (0-100).
 #' @param model Character. The model to use for calculation.
-#'              Options are "Sedlbauer", "VIR", or "Isaksson".
+#'              Options are "Days", "Sedlbauer", "VIR", or "Isaksson".
 #'
 #' @return Numeric. The result depends on the chosen model:
 #'   \itemize{
+#'     \item Table: returns days to mould
 #'     \item Sedlbauer and VIR: Critical RH for mould growth from temperature
 #'     \item Isaksson: Daily dose (1/t(ms)) / D(rel/day)
 #'   }
@@ -21,6 +22,7 @@
 #' @importFrom dplyr mutate
 #'
 #' @examples
+#' calcMould_models(20, 80, "Days")
 #' calcMould_models(20, 80, "Sedlbauer")
 #' calcMould_models(25, 70, "VIR")
 #' calcMould_models(22, 85, "Isaksson")
@@ -28,6 +30,7 @@
 #'
 #' head(mydata) |>
 #'   dplyr::mutate(
+#'     # Days_mould = calcMould_models(Temp, RH, "Days"),
 #'     RH_crit_Sedlbauer = calcMould_models(Temp, RH, "Sedlbauer"),
 #'     RH_crit_VIR = calcMould_models(Temp, RH, "VIR"),
 #'     Mould_daily_dose = calcMould_models(Temp, RH, "Isaksson")
@@ -35,7 +38,25 @@
 #'
 #'
 #'
-calcMould_models <- function(Temp, RH, model = c("Sedlbauer", "VIR", "DP", "Isaksson")) {
+calcMould_models <- function(Temp, RH, model = c("Days", "Sedlbauer", "VIR", "Isaksson")) {
+
+  calcMould_Days <- function(Temp, RH) {
+    data("mouldtable", envir = environment())
+
+    # Round temperature and RH
+    Temp_mould <- round(Temp)
+    RH_mould <- round(RH)
+
+    days_mould <- mouldtable$days_mould[
+      mouldtable$TempMould == Temp_mould & mouldtable$RHMould == RH_mould]
+
+    # Return NA if no match is found
+    if (length(days_mould) == 0) {
+      return(NA)
+    } else {
+      return(days_mould)
+    }
+  }
 
   calcMould_Sedlbauer <- function(Temp) {
     # Returns: Critical RH for mould growth at Temp
@@ -70,6 +91,7 @@ calcMould_models <- function(Temp, RH, model = c("Sedlbauer", "VIR", "DP", "Isak
   model <- match.arg(model)
 
   switch(model,
+         "Days" = calcMould_Days(Temp, RH),
          "Sedlbauer" = calcMould_Sedlbauer(Temp),
          "VIR" = calcMould_VIR(Temp),
          "Isaksson" = calcMould_Isakkson(Temp, RH)

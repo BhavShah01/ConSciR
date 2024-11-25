@@ -9,7 +9,7 @@
 #' @param P_atm Atmospheric pressure = 1013.25 (hPa)
 #' @param R_dry Specific gas constant for dry air (J/(kg·K))
 #' @param R_vap Specific gas constant for water vapor (J/(kg·K))
-#' @param ... Addtional arguments  to supply to [calcPws]
+#' @param ... Addtional arguments  to supply to \code{\link{calcPws}}
 #'
 #' @return Air density in kg/m³
 #' @export

@@ -19,6 +19,7 @@
 #'
 #' @param Temp Temperature (°Celsius)
 #' @param RH Relative Humidity (0-100\%)
+#' @param ... Additional arguments to supply to \code{\link{calcPws}}
 #'
 #' @return h Enthalpy (kJ/kg)
 #' @export
@@ -29,8 +30,8 @@
 #' head(mydata) |> dplyr::mutate(Enthalpy = calcEnthalpy(Temp, RH))
 #'
 #'
-calcEnthalpy <- function(Temp, RH) {
-  X = calcMR(Temp, RH)
+calcEnthalpy <- function(Temp, RH, ...) {
+  X = calcMR(Temp, RH, ...)
   h = Temp * (1.01 + 0.00189 * X) + 2.5 * X
   return(h)
 }
