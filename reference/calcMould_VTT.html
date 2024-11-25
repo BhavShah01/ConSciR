@@ -94,18 +94,30 @@ environmental conditions.</p>
 
 
 <dt id="arg-surface">surface<a class="anchor" aria-label="anchor" href="#arg-surface"></a></dt>
-<dd><p>The surface quality; 0 for resawn kiln dried timber and 1 for timber dried under normal kiln drying process. Default is 0.</p></dd>
+<dd><p>The surface quality; 0 for resawn kiln dried timber and 1 for timber dried under normal kiln drying process. Default is 0 (worst case).</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>Mould growth index</p>
-    </div>
+<ul><li><p>0 = No mould growth</p></li>
+<li><p>1 = Small amounts of mould growth on surface visible under microscope</p></li>
+<li><p>2 = Several local mould growth colonies on surface visible under microscope</p></li>
+<li><p>3 = Visual findings of mould on surface &lt;10% coverage or 50% coverage under microsocpe</p></li>
+<li><p>4 = Visual findings of mould on surface 10-50% coverage or &gt;50% coverage under microscope</p></li>
+<li><p>5 = Plenty of growth on surface &gt;50% visual coverage</p></li>
+<li><p>6 = Heave and tight growth, coverage almost 100%</p></li>
+</ul></div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     <p>Hukka, A., Viitanen, H. A mathematical model of mould growth on wooden material. Wood Science and Technology 33, 475–485 (1999). https://doi.org/10.1007/s002260050131</p>
 <p>Viitanen, Hannu, and Tuomo Ojanen. "Improved model to predict mold growth in building materials." Thermal Performance of the Exterior Envelopes of Whole Buildings X–Proceedings CD (2007): 2-7.</p>
-    </div>
+<p>Senstivity is related to the material surface, mould will grow on. Options in function avaiable are:</p>
+<ul><li><p>'very' sensitive materials include pine and sapwood.</p></li>
+<li><p>'sensitive' materials include glued wooden boards, PUR with paper surface, spruce</p></li>
+<li><p>'medium' resistant materials include concrete, glass wool, polyester wool</p></li>
+<li><p>'resistant' materials include PUR polished surface</p></li>
+</ul></div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
