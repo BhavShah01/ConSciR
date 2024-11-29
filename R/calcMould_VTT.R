@@ -6,12 +6,7 @@
 #' developed by Hukka and Viitanen, which predicts mould growth under varying
 #' environmental conditions.
 #'
-#'
-#' @references
-#' Hukka, A., Viitanen, H. A mathematical model of mould growth on wooden material. Wood Science and Technology 33, 475–485 (1999). https://doi.org/10.1007/s002260050131
-#'
-#' Viitanen, Hannu, and Tuomo Ojanen. "Improved model to predict mold growth in building materials." Thermal Performance of the Exterior Envelopes of Whole Buildings X–Proceedings CD (2007): 2-7.
-#'
+#' @details
 #' Senstivity is related to the material surface, mould will grow on. Options in function avaiable are:
 #'
 #' \itemize{
@@ -22,6 +17,14 @@
 #' }
 #'
 #'
+#'
+#'
+#' @references
+#' Hukka, A., Viitanen, H. A mathematical model of mould growth on wooden material. Wood Science and Technology 33, 475–485 (1999). https://doi.org/10.1007/s002260050131
+#'
+#' Viitanen, Hannu, and Tuomo Ojanen. "Improved model to predict mold growth in building materials." Thermal Performance of the Exterior Envelopes of Whole Buildings X–Proceedings CD (2007): 2-7.
+#'
+#'
 #' @param Temp Temperature (°Celsius)
 #' @param RH Relative Humidity (0-100\%)
 #' @param M_prev The previous mould index value (default is 0).
@@ -29,7 +32,7 @@
 #' @param wood The wood species; 0 for pine and 1 for spruce. Default is 0.
 #' @param surface The surface quality; 0 for resawn kiln dried timber and 1 for timber dried under normal kiln drying process. Default is 0 (worst case).
 #'
-#' @return Mould growth index
+#' @return M Mould growth index
 #'
 #' \itemize{
 #'   \item 0 = No mould growth
@@ -38,7 +41,7 @@
 #'   \item 3 = Visual findings of mould on surface <10\% coverage or 50\% coverage under microsocpe
 #'   \item 4 = Visual findings of mould on surface 10-50\% coverage or >50\% coverage under microscope
 #'   \item 5 = Plenty of growth on surface >50\% visual coverage
-#'   \item 6 = Heave and tight growth, coverage almost 100\%
+#'   \item 6 = Heavy and tight growth, coverage almost 100\%
 #' }
 #'
 #'
