@@ -22,6 +22,7 @@ reference:
     - calcIPI
     - calcLM
     - calcMould
+    - calcMould_Zeng
     - calcMould_VTT
     - calcMould_models
 - title: Humidity functions

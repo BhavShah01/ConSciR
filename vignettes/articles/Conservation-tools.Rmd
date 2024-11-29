@@ -49,7 +49,7 @@ mydata |>
   mutate(Mould_VTT = calcMould_VTT(Temp, RH)) |>
   ggplot() +
   geom_line(aes(Date, Mould_VTT), col = "purple") +
-  geom_line(aes(Date, RH), col = "blue") + 
+  # geom_line(aes(Date, RH), col = "blue") + 
   labs(title = "VTT Model: Mould Index") + 
   theme_bw()
 

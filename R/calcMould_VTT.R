@@ -49,7 +49,11 @@
 #'
 #' calcMould_VTT(Temp = 18, RH = 70, M_prev = 2, sensitivity = "medium", wood = 1, surface = 1)
 #'
-#' head(mydata) |> dplyr::mutate(MouldIndex = calcMould_VTT(Temp, RH ))
+#' head(mydata) |>
+#'    dplyr::mutate(
+#'       MouldIndex = calcMould_VTT(Temp, RH),
+#'       MouldIndex_sensitve = calcMould_VTT(Temp, RH, sensitivity = "sensitive")
+#'    )
 #'
 #'
 #'
@@ -72,41 +76,42 @@ calcMould_VTT <- function(Temp, RH, M_prev = 0, sensitivity = "very", wood = 0, 
   B <- constants$B
   C <- constants$C
 
-  # Conditions favourable to initiation of mould growth (0-50C)
-  RH_crit <- ifelse(Temp > 20,
-                    80,
-                    -0.00267 * Temp^3 + 0.160 * Temp^2 + 3.13 * Temp + 100)
+  # Vectorized function to handle NA values
+  calc_mould <- function(temp, rh, m_prev) {
+    if (is.na(temp) || is.na(rh)) {
+      return(NA)
+    }
 
+    # Conditions favourable to initiation of mould growth (0-50C)
+    RH_crit <- ifelse(temp > 20,
+                      80,
+                      -0.00267 * temp^3 + 0.160 * temp^2 + 3.13 * temp + 100)
 
-  # Maximum mould index
-  ## Mould growth index M
-  # M takes values between 1-6
-  # M < 1: no mould growth
-  # M = 1: mould growth can be detected microscopically.
-  # M = 6: mould will cover the whole surface regardless of temperature (0-50C)
-  M_max <-
-    A + B * ((RH_crit - RH) / (RH_crit - 100)) - C * ((RH_crit - RH) / (RH_crit - 100))^2
+    # Maximum Mould growth index M
+    M_max <- A + B * ((RH_crit - rh) / (RH_crit - 100)) - C * ((RH_crit - rh) / (RH_crit - 100))^2
 
+    # Response times Viitanen (1997a)
+    t_m <- exp(-0.68 * log(temp) - 13.9 * log(rh) + 0.14 * wood + 66.02)
+    t_v <- exp(-0.74 * log(temp) - 12.72 * log(rh) + 0.06 * wood + 61.50)
 
-  # Response times Viitanen (1997a)
-  t_m <- exp(-0.68 * log(Temp) - 13.9 * log(RH) + 0.14 * wood + 66.02)
-  t_v <- exp(-0.74 * log(Temp) - 12.72 * log(RH) + 0.06 * wood + 61.50)
+    # Correction coefficients
+    k1 <- ifelse(M_max < 1, 1,  2 / (t_v / (t_m - 1)))
+    # Coefficient for the retardation of growth in the later stages
+    k2 <- max(1 - exp(2.3 * (m_prev - M_max)), 0)
 
+    # Calculate mould growth rate
+    dM_dt <- k1 * k2 * (1 / (7 * exp(-0.68 * log(temp) -
+                                       13.9 * log(rh) +
+                                       0.14 * wood -
+                                       0.33 * surface +
+                                       66.02)))
 
-  # Correction coefficients
-  k1 <- ifelse(M_max < 1, 1,  2 / (t_v / (t_m - 1)))
-  # Coefficient for the retardation of growth in the later stages
-  k2 <- max(1 - exp(2.3 * (M_prev - M_max)), 0)
+    # Update mould index
+    M_new <- m_prev + dM_dt
 
-  # Calculate mould growth rate
-  dM_dt <- k1 * k2 * (1 / (7 * exp(-0.68 * log(Temp) -
-                                     13.9 * log(RH) +
-                                     0.14 * wood -
-                                     0.33 * surface +
-                                     66.02)))
+    return(M_new)
+  }
 
-  # Update mould index
-  M_new <- M_prev + dM_dt
-
-  return(M_new)
+  # Vectorized function
+  mapply(calc_mould, Temp, RH, M_prev)
 }
