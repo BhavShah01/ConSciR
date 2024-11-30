@@ -74,14 +74,15 @@ calcMould_models <- function(Temp, RH, model = c("Days", "Sedlbauer", "VIR", "Is
     # Returns: Daily dose (1/t(ms)) / D(rel/day)
     D = ifelse(
       Temp < 0.1,
-      1/(-2*exp((-0.74*log(20))-(15.53*log(90))+75.736)),
+      1 / (-2 * exp((-0.74 * log(20)) - (15.53 * log(90)) + 75.736)),
       ifelse(
         RH < 60,
-        1/(-2*exp((-0.74*log(Temp))-(15.53*log(90))+75.736)),
+        1 / (-2 * exp((-0.74 * log(Temp)) - (15.53 * log(90)) + 75.736)),
         ifelse(
           RH < 75,
-          1/((15^-1*(exp(15.53*log(75/90))+0.5) * (RH-60)-0.5)^-1*exp((-0.74*log(Temp)) - (15.53*log(90))+75.736)),
-          1/(exp((-0.74*log(Temp))-(15.53*log(RH))+75.736))
+          1 / ((15^-1 * (exp(15.53 * log(75 / 90)) + 0.5) *
+                (RH - 60) - 0.5)^-1 * exp((-0.74 * log(Temp)) - (15.53 * log(90)) + 75.736)),
+          1 / (exp((-0.74 * log(Temp)) - (15.53 * log(RH)) + 75.736))
         )
       )
     )

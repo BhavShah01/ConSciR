@@ -20,7 +20,7 @@ library(dplyr)
 
 ```{r}
 
-Temp <- seq(0, 100, 0.25)
+Temp <- seq(0, 60, 0.25)
 RH <- seq(0, 100, 1)
 
 TRHgrid <- 
@@ -33,7 +33,42 @@ TRHgrid <-
 
 ### Mould
 
-```{r echo=FALSE}
+Zeng model
+
+```{r echo=TRUE}
+
+TRHgrid |>
+  mutate(Mould_Zeng = calcMould_Zeng(Temp, RH)) |>
+  ggplot(aes(Temp, RH, z = Mould_Zeng)) +
+  geom_contour_filled(bins = 20) +
+  labs(title = "Mould Isoline Limit: LM0") + 
+  theme_bw()
+
+mydata |>
+  mutate(Mould_Zeng = calcMould_Zeng(Temp, RH))
+
+mydata |>
+  mutate(Mould_Zeng = calcMould_Zeng(Temp, RH)) |>
+  ggplot() +
+  geom_line(aes(Date, Mould_Zeng), col = "purple") +
+  geom_line(aes(Date, RH), col = "blue") + 
+  labs(title = "Mould Isoline Limit") + 
+  theme_bw()
+
+mydata |>
+  mutate(Mould_Zeng = calcMould_Zeng(Temp, RH, label = TRUE)) |>
+  ggplot() +
+  geom_bar(aes(Mould_Zeng, fill = Mould_Zeng)) +
+  coord_flip() +
+  labs(title = "Mould Isoline Limit") + 
+  theme_void()
+
+```
+
+
+VTT model
+
+```{r echo=TRUE}
 
 TRHgrid |>
   mutate(Mould_VTT = calcMould_VTT(Temp, RH)) |>

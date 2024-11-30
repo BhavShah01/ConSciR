@@ -5,6 +5,8 @@ library(ggplot2)
 library(dplyr)
 library(ConSciR)
 
+options(shiny.maxRequestSize=30*1024^2)
+
 
 server <- function(input, output) {
 
@@ -16,33 +18,60 @@ server <- function(input, output) {
     tagList(
       fileInput("file", "Choose CSV or Excel File",
                 accept = c(".csv", ".xls", ".xlsx")),
+      uiOutput("sheet_selector"),  # UI for selecting Excel sheet
       actionButton("upload", "Upload Data")
     )
+  })
+
+  # Observe file input to update sheet choices if Excel
+  observeEvent(input$file, {
+    req(input$file)
+    file_ext <- tools::file_ext(input$file$name)
+
+    if (file_ext %in% c("xls", "xlsx")) {
+      sheets <- excel_sheets(input$file$datapath)
+      output$sheet_selector <- renderUI({
+        selectInput("sheet", "Select Sheet", choices = sheets)
+      })
+    } else {
+      output$sheet_selector <- renderUI(NULL)  # No sheet selection for CSV
+    }
   })
 
   # Wait till file upload
   observeEvent(input$upload, {
     req(input$file)
     file_ext <- tools::file_ext(input$file$name)
+
     tryCatch(
       {
         uploaded_data <- switch(
           file_ext,
           "csv" = read.csv(input$file$datapath),
-          "xls" = readxl::read_excel(input$file$datapath, sheet = 1),
-          "xlsx" = readxl::read_excel(input$file$datapath, sheet = 1),
+          "xls" = read_excel(input$file$datapath, sheet = input$sheet),
+          "xlsx" = read_excel(input$file$datapath, sheet = input$sheet),
           stop("Unsupported file type")
         )
         data(uploaded_data)
         showNotification("Data uploaded successfully!", type = "message")
       },
       error = function(e) {
-        showNotification(paste("Error reading file:", e$message,
-                               ". CSV or Excel formatted data with 'Temp' and 'RH' columns
-                               can be uploaded to the application."),
-                         type = "error")
+        showNotification(paste(
+          "Error reading file:", e$message,
+          ". CSV or Excel formatted data with 'Temp', 'RH' and 'Sensor' columns can be uploaded to the application."),
+          type = "error")
       }
     )
+  })
+
+  output$column_Date = renderUI({
+    textInput("column_Date", "Date column", value = "Date")
+  })
+  output$column_Temp = renderUI({
+    textInput("column_Temp", "Temperature column", value = "Temp")
+  })
+  output$column_RH = renderUI({
+    textInput("column_RH", "RH column", value = "RH")
   })
 
   func_list_text <- c(

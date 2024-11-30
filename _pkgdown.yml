@@ -10,6 +10,8 @@ reference:
     - run_ConSciR_app
     - run_Psychrometric_app
     - run_Mould_app
+    - shiny_DataUploaderServer
+    - shiny_DataUploaderUI
 - title: Graphs
   desc: Tools for graphing data.
   contents:
@@ -42,8 +44,9 @@ reference:
     - calcRH_DP
     - calcTemp
 - title: Data
-  desc: In-built datasets to demonstrate functions.
+  desc: Tools to tidy data and in-built datasets to demonstrate functions.
   contents:
+    - tidy_Meaco
     - mydata
     - TRHdata
     - mouldtable

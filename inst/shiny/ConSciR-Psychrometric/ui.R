@@ -10,6 +10,9 @@ ui <- page_navbar(
     uiOutput("select_temp_range"),
     uiOutput("select_temp"),
     uiOutput("select_rh"),
+    uiOutput("column_Date"),
+    uiOutput("column_Temp"),
+    uiOutput("column_RH"),
   ),
   card(
     card_header("Psychrometric Chart"),
