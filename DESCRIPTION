@@ -7,8 +7,8 @@ Authors@R: c(
            comment = c(ORCID = "0000-0001-8673-0589")),
     person("Annelies", "Cosaert", , "", role = c("aut"),
            comment = c(ORCID = "0009-0004-1269-4465")), 
-    person("test", "test", , "", role = c("ctb"), 
-           comment = c(ORCID = ""))
+    person("Emily R", "Long", , "", role = c("ctb"), 
+           comment = c(ORCID = "0000-0003-3162-4521"))
   )
 Maintainer: Bhavesh Shah <bhaveshshah01@gmail.com>
 Description: Data science toolbox for conservation science.
@@ -30,7 +30,11 @@ Suggests:
     bslib
 Imports:
     stats,
+    tools,
+    tidyr,
+    readr,
     readxl,
+    stringr,
     rlang,
     shiny,
     ggplot2,

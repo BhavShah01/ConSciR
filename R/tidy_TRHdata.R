@@ -22,15 +22,15 @@
 #' @param mydata A data frame containing the raw TRH data. This should include columns
 #' for site, sensor, date, temperature, and relative humidity.
 #' @param Site_col A string specifying the name of the column in `mydata` that contains
-#' location information. Default is "RECEIVER".
+#' location information. Default is "Site".
 #' @param Sensor_col A string specifying the name of the column in `mydata` that contains
-#' sensor information. Default is "TRANSMITTER".
+#' sensor information. Default is "Sensor".
 #' @param Date_col A string specifying the name of the column in `mydata` that contains
-#' date information. Default is "DATE".
+#' date information. Default is "Date".
 #' @param Temp_col A string specifying the name of the column in `mydata` that contains
-#' temperature data. Default is "TEMPERATURE".
+#' temperature data. Default is "Temp".
 #' @param RH_col A string specifying the name of the column in `mydata` that contains
-#' relative humidity data. Default is "HUMIDITY".
+#' relative humidity data. Default is "RH".
 #'
 #'
 #' @return A tidy data frame containing processed TRH data with columns for Site,
@@ -47,11 +47,11 @@
 #' # Example usage:
 #' mydata <- read.csv("path/to/your/data.csv")
 #' tidy_data <- tidy_TRHdata(mydata,
-#'                            Site_col = "YourSiteColumnName",
-#'                            Sensor_col = "YourSensorColumnName",
-#'                            Date_col = "YourDateColumnName",
-#'                            Temp_col = "YourTemperatureColumnName",
-#'                            RH_col = "YourHumidityColumnName")
+#'                            Site_col = "RECEIVER",
+#'                            Sensor_col = "TRANSMITTER",
+#'                            Date_col = "DATE",
+#'                            Temp_col = "TEMPERATURE",
+#'                            RH_col = "HUMIDITY")
 #'
 #' # View the tidy data
 #' head(tidy_data)

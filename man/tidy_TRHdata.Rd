@@ -18,19 +18,19 @@ tidy_TRHdata(
 for site, sensor, date, temperature, and relative humidity.}
 
 \item{Site_col}{A string specifying the name of the column in `mydata` that contains
-location information. Default is "RECEIVER".}
+location information. Default is "Site".}
 
 \item{Sensor_col}{A string specifying the name of the column in `mydata` that contains
-sensor information. Default is "TRANSMITTER".}
+sensor information. Default is "Sensor".}
 
 \item{Date_col}{A string specifying the name of the column in `mydata` that contains
-date information. Default is "DATE".}
+date information. Default is "Date".}
 
 \item{Temp_col}{A string specifying the name of the column in `mydata` that contains
-temperature data. Default is "TEMPERATURE".}
+temperature data. Default is "Temp".}
 
 \item{RH_col}{A string specifying the name of the column in `mydata` that contains
-relative humidity data. Default is "HUMIDITY".}
+relative humidity data. Default is "RH".}
 }
 \value{
 A tidy data frame containing processed TRH data with columns for Site,
@@ -60,11 +60,11 @@ sensor, and date. The function also pads the data to ensure hourly intervals.
 # Example usage:
 mydata <- read.csv("path/to/your/data.csv")
 tidy_data <- tidy_TRHdata(mydata,
-                           Site_col = "YourSiteColumnName",
-                           Sensor_col = "YourSensorColumnName",
-                           Date_col = "YourDateColumnName",
-                           Temp_col = "YourTemperatureColumnName",
-                           RH_col = "YourHumidityColumnName")
+                           Site_col = "RECEIVER",
+                           Sensor_col = "TRANSMITTER",
+                           Date_col = "DATE",
+                           Temp_col = "TEMPERATURE",
+                           RH_col = "HUMIDITY")
 
 # View the tidy data
 head(tidy_data)
