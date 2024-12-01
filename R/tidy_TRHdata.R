@@ -1,0 +1,100 @@
+#' Tidy and Process Temperature and Relative Humidity data
+#'
+#' @description
+#' This function tidies and processes temperature, relative humidity, and date data
+#' from a given dataset.
+#'
+#' It filters out rows with missing date values, renames columns,
+#' converts temperature and humidity to numeric types, and groups the data by site,
+#' sensor, and date. The function also pads the data to ensure hourly intervals.
+#'
+#' \itemize{
+#'    \item Filters out rows with missing dates
+#'    \item Renames columns for consistency
+#'    \item Converts temperature and relative humidity to numeric
+#'    \item Rounds dates down to the nearest hour
+#'    \item Calculates hourly averages for temperature and relative humidity
+#'    \item Pads the data to ensure hourly intervals
+#'    \item Filters out implausible temperature and humidity values
+#' }
+#'
+#'
+#' @param mydata A data frame containing the raw TRH data. This should include columns
+#' for site, sensor, date, temperature, and relative humidity.
+#' @param Site_col A string specifying the name of the column in `mydata` that contains
+#' location information. Default is "RECEIVER".
+#' @param Sensor_col A string specifying the name of the column in `mydata` that contains
+#' sensor information. Default is "TRANSMITTER".
+#' @param Date_col A string specifying the name of the column in `mydata` that contains
+#' date information. Default is "DATE".
+#' @param Temp_col A string specifying the name of the column in `mydata` that contains
+#' temperature data. Default is "TEMPERATURE".
+#' @param RH_col A string specifying the name of the column in `mydata` that contains
+#' relative humidity data. Default is "HUMIDITY".
+#'
+#'
+#' @return A tidy data frame containing processed TRH data with columns for Site,
+#' Sensor, Date (floored to the nearest hour), Temperature (mean values),
+#' and Relative Humidity (mean values).
+#' @export
+#'
+#' @importFrom dplyr filter rename mutate group_by summarise ungroup arrange between
+#' @importFrom lubridate floor_date
+#' @importFrom padr pad
+#'
+#' @examples
+#' \dontrun{
+#' # Example usage:
+#' mydata <- read.csv("path/to/your/data.csv")
+#' tidy_data <- tidy_TRHdata(mydata,
+#'                            Site_col = "YourSiteColumnName",
+#'                            Sensor_col = "YourSensorColumnName",
+#'                            Date_col = "YourDateColumnName",
+#'                            Temp_col = "YourTemperatureColumnName",
+#'                            RH_col = "YourHumidityColumnName")
+#'
+#' # View the tidy data
+#' head(tidy_data)
+#' }
+#'
+#'
+#'
+tidy_TRHdata <- function(mydata,
+                         Site_col = "Site",
+                         Sensor_col = "Sensor",
+                         Date_col = "Date",
+                         Temp_col = "Temp",
+                         RH_col = "RH") {
+
+  tidy_data <- mydata |>
+    dplyr::filter(!is.na(!!sym(Date_col))) |>
+    dplyr::rename(
+      Site = !!sym(Site_col),
+      Sensor = !!sym(Sensor_col),
+      Date = !!sym(Date_col),
+      Temp = !!sym(Temp_col),
+      RH = !!sym(RH_col)
+    ) |>
+    dplyr::mutate(
+      Date = lubridate::parse_date_time(Date, orders = c("ymd", "dmy", "mdy")),
+      Temp = as.numeric(Temp),
+      RH = as.numeric(RH)
+    ) |>
+    dplyr::mutate(
+      Date = lubridate::floor_date(Date, unit = "hour")
+    ) |>
+    dplyr::group_by(Site, Sensor, Date) |>
+    dplyr::summarise(
+      Temp = mean(Temp, na.rm = TRUE),
+      RH = mean(RH, na.rm = TRUE),
+      .groups = 'drop'  # Prevents grouping in the result
+    ) |>
+    padr::pad(by = "Date", interval = "hour") |>
+    dplyr::ungroup() |>
+    dplyr::group_by(Site, Sensor) |>
+    dplyr::arrange(Sensor, Date) |>
+    dplyr::filter(between(Temp, -50, 50)) |>
+    dplyr::filter(between(RH, 0, 100))
+
+  return(tidy_data)
+}

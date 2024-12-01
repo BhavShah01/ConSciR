@@ -10,11 +10,11 @@ ui <- page_navbar(
     uiOutput("column_Date"),
     uiOutput("column_Temp"),
     uiOutput("column_RH"),
-    actionButton("toggle_log", "Log scale"),
+
   ),
   card(
     card_header("Mould"),
     plotOutput("gg_Mould"),
-
+    actionButton("toggle_log", "Log scale"),
   ),
 )

@@ -16,6 +16,7 @@
 #' # run_Mould_app()
 #'
 run_Mould_app <- function() {
+
   app_dir <- system.file("shiny", "ConSciR-Mould", package = "ConSciR")
   if (app_dir == "") {
     stop("Could not find example directory. Try re-installing ConSciR.", call. = FALSE)

@@ -79,6 +79,7 @@ server <- function(input, output) {
   data_mould <- reactive({
     data() |>
       group_by(Sensor) |>
+      mutate(Date = lubridate::as_datetime(Date)) |>
       calcMould(Date = input$column_Date,
                 Temp = input$column_Temp,
                 RH = input$column_RH)

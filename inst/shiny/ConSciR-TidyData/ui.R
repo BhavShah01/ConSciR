@@ -8,12 +8,14 @@ ui <- page_navbar(
   title = "ConSciR: Data Tidy",
   sidebar = sidebar(
     title = "",
-    shiny_DataUploaderUI("dataUpload")
+    shiny_DataUploaderUI("dataUpload"),
   ),
   card(
     card_header("Data Tidy"),
-    verbatimTextOutput("data_summary")
 
+    actionButton("tidy_data", "Tidy Data"),
+    verbatimTextOutput("tidydata_head"),
+    downloadButton("downloadData", "Download Tidied Data"),
   ),
 )
 

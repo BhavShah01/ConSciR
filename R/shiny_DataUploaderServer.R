@@ -1,4 +1,4 @@
-#' Server module to read data from an Excel or CSV file into Shiny application
+#' Server module to read TRH data from an Excel or CSV file into Shiny application
 #'
 #' @description
 #' Server module to create a user interface for uploading Excel (.xlsx or .xls) or CSV files
@@ -46,9 +46,12 @@
 #'
 #'
 shiny_DataUploaderServer <- function(id, mydata = NULL, Date = "Date", Temp_col = "Temp", RH_col = "RH") {
+
   moduleServer(id, function(input, output, session) {
+
     data <- reactiveVal(mydata)
     column_names <- reactiveVal(NULL)
+    tidy_data <- reactiveVal(NULL)  # Reactive value for tidy data
 
     output$file_upload <- renderUI({
       tagList(
@@ -85,43 +88,90 @@ shiny_DataUploaderServer <- function(id, mydata = NULL, Date = "Date", Temp_col 
           "xlsx" = readxl::read_excel(input$file$datapath, sheet = input$sheet),
           stop("Unsupported file type")
         )
-        data(uploaded_data)
+        data(uploaded_data)  # Update the reactive value with uploaded data
         column_names(names(uploaded_data))
         showNotification("Data uploaded successfully!", type = "message")
       },
       error = function(e) {
         showNotification(paste(
           "Error reading file:", e$message,
-          ". CSV or Excel formatted data with Date, Temperature, and RH columns can be uploaded to the application."),
+          ". CSV or Excel formatted data with Date, Temp, and RH columns can be uploaded to the application."),
           type = "error")
       })
+    })
+
+    # UI for Site column: Select or Type
+    output$column_Site <- renderUI({
+      req(column_names())
+      tagList(
+        textInput(session$ns("input_Site"), "Enter Site (or select from below):"),
+        selectInput(session$ns("column_Site"), "Select Site column",
+                    choices = c("", column_names()),  # Allow empty selection for optionality
+                    selected = "")
+      )
+    })
+
+    # UI for Sensor column: Select or Type
+    output$column_Sensor <- renderUI({
+      req(column_names())
+      tagList(
+        textInput(session$ns("input_Sensor"), "Enter Sensor (or select from below):"),
+        selectInput(session$ns("column_Sensor"), "Select Sensor column",
+                    choices = c("", column_names()),  # Allow empty selection for optionality
+                    selected = "")
+      )
     })
 
     output$column_Date <- renderUI({
       req(column_names())
       selectInput(session$ns("column_Date"), "Select Date column",
                   choices = column_names(),
-                  selected = if(Date %in% column_names()) Date else column_names()[1])
+                  selected = if(Date %in% column_names()) Date else "")
     })
 
     output$column_Temp <- renderUI({
       req(column_names())
       selectInput(session$ns("column_Temp"), "Select Temperature column",
                   choices = column_names(),
-                  selected = if(Temp_col %in% column_names()) Temp_col else column_names()[1])
+                  selected = if(Temp_col %in% column_names()) Temp_col else "")
     })
 
     output$column_RH <- renderUI({
       req(column_names())
       selectInput(session$ns("column_RH"), "Select RH column",
                   choices = column_names(),
-                  selected = if(RH_col %in% column_names()) RH_col else column_names()[1])
+                  selected = if(RH_col %in% column_names()) RH_col else "")
+    })
+
+    # Action button to tidy data using tidy_TRHdata
+    output$tidy_data_button <- renderUI({
+      actionButton(session$ns("tidy_data"), "Tidy Data")
+    })
+
+    observeEvent(input$tidy_data, {
+      req(data())
+
+      # Call tidy_TRHdata with selected columns from the uploader
+      tidy_result <- tidy_TRHdata(
+        data(),
+        Site_col = if (input$input_Site != "") input$input_Site else input$column_Site,
+        Sensor_col = if (input$input_Sensor != "") input$input_Sensor else input$column_Sensor,
+        Date_col = input$column_Date,
+        Temp_col = input$column_Temp,
+        RH_col = input$column_RH)
+
+      tidy_data(tidy_result)  # Update reactive value with tidied data
+
+      showNotification("Data tidied successfully!", type = "message")
     })
 
     return(list(
       data = data,
+      tidy_data = tidy_data,
       selected_columns = reactive({
         list(
+          Site = if (input$input_Site != "") input$input_Site else input$column_Site,
+          Sensor = if (input$input_Sensor != "") input$input_Sensor else input$column_Sensor,
           Date = input$column_Date,
           Temp = input$column_Temp,
           RH = input$column_RH

@@ -4,11 +4,33 @@
 \alias{tidy_Meaco}
 \title{Tidy Meaco sensor data}
 \usage{
-tidy_Meaco(mydata)
+tidy_Meaco(
+  mydata,
+  Site_col = "RECEIVER",
+  Sensor_col = "TRANSMITTER",
+  Date_col = "DATE",
+  Temp_col = "TEMPERATURE",
+  RH_col = "HUMIDITY"
+)
 }
 \arguments{
 \item{mydata}{A data frame containing raw Meaco sensor data with columns
 RECEIVER, TRANSMITTER, DATE, TEMPERATURE, and HUMIDITY}
+
+\item{Site_col}{A string specifying the name of the column in `mydata` that contains
+location information. Default is "RECEIVER".}
+
+\item{Sensor_col}{A string specifying the name of the column in `mydata` that contains
+sensor information. Default is "TRANSMITTER".}
+
+\item{Date_col}{A string specifying the name of the column in `mydata` that contains
+date information. Default is "DATE".}
+
+\item{Temp_col}{A string specifying the name of the column in `mydata` that contains
+temperature data. Default is "TEMPERATURE".}
+
+\item{RH_col}{A string specifying the name of the column in `mydata` that contains
+relative humidity data. Default is "HUMIDITY".}
 }
 \value{
 A tidied data frame with columns Site, Sensor, Date, Temp, and RH
@@ -16,13 +38,15 @@ A tidied data frame with columns Site, Sensor, Date, Temp, and RH
 \description{
 This function takes raw Meaco sensor data and performs several cleaning and processing steps:
 
-- Filters out rows with missing dates
-- Renames columns for consistency
-- Converts temperature and relative humidity to numeric
-- Rounds dates down to the nearest hour
-- Calculates hourly averages for temperature and relative humidity
-- Pads the data to ensure hourly intervals
-- Filters out implausible temperature and humidity values
+\itemize{
+   \item Filters out rows with missing dates
+   \item Renames columns for consistency
+   \item Converts temperature and relative humidity to numeric
+   \item Rounds dates down to the nearest hour
+   \item Calculates hourly averages for temperature and relative humidity
+   \item Pads the data to ensure hourly intervals
+   \item Filters out implausible temperature and humidity values
+}
 }
 \examples{
 

@@ -9,6 +9,7 @@
 #' @param id A string representing the module ID. This ID is used to namespace
 #' the inputs and outputs of the module, ensuring that they do not conflict
 #' with other modules or UI elements in the application.
+#' @param ... Additional arguements to pass to UI function.
 #'
 #' @return A tagList containing UI elements for file upload and column selection.
 #' @export
@@ -22,12 +23,14 @@
 #'
 #'
 #'
-shiny_DataUploaderUI <- function(id) {
+shiny_DataUploaderUI <- function(id, ...) {
   ns <- NS(id)
   tagList(
-    uiOutput(ns("file_upload")),
-    uiOutput(ns("column_Date")),
-    uiOutput(ns("column_Temp")),
-    uiOutput(ns("column_RH"))
+    uiOutput(ns("file_upload"), ...),
+    uiOutput(ns("column_Date"), ...),
+    uiOutput(ns("column_Temp"), ...),
+    uiOutput(ns("column_RH"), ...),
+    uiOutput(ns("column_Site"), ...),
+    uiOutput(ns("column_Sensor"), ...),
   )
 }

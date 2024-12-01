@@ -7,11 +7,10 @@ reference:
 - title: Shiny applications
   desc: Applications to test and demonstrate tools in the package.
   contents:
-    - run_ConSciR_app
+    - run_TidyData_app
     - run_Psychrometric_app
     - run_Mould_app
-    - shiny_DataUploaderServer
-    - shiny_DataUploaderUI
+    - run_ConSciR_app
 - title: Graphs
   desc: Tools for graphing data.
   contents:
@@ -46,7 +45,10 @@ reference:
 - title: Data
   desc: Tools to tidy data and in-built datasets to demonstrate functions.
   contents:
+    - tidy_TRHdata
     - tidy_Meaco
     - mydata
     - TRHdata
     - mouldtable
+    - shiny_DataUploaderServer
+    - shiny_DataUploaderUI

@@ -2,7 +2,7 @@
 % Please edit documentation in R/shiny_DataUploaderServer.R
 \name{shiny_DataUploaderServer}
 \alias{shiny_DataUploaderServer}
-\title{Server module to read data from an Excel or CSV file into Shiny application}
+\title{Server module to read TRH data from an Excel or CSV file into Shiny application}
 \usage{
 shiny_DataUploaderServer(
   id,

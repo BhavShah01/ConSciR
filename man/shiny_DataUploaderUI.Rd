@@ -4,12 +4,14 @@
 \alias{shiny_DataUploaderUI}
 \title{UI module for the data uploader module}
 \usage{
-shiny_DataUploaderUI(id)
+shiny_DataUploaderUI(id, ...)
 }
 \arguments{
 \item{id}{A string representing the module ID. This ID is used to namespace
 the inputs and outputs of the module, ensuring that they do not conflict
 with other modules or UI elements in the application.}
+
+\item{...}{Additional arguements to pass to UI function.}
 }
 \value{
 A tagList containing UI elements for file upload and column selection.
