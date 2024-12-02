@@ -83,7 +83,8 @@ server <- function(input, output, session) {
       error = function(e) {
         showNotification(paste(
           "Error reading file:", e$message,
-          ". CSV or Excel formatted data with 'Temp', 'RH' and 'Sensor' columns can be uploaded to the application."),
+          ". CSV or Excel formatted data with 'Temp', 'RH' and 'Sensor' columns
+          can be uploaded to the application."),
           type = "error")
       }
     )
