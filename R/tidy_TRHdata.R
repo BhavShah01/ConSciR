@@ -76,7 +76,10 @@ tidy_TRHdata <- function(mydata,
       RH = !!sym(RH_col)
     ) |>
     dplyr::mutate(
-      Date = lubridate::parse_date_time(Date, orders = c("ymd", "dmy", "mdy")),
+      Date = lubridate::parse_date_time(
+        Date,
+        orders = c("ymd HMS", "ymd HM", "ymd", "dmy HMS","dmy HM", "dmy", "mdy HMS", "mdy HM", "mdy"),
+        quiet = TRUE),
       Temp = as.numeric(Temp),
       RH = as.numeric(RH)
     ) |>
@@ -86,9 +89,8 @@ tidy_TRHdata <- function(mydata,
     dplyr::group_by(Site, Sensor, Date) |>
     dplyr::summarise(
       Temp = mean(Temp, na.rm = TRUE),
-      RH = mean(RH, na.rm = TRUE),
-      .groups = 'drop'  # Prevents grouping in the result
-    ) |>
+      RH = mean(RH, na.rm = TRUE)
+      ) |>
     padr::pad(by = "Date", interval = "hour") |>
     dplyr::ungroup() |>
     dplyr::group_by(Site, Sensor) |>

@@ -28,7 +28,7 @@ Authors:
 
 Other contributors:
 \itemize{
-  \item test test [contributor]
+  \item Emily R Long (\href{https://orcid.org/0000-0003-3162-4521}{ORCID}) [contributor]
 }
 
 }

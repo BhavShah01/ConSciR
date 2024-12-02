@@ -12,8 +12,7 @@ ui <- page_navbar(
   ),
   card(
     card_header("Data Tidy"),
-
-    actionButton("tidy_data", "Tidy Data"),
+    # actionButton("tidy_data", "Tidy Data"),
     verbatimTextOutput("tidydata_head"),
     downloadButton("downloadData", "Download Tidied Data"),
   ),

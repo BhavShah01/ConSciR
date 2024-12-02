@@ -12,16 +12,19 @@ server <- function(input, output, session) {
   # Call the data uploader module
   data_upload <- shiny_DataUploaderServer("dataUpload")
 
-  # Reactive value to store tidied data
-  tidy_data <- reactiveVal(NULL)
-
-  observeEvent(data_upload$data(), {
-    if (!is.null(data_upload$data())) {
-      tidy_data(data_upload$data())  # Store uploaded data in tidy_data reactive value
-    }
+  # Reactive expression for uploaded data
+  uploaded_data <- reactive({
+    req(data_upload$data())
+    data_upload$data()
   })
 
-# Download handler for tidied data
+  # Reactive expression for tidied data
+  tidy_data <- reactive({
+    req(uploaded_data())
+    uploaded_data() |> tidy_Meaco()
+  })
+
+  # Download handler for tidied data
   output$downloadData <- downloadHandler(
     filename = function() {
       paste("tidy_data-", Sys.Date(), ".csv", sep="")
@@ -32,10 +35,9 @@ server <- function(input, output, session) {
     }
   )
 
-
   output$data_summary <- renderPrint({
-    req(data_upload)
-    summary(data_upload)
+    req(uploaded_data())
+    summary(uploaded_data())
   })
 
   output$tidydata_head <- renderPrint({

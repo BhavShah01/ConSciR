@@ -1,0 +1,37 @@
+# inst/shiny/ConSciR-SilicaGel/app.R
+library(shiny)
+library(bslib)
+
+
+
+ui <- page_navbar(
+  title = "ConSciR: Silica Gel Calculator",
+  sidebar = sidebar(
+    title = "",
+    uiOutput("file_upload"),
+    # shiny_DataUploaderUI("dataUpload"),
+  ),
+  card(
+    card_header("Silica Gel (kg)"),
+    fluidRow(
+    column(6,
+    h4("Case Details"),
+    fluidRow(
+      uiOutput("select_aer"),
+      uiOutput("select_length"),
+      uiOutput("select_height"),
+      uiOutput("select_width"),
+    )),
+    column(6,
+    h4("Silica Gel requirements"),
+    fluidRow(
+      uiOutput("select_silica"),
+      uiOutput("select_initialRH"),
+      uiOutput("select_specifiedRH"),
+    ))),
+    plotOutput("mdata_plot"),
+    textOutput("calc_rh")
+
+
+  ),
+)
