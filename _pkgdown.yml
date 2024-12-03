@@ -43,6 +43,9 @@ reference:
     - calcRH_AH
     - calcRH_DP
     - calcTemp
+- title: Sustainability
+  desc: Tools for calculating energy consumption related to environmental management.
+  contents:
     - calcCoolingPower
     - calcCoolingCapacity
     - calcSensibleHeating
