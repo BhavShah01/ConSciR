@@ -80,12 +80,12 @@ conditions and volume flow rate.</p>
 
 
 <dt id="arg-volumeflowrate">volumeFlowRate<a class="anchor" aria-label="anchor" href="#arg-volumeflowrate"></a></dt>
-<dd><p>Volume flow rate of air (m\³/s)</p></dd>
+<dd><p>Volume flow rate of air (m³/s)</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Cooling power in watts (W)</p>
+    <p>Cooling power in kilowatts (kW)</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -98,11 +98,13 @@ conditions and volume flow rate.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">calcCoolingPower</span><span class="op">(</span>Temp1 <span class="op">=</span> <span class="fl">25</span>, RH1 <span class="op">=</span> <span class="fl">70</span>, Temp2 <span class="op">=</span> <span class="fl">20</span>, RH2 <span class="op">=</span> <span class="fl">50</span>, volumeFlowRate <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">calcCoolingPower</span><span class="op">(</span><span class="fl">30</span>, <span class="fl">22</span>, <span class="fl">70</span>, <span class="fl">55</span>, <span class="fl">0.8</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.03084615</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">calcCoolingPower</span><span class="op">(</span>Temp1 <span class="op">=</span> <span class="fl">25</span>, Temp2 <span class="op">=</span> <span class="fl">20</span>, RH1 <span class="op">=</span> <span class="fl">70</span>, RH2 <span class="op">=</span> <span class="fl">50</span>, volumeFlowRate <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.01307436</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">calcCoolingPower</span><span class="op">(</span><span class="fl">30</span>, <span class="fl">70</span>, <span class="fl">22</span>, <span class="fl">55</span>, <span class="fl">0.8</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -0.3348063</span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
