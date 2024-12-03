@@ -7,9 +7,9 @@
 calcMould_models(Temp, RH, model = c("Days", "Sedlbauer", "VIR", "Isaksson"))
 }
 \arguments{
-\item{Temp}{Numeric. Temperature in Celsius.}
+\item{Temp}{Numeric. Temperature (°Celsius)}
 
-\item{RH}{Numeric. Relative Humidity as a percentage (0-100).}
+\item{RH}{Numeric. Relative Humidity (0-100\%)}
 
 \item{model}{Character. The model to use for calculation.
 Options are "Days", "Sedlbauer", "VIR", or "Isaksson".}

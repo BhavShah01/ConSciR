@@ -9,7 +9,9 @@
 #' @param id The module ID
 #' @param mydata A data frame containing initial data (if any). Default is NULL.
 #' @param Date A string specifying the default name of the Date column. Default is "Date".
-#' @param Temp_col Temp_col A string specifying the default name of the Temperature column. Default is "Temp".
+#' @param Temp_col A string specifying the default name of the Temperature column. Default is "Temp".
+#' @param Sensor_col A string specifying the default name of the Sensor column. Default is "Sensor".
+#' @param Site_col A string specifying the default name of the Site column. Default is "Site".
 #' @param RH_col A string specifying the default name of the Relative Humidity column. Default is "RH".
 #'
 #' @return A list containing two reactive elements:
@@ -45,12 +47,19 @@
 #'
 #'
 #'
-shiny_DataUploaderServer <- function(id, mydata = NULL, Date = "Date", Temp_col = "Temp", RH_col = "RH") {
+shiny_DataUploaderServer <- function(id, mydata = NULL,
+                                     Date = "Date",
+                                     Temp_col = "Temp",
+                                     RH_col = "RH",
+                                     Sensor_col = "Sensor",
+                                     Site_col = "Site") {
 
   moduleServer(id, function(input, output, session) {
 
     data <- reactiveVal(mydata)
+
     column_names <- reactiveVal(NULL)
+
     tidy_data <- reactiveVal(NULL)  # Reactive value for tidy data
 
     output$file_upload <- renderUI({
@@ -64,6 +73,7 @@ shiny_DataUploaderServer <- function(id, mydata = NULL, Date = "Date", Temp_col 
 
     observeEvent(input$file, {
       req(input$file)
+
       file_ext <- tools::file_ext(input$file$name)
 
       if (file_ext %in% c("xls", "xlsx")) {
@@ -71,6 +81,7 @@ shiny_DataUploaderServer <- function(id, mydata = NULL, Date = "Date", Temp_col 
         output$sheet_selector <- renderUI({
           selectInput(session$ns("sheet"), "Select Sheet", choices = sheets)
         })
+
       } else {
         output$sheet_selector <- renderUI(NULL)
       }

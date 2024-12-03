@@ -9,7 +9,9 @@ shiny_DataUploaderServer(
   mydata = NULL,
   Date = "Date",
   Temp_col = "Temp",
-  RH_col = "RH"
+  RH_col = "RH",
+  Sensor_col = "Sensor",
+  Site_col = "Site"
 )
 }
 \arguments{
@@ -19,9 +21,13 @@ shiny_DataUploaderServer(
 
 \item{Date}{A string specifying the default name of the Date column. Default is "Date".}
 
-\item{Temp_col}{Temp_col A string specifying the default name of the Temperature column. Default is "Temp".}
+\item{Temp_col}{A string specifying the default name of the Temperature column. Default is "Temp".}
 
 \item{RH_col}{A string specifying the default name of the Relative Humidity column. Default is "RH".}
+
+\item{Sensor_col}{A string specifying the default name of the Sensor column. Default is "Sensor".}
+
+\item{Site_col}{A string specifying the default name of the Site column. Default is "Site".}
 }
 \value{
 A list containing two reactive elements:

@@ -6,7 +6,7 @@
 #' Temperature and humidity data from the proposed location, case dimensions,
 #' and air exchange rate (AER) if known, as inputs.
 #'
-#' CSV or Excel formatted data with "Temp" and "RH" columns can be uploaded to the application.
+#' CSV or Excel data with "Date", "Temp" and "RH" columns can be uploaded to the application.
 #'
 #'
 #' @return Shiny object

@@ -35,12 +35,13 @@
 #' @export
 #'
 #' @examples
-#' # RH at air tempertaure of 20C and dew point of 15C
+#' # RH at air tempertaure of 20C and dew point of 15°C
 #' calcRH_DP(20, 15)
 #'
 #' calcRH_DP(20, calcDP(20, 50))
 #'
 #' head(mydata) |> dplyr::mutate(DewPoint = calcDP(Temp, RH), RH2 = calcRH_DP(Temp, DewPoint))
+#'
 #'
 #'
 calcRH_DP <- function(Temp, DewP) {

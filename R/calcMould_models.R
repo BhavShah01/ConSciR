@@ -5,8 +5,8 @@
 #'
 #' The results are very different so take care in interpretation.
 #'
-#' @param Temp Numeric. Temperature in Celsius.
-#' @param RH Numeric. Relative Humidity as a percentage (0-100).
+#' @param Temp Numeric. Temperature (°Celsius)
+#' @param RH Numeric. Relative Humidity (0-100\%)
 #' @param model Character. The model to use for calculation.
 #'              Options are "Days", "Sedlbauer", "VIR", or "Isaksson".
 #'
