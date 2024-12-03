@@ -12,9 +12,9 @@
 #' @param Temp2 Final Temperature (°Celsius)
 #' @param RH1 Initial Relative Humidity (0-100\%)
 #' @param RH2 Final Relative Humidity (0-100\%)
-#' @param volumeFlowRate Volume flow rate of air (m\³/s)
+#' @param volumeFlowRate Volume flow rate of air (m³/s)
 #'
-#' @return Cooling power in watts (W)
+#' @return Cooling power in kilowatts (kW)
 #' @export
 #'
 #' @seealso \code{\link{calcEnthalpy}}, \code{\link{calcAD}}
@@ -22,9 +22,11 @@
 #' @references ASHRAE Handbook Fundamentals
 #'
 #' @examples
-#' calcCoolingPower(Temp1 = 25, RH1 = 70, Temp2 = 20, RH2 = 50, volumeFlowRate = 0.5)
+#' calcCoolingPower(30, 22, 70, 55, 0.8)
 #'
-#' calcCoolingPower(30, 70, 22, 55, 0.8)
+#' calcCoolingPower(Temp1 = 25, Temp2 = 20, RH1 = 70, RH2 = 50, volumeFlowRate = 0.5)
+#'
+#'
 #'
 #'
 calcCoolingPower <- function(Temp1, Temp2, RH1, RH2, volumeFlowRate) {

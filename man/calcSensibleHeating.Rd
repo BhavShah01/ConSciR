@@ -13,7 +13,7 @@ calcSensibleHeating(Temp1, Temp2, RH = 50, volumeFlowRate)
 
 \item{RH}{Initial Relative Humidity (0-100\%). Optional, default is 50\%.}
 
-\item{volumeFlowRate}{Volume flow rate of air in cubic meters per second (m\³/s)}
+\item{volumeFlowRate}{Volume flow rate of air in cubic meters per second (m³/s)}
 }
 \value{
 Sensible heat in kilowatts (kW)

@@ -10,7 +10,7 @@
 #'
 #' @param Temp1 Initial Temperature (°Celsius)
 #' @param Temp2 Final Temperature (°Celsius)
-#' @param volumeFlowRate Volume flow rate of air in cubic meters per second (m\³/s)
+#' @param volumeFlowRate Volume flow rate of air in cubic meters per second (m³/s)
 #' @param RH Initial Relative Humidity (0-100\%). Optional, default is 50\%.
 #'
 #' @return Sensible heat in kilowatts (kW)

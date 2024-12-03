@@ -10,7 +10,7 @@
 #' @param Temp2 Final Temperature (°Celsius)
 #' @param RH1 Initial Relative Humidity (0-100\%)
 #' @param RH2 Final Relative Humidity (0-100\%)
-#' @param volumeFlowRate Volume flow rate of air in cubic meters per second (m\³/s)
+#' @param volumeFlowRate Volume flow rate of air in cubic meters per second (m³/s)
 #'
 #' @return Total Heating in kilowatts (kW)
 #' @export

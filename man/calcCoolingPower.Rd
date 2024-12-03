@@ -15,10 +15,10 @@ calcCoolingPower(Temp1, Temp2, RH1, RH2, volumeFlowRate)
 
 \item{RH2}{Final Relative Humidity (0-100\%)}
 
-\item{volumeFlowRate}{Volume flow rate of air (m\³/s)}
+\item{volumeFlowRate}{Volume flow rate of air (m³/s)}
 }
 \value{
-Cooling power in watts (W)
+Cooling power in kilowatts (kW)
 }
 \description{
 This function calculates the cooling power based on initial and final air
@@ -27,9 +27,11 @@ conditions and volume flow rate.
 Cooling power is the rate of energy transferred during a cooling process.
 }
 \examples{
-calcCoolingPower(Temp1 = 25, RH1 = 70, Temp2 = 20, RH2 = 50, volumeFlowRate = 0.5)
+calcCoolingPower(30, 22, 70, 55, 0.8)
 
-calcCoolingPower(30, 70, 22, 55, 0.8)
+calcCoolingPower(Temp1 = 25, Temp2 = 20, RH1 = 70, RH2 = 50, volumeFlowRate = 0.5)
+
+
 
 
 }

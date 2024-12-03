@@ -15,7 +15,7 @@ calcSensibleHeatRatio(Temp1, Temp2, RH1, RH2, volumeFlowRate)
 
 \item{RH2}{Final Relative Humidity (0-100\%)}
 
-\item{volumeFlowRate}{Volume flow rate of air in cubic meters per second (m\³/s)}
+\item{volumeFlowRate}{Volume flow rate of air in cubic meters per second (m³/s)}
 }
 \value{
 SHR Sensible Heat Ratio (0-100\%)
