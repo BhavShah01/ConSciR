@@ -7,14 +7,9 @@ ui <- page_sidebar(
     title = "mydata",
   ),
   card(
-    card_header("Graph"),
-    plotOutput("gg_TRHplot")
-  ),
-
-  card(
-    card_header("Conservation tools"),
+    card_header("Tools"),
+    plotOutput("gg_TRHplot"),
     plotOutput("gg_mould"),
-    plotOutput("gg_LM"),
-    plotOutput("gg_PI")
+    plotOutput("gg_Psy")
   ),
 )

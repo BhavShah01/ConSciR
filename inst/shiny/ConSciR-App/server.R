@@ -35,22 +35,11 @@ server <- function(input, output) {
       theme_minimal()
   })
 
-  output$gg_LM <- renderPlot({
+  output$gg_Psy <- renderPlot({
     mydata |>
-      mutate(LifeTime = calcLM(Temp, RH)) |>
-      ggplot() +
-      geom_line(aes(Date, LifeTime, col = LifeTime)) +
-      labs(title = "Lifetime Multiplier") +
+      graph_psychrometric() +
       theme_minimal()
   })
 
-  output$gg_PI <- renderPlot({
-    mydata |>
-      mutate(PI = calcPI(Temp, RH)) |>
-      ggplot() +
-      geom_line(aes(Date, PI, col = PI)) +
-      labs(title = "Preservation Index") +
-      theme_minimal()
-  })
 
 }
