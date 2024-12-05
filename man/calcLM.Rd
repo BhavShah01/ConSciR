@@ -2,7 +2,7 @@
 % Please edit documentation in R/calcLM.R
 \name{calcLM}
 \alias{calcLM}
-\title{Life-time multiplier (Michalski, 2002) for chemical degradation}
+\title{Life-time multiplier for chemical degradation}
 \usage{
 calcLM(Temp, RH, EA = 100)
 }
@@ -11,19 +11,20 @@ calcLM(Temp, RH, EA = 100)
 
 \item{RH}{Relative Humidity (0-100\%)}
 
-\item{EA}{Activation Energy (J/mol) 100 for cellulosic (paper) or 70 yellowing varnish}
+\item{EA}{Activation Energy (J/mol).
+100 J/mol for cellulosic (paper) or 70 J/mol yellowing varnish}
 }
 \value{
 Lifetime multiplier
 }
 \description{
-Function to calculate life-time multiplier in J/mol from temperature and relative humidity.
+Function to calculate lifetime multiplier from temperature and relative humidity.
 
 The lifetime multiplier calculates the expected lifetime of an object for a given point
 relative to to the lifetime at 20°C and 50\%RH.
 This can used to then average it over the length of your dataset.
 
-The lifetime multiplier gives an idea about the speed of natural decay of your object.
+The lifetime multiplier gives an indication of the speed of natural decay of an object.
 It expresses an expected lifetime of an object compared to the expected lifetime of
 the same object at 20°C and 50\% RH. This means that if the result = 1, the expected
 lifetime for your object is 'good'. The closer you go to 0, the less suited your environment is.
@@ -33,10 +34,10 @@ The data is based on experiments on paper, synthetic films and dyes.
 }
 \details{
 Based on the experiments of the rate of decay of paper, films and dyes.
-Activation energy, Ea = 100 kJ/mol (degradation of cellulose - paper),
-70 kJ/mol (yellowing of varnish - furniture, painting, sculpture).
+Activation energy, Ea = 100 J/mol (degradation of cellulose - paper),
+70 J/mol (yellowing of varnish - furniture, painting, sculpture).
 
-Gas constant, R = 8.314 J/K.mol.
+Gas constant, R = 8.314 J/K.mol
 
 \deqn{LM=\left(\frac{50\%RH}{RH}\right)^{1.3}.e\left(\frac{E_a}{R}.\left(\frac{1}{T_K}-\frac{1}{293}\right)\right)}
 }
