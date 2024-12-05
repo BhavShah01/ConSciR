@@ -22,7 +22,7 @@ Function to calculate lifetime multiplier from temperature and relative humidity
 
 The lifetime multiplier calculates the expected lifetime of an object for a given point
 relative to to the lifetime at 20°C and 50\%RH.
-This can used to then average it over the length of your dataset.
+This can used to then average over the length of the dataset.
 
 The lifetime multiplier gives an indication of the speed of natural decay of an object.
 It expresses an expected lifetime of an object compared to the expected lifetime of
@@ -44,7 +44,13 @@ Gas constant, R = 8.314 J/K.mol
 \examples{
 calcLM(20, 50)
 
+calcLM(20, 50, EA = 70)
+
 head(mydata) |> dplyr::mutate(LifeTime = calcLM(Temp, RH))
+
+head(mydata) |>
+  dplyr::mutate(LM = calcLM(Temp, RH)) |>
+   dplyr::summarise(LM_avg = mean(LM, na.rm = TRUE))
 
 
 }
