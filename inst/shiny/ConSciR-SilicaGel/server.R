@@ -14,22 +14,19 @@ calculate_RH <- function(data, initialRH, RH, half_life) {
   # Calculate the result for each value of RH
   for (i in 1:length(RH)) {
     if (i == 1) {
-      RH_gel[i] <- initialRH
+      RH_gel[i] <- ifelse(is.na(RH[i]), initialRH, initialRH + (RH[i] - initialRH) * (1 - exp(-log(2) / half_life)))
     } else {
-      RH_gel[i] <- RH_gel[i-1] + (RH[i] - RH_gel[i-1]) * (1 - exp(-log(2) / half_life))
+      if (is.na(RH[i])) {
+        RH_gel[i] <- RH_gel[i-1]  # Roll over previous value if current RH is NA
+      } else {
+        RH_gel[i] <- RH_gel[i-1] + (RH[i] - RH_gel[i-1]) * (1 - exp(-log(2) / half_life))
+      }
     }
   }
   data$RH_gel <- RH_gel
   return(data)
 }
 
-myfun_lifetime <- function(IntialRH, RH, half_life) {
-  # Does not work
-  RH_gel = 0
-  RH_gel[0] = IntialRH
-  RH_gel = RH_gel + (RH - lag(RH_gel)) * (1 - exp(-log(2) / half_life))
-  return(RH_gel)
-}
 
 
 # Main server function
@@ -142,6 +139,27 @@ server <- function(input, output, session) {
 
   mdata <- reactive({
     mydata() |>
+      dplyr::rename_with(
+        ~ dplyr::case_when(
+          . == "DATE" ~ "Date",
+          . == "HUMIDITY" ~ "RH",
+          TRUE ~ .
+        )
+      ) |>
+      dplyr::mutate(
+        Date = lubridate::parse_date_time(
+          Date,
+          orders = c("ymd HMS", "ymd HM", "ymd", "dmy HMS","dmy HM", "dmy", "mdy HMS", "mdy HM", "mdy"),
+          quiet = TRUE),
+        RH = as.numeric(RH)
+      ) |>
+      dplyr::mutate(
+        Date = lubridate::floor_date(Date, unit = "hour")
+      ) |>
+      group_by(Date) |>
+      summarise(
+        RH = mean(RH, na.rm = TRUE)
+      ) |>
       mutate(
         initialRH = input$select_initialRH,
         half_life = case_half_life(),
