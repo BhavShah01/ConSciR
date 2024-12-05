@@ -16,7 +16,7 @@
 #' unstable object (based on experiments on acetate film). This means it is the
 #' expected lifetime for a specific T, RH and theoretical object if this remains
 #' stable (no fluctuations).
-#' The chosen activation energy (E) has a larger impact at low temperature.
+#' The chosen activation energy (Ea) has a larger impact at low temperature.
 #'
 #' Developed by the Image Permance Institute, the model is based on the
 #' chemical degradation of cellulose acetate (Reilly et al., 1995):
@@ -30,7 +30,7 @@
 #' deterioration of acetate film. This last object is naturally relatively unstable
 #' and there lies the biggest difference with other chemical metrics together with
 #' the fact that it is not relative to the lifetime of the object.
-#' All lifetime multipliers give similar results between 20% and 60% RH.
+#' All lifetime multipliers give similar results between 20\% and 60\% RH.
 #' The results at very low-end high RH are unreliable for PI (and TWPI).
 #'
 #'

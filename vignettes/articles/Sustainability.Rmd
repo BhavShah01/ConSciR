@@ -1,0 +1,16 @@
+---
+title: "Sustainability"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(ConSciR)
+library(dplyr)
+```
+

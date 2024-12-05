@@ -2,7 +2,7 @@
 % Please edit documentation in R/calcIPI.R
 \name{calcIPI}
 \alias{calcIPI}
-\title{Calculate IPI}
+\title{Calculate IPI Years to Deterioration}
 \source{
 Tim Padfield, 2004
 }
@@ -14,7 +14,7 @@ calcIPI(Temp, RH, EA = 95220)
 
 \item{RH}{Relative Humidity (0-100\%)}
 
-\item{EA}{Activation energy E, 95220 J/mol to give the best fit to the cellulose triacetate deterioration data}
+\item{EA}{Activation energy Ea, 95220 J/mol to give the best fit to the cellulose triacetate deterioration data}
 }
 \value{
 IPI formulation of the reaction kinetics, years to a defined state of deterioration
@@ -22,7 +22,7 @@ IPI formulation of the reaction kinetics, years to a defined state of deteriorat
 \description{
 IPI formulation of the reaction kinetics: years to a defined state of deterioration
 
-exp((E - 134.9 × [RH%])/(8.314 × T) + 0.0284 × [RH%] - 28.023)/365
+-  exp((E - 134.9 × [RH\%])/(8.314 × T) + 0.0284 × [RH\%] - 28.023)/365
 }
 \examples{
 calcIPI(20, 50)
