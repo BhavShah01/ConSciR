@@ -85,8 +85,6 @@
 <li>Students and educators in conservation and heritage science programs</li>
 <li>FAIR: ConSciR is designed to be findable, accessible, interoperable and reusable</li>
 </ul>
-<p>Learn more about ConSciR here: <a href="https://bhavshah01.github.io/ConSciR/"><strong>ConSciR webpage</strong></a></p>
-<p>The ConSciR Github page: <a href="https://github.com/BhavShah01/ConSciR" class="external-link"><strong>ConSciR Github</strong></a></p>
 <p>If using R for the first time, read an article here: <a href="https://bhavshah01.github.io/ConSciR/articles/ConSciR-FirstTimeR.html">Using R for the first time</a></p>
 <div class="section level2">
 <h2 id="tools-available">Tools available<a class="anchor" aria-label="anchor" href="#tools-available"></a>
@@ -139,7 +137,7 @@
 <span><span class="co">#&gt; 5 London Room 1 2024-01-01 00:59:59  21.7  36.5</span></span>
 <span><span class="co">#&gt; 6 London Room 1 2024-01-01 01:14:59  21.7  36.2</span></span></code></pre></div>
 <ul>
-<li>Use functions to perform calculations, for example use the existing data to add dew point and absolute humidity. Performance metrics are also being added like lifetime multiplier, preservation index and mould calculations.</li>
+<li>Use functions, for example use the existing data to add dew point and absolute humidity. Performance metrics are also being added like lifetime multiplier, preservation index and mould calculations.</li>
 </ul>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Peform calculations</span></span>
@@ -153,12 +151,12 @@
 <span><span class="co">#&gt; # A tibble: 6 × 9</span></span>
 <span><span class="co">#&gt;   Site   Sensor Date                 Temp    RH  DewP   Abs LifeTime    PI</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;  &lt;chr&gt;  &lt;dttm&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 London Room 1 2024-01-01 00:00:00  21.8  36.8  6.38  7.05     1.85  45.3</span></span>
-<span><span class="co">#&gt; 2 London Room 1 2024-01-01 00:15:00  21.8  36.7  6.34  7.03     1.85  45.4</span></span>
-<span><span class="co">#&gt; 3 London Room 1 2024-01-01 00:29:59  21.8  36.6  6.30  7.01     1.85  45.5</span></span>
-<span><span class="co">#&gt; 4 London Room 1 2024-01-01 00:44:59  21.7  36.6  6.22  6.97     1.85  46.1</span></span>
-<span><span class="co">#&gt; 5 London Room 1 2024-01-01 00:59:59  21.7  36.5  6.18  6.95     1.86  46.2</span></span>
-<span><span class="co">#&gt; 6 London Room 1 2024-01-01 01:14:59  21.7  36.2  6.06  6.90     1.86  46.6</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 London Room 1 2024-01-01 00:00:00  21.8  36.8  6.38  7.05     1.11  45.3</span></span>
+<span><span class="co">#&gt; 2 London Room 1 2024-01-01 00:15:00  21.8  36.7  6.34  7.03     1.11  45.4</span></span>
+<span><span class="co">#&gt; 3 London Room 1 2024-01-01 00:29:59  21.8  36.6  6.30  7.01     1.11  45.5</span></span>
+<span><span class="co">#&gt; 4 London Room 1 2024-01-01 00:44:59  21.7  36.6  6.22  6.97     1.11  46.1</span></span>
+<span><span class="co">#&gt; 5 London Room 1 2024-01-01 00:59:59  21.7  36.5  6.18  6.95     1.11  46.2</span></span>
+<span><span class="co">#&gt; 6 London Room 1 2024-01-01 01:14:59  21.7  36.2  6.06  6.90     1.11  46.6</span></span></code></pre></div>
 <ul>
 <li>Combine analysis with graphs</li>
 </ul>
@@ -166,20 +164,27 @@
 <code class="sourceCode R"><span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>DewPoint <span class="op">=</span> <span class="fu"><a href="reference/calcDP.html">calcDP</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="reference/graph_TRH.html">graph_TRH</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">DewPoint</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"purple"</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">DewPoint</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"purple"</span><span class="op">)</span> <span class="op">+</span> <span class="co"># add dewpoint line in purple</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-graphTRH_DewPoint-1.png" alt="graphTRH" width="100%"></p>
 <ul>
-<li>Use analysis functions, for example estimate mould growth</li>
+<li>Conservator tools: for example estimate mould growth</li>
 </ul>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="reference/calcMould.html">calcMould</a></span><span class="op">(</span>Temp <span class="op">=</span> <span class="st">"Temp"</span>, RH <span class="op">=</span> <span class="st">"RH"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html" class="external-link">geom_area</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">mould</span><span class="op">)</span>, fill <span class="op">=</span> <span class="st">"darkgreen"</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Probabilty of mould"</span>, x <span class="op">=</span> <span class="st">""</span>, y <span class="op">=</span> <span class="st">"Mould risk"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Probabilty of mould"</span>, x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="st">"Mould risk"</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-mould_risk-1.png" alt="mould" width="100%"></p>
+<ul>
+<li>Humidity functions: for example psychrometric chart</li>
+</ul>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/graph_psychrometric.html">graph_psychrometric</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-psychrometri%20chart-1.png" alt="psych_chart" width="100%"></p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
