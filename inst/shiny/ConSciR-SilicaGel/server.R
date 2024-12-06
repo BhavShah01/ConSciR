@@ -23,7 +23,7 @@ calculate_RH <- function(data, initialRH, RH, half_life) {
 # Main server function
 server <- function(input, output, session) {
 
-  data_upload <- shiny_DataUploadServer("dataUpload")
+  data_upload <- shiny_dataUploadServer("dataUpload")
 
   # Reactive value to store the data
   mydata <- reactiveVal(NULL)

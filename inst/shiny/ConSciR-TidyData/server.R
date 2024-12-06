@@ -10,7 +10,7 @@ options(shiny.maxRequestSize = 100 * 1024^2)
 server <- function(input, output, session) {
 
   # Call the data uploader module
-  data_upload <- shiny_DataUploadServer("dataUpload")
+  data_upload <- shiny_dataUploadServer("dataUpload")
 
   # Reactive expression for uploaded data
   uploaded_data <- reactive({

@@ -56,3 +56,5 @@ reference:
     - tidy_Hanwell
     - mydata
     - TRHdata
+    - shiny_dataUploadServer
+    - shiny_dataUploadUI

@@ -5,7 +5,7 @@ library(ggplot2)
 library(dplyr)
 library(ConSciR)
 
-options(shiny.maxRequestSize=100*1024^2)
+options(shiny.maxRequestSize = 100 * 1024^2)
 
 
 server <- function(input, output) {

@@ -5,7 +5,9 @@ library(bslib)
 ui <- page_navbar(
   title = "ConSciR: Psychrometric Chart",
   sidebar = sidebar(
-    title = "mydata",
+    title = "",
+    "Upload tidy data with 'Temp' and 'RH' columns",
+    shiny_dataUploadUI("dataUpload"),
     uiOutput("file_upload"),
     uiOutput("select_temp_range"),
     uiOutput("select_temp"),

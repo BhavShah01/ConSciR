@@ -1,3 +1,47 @@
+#' Shiny Module Server for Data Upload and Processing
+#'
+#' @description
+#' This function creates a Shiny module server for uploading CSV or Excel files,
+#' processing the data, and returning a tidied dataset.
+#'
+#'
+#' @param id A character string that corresponds to the ID used in the UI function
+#'  for this module.
+#'
+#' @return A reactive expression containing the tidied data frame with the following columns:
+#'
+#'   \itemize{
+#'     \item Date: Date and time, floored to the hour
+#'     \item Sensor: Sensor identifier
+#'     \item Site: Site identifier
+#'     \item Temp: Average temperature for each hour
+#'     \item RH: Average relative humidity for each hour
+#'   }
+#'
+#' @export
+#'
+#' @import shiny
+#' @importFrom readxl read_excel excel_sheets
+#' @importFrom tools file_ext
+#' @importFrom dplyr rename_with case_when mutate group_by across summarise
+#' @importFrom lubridate parse_date_time floor_date
+#'
+#'
+#' @examples
+#' \dontrun{
+#'
+#' # In a Shiny app:
+#' ui <- fluidPage(
+#'   shiny_dataUploadUI("dataUpload")
+#' )
+#'
+#' server <- function(input, output, session) {
+#'   data <- shiny_dataUploadServer("dataUpload")
+#' }
+#'
+#' }
+#'
+#'
 shiny_dataUploadServer <- function(id) {
   moduleServer(id, function(input, output, session) {
 
