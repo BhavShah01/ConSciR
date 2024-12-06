@@ -26,9 +26,6 @@ ConSciR is an R package designed to assist conservators, scientists and engineer
 -   Students and educators in conservation and heritage science programs
 -   FAIR: ConSciR is designed to be findable, accessible, interoperable and reusable
 
-Learn more about ConSciR here:  [**ConSciR webpage**](https://bhavshah01.github.io/ConSciR/)
-
-The ConSciR Github page: [**ConSciR Github**](https://github.com/BhavShah01/ConSciR)
 
 If using R for the first time, read an article here: [Using R for the first time](https://bhavshah01.github.io/ConSciR/articles/ConSciR-FirstTimeR.html)
 
@@ -77,7 +74,7 @@ library(ggplot2)
 head(mydata)
 ```
 
--   Use functions to perform calculations, for example use the existing data to add dew point and absolute humidity. Performance metrics are also being added like lifetime multiplier, preservation index and mould calculations. 
+-   Use functions, for example use the existing data to add dew point and absolute humidity. Performance metrics are also being added like lifetime multiplier, preservation index and mould calculations. 
 
 ```{r add_calcs, message=FALSE, warning=FALSE}
 # Peform calculations
@@ -96,18 +93,26 @@ head(mydata) |>
 mydata |>
   mutate(DewPoint = calcDP(Temp, RH)) |>
   graph_TRH() + 
-  geom_line(aes(Date, DewPoint), col = "purple", size = 1) + 
+  geom_line(aes(Date, DewPoint), col = "purple") + # add dewpoint line in purple
   theme_minimal()
 ```
 
--   Use analysis functions, for example estimate mould growth
+-   Conservator tools: for example estimate mould growth
 
 ```{r mould_risk, message=FALSE, warning=FALSE, fig.alt="mould"}
 mydata |>
   calcMould(Temp = "Temp", RH = "RH") |>
   ggplot() +
   geom_area(aes(Date, mould), fill = "darkgreen", size = 1) +
-  labs(title = "Probabilty of mould", x = "", y = "Mould risk") + 
+  labs(title = "Probabilty of mould", x = NULL, y = "Mould risk") + 
   theme_bw()
+```
+
+
+-   Humidity functions: for example psychrometric chart
+
+```{r psychrometri chart, message=FALSE, warning=FALSE, fig.alt="psych_chart"}
+mydata |>
+  graph_psychrometric()
 ```
 
