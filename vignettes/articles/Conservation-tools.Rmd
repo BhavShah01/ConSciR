@@ -61,7 +61,7 @@ mydata |>
   geom_bar(aes(Mould_Zeng, fill = Mould_Zeng)) +
   coord_flip() +
   labs(title = "Mould Isoline Limit") + 
-  theme_void()
+  theme_bw()
 
 ```
 
@@ -90,109 +90,12 @@ mydata |>
 
 ```
 
-```{r}
-
-TRHgrid |>
-  mutate(Mould_Sedlbauer = calcMould_models(Temp, RH, model = "Sedlbauer")) |>
-  filter(Mould_Sedlbauer < 100) |>
-  ggplot(aes(Temp, RH, z = Mould_Sedlbauer)) +
-  geom_contour_filled(bins = 20) +
-  labs(title = "Sedlbauer model: Critical RH for mould growth from temperature") + 
-  theme_bw()
-
-mydata |>
-  mutate(Mould_Sedlbauer = calcMould_models(Temp, RH, model = "Sedlbauer"))
-
-mydata |>
-  mutate(Mould_Sedlbauer = calcMould_models(Temp, RH, model = "Sedlbauer")) |>
-  ggplot() +
-  geom_line(aes(Date, Mould_Sedlbauer), col = "purple") +
-  geom_line(aes(Date, RH), col = "blue") + 
-  labs(title = "Sedlbauer model: Critical RH for mould growth from temperature") + 
-  theme_bw()
-
-```
-
-```{r}
-
-TRHgrid |>
-  mutate(Mould_VIR = calcMould_models(Temp, RH, model = "VIR")) |>
-  filter(Mould_VIR < 100) |>
-  ggplot(aes(Temp, RH, z = Mould_VIR)) +
-  geom_contour_filled(bins = 20) +
-  labs(title = "VIR model: Critical RH for mould growth from temperature") + 
-  theme_bw()
 
 
-mydata |>
-  mutate(Mould_VIR = calcMould_models(Temp, RH, model = "VIR"))
-
-mydata |>
-  mutate(Mould_VIR = calcMould_models(Temp, RH, model = "VIR")) |>
-  ggplot() +
-  geom_line(aes(Date, Mould_VIR), col = "purple") +
-  geom_line(aes(Date, RH), col = "blue") +
-  labs(title = "VIR model: Critical RH for mould growth from temperature") + 
-  theme_bw()
-
-```
-
-```{r}
-
-TRHgrid |>
-  mutate(Mould_Daily_Dose = calcMould_models(Temp, RH, model = "Isaksson")) |>
-  filter(Mould_Daily_Dose > 0) |>
-  ggplot(aes(Temp, RH, z = Mould_Daily_Dose)) +
-  geom_contour_filled(bins = 20) +
-  labs(title = "Isaksson model: Daily dose (1/t(ms)) / D(rel/day)") + 
-  theme_bw()
-
-mydata |>
-  mutate(Mould_Daily_Dose = calcMould_models(Temp, RH, model = "Isaksson"))
-
-mydata |>
-  mutate(Mould_Daily_Dose = calcMould_models(Temp, RH, model = "Isaksson")) |>
-  ggplot() +
-  geom_line(aes(Date, Mould_Daily_Dose), col = "purple") +
-  geom_hline(yintercept = 0, col = "red") +
-  labs(title = "Isaksson model: Daily dose (1/t(ms)) / D(rel/day)") + 
-  theme_bw()
-
-```
 
 
-`calcMould` requires a dataset with a "Date" column. 
 
-```{r}
 
-mydata |>
-  calcMould() 
-
-mydata |>
-  calcMould() |>
-  ggplot() +
-  geom_point(aes(Date, days_mould), col = "purple", size = 1) + 
-  labs(title = "IPI model: Days to mould") + 
-  theme_bw()
-
-mydata |>
-  calcMould() |>
-  ggplot() +
-  geom_area(aes(Date, mould), col = "purple") + 
-  geom_hline(yintercept = 1, col = "red") +
-  labs(title = "IPI model: Mould probability") + 
-  theme_bw()
-
-mydata |>
-  calcMould() |>
-  ggplot() +
-  geom_line(aes(Date, mould), col = "purple") + 
-  geom_hline(yintercept = 1, col = "red") +
-  scale_y_log10() + 
-  labs(title = "IPI model: Mould probability (log scale)") + 
-  theme_bw()
-
-```
 
 
 

@@ -29,15 +29,13 @@ ConSciR is an R package designed to assist conservators, scientists and engineer
 
 If using R for the first time, read an article here: [Using R for the first time](https://bhavshah01.github.io/ConSciR/articles/ConSciR-FirstTimeR.html)
 
-## Tools available 
+## Tools  
 
-
--   Calculations: humidity calculations, conservator tools 
+-   Humidity calculations, conservator tools, sustainability 
+-   Mould growth models, damage functions
 -   Graphs: TRH plots, psychometric chart
--   Summaries:  
--   Analysis: 
--   Tidying data: 
-
+-   Tidying data: Meaco, Hanwell data
+-   Interactive Shiny applications
 
 
 ## Installation
@@ -111,7 +109,7 @@ mydata |>
 
 -   Humidity functions: for example psychrometric chart
 
-```{r psychrometri chart, message=FALSE, warning=FALSE, fig.alt="psych_chart"}
+```{r psychart, message=FALSE, warning=FALSE, fig.alt="psych_chart"}
 mydata |>
   graph_psychrometric()
 ```

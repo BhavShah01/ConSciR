@@ -22,13 +22,13 @@ If using R for the first time, read an article here: [Using R for the
 first
 time](https://bhavshah01.github.io/ConSciR/articles/ConSciR-FirstTimeR.html)
 
-## Tools available
+## Tools
 
-- Calculations: humidity calculations, conservator tools
+- Humidity calculations, conservator tools, sustainability
+- Mould growth models, damage functions
 - Graphs: TRH plots, psychometric chart
-- Summaries:  
-- Analysis:
-- Tidying data:
+- Tidying data: Meaco, Hanwell data
+- Interactive Shiny applications
 
 ## Installation
 
@@ -131,4 +131,4 @@ mydata |>
   graph_psychrometric()
 ```
 
-<img src="man/figures/README-psychrometri chart-1.png" alt="psych_chart" width="100%" />
+<img src="man/figures/README-psychart-1.png" alt="psych_chart" width="100%" />

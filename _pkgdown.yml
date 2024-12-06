@@ -9,7 +9,6 @@ reference:
   contents:
     - run_TidyData_app
     - run_Psychrometric_app
-    - run_Mould_app
     - run_SilicaGel_app
     - run_ConSciR_app
 - title: Graphs
@@ -23,10 +22,8 @@ reference:
     - calcPI
     - calcIPI
     - calcLM
-    - calcMould
     - calcMould_Zeng
     - calcMould_VTT
-    - calcMould_models
 - title: Humidity functions
   desc: Functions for performing calculations from temperature and humidity data.
   contents:
@@ -59,6 +56,3 @@ reference:
     - tidy_Hanwell
     - mydata
     - TRHdata
-    - mouldtable
-    - shiny_DataUploaderServer
-    - shiny_DataUploaderUI

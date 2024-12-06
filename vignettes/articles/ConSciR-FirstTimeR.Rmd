@@ -33,7 +33,6 @@ To load a package in R for the first time, follow these two steps:
 
    ```{r, eval=FALSE}
    install.packages("tidyverse")
-   install.packages("runner")
    ```
 
 2. **Loading the package:**
@@ -41,7 +40,6 @@ To load a package in R for the first time, follow these two steps:
 
    ```{r, eval=FALSE}
    library(tidyverse)
-   library(runner)
    ```
 
 ### Basic RStudio Features

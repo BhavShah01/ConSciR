@@ -10,7 +10,7 @@ ui <- page_navbar(
     title = "",
     "Upload tidy data with 'Date' and 'RH' columns",
     uiOutput("file_upload"),
-    # shiny_DataUploaderUI("dataUpload"),
+    shiny_DataUploadUI("dataUpload"),
   ),
   card(
     card_header("Silica Gel (kg)"),

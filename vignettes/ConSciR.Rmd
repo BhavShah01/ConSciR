@@ -48,7 +48,7 @@ The ConSciR Github page: [ConSciR Github](https://github.com/BhavShah01/ConSciR)
 
 ## Examples 
 
-```{r load the packages, message=FALSE, warning=FALSE}
+```{r load packages, message=FALSE, warning=FALSE}
 # Load packages
 library(ConSciR)
 library(dplyr)
@@ -81,7 +81,7 @@ head(mydata) |>
 
 Perform calculations to visualise and explore data
 
-```{r calculations to visualise the data, message=FALSE, warning=FALSE}
+```{r calculations to visualise the data, message=FALSE, warning=FALSE, fig.alt="visualisations"}
 
 mydata |>
   # Calculate Absolute Humidity and Dew Point
@@ -102,7 +102,7 @@ mydata |>
 
 Built in psychrometric chart
 
-```{r psychrometric chart, message=FALSE, warning=FALSE, fig.align="psychrometric_chart_example"}
+```{r psychrometric chart, message=FALSE, warning=FALSE, fig.alt="psychrometric_chart_example"}
 
 head(mydata, 100) |>
   graph_psychrometric() + 

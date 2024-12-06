@@ -4,7 +4,9 @@ library(bslib)
 ui <- page_sidebar(
   title = "ConSciR: Tools for Conservation",
   sidebar = sidebar(
-    title = "mydata",
+    title = "",
+    "Upload data",
+    shiny_dataUploadUI("dataupload")
   ),
   card(
     card_header("Tools"),

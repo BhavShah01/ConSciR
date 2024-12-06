@@ -8,7 +8,7 @@ ui <- page_navbar(
   title = "ConSciR: Data Tidy",
   sidebar = sidebar(
     title = "",
-    shiny_DataUploaderUI("dataUpload"),
+    shiny_DataUploadUI("dataUpload"),
   ),
   card(
     card_header("Data Tidy"),
