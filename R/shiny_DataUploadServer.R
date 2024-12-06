@@ -1,4 +1,4 @@
-shiny_dataUploaderServer <- function(id) {
+shiny_dataUploadServer <- function(id) {
   moduleServer(id, function(input, output, session) {
 
     # Reactive value to store the raw data

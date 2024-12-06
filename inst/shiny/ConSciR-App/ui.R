@@ -1,3 +1,4 @@
+# inst/shiny/ConSciR-App/app.R
 library(shiny)
 library(bslib)
 
@@ -11,7 +12,6 @@ ui <- page_sidebar(
   card(
     card_header("Tools"),
     plotOutput("gg_TRHplot"),
-    plotOutput("gg_mould"),
     plotOutput("gg_Psy")
   ),
 )

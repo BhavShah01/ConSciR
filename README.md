@@ -115,10 +115,12 @@ mydata |>
 
 ``` r
 mydata |>
-  calcMould(Temp = "Temp", RH = "RH") |>
+  mutate(Mould = calcMould_Zeng(Temp, RH)) |>
   ggplot() +
-  geom_area(aes(Date, mould), fill = "darkgreen", size = 1) +
-  labs(title = "Probabilty of mould", x = NULL, y = "Mould risk") + 
+  geom_line(aes(Date, RH), col = "blue") +
+  geom_line(aes(Date, Mould), col = "darkgreen", size = 1) +
+  labs(title = "Mould Growth Rate Limits", 
+       y = "Humidity (blue) and Mould Limit (green)") + 
   theme_bw()
 ```
 

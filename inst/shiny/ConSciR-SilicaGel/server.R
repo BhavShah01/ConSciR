@@ -8,23 +8,14 @@ options(shiny.maxRequestSize = 100 * 1024^2)
 
 
 calculate_RH <- function(data, initialRH, RH, half_life) {
-  RH <- data$RH
-  # Initialize the result vector
-  RH_gel <- numeric(length(RH))
-  # Calculate the result for each value of RH
-  for (i in 1:length(RH)) {
-    if (i == 1) {
-      RH_gel[i] <- ifelse(is.na(RH[i]), initialRH, initialRH + (RH[i] - initialRH) * (1 - exp(-log(2) / half_life)))
-    } else {
-      if (is.na(RH[i])) {
-        RH_gel[i] <- RH_gel[i-1]  # Roll over previous value if current RH is NA
-      } else {
-        RH_gel[i] <- RH_gel[i-1] + (RH[i] - RH_gel[i-1]) * (1 - exp(-log(2) / half_life))
-      }
-    }
-  }
-  data$RH_gel <- RH_gel
-  return(data)
+  data %>%
+    mutate(
+      RH_gel = case_when(
+        row_number() == 1 ~ ifelse(is.na(RH), initialRH, initialRH + (RH - initialRH) * (1 - exp(-log(2) / half_life))),
+        is.na(RH) ~ lag(RH_gel),
+        TRUE ~ lag(RH_gel) + (RH - lag(RH_gel)) * (1 - exp(-log(2) / half_life))
+      )
+    )
 }
 
 

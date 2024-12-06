@@ -1,3 +1,4 @@
+# inst/shiny/ConSciR-App/app.R
 library(shiny)
 library(bslib)
 library(ggplot2)
@@ -27,15 +28,6 @@ server <- function(input, output) {
     mydata |>
       graph_TRH() +
       theme_bw()
-  })
-
-  output$gg_mould <- renderPlot({
-    mydata |>
-      calcMould(Temp = "Temp", RH = "RH") |>
-      ggplot() +
-      geom_line(aes(Date, mould), col = "darkgreen") +
-      labs(title = "Mould risk") +
-      theme_minimal()
   })
 
   output$gg_Psy <- renderPlot({
