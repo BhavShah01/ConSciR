@@ -109,12 +109,6 @@ TRHgrid |>
   geom_contour_filled(bins = 20) +
   theme_bw()
 
-TRHgrid |>
-  mutate(LM_log = calcLM(Temp, RH) |> log10()) |>
-  ggplot(aes(Temp, RH, z = LM_log)) +
-  geom_contour_filled(bins = 20) +
-  theme_bw()
-
 ```
 
 ### Preservation Index

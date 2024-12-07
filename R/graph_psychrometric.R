@@ -16,7 +16,6 @@
 #'    \item calcPws: Saturation vapor pressure (hPa)
 #'    \item calcPw: Water Vapour Pressure (hPa)
 #'    \item calcPI: Preservation Index
-#'    \item calcIPI: Years to Degradation of reference material
 #'    \item calcLM: Lifetime
 #' }
 #'
@@ -143,7 +142,6 @@ graph_psychrometric <- function(mydata,
            "calcPws" = "Saturation vapor pressure (hPa)",
            "calcPw" = "Water Vapour Pressure (hPa)",
            "calcPI" = "Preservation Index",
-           "calcIPI" = "Years to Degradation of reference material",
            "calcLM" = "Lifetime",
            "value")
 

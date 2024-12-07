@@ -9,7 +9,7 @@ library(readxl)
 
 server <- function(input, output) {
 
-  shiny_dataUploadServer("dataupload")
+  mydata <- shiny_dataUploadServer("dataupload")
 
   mydata_ <- reactive({
     mydata |>

@@ -85,7 +85,6 @@ server <- function(input, output) {
     "Saturation Vapour Pressure (hPa)" = "calcPws",
     "Water Vapour Pressure (hPa)" = "calcPw",
     "Preservation Index" = "calcPI",
-    "Years to Degradation" = "calcIPI",
     "Lifetime Multiplier" = "calcLM"
   )
 

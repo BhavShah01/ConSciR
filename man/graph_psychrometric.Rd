@@ -63,7 +63,6 @@ Various psychrometric functions can be used for the y-axis.
    \item calcPws: Saturation vapor pressure (hPa)
    \item calcPw: Water Vapour Pressure (hPa)
    \item calcPI: Preservation Index
-   \item calcIPI: Years to Degradation of reference material
    \item calcLM: Lifetime
 }
 }

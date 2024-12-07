@@ -20,7 +20,6 @@ reference:
   desc: Tools for the analysis of data for conservators.
   contents:
     - calcPI
-    - calcIPI
     - calcLM
     - calcMould_Zeng
     - calcMould_VTT
