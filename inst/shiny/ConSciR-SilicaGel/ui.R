@@ -9,8 +9,8 @@ ui <- page_navbar(
   sidebar = sidebar(
     title = "",
     "Upload tidy data with 'Date' and 'RH' columns",
-    uiOutput("file_upload"),
-    shiny_DataUploadUI("dataUpload"),
+    shiny_dataUploadUI("dataupload"),
+    downloadButton("downloadData", "Download Results")
   ),
   card(
     card_header("Silica Gel (kg)"),
@@ -28,11 +28,10 @@ ui <- page_navbar(
     fluidRow(
       uiOutput("select_silica"),
       uiOutput("select_initialRH"),
-      uiOutput("select_specifiedRH"),
-    ))),
-    plotOutput("mdata_plot"),
-    textOutput("calc_rh")
-
-
-  ),
+      uiOutput("select_specifiedRH")
+    ),
+      textOutput("half_life_text", inline = TRUE))
+    ),
+    plotOutput("mdata_plot")
+    ),
 )

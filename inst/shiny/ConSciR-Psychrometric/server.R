@@ -10,68 +10,14 @@ options(shiny.maxRequestSize = 100 * 1024^2)
 
 server <- function(input, output) {
 
-  # Reactive value to store the data
-  data <- reactiveVal(mydata)
+  uploaded_data <- shiny_dataUploadServer("dataupload")
 
-  # File input and upload button to UI
-  output$file_upload <- renderUI({
-    tagList(
-      fileInput("file", "Choose CSV or Excel File",
-                accept = c(".csv", ".xls", ".xlsx")),
-      uiOutput("sheet_selector"),  # UI for selecting Excel sheet
-      actionButton("upload", "Upload Data")
-    )
-  })
-
-  # Observe file input to update sheet choices if Excel
-  observeEvent(input$file, {
-    req(input$file)
-    file_ext <- tools::file_ext(input$file$name)
-
-    if (file_ext %in% c("xls", "xlsx")) {
-      sheets <- excel_sheets(input$file$datapath)
-      output$sheet_selector <- renderUI({
-        selectInput("sheet", "Select Sheet", choices = sheets)
-      })
+  mydata <- reactive({
+    if (is.null(uploaded_data())) {
+      mydata
     } else {
-      output$sheet_selector <- renderUI(NULL)  # No sheet selection for CSV
+      uploaded_data()
     }
-  })
-
-  # Wait till file upload
-  observeEvent(input$upload, {
-    req(input$file)
-    file_ext <- tools::file_ext(input$file$name)
-
-    tryCatch(
-      {
-        uploaded_data <- switch(
-          file_ext,
-          "csv" = read.csv(input$file$datapath),
-          "xls" = read_excel(input$file$datapath, sheet = input$sheet),
-          "xlsx" = read_excel(input$file$datapath, sheet = input$sheet),
-          stop("Unsupported file type")
-        )
-        data(uploaded_data)
-        showNotification("Data uploaded successfully!", type = "message")
-      },
-      error = function(e) {
-        showNotification(paste(
-          "Error reading file:", e$message,
-          ". CSV or Excel formatted data with 'Temp', 'RH' and 'Sensor' columns can be uploaded to the application."),
-          type = "error")
-      }
-    )
-  })
-
-  output$column_Date = renderUI({
-    textInput("column_Date", "Date column", value = "Date")
-  })
-  output$column_Temp = renderUI({
-    textInput("column_Temp", "Temperature column", value = "Temp")
-  })
-  output$column_RH = renderUI({
-    textInput("column_RH", "RH column", value = "RH")
   })
 
   func_list_text <- c(
@@ -119,9 +65,9 @@ server <- function(input, output) {
   })
 
   output$gg_Psychrometric <- renderPlot({
-    req(input$select_y_func)
+    req(mydata())
 
-    data() |>
+    mydata() |>
       graph_psychrometric(
         y_func = get(input$select_y_func), # Humidity function
         Temp_range = c(input$select_temp_range[1], input$select_temp_range[2]),
@@ -129,7 +75,7 @@ server <- function(input, output) {
         HighT = input$select_temp[2],
         LowRH = input$select_rh[1],
         HighRH = input$select_rh[2],
-        data_colour = !!input$select_data_colour,
+        # data_colour = !!input$select_data_colour,
         data_alpha = input$select_alpha
       ) +
       theme_bw()

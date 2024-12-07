@@ -4,17 +4,18 @@ library(bslib)
 
 
 
-ui <- page_navbar(
-  title = "ConSciR: Data Tidy",
+ui <- page_sidebar(
+  title = "ConSciR: Tidy data",
   sidebar = sidebar(
     title = "",
-    shiny_DataUploadUI("dataUpload"),
+    "Upload data to be tidied",
+    shiny_dataUploadUI("dataupload"),
+    downloadButton("downloadData", "Download Tidied Data")
   ),
   card(
-    card_header("Data Tidy"),
-    # actionButton("tidy_data", "Tidy Data"),
+    card_header("Data Tidy - Check"),
     verbatimTextOutput("tidydata_head"),
-    downloadButton("downloadData", "Download Tidied Data"),
+    plotOutput("gg_TRHplot")
   ),
 )
 

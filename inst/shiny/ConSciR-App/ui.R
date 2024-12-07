@@ -6,7 +6,7 @@ ui <- page_sidebar(
   title = "ConSciR: Tools for Conservation",
   sidebar = sidebar(
     title = "",
-    "Upload data",
+    "Upload tidy data",
     shiny_dataUploadUI("dataupload")
   ),
   card(

@@ -143,7 +143,7 @@ graph_psychrometric <- function(mydata,
            "calcPw" = "Water Vapour Pressure (hPa)",
            "calcPI" = "Preservation Index",
            "calcLM" = "Lifetime",
-           "value")
+           NULL)
 
   # Create the plot
   p <-

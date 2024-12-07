@@ -6,35 +6,33 @@ library(dplyr)
 library(ConSciR)
 library(readxl)
 
+options(shiny.maxRequestSize = 100 * 1024^2)
+
 
 server <- function(input, output) {
 
-  mydata <- shiny_dataUploadServer("dataupload")
+  uploaded_data <- shiny_dataUploadServer("dataupload")
 
-  mydata_ <- reactive({
-    mydata |>
-      mutate(
-        AbsHum = calcAH(Temp, RH),
-        DewPoint = calcDP(Temp, RH),
-        MR = calcMR(Temp, RH),
-        Pw = calcPw(Temp, RH),
-        Pws = calcPws(Temp),
-        LifeTime = calcLM(Temp, RH),
-        PI = calcPI(Temp, RH)
-      )
+  mydata <- reactive({
+    if (is.null(uploaded_data())) {
+      mydata
+    } else {
+      uploaded_data()
+    }
   })
 
   output$gg_TRHplot <- renderPlot({
-    mydata |>
+    req(mydata())
+    mydata() |>
       graph_TRH() +
       theme_bw()
   })
 
   output$gg_Psy <- renderPlot({
-    mydata |>
+    req(mydata())
+    mydata() |>
       graph_psychrometric() +
       theme_minimal()
   })
-
 
 }

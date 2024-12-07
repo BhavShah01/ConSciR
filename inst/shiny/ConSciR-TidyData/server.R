@@ -9,19 +9,15 @@ options(shiny.maxRequestSize = 100 * 1024^2)
 # Main server function
 server <- function(input, output, session) {
 
-  # Call the data uploader module
-  data_upload <- shiny_dataUploadServer("dataUpload")
+  # Data uploader module
+  uploaded_data <- shiny_dataUploadServer("dataupload")
 
-  # Reactive expression for uploaded data
-  uploaded_data <- reactive({
-    req(data_upload$data())
-    data_upload$data()
-  })
-
-  # Reactive expression for tidied data
   tidy_data <- reactive({
-    req(uploaded_data())
-    uploaded_data() |> tidy_Meaco()
+    if (is.null(uploaded_data())) {
+      mydata
+    } else {
+      uploaded_data()
+    }
   })
 
   # Download handler for tidied data
@@ -35,14 +31,16 @@ server <- function(input, output, session) {
     }
   )
 
-  output$data_summary <- renderPrint({
-    req(uploaded_data())
-    summary(uploaded_data())
-  })
-
   output$tidydata_head <- renderPrint({
     req(tidy_data())
     head(tidy_data())
+  })
+
+  output$gg_TRHplot <- renderPlot({
+    req(tidy_data())
+    tidy_data() |>
+      graph_TRH() +
+      theme_bw()
   })
 
 
