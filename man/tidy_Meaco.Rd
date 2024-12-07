@@ -40,19 +40,22 @@ This function takes raw Meaco sensor data and performs several cleaning and proc
 
 \itemize{
    \item Filters out rows with missing dates
-   \item Renames columns for consistency
+   \item Renames column names for consistency
    \item Converts temperature and relative humidity to numeric
    \item Rounds dates down to the nearest hour
    \item Calculates hourly averages for temperature and relative humidity
-   \item Pads the data to ensure hourly intervals
-   \item Filters out implausible temperature and humidity values
+   \item Pads the data to ensure hourly intervals using padr package
+   \item Filters out unrealistic temperature and humidity values
+         (outside -50°C to 50°C and 0 to 100\%RH)
 }
 }
 \examples{
 
 \dontrun{
-raw_data <- read.csv("meaco_data.csv")
-clean_data <- tidy_Meaco(raw_data)
+
+meaco_data <- read.csv("path/to/your/meaco_data.csv")
+meaco_tidy <- tidy_Meaco(meaco_data)
+
 }
 
 

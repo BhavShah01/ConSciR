@@ -5,12 +5,13 @@
 #'
 #' \itemize{
 #'    \item Filters out rows with missing dates
-#'    \item Renames columns for consistency
+#'    \item Renames column names for consistency
 #'    \item Converts temperature and relative humidity to numeric
 #'    \item Rounds dates down to the nearest hour
 #'    \item Calculates hourly averages for temperature and relative humidity
-#'    \item Pads the data to ensure hourly intervals
-#'    \item Filters out implausible temperature and humidity values
+#'    \item Pads the data to ensure hourly intervals using padr package
+#'    \item Filters out unrealistic temperature and humidity values
+#'          (outside -50°C to 50°C and 0 to 100\%RH)
 #' }
 #'
 #'
@@ -39,8 +40,10 @@
 #' @examples
 #'
 #' \dontrun{
-#' raw_data <- read.csv("meaco_data.csv")
-#' clean_data <- tidy_Meaco(raw_data)
+#'
+#' meaco_data <- read.csv("path/to/your/meaco_data.csv")
+#' meaco_tidy <- tidy_Meaco(meaco_data)
+#'
 #' }
 #'
 #'
@@ -52,13 +55,42 @@ tidy_Meaco <- function(mydata,
                        Temp_col = "TEMPERATURE",
                        RH_col = "HUMIDITY") {
 
-  # Call tidy_TRHdata to process Meaco data
-  tidy_data <- tidy_TRHdata(mydata,
-                            Site_col = Site_col,
-                            Sensor_col = Sensor_col,
-                            Date_col = Date_col,
-                            Temp_col = Temp_col,
-                            RH_col = RH_col)
+
+  tidy_data <-
+    mydata |>
+    dplyr::rename_with(
+      ~ dplyr::case_when(
+        . == "RECEIVER" ~ "Site",
+        . == "TRANSMITTER" ~ "Sensor",
+        . == "DATE" ~ "Date",
+        . == "TEMPERATURE" ~ "Temp",
+        . == "HUMIDITY" ~ "RH",
+        TRUE ~ .
+      )
+    ) |>
+    dplyr::mutate(
+      Date = lubridate::parse_date_time(
+        Date,
+        orders = c("ymd HMS", "ymd HM", "ymd",
+                   "dmy HMS","dmy HM", "dmy",
+                   "mdy HMS", "mdy HM", "mdy"),
+        quiet = TRUE),
+      RH = as.numeric(RH)
+    ) |>
+    dplyr::mutate(
+      Date = lubridate::floor_date(Date, unit = "hour")
+    ) |>
+    dplyr::group_by(Date, across(c("Sensor", "Site"), .names = "{.col}")) |>
+    dplyr::summarise(
+      Temp = mean(Temp, na.rm = TRUE),
+      RH = mean(RH, na.rm = TRUE)
+    ) |>
+    padr::pad(by = "Date", interval = "hour") |>
+    dplyr::ungroup() |>
+    dplyr::group_by(Site, Sensor) |>
+    dplyr::arrange(Sensor, Date) |>
+    dplyr::filter(between(Temp, -50, 50)) |>
+    dplyr::filter(between(RH, 0, 100))
 
   return(tidy_data)
 }
