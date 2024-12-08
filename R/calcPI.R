@@ -1,7 +1,7 @@
 #' Calculate Preservation Index
 #'
 #' @description
-#' Calculates the Preservation Index (PI) to estimate natural decay speed of objects.
+#' Calculates the Preservation Index (PI) to estimate the natural decay speed of objects.
 #' Uses acetate film as a reference for early warning of chemical deterioration in
 #' organic and synthetic objects. Results are in years for each data point, showing
 #' periods of higher and lower risk. Model based on acetate films or similarly
@@ -21,7 +21,7 @@
 #' Developed by the Image Permance Institute, the model is based on the
 #' chemical degradation of cellulose acetate (Reilly et al., 1995):
 #'
-#' -  Rate, k = [RH\%] × 5.9 × 10^12 × e(-90300/(8.314 × TempK))
+#' -  Rate, k = [RH\%] × 5.9 × 10^12 × exp(-90300 / (8.314 × TempK))
 #'
 #' -  Preservation Index, PI = 1/k
 #'
@@ -31,7 +31,7 @@
 #' and there lies the biggest difference with other chemical metrics together with
 #' the fact that it is not relative to the lifetime of the object.
 #' All lifetime multipliers give similar results between 20\% and 60\% RH.
-#' The results at very low-end high RH are unreliable for PI (and TWPI).
+#' The results at very low and high RH can be unreliable.
 #'
 #'
 #' @references

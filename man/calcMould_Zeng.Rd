@@ -2,7 +2,7 @@
 % Please edit documentation in R/calcMould_Zeng.R
 \name{calcMould_Zeng}
 \alias{calcMould_Zeng}
-\title{Calculate Mould Growth Rate Limits (Zeng)}
+\title{Calculate Mould Growth Rate Limits (Zeng et al.)}
 \usage{
 calcMould_Zeng(Temp, RH, LIM = 0, label = FALSE)
 }
@@ -67,4 +67,9 @@ Zeng L, Chen Y, Ma M, et al. Prediction of mould growth rate within building env
 development and validation of an improved model.
 Building Services Engineering Research and Technology. 2023;44(1):63-79.
 doi:10.1177/01436244221137846
+
+Sautour M, Dantigny P, Divies C, Bensoussan M. A temperature-type model for
+describing the relationship between fungal growth and water activity.
+Int J Food Microbiol. 2001 Jul 20;67(1-2):63-9.
+doi: 10.1016/s0168-1605(01)00471-8. PMID: 11482570.
 }

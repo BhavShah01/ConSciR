@@ -1,4 +1,4 @@
-#' Calculate Mould Growth Rate Limits (Zeng)
+#' Calculate Mould Growth Rate Limits (Zeng et al.)
 #'
 #' @description
 #' This function calculates the Lowest Isoline for Mould (LIM) based on temperature
@@ -44,6 +44,11 @@
 #' development and validation of an improved model.
 #' Building Services Engineering Research and Technology. 2023;44(1):63-79.
 #' doi:10.1177/01436244221137846
+#'
+#' Sautour M, Dantigny P, Divies C, Bensoussan M. A temperature-type model for
+#' describing the relationship between fungal growth and water activity.
+#' Int J Food Microbiol. 2001 Jul 20;67(1-2):63-9.
+#' doi: 10.1016/s0168-1605(01)00471-8. PMID: 11482570.
 #'
 #'
 #' @examples
@@ -99,12 +104,12 @@ calcMould_Zeng <- function(Temp, RH, LIM = 0, label = FALSE) {
 
   if (label) {
     result <- ifelse(RH < LIM0, "Below LIM0",
-               ifelse(RH < LIM0.1, "LIM0.1: 0.1 mm/day growth rate",
-               ifelse(RH < LIM0.5, "LIM0.5: 0.5 mm/day growth rate",
-               ifelse(RH < LIM1, "LIM1: 1 mm/day growth rate",
-               ifelse(RH < LIM2, "LIM2: 2 mm/day growth rate",
-               ifelse(RH < LIM3, "LIM3: 3 mm/day growth rate",
-               ifelse(RH < LIM4, "LIM4: 4 mm/day growth rate",
+               ifelse(RH < LIM0.1, "0.1 mm/day growth rate",
+               ifelse(RH < LIM0.5, "0.5 mm/day growth rate",
+               ifelse(RH < LIM1, "1 mm/day growth rate",
+               ifelse(RH < LIM2, "2 mm/day growth rate",
+               ifelse(RH < LIM3, "3 mm/day growth rate",
+               ifelse(RH < LIM4, "4 mm/day growth rate",
                "Above LIM4")))))))
 
     return(result)
