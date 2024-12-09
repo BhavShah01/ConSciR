@@ -113,6 +113,7 @@ environmental conditions.</p>
 <div class="section level4">
 <h4 id="mould-isoline-and-growth-rates">Mould Isoline and Growth Rates<a class="anchor" aria-label="anchor" href="#mould-isoline-and-growth-rates"></a>
 </h4>
+<p><code>calcMould_Zeng</code></p>
 <p>The Zeng et al. (2023) model for predicting mould growth is a dynamic
 model that considers temperature and relative humidity to assess the
 risk of mould formation. This model was developed to predict the risk of
@@ -192,6 +193,7 @@ Building Services Engineering Research and Technology. 2023;44(1):63-79.
 <div class="section level4">
 <h4 id="mould-index">Mould Index<a class="anchor" aria-label="anchor" href="#mould-index"></a>
 </h4>
+<p><code>calcMould_VTT</code></p>
 <p>The VTT model, developed by the Technical Research Centre of Finland
 (VTT), is a mathematical approach for predicting mould growth on various
 building materials. It uses a Mould Index scale from 0 to 6 to quantify
@@ -259,6 +261,7 @@ mould growth on wooden material. Wood Science and Technology, 33(6),
 <div class="section level3">
 <h3 id="lifetime-multiplier">Lifetime multiplier<a class="anchor" aria-label="anchor" href="#lifetime-multiplier"></a>
 </h3>
+<p><code>calcLM</code></p>
 <p>The calcLM function calculates the lifetime multiplier for chemical
 degradation of objects based on temperature and relative humidity
 conditions. This metric provides an estimate of an object’s expected
@@ -311,6 +314,7 @@ de Janeiro (Vol. I, pp. 66-72). London: James &amp; James.</p>
 <div class="section level3">
 <h3 id="preservation-index">Preservation Index<a class="anchor" aria-label="anchor" href="#preservation-index"></a>
 </h3>
+<p><code>calcPI</code></p>
 <p>The Preservation Index, developed by the Image Permanence Institute,
 is a chemical kinetics metric that determines the rate of deterioration
 of materials based on temperature and relative humidity. The
@@ -366,6 +370,61 @@ hygro-thermodynamically favorable for an object.</p>
 <span>       subtitle <span class="op">=</span> <span class="st">"20C and 50%RH reference line"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Conservation-tools_files/figure-html/unnamed-chunk-6-4.png" width="700"></p>
+</div>
+<div class="section level3">
+<h3 id="equilibrium-moisture-content">Equilibrium Moisture Content<a class="anchor" aria-label="anchor" href="#equilibrium-moisture-content"></a>
+</h3>
+<p><code>calcEMC_wood</code></p>
+<p>Equilibrium Moisture Content (EMC) determine the ideal relative
+humidity for storing materials, as it indicates the point at which an
+object neither gains nor loses moisture from its environment.
+Maintaining appropriate EMC levels prevents issues such as mold growth,
+warping, cracking, or dimensional changes in organic materials like
+wood, textiles, and paper.</p>
+<ul>
+<li>Wood: The safe EMC range for wood is typically between 6% and 20%.
+This range helps to prevent issues such as warping, cracking, and mold
+growth, which can occur if the moisture content falls below or exceeds
+these levels.</li>
+</ul>
+<p>Simpson, W. T. (1998). “Equilibrium moisture content of wood in
+outdoor locations in the United States and worldwide.” Res. Note
+FPL-RN-0268. U.S. Department of Agriculture, Forest Service, Forest
+Products Laboratory.</p>
+<p>Hailwood, A. J., &amp; Horrobin, S. (1946). “Absorption of water by
+polymers.” Journal of the Society of Chemical Industry, 65(12),
+499-502.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># EMC plotted at different temperature and relative humidity</span></span>
+<span><span class="va">TRHgrid</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>EMC <span class="op">=</span> <span class="fu"><a href="../reference/calcEMC_wood.html">calcEMC_wood</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span>, z <span class="op">=</span> <span class="va">EMC</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour_filled</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Equilibrium Moisture Content (EMC)"</span>, fill <span class="op">=</span> <span class="st">"EMC"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Conservation-tools_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># EMC on `mydata`</span></span>
+<span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>EMC <span class="op">=</span> <span class="fu"><a href="../reference/calcEMC_wood.html">calcEMC_wood</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">EMC</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"violet"</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Equilibrium Moisture Content (EMC)"</span>, x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="st">"EMC"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Conservation-tools_files/figure-html/unnamed-chunk-7-2.png" width="700"></p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>EMC <span class="op">=</span> <span class="fu"><a href="../reference/calcEMC_wood.html">calcEMC_wood</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html" class="external-link">geom_density</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">EMC</span><span class="op">)</span>, fill <span class="op">=</span> <span class="st">"hotpink"</span>, alpha <span class="op">=</span> <span class="fl">0.4</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_vline</a></span><span class="op">(</span>xintercept <span class="op">=</span> <span class="fu"><a href="../reference/calcEMC_wood.html">calcEMC_wood</a></span><span class="op">(</span><span class="fl">20</span>, <span class="fl">50</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"violet"</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Equilibrium Moisture Content"</span>, x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>       subtitle <span class="op">=</span> <span class="st">"20C and 50%RH reference line"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Conservation-tools_files/figure-html/unnamed-chunk-7-3.png" width="700"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

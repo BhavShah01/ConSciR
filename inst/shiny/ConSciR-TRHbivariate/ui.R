@@ -15,6 +15,9 @@ ui <- page_navbar(
   ),
   card(
     card_header("Bivariate Chart"),
+    fluidRow(
+      uiOutput("select_z_func"),
+      uiOutput("select_alpha")),
     plotOutput("gg_Bivariate")
   ),
   card(

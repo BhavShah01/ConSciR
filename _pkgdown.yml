@@ -22,6 +22,7 @@ reference:
   contents:
     - calcPI
     - calcLM
+    - calcEMC_wood
     - calcMould_Zeng
     - calcMould_VTT
 - title: Humidity functions

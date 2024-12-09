@@ -102,6 +102,9 @@ server <- function(input, output, session) {
   mdata <- reactive({
     mydata() |>
       mutate(
+        "Case volume (m3)" = case_vol(),
+        "Silica gel (kg)" = input$select_silica,
+        "Case loading" = case_loading(),
         initialRH = input$select_initialRH,
         half_life = case_half_life(),
       ) |>

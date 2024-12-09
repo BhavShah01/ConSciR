@@ -34,12 +34,11 @@ TRHgrid <-
 
 ```
 
-
-
-
 ### Mould
 
 #### Mould Isoline and Growth Rates
+
+`calcMould_Zeng`
 
 The Zeng et al. (2023) model for predicting mould growth is a dynamic model that considers temperature and relative humidity to assess the risk of mould formation. This model was developed to predict the risk of mould growth in building envelopes under various conditions. It establishes an isoline model describing mould growth on surfaces and predicts growth rates between and outside the isoline areas by modifying the Sautour model for relevant air temperature and humidity conditions.
 
@@ -85,9 +84,9 @@ mydata |>
 
 ```
 
-
-
 #### Mould Index
+
+`calcMould_VTT`
 
 The VTT model, developed by the Technical Research Centre of Finland (VTT), is a mathematical approach for predicting mould growth on various building materials. It uses a Mould Index scale from 0 to 6 to quantify mould growth potential based on temperature, relative humidity, time, and material properties. The model accounts for growth initiation, intensity, maximum levels, and decline during unfavorable conditions. It has been expanded from its original focus on wood to include different material sensitivity classes (see `calcMould_VTT` for more details).
 
@@ -124,10 +123,9 @@ mydata |>
 
 ```
 
-
-
-
 ### Lifetime multiplier
+
+`calcLM`
 
 The calcLM function calculates the lifetime multiplier for chemical degradation of objects based on temperature and relative humidity conditions. This metric provides an estimate of an object's expected lifetime relative to standard conditions (20°C and 50% RH), with values closer to 1 indicating more suitable environments. The function incorporates the Arrhenius equation to account for temperature effects and a power law relationship for relative humidity, making it applicable to various materials such as paper, synthetic films, and dyes. This approach allows conservators to assess environmental conditions and identify periods when objects may be at higher risk of degradation.
 
@@ -165,10 +163,9 @@ mydata |>
 
 ```
 
-
-
-
 ### Preservation Index
+
+`calcPI`
 
 The Preservation Index, developed by the Image Permanence Institute, is a chemical kinetics metric that determines the rate of deterioration of materials based on temperature and relative humidity. The `calcPI` function returns the estimated years to deterioration, with higher values indicating conditions that are more hygro-thermodynamically favorable for an object.
 
@@ -218,3 +215,43 @@ mydata |>
 
 ```
 
+### Equilibrium Moisture Content
+
+`calcEMC_wood`
+
+Equilibrium Moisture Content (EMC) determine the ideal relative humidity for storing materials, as it indicates the point at which an object neither gains nor loses moisture from its environment. Maintaining appropriate EMC levels prevents issues such as mold growth, warping, cracking, or dimensional changes in organic materials like wood, textiles, and paper.
+
+-   Wood: The safe EMC range for wood is typically between 6% and 20%. This range helps to prevent issues such as warping, cracking, and mold growth, which can occur if the moisture content falls below or exceeds these levels.
+
+Simpson, W. T. (1998). "Equilibrium moisture content of wood in outdoor locations in the United States and worldwide." Res. Note FPL-RN-0268. U.S. Department of Agriculture, Forest Service, Forest Products Laboratory.
+
+Hailwood, A. J., & Horrobin, S. (1946). "Absorption of water by polymers." Journal of the Society of Chemical Industry, 65(12), 499-502.
+
+```{r}
+
+# EMC plotted at different temperature and relative humidity
+TRHgrid |>
+  mutate(EMC = calcEMC_wood(Temp, RH)) |>
+  ggplot(aes(Temp, RH, z = EMC)) +
+  geom_contour_filled(bins = 20) +
+  labs(title = "Equilibrium Moisture Content (EMC)", fill = "EMC") + 
+  theme_bw()
+
+# EMC on `mydata`
+mydata |>
+  mutate(EMC = calcEMC_wood(Temp, RH)) |>
+  ggplot() + 
+  geom_line(aes(Date, EMC), col = "violet", size = 1) + 
+  labs(title = "Equilibrium Moisture Content (EMC)", x = NULL, y = "EMC") +
+  theme_bw()
+
+mydata |>
+  mutate(EMC = calcEMC_wood(Temp, RH)) |>
+  ggplot() + 
+  geom_density(aes(EMC), fill = "hotpink", alpha = 0.4) +
+  geom_vline(xintercept = calcEMC_wood(20, 50), col = "violet", size = 1) + 
+  labs(title = "Equilibrium Moisture Content", x = NULL,
+       subtitle = "20C and 50%RH reference line") +
+  theme_bw()
+
+```

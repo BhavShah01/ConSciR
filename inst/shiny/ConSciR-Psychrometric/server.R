@@ -31,7 +31,8 @@ server <- function(input, output) {
     "Saturation Vapour Pressure (hPa)" = "calcPws",
     "Water Vapour Pressure (hPa)" = "calcPw",
     "Preservation Index" = "calcPI",
-    "Lifetime Multiplier" = "calcLM"
+    "Lifetime Multiplier" = "calcLM",
+    "Equilibrium Moisture Content (wood)" = "calcEMC_wood"
   )
 
   output$select_y_func <- renderUI({
@@ -64,10 +65,12 @@ server <- function(input, output) {
                 min = 0, max = 100, value = c(40, 60))
   })
 
+
   output$gg_Psychrometric <- renderPlot({
     req(mydata())
 
     mydata() |>
+
       graph_psychrometric(
         y_func = get(input$select_y_func), # Humidity function
         Temp_range = c(input$select_temp_range[1], input$select_temp_range[2]),
@@ -78,6 +81,7 @@ server <- function(input, output) {
         # data_colour = !!input$select_data_colour,
         data_alpha = input$select_alpha
       ) +
+
       theme_bw()
   })
 

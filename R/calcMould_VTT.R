@@ -86,9 +86,11 @@ calcMould_VTT <- function(Temp, RH, M_prev = 0, sensitivity = "very", wood = 0, 
     }
 
     # Conditions favourable to initiation of mould growth (0-50C)
-    RH_crit <- ifelse(temp > 20,
-                      80,
-                      -0.00267 * temp^3 + 0.160 * temp^2 + 3.13 * temp + 100)
+    RH_crit <-
+      ifelse(
+        temp > 20,
+        80,
+        -0.00267 * temp^3 + 0.160 * temp^2 + 3.13 * temp + 100)
 
     # Maximum Mould growth index M
     M_max <- A + B * ((RH_crit - rh) / (RH_crit - 100)) - C * ((RH_crit - rh) / (RH_crit - 100))^2
@@ -118,3 +120,4 @@ calcMould_VTT <- function(Temp, RH, M_prev = 0, sensitivity = "very", wood = 0, 
   # Vectorized function
   mapply(calc_mould, Temp, RH, M_prev)
 }
+

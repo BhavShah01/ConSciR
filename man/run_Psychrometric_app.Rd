@@ -28,6 +28,7 @@ Functions available:
    \item calcPw: Water Vapour Pressure (hPa)
    \item calcPI: Preservation Index
    \item calcLM: Lifetime
+   \item calcEMC_wood: Equilibrium Moisture Content (wood)
 }
 }
 \examples{

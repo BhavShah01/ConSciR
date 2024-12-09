@@ -17,6 +17,7 @@
 #'    \item calcPw: Water Vapour Pressure (hPa)
 #'    \item calcPI: Preservation Index
 #'    \item calcLM: Lifetime
+#'    \item calcEMC_wood: Equilibrium Moisture Content (wood)
 #' }
 #'
 #'
@@ -95,7 +96,7 @@ graph_psychrometric <- function(mydata,
 
   # Create background grid 10-100RH with 10RH resolution
   ref_Temp = seq(from = Temp_range[1], to = Temp_range[2], by = 1)
-  ref_RH = seq(from = 10, to = 100, by = 10)
+  ref_RH = seq(from = 0, to = 100, by = 10)
 
   background_df =
     expand.grid(ref_Temp, ref_RH) |>
@@ -143,6 +144,7 @@ graph_psychrometric <- function(mydata,
            "calcPw" = "Water Vapour Pressure (hPa)",
            "calcPI" = "Preservation Index",
            "calcLM" = "Lifetime",
+           "calcEMC_wood" = "Equilibrium Moisture Content (wood)",
            NULL)
 
   # Create the plot
@@ -177,7 +179,8 @@ graph_psychrometric <- function(mydata,
                        col = 'blue', alpha = 0.5, size = 1, data = envelope_df) +
 
     # Overlay your TRH data
-    ggplot2::geom_point(aes(x = !!Temp, y = y_Axis, col = !!data_colour), alpha = data_alpha) +
+    ggplot2::geom_point(aes(x = !!Temp, y = y_Axis, col = !!data_colour),
+                        alpha = data_alpha) +
 
     # Add limits to x and y axis
     ggplot2::coord_cartesian(xlim = c(Temp_range[1], Temp_range[2]),
