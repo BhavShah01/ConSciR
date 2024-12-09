@@ -57,11 +57,19 @@ TRHgrid |>
   labs(title = "Mould Isoline Limit: LM0", fill = "RH Limit") + 
   theme_bw()
 
-mydata |>
+TRHgrid |>
+  mutate(Mould_growth = calcMould_Zeng(Temp, RH, label = TRUE)) |>
+  ggplot(aes(Temp, RH, fill = Mould_growth, group = Mould_growth)) +
+  geom_raster() +
+  labs(title = "Mould Growth Rates", fill = "Growth Rates") + 
+  scale_fill_brewer(palette = "Set2") +
+  theme_bw()
+
+head(mydata) |>
   mutate(
     Mould_LIM0 = calcMould_Zeng(Temp, RH),
     Mould_growth_rate = calcMould_Zeng(Temp, RH, label = TRUE),
-    )
+    ) 
 
 mydata |>
   mutate(Mould_LIM0 = calcMould_Zeng(Temp, RH)) |>
