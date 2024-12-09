@@ -163,7 +163,7 @@ Building Services Engineering Research and Technology. 2023;44(1):63-79.
 <span>    Mould_LIM0 <span class="op">=</span> <span class="fu"><a href="../reference/calcMould_Zeng.html">calcMould_Zeng</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>,</span>
 <span>    Mould_growth_rate <span class="op">=</span> <span class="fu"><a href="../reference/calcMould_Zeng.html">calcMould_Zeng</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span>, label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>    <span class="op">)</span> </span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 7</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 7</span></span>m</span>
 <span><span class="co">#&gt;   Site   Sensor Date                 Temp    RH Mould_LIM0 Mould_growth_rate</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> London Room 1 2024-01-01 <span style="color: #949494;">00:00:00</span>  21.8  36.8       75.1 Below LIM0       </span></span>
@@ -238,7 +238,7 @@ mould growth on wooden material. Wood Science and Technology, 33(6),
 <code class="sourceCode R"><span></span>
 <span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Mould_VTT <span class="op">=</span> <span class="fu"><a href="../reference/calcMould_VTT.html">calcMould_VTT</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 35,136 × 6</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 35,136 × 6</span></span>m</span>
 <span><span class="co">#&gt;    Site   Sensor Date                 Temp    RH Mould_VTT</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> London Room 1 2024-01-01 <span style="color: #949494;">00:00:00</span>  21.8  36.8         0</span></span>
@@ -251,7 +251,7 @@ mould growth on wooden material. Wood Science and Technology, 33(6),
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> London Room 1 2024-01-01 <span style="color: #949494;">01:44:59</span>  21.7  36.4         0</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> London Room 1 2024-01-01 <span style="color: #949494;">01:59:59</span>  21.7  36           0</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> London Room 1 2024-01-01 <span style="color: #949494;">02:14:59</span>  21.6  36           0</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 35,126 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 35,126 more rows</span></span>9m</span>
 <span></span>
 <span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Mould_VTT <span class="op">=</span> <span class="fu"><a href="../reference/calcMould_VTT.html">calcMould_VTT</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>

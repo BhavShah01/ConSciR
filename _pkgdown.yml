@@ -20,11 +20,11 @@ reference:
 - title: Conservation tools
   desc: Tools for the analysis of data for conservators.
   contents:
+    - calcMould_Zeng
+    - calcMould_VTT
     - calcPI
     - calcLM
     - calcEMC_wood
-    - calcMould_Zeng
-    - calcMould_VTT
 - title: Humidity functions
   desc: Functions for performing calculations from temperature and humidity data.
   contents:
