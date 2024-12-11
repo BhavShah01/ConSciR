@@ -26,8 +26,8 @@ ConSciR is designed for and to be:
 -   Conservation scientists, engineers and researchers
 -   Cultural heritage professionals involved in preventive conservation
 -   Students and educators in conservation and heritage science programs
--   FAIR: ConSciR is designed to be findable, accessible, interoperable and reusable
--   Collaborative: anyone can upload code, raise a request, report a bug and add functionality to the package. 
+-   FAIR: Findable, Accessible, Interoperable, and Reusable
+-   Collaborative: allowing anyone to upload code, raise requests, report bugs, and add functionality to the package
 
 
 If using R for the first time, read an article here: [Using R for the first time](https://bhavshah01.github.io/ConSciR/articles/ConSciR-FirstTimeR.html)

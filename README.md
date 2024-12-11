@@ -8,15 +8,17 @@
 
 ConSciR is an R package designed to assist conservators, scientists and
 engineers by providing a toolkit for performing calculations and
-streamlining common tasks in cultural heritage conservation. ConSciR is
-designed for:
+streamlining common tasks in cultural heritage conservation.
+
+ConSciR is designed for and to be:
 
 - Conservators working in museums, galleries, and heritage sites
 - Conservation scientists, engineers and researchers
 - Cultural heritage professionals involved in preventive conservation
 - Students and educators in conservation and heritage science programs
-- FAIR: ConSciR is designed to be findable, accessible, interoperable
-  and reusable
+- FAIR: Findable, Accessible, Interoperable, and Reusable
+- Collaborative: allowing anyone to upload code, raise requests, report
+  bugs, and add functionality to the package
 
 If using R for the first time, read an article here: [Using R for the
 first
