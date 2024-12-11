@@ -1,0 +1,31 @@
+---
+title: "Sustainability"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  warning = FALSE,
+  message = FALSE,
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+knitr::opts_chunk$set(echo = FALSE)
+library(ConSciR)
+library(dplyr)
+library(ggplot2)
+```
+
+```{r}
+mydata |> 
+  ggplot() +
+  geom_line(aes(Date, Temp), col = "red") +
+  geom_line(aes(Date, RH), col = "blue") +
+  labs(title = "Climate",
+       y = "Temperature (red) & Humidity (blue)") + 
+  theme_bw()
+
+```
+

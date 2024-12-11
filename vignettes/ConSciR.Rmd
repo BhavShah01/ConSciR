@@ -1,0 +1,102 @@
+---
+title: "ConSciR"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{ConSciR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+```
+
+
+## Introduction
+
+ConSciR is an R package specifically designed to assist conservators, scientists and engineers by providing a toolkit for performing calculations and streamlining common tasks in cultural heritage conservation.
+
+
+## Install and load
+
+``` r
+install.packages("pak")
+pak::pak("BhavShah01/ConSciR")
+```
+-or- 
+
+``` r
+# install.packages("devtools")
+devtools::install_github("BhavShah01/ConSciR")
+```
+
+The ConSciR Github page: [ConSciR Github](https://github.com/BhavShah01/ConSciR)
+
+
+## Examples 
+
+```{r load packages, message=FALSE, warning=FALSE}
+# Load packages
+library(ConSciR)
+library(dplyr)
+library(ggplot2)
+```
+
+
+Add calculated values using mutate
+
+```{r table of calculated values, message=FALSE, warning=FALSE}
+# Add calculated values using mutate
+head(mydata) |> 
+  mutate(
+    Absolute_Humidity = calcAH(Temp, RH), 
+    Dew_Point = calcDP(Temp, RH), 
+    Mixing_Ratio = calcMR(Temp, RH), 
+    Humidity_Ratio = calcHR(Temp, RH),
+    Enthalpy = calcEnthalpy(Temp, RH), 
+    Saturation_Vapour_Pressure = calcPws(Temp), 
+    Actual_Vapour_Pressure = calcPw(Temp, RH), 
+    Air_Density = calcAD(Temp, RH),
+    Temp_calc = calcTemp(RH, Dew_Point),
+    RH_AH_calc = calcRH_AH(Temp, Absolute_Humidity),
+    RH_DP_calc = calcRH_DP(Temp, Dew_Point)
+  ) |>
+  glimpse()
+
+```
+
+
+Perform calculations to visualise and explore data
+
+```{r calculations to visualise the data, message=FALSE, warning=FALSE, fig.alt="visualisations"}
+
+mydata |>
+  # Calculate Absolute Humidity and Dew Point
+  mutate(
+    AbsHum = calcAH(Temp, RH),
+    DewPoint = calcDP(Temp, RH)
+  ) |>
+  # Create base plot using graph_TRH function
+  graph_TRH() +
+  # Add Absolute Humidity line
+  geom_line(aes(Date, AbsHum), color = "green") +
+  # Add Dew Point line
+  geom_line(aes(Date, DewPoint), color = "purple") +
+  # Apply a theme
+  theme_bw()
+
+```
+
+Built in psychrometric chart
+
+```{r psychrometric chart, message=FALSE, warning=FALSE, fig.alt="psychrometric_chart_example"}
+
+head(mydata, 100) |>
+  graph_psychrometric() + 
+  theme_bw()
+
+```

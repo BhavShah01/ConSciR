@@ -1,0 +1,45 @@
+Package: ConSciR
+Type: Package
+Title: Tools for Conservation Science
+Version: 0.1.0
+Authors@R: c(
+    person("Bhavesh", "Shah", , "bhaveshshah01@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0001-8673-0589")),
+    person("Annelies", "Cosaert", , "", role = c("aut"),
+           comment = c(ORCID = "0009-0004-1269-4465")), 
+    person("Emily R", "Long", , "", role = c("ctb"), 
+           comment = c(ORCID = "0000-0003-3162-4521"))
+  )
+Maintainer: Bhavesh Shah <bhaveshshah01@gmail.com>
+Description: Data science toolbox for conservation science.
+    Tools to help conservators, scientists and engineers in cultural heritage. 
+    Data accepted so far - temperature, relative humidity, light. 
+    Currently under development. 
+License: CC BY 4.0
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.3.2
+VignetteBuilder: knitr
+URL: https://bhavshah01.github.io/ConSciR/
+BugReports: https://github.com/BhavShah01/ConSciR/issues
+Config/testthat/edition: 3
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0),
+    bslib
+Imports:
+    stats,
+    tools,
+    tidyr,
+    readr,
+    readxl,
+    stringr,
+    rlang,
+    shiny,
+    ggplot2,
+    dplyr, 
+    lubridate,
+    padr
+Depends: 
+    R (>= 2.10)

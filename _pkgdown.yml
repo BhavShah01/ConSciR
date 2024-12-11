@@ -1,0 +1,61 @@
+url: https://bhavshah01.github.io/ConSciR/
+template:
+  bootstrap: 5
+  bootswatch: shiny
+  light-switch: true
+reference:
+- title: Shiny applications
+  desc: Interactive applications to use and demonstrate tools in the package.
+  contents:
+    - run_TidyData_app
+    - run_Psychrometric_app
+    - run_TRHbivariate_app
+    - run_SilicaGel_app
+    - run_ConSciR_app
+- title: Graphs
+  desc: Tools for graphing data.
+  contents:
+    - graph_TRH
+    - graph_psychrometric
+- title: Conservation tools
+  desc: Tools for the analysis of data for conservators.
+  contents:
+    - calcMould_Zeng
+    - calcMould_VTT
+    - calcPI
+    - calcLM
+    - calcEMC_wood
+- title: Humidity functions
+  desc: Functions for performing calculations from temperature and humidity data.
+  contents:
+    - calcFtoC
+    - calcAH
+    - calcDP
+    - calcAD
+    - calcSH
+    - calcMR
+    - calcHR
+    - calcPw
+    - calcPws
+    - calcEnthalpy
+    - calcRH_AH
+    - calcRH_DP
+    - calcTemp
+- title: Sustainability
+  desc: Tools for calculating energy consumption related to environmental management.
+  contents:
+    - calcCoolingPower
+    - calcCoolingCapacity
+    - calcSensibleHeating
+    - calcTotalHeating
+    - calcSensibleHeatRatio
+- title: Data
+  desc: Tools to tidy data and in-built datasets to demonstrate functions.
+  contents:
+    - tidy_TRHdata
+    - tidy_Meaco
+    - tidy_Hanwell
+    - mydata
+    - TRHdata
+    - shiny_dataUploadServer
+    - shiny_dataUploadUI
