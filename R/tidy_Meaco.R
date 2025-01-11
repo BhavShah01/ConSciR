@@ -85,8 +85,8 @@ tidy_Meaco <- function(mydata,
       Temp = mean(Temp, na.rm = TRUE),
       RH = mean(RH, na.rm = TRUE)
     ) |>
-    padr::pad(by = "Date", interval = "hour") |>
     dplyr::ungroup() |>
+    padr::pad(by = "Date", interval = "hour") |>
     dplyr::group_by(Site, Sensor) |>
     dplyr::arrange(Sensor, Date) |>
     dplyr::filter(between(Temp, -50, 50)) |>
