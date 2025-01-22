@@ -79,6 +79,10 @@ server <- function(input, output, session) {
     numericInput("select_initialRH", "Intial RH", value = 5, min = 0, step = 1, width = 120)
   })
 
+  output$select_silicaMvalue <- renderUI({
+    numericInput("select_silicaMvalue", "Silica M value", value = 4, min = 0, step = 0.5, width = 120)
+  })
+
 
 
   case_vol <- reactive({
@@ -90,7 +94,7 @@ server <- function(input, output, session) {
   })
 
   case_half_life <- reactive({
-    (4 * 24 * case_loading() * 4) / input$select_aer
+    (4 * 24 * case_loading() * input$select_silicaMvalue) / input$select_aer
   })
 
   output$half_life_text <- renderText({

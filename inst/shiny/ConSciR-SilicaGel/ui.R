@@ -28,7 +28,8 @@ ui <- page_navbar(
     fluidRow(
       uiOutput("select_silica"),
       uiOutput("select_initialRH"),
-      uiOutput("select_specifiedRH")
+      uiOutput("select_specifiedRH"),
+      uiOutput("select_silicaMvalue")
     ),
       textOutput("half_life_text", inline = TRUE))
     ),
