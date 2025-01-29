@@ -17,8 +17,8 @@ A reactive expression containing the tidied data frame with the following column
     \item Date: Date and time, floored to the hour
     \item Sensor: Sensor identifier
     \item Site: Site identifier
-    \item Temp: Average temperature for each hour
-    \item RH: Average relative humidity for each hour
+    \item Temp: Median average temperature for each hour
+    \item RH: Median average relative humidity for each hour
   }
 }
 \description{

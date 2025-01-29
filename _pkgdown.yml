@@ -10,6 +10,7 @@ reference:
   - run_TidyData_app
   - run_Psychrometric_app
   - run_TRHbivariate_app
+  - run_Mould_app
   - run_SilicaGel_app
   - run_ConSciR_app
 - title: Graphs

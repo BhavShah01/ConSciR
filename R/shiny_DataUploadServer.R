@@ -14,8 +14,8 @@
 #'     \item Date: Date and time, floored to the hour
 #'     \item Sensor: Sensor identifier
 #'     \item Site: Site identifier
-#'     \item Temp: Average temperature for each hour
-#'     \item RH: Average relative humidity for each hour
+#'     \item Temp: Median average temperature for each hour
+#'     \item RH: Median average relative humidity for each hour
 #'   }
 #'
 #' @export
@@ -25,6 +25,7 @@
 #' @importFrom tools file_ext
 #' @importFrom dplyr rename_with case_when mutate group_by across summarise
 #' @importFrom lubridate parse_date_time floor_date
+#' @importFrom stats median
 #'
 #'
 #' @examples
@@ -126,8 +127,8 @@ shiny_dataUploadServer <- function(id) {
         ) |>
         group_by(Date, across(c("Sensor", "Site"), .names = "{.col}")) |>
         summarise(
-          Temp = mean(Temp, na.rm = TRUE),
-          RH = mean(RH, na.rm = TRUE)
+          Temp = median(Temp, na.rm = TRUE),
+          RH = median(RH, na.rm = TRUE)
         )
     })
 
