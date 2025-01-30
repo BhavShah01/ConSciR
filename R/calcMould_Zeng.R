@@ -103,15 +103,26 @@ calcMould_Zeng <- function(Temp, RH, LIM = 0, label = FALSE) {
   # Mould growth rate (u) = (9.016 * (RH - 0.975) * (RH - 0.742)^2) / (0.231 * (0.231 * (RH - 0.973)) - (-0.002) * (1.715 - 2 * RH))
 
   if (label) {
+    # result <- ifelse(is.na(RH), "NA",
+    #             ifelse(RH >= LIM4, "Above LIM4",
+    #             ifelse(RH >= LIM3, "4 mm/day growth rate",
+    #             ifelse(RH >= LIM2, "3 mm/day growth rate",
+    #             ifelse(RH >= LIM1, "2 mm/day growth rate",
+    #             ifelse(RH >= LIM0.5, "1 mm/day growth rate",
+    #             ifelse(RH >= LIM0.1, "0.5 mm/day growth rate",
+    #             ifelse(RH >= LIM0, "0.1 mm/day growth rate",
+    #                                 "Below LIM0"))))))))
+
+
     result <- ifelse(is.na(RH), "NA",
-                ifelse(RH >= LIM4, "Above LIM4",
-                ifelse(RH >= LIM3, "4 mm/day growth rate",
-                ifelse(RH >= LIM2, "3 mm/day growth rate",
-                ifelse(RH >= LIM1, "2 mm/day growth rate",
-                ifelse(RH >= LIM0.5, "1 mm/day growth rate",
-                ifelse(RH >= LIM0.1, "0.5 mm/day growth rate",
-                ifelse(RH >= LIM0, "0.1 mm/day growth rate",
-                                    "Below LIM0"))))))))
+               ifelse(RH >= LIM4, 5,
+                ifelse(RH >= LIM3, 4,
+                 ifelse(RH >= LIM2, 3,
+                  ifelse(RH >= LIM1, 2,
+                   ifelse(RH >= LIM0.5, 1,
+                    ifelse(RH >= LIM0.1, 0.5,
+                     ifelse(RH >= LIM0, 0.1,
+                      0))))))))
 
     return(result)
 

@@ -12,11 +12,27 @@ ui <- page_navbar(
     shiny_dataUploadUI("dataupload"),
     downloadButton("downloadData", "Download Results")
   ),
-  card(
+  navset_card_tab(
     full_screen = TRUE,
-    card_header("Mould estimates"),
-    plotOutput("mdata_TRHplot"),
-    plotOutput("mdata_Mouldplot_VTT"),
-    plotOutput("mdata_Mouldplot_limit")
-  )
+    height = 550,
+    title = "Mould",
+    nav_panel(
+      "TRH data",
+      plotOutput("mdata_TRHplot"),
+    ),
+    nav_panel(
+      "VTT model",
+      "M Mould growth index: 0-6",
+      plotOutput("mdata_Mouldplot_VTT")
+    ),
+    nav_panel(
+      "Zeng prediction",
+      plotOutput("mdata_Mouldplot_Zeng")
+    ),
+    nav_panel(
+      "Zeng Mould Growth",
+      "Zeng model: Growth limit mm/day",
+      plotOutput("mdata_Mouldplot_limit")
+    )
+    )
 )
