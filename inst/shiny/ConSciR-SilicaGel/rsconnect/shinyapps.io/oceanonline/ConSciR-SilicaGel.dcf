@@ -1,0 +1,12 @@
+name: ConSciR-SilicaGel
+title: ConSciR-SilicaGel
+username: oceanonline
+account: oceanonline
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 13888272
+bundleId:
+url: https://oceanonline.shinyapps.io/ConSciR-SilicaGel/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE

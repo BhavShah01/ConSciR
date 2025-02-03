@@ -88,6 +88,13 @@ server <- function(input, output, session) {
   case_vol <- reactive({
     input$select_length * input$select_height * input$select_width
   })
+  output$case_vol_text <- renderText({
+    paste0("Case volume (m^3): ", round(case_vol()))
+  })
+
+  output$case_Prosorb_text <- renderText({
+    paste0("Rule of thumb Prosorb (kg): ", round(case_vol() * 8))
+  })
 
   case_loading <- reactive({
     input$select_silica / case_vol()
@@ -98,7 +105,7 @@ server <- function(input, output, session) {
   })
 
   output$half_life_text <- renderText({
-    paste0("Case half life: ", case_half_life(), " hours")
+    paste0("Case half life: ", round(case_half_life()), " hours")
   })
 
 

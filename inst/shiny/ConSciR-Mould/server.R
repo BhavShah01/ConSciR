@@ -56,7 +56,7 @@ server <- function(input, output, session) {
     p = mdata() |>
       ggplot() +
       geom_area(aes(Date, Mould_VTT, group = Sensor), fill = "darkorange", alpha = 0.9) +
-      geom_hline(yintercept = 0.1, col = "darkred") +
+      geom_hline(yintercept = 0.01, col = "darkred") +
       labs(x = NULL, y = "M Mould Growth Index value", title = "VTT model") +
       hrbrthemes::theme_ipsum(
         base_size = 14, axis_title_size = 14,
