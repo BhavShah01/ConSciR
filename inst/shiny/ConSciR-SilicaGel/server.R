@@ -89,7 +89,7 @@ server <- function(input, output, session) {
     input$select_length * input$select_height * input$select_width
   })
   output$case_vol_text <- renderText({
-    paste0("Case volume (m^3): ", round(case_vol()))
+    paste0("Case volume (m^3): ", round(case_vol(), 1))
   })
 
   output$case_Prosorb_text <- renderText({

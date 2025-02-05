@@ -111,7 +111,7 @@ calcMould_Zeng <- function(Temp, RH, LIM = 0, label = FALSE) {
     #             ifelse(RH >= LIM0.5, "1 mm/day growth rate",
     #             ifelse(RH >= LIM0.1, "0.5 mm/day growth rate",
     #             ifelse(RH >= LIM0, "0.1 mm/day growth rate",
-    #                                 "Below LIM0"))))))))
+    #                                 "0 Below LIM0"))))))))
 
 
     result <- ifelse(is.na(RH), "NA",
