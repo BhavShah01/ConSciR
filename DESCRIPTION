@@ -8,7 +8,9 @@ Authors@R: c(
     person("Annelies", "Cosaert", , "", role = c("aut"),
            comment = c(ORCID = "0009-0004-1269-4465")), 
     person("Emily R", "Long", , "", role = c("ctb"), 
-           comment = c(ORCID = "0000-0003-3162-4521"))
+           comment = c(ORCID = "0000-0003-3162-4521")),
+    person("Marcin", "Zygmunt", , "", role = c("ctb"), 
+           comment = c(ORCID = "0000-0003-1304-8591"))
   )
 Maintainer: Bhavesh Shah <bhaveshshah01@gmail.com>
 Description: Data science toolbox for conservation science.

@@ -12,12 +12,25 @@ ui <- page_navbar(
     uiOutput("select_temp"),
     uiOutput("select_rh")
   ),
-  card(
-    card_header("Psychrometric Chart"),
-    fluidRow(
-      uiOutput("select_y_func"),
-      # uiOutput("select_data_colour"),
-      uiOutput("select_alpha")),
-    plotOutput("gg_Psychrometric")
-  ),
+  navset_card_tab(
+    full_screen = TRUE,
+    height = 550,
+    title = "Mould",
+    nav_panel(
+      "Psychrometric Chart",
+      fluidRow(
+        uiOutput("select_y_func"),
+        # uiOutput("select_data_colour"),
+        uiOutput("select_alpha")),
+      plotOutput("gg_Psychrometric")
+    ),
+    nav_panel(
+      "TRH plot",
+      plotOutput("mdata_TRHplot"),
+    ),
+    nav_panel(
+      "Bivariate plot",
+      plotOutput("mdata_Bivariate"),
+    )
+  )
 )

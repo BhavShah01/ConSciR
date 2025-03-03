@@ -1,10 +1,14 @@
 # inst/shiny/ConSciR-Psychrometric/app.R
-#' Run ConSciR Psychrometric Application
+#' Run ConSciR Psychrometric and Graphing Application
 #'
 #' @description
-#' Shiny application to upload data to a psychrometric chart.
+#' Shiny application to upload data to a psychrometric chart. Also includes graphs
+#' for temperature and humidity - line plot with limits shaded and a bivariate
+#' plot with box showing limits.
 #'
 #' CSV or Excel formatted data with "Temp" and "RH" columns can be uploaded to the application.
+#'
+#' Use the sliders and functions to set the limits and parameters to be used.
 #'
 #' Functions available:
 #'

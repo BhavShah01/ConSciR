@@ -29,6 +29,7 @@ Authors:
 Other contributors:
 \itemize{
   \item Emily R Long (\href{https://orcid.org/0000-0003-3162-4521}{ORCID}) [contributor]
+  \item Marcin Zygmunt (\href{https://orcid.org/0000-0003-1304-8591}{ORCID}) [contributor]
 }
 
 }

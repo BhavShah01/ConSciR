@@ -66,6 +66,73 @@ server <- function(input, output) {
   })
 
 
+
+
+  output$mdata_TRHplot <- renderPlot({
+    req(mydata())
+
+    mydata() |>
+      graph_TRH() +
+      geom_ribbon(aes(
+        Date,
+        ymin = input$select_temp[1],
+        ymax = input$select_temp[2]),
+        fill = "red",
+        alpha = 0.2) +
+      geom_ribbon(aes(
+        Date,
+        ymin = input$select_rh[1],
+        ymax = input$select_rh[2]),
+        fill = "blue",
+        alpha = 0.2) +
+      facet_wrap(~ Sensor) +
+      labs(caption =
+             paste0("Box: ",
+                    input$select_temp[1],
+                    " to ",
+                    input$select_temp[2],
+                    "C and ",
+                    input$select_rh[1],
+                    " to ",
+                    input$select_rh[2],
+                    "%RH")) +
+      theme_classic(base_size = 16)
+
+  })
+
+  output$mdata_Bivariate <- renderPlot({
+    req(mydata())
+
+    mydata() |>
+      ggplot() +
+      annotate("rect",
+               xmin = input$select_temp[1],
+               xmax = input$select_temp[2],
+               ymin = input$select_rh[1],
+               ymax = input$select_rh[2],
+               alpha = 0.5, fill = "seagreen1", size = 1) +
+      geom_point(aes(Temp, RH), alpha = 0.5, col = "violetred") +
+      lims(x = c(input$select_temp_range[1], input$select_temp_range[2]),
+           y = c(0, 100)) +
+      facet_wrap(~ Sensor) +
+      labs(
+        x = "Temperature (C)",
+        y = "Humidity (%)",
+        caption =
+             paste0("Limits: ",
+                    input$select_temp[1],
+                    " to ",
+                    input$select_temp[2],
+                    "C and ",
+                    input$select_rh[1],
+                    " to ",
+                    input$select_rh[2],
+                    "%RH")) +
+      theme_classic(base_size = 16)
+
+  })
+
+
   output$gg_Psychrometric <- renderPlot({
     req(mydata())
 
@@ -81,8 +148,8 @@ server <- function(input, output) {
         # data_colour = !!input$select_data_colour,
         data_alpha = input$select_alpha
       ) +
-
-      theme_bw()
+      facet_wrap(~ Sensor) +
+      theme_classic(base_size = 16)
   })
 
 }

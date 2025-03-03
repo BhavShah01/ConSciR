@@ -2,7 +2,7 @@
 % Please edit documentation in R/run_Psychrometric_app.R
 \name{run_Psychrometric_app}
 \alias{run_Psychrometric_app}
-\title{Run ConSciR Psychrometric Application}
+\title{Run ConSciR Psychrometric and Graphing Application}
 \usage{
 run_Psychrometric_app()
 }
@@ -10,9 +10,13 @@ run_Psychrometric_app()
 Shiny object
 }
 \description{
-Shiny application to upload data to a psychrometric chart.
+Shiny application to upload data to a psychrometric chart. Also includes graphs
+for temperature and humidity - line plot with limits shaded and a bivariate
+plot with box showing limits.
 
 CSV or Excel formatted data with "Temp" and "RH" columns can be uploaded to the application.
+
+Use the sliders and functions to set the limits and parameters to be used.
 
 Functions available:
 
