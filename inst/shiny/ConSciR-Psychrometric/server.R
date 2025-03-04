@@ -87,7 +87,7 @@ server <- function(input, output) {
         alpha = 0.2) +
       facet_wrap(~ Sensor) +
       labs(caption =
-             paste0("Box: ",
+             paste0("Limits: ",
                     input$select_temp[1],
                     " to ",
                     input$select_temp[2],
@@ -110,8 +110,8 @@ server <- function(input, output) {
                xmax = input$select_temp[2],
                ymin = input$select_rh[1],
                ymax = input$select_rh[2],
-               alpha = 0.5, fill = "seagreen1", size = 1) +
-      geom_point(aes(Temp, RH), alpha = 0.5, col = "violetred") +
+               alpha = 0.5, fill = "paleturquoise3", size = 1) +
+      geom_point(aes(Temp, RH), alpha = 0.5, col = "maroon3") +
       lims(x = c(input$select_temp_range[1], input$select_temp_range[2]),
            y = c(0, 100)) +
       facet_wrap(~ Sensor) +
@@ -119,7 +119,7 @@ server <- function(input, output) {
         x = "Temperature (C)",
         y = "Humidity (%)",
         caption =
-             paste0("Limits: ",
+             paste0("Box: ",
                     input$select_temp[1],
                     " to ",
                     input$select_temp[2],
@@ -137,7 +137,6 @@ server <- function(input, output) {
     req(mydata())
 
     mydata() |>
-
       graph_psychrometric(
         y_func = get(input$select_y_func), # Humidity function
         Temp_range = c(input$select_temp_range[1], input$select_temp_range[2]),
