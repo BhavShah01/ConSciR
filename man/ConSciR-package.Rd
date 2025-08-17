@@ -24,6 +24,7 @@ Useful links:
 Authors:
 \itemize{
   \item Annelies Cosaert (\href{https://orcid.org/0009-0004-1269-4465}{ORCID})
+  \item Vincent Beltran
 }
 
 Other contributors:
