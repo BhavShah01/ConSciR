@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Data science toolbox for conservation science. Tools to help conservators, scientists and engineers in cultural heritage. Data accepted so far - temperature, relative humidity, light. Currently under development.
+Data science toolbox for conservation science. 'ConSciR' is an R package conatining tools to help conservators, scientists and engineers in cultural heritage.
 }
 \seealso{
 Useful links:
@@ -19,7 +19,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Bhavesh Shah \email{bhaveshshah01@gmail.com} (\href{https://orcid.org/0000-0001-8673-0589}{ORCID})
+\strong{Maintainer}: Bhavesh Shah \email{bhaveshshah01@gmail.com} (\href{https://orcid.org/0000-0001-8673-0589}{ORCID}) [copyright holder]
 
 Authors:
 \itemize{

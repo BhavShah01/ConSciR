@@ -3,7 +3,7 @@ Type: Package
 Title: Tools for Conservation Science
 Version: 0.1.0
 Authors@R: c(
-    person("Bhavesh", "Shah", , "bhaveshshah01@gmail.com", role = c("aut", "cre"),
+    person("Bhavesh", "Shah", , "bhaveshshah01@gmail.com", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0001-8673-0589")),
     person("Annelies", "Cosaert", , "", role = c("aut"),
            comment = c(ORCID = "0009-0004-1269-4465")), 
@@ -14,9 +14,8 @@ Authors@R: c(
   )
 Maintainer: Bhavesh Shah <bhaveshshah01@gmail.com>
 Description: Data science toolbox for conservation science.
-    Tools to help conservators, scientists and engineers in cultural heritage. 
-    Data accepted so far - temperature, relative humidity, light. 
-    Currently under development. 
+    'ConSciR' is an R package conatining tools to help conservators, 
+    scientists and engineers in cultural heritage.
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
