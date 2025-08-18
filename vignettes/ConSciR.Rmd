@@ -74,6 +74,7 @@ head(mydata) |>
 
 ```
 
+
 ### Visualise and explore data with calculations
 
 Combine calculations and plotting to explore patterns visually:
@@ -96,6 +97,21 @@ mydata |>
   theme_bw()
 
 ```
+
+
+-   **Conservator tools: mould growth index**\
+    Calculate mould growth index using **`calcMould_VTT()`** and visualise it alongside humidity data.
+
+```{r mould_risk, message=FALSE, warning=FALSE, fig.alt="mould"}
+mydata |>
+  mutate(Mould = calcMould_VTT(Temp, RH)) |>
+  ggplot() +
+  geom_area(aes(Date, Mould), fill = "darkgreen", alpha = 0.5) +
+  labs(title = "Mould Growth Index", 
+       y = "Mould Index") + 
+  theme_classic()
+```
+
 
 
 ### Built-in psychrometric chart

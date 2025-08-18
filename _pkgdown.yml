@@ -7,12 +7,12 @@ reference:
 - title: Shiny applications
   desc: Interactive applications to use and demonstrate tools in the package.
   contents:
-  - run_TidyData_app
+  - run_ConSciR_app
+  - run_Mould_app
   - run_Psychrometric_app
   - run_TRHbivariate_app
-  - run_Mould_app
   - run_SilicaGel_app
-  - run_ConSciR_app
+  - run_TidyData_app
 - title: Graphs
   desc: Tools for graphing data.
   contents:
