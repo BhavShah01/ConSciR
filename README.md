@@ -36,11 +36,14 @@ time](https://bhavshah01.github.io/ConSciR/articles/ConSciR-FirstTimeR.html)
 
 ## Tools
 
-- Humidity calculations, conservator tools, sustainability metrics
-- Mould growth models, damage functions
-- Graphs: TRH plots, psychometric chart
-- Tidying data: Meaco, Hanwell data
-- Interactive Shiny applications
+- Humidity calculations, conservator tools, and sustainability metrics.
+- Mould growth models and damage risk functions.
+- Graphical outputs including temperature-relative humidity (TRH) plots,
+  psychrometric charts and data for other applications.
+- Data tidying functions compatible with Meaco and Hanwell environmental
+  monitoring devices.
+- Interactive Shiny applications enabling dynamic data exploration and
+  visualisation.
 
 ## Installation
 
@@ -101,7 +104,7 @@ head(mydata)
   Use ConSciR functions to add environmental metrics such as dew point
   (**`calcDP`**), absolute humidity (**`calcAH`**), lifetime multiplier
   (**`calcLM`**), and preservation index (**`calcPI`**) to the dataset.
-  More functions are available in the package ‘Reference’.
+  More functions are available; see the package Reference for details.
 
 ``` r
 # Peform calculations
@@ -155,12 +158,34 @@ mydata |>
 <img src="man/figures/README-mould_risk-1.png" alt="mould" width="100%" />
 
 - **Humidity functions: generate a psychrometric chart**  
-  Visualise the dataset in a psychrometric chart with
-  **`graph_psychrometric()`**.
+  Visualise the dataset using a psychrometric chart with the
+  function `graph_psychrometric()`. The first example shows a basic
+  plot, while the second demonstrates how to customise parameters such
+  as data transparency, temperature and humidity ranges, and the y-axis
+  function. See the full documentation with `?graph_psychrometric`.
 
 ``` r
+
+# Basic
 mydata |>
-  graph_psychrometric()
+  graph_psychrometric() 
 ```
 
 <img src="man/figures/README-psychart-1.png" alt="psych_chart" width="100%" />
+
+``` r
+
+# Customise 
+mydata |>
+  graph_psychrometric(
+    data_alpha = 0.2,
+    LowT = 8, 
+    HighT = 28,
+    LowRH = 30,
+    HighRH = 70,
+    y_func = calcAH
+    ) +
+  theme_classic()
+```
+
+<img src="man/figures/README-psychart-2.png" alt="psych_chart" width="100%" />
