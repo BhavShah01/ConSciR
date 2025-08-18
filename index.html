@@ -16,8 +16,8 @@
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Tools for Conservation Science">
-<meta name="description" content="Data science toolbox for conservation science. ConSciR is an R package conatining tools to help conservators, scientists and engineers in cultural heritage.">
-<meta property="og:description" content="Data science toolbox for conservation science. ConSciR is an R package conatining tools to help conservators, scientists and engineers in cultural heritage.">
+<meta name="description" content="Provides data science tools for conservation science, including methods for environmental analysis applications, humidity calculations, sustainability metrics, engineering calculations, and data visualisation. Supports conservators, scientists, and engineers working with cultural heritage data.">
+<meta property="og:description" content="Provides data science tools for conservation science, including methods for environmental analysis applications, humidity calculations, sustainability metrics, engineering calculations, and data visualisation. Supports conservators, scientists, and engineers working with cultural heritage data.">
 <meta property="og:image" content="https://bhavshah01.github.io/ConSciR/logo.png">
 </head>
 <body>
@@ -77,22 +77,26 @@
 </div>
 <!-- badges: start -->
 <!-- badges: end -->
-<p>ConSciR is an R package designed to assist conservators, scientists and engineers by providing a toolkit for performing calculations and streamlining common tasks in cultural heritage conservation.</p>
-<p>ConSciR is designed for and to be:</p>
-<ul>
-<li>Conservators working in museums, galleries, and heritage sites</li>
-<li>Conservation scientists, engineers and researchers</li>
-<li>Cultural heritage professionals involved in preventive conservation</li>
-<li>Students and educators in conservation and heritage science programs</li>
-<li>FAIR: Findable, Accessible, Interoperable, and Reusable</li>
-<li>Collaborative: allowing anyone to upload code, raise requests, report bugs, and add functionality to the package</li>
-</ul>
+<p><code>ConSciR</code> is an R package that provides data science tools for conservation science.<br>
+It includes functions for environmental applications, humidity calculations, sustainability metrics, engineering calculations, and data visualisations such as psychrometric charts.<br>
+The toolkit is designed to assist conservators, scientists, and engineers in performing<br>
+calculations, analysing data, and streamlining common tasks in cultural heritage conservation.</p>
+<p><code>ConSciR</code> is intended for:<br>
+- Conservators working in museums, galleries, and heritage sites<br>
+- Conservation scientists, engineers, and researchers<br>
+- Data scientists developing applications for conservation<br>
+- Cultural heritage professionals involved in preventive conservation<br>
+- Students and educators in conservation and heritage science programmes</p>
+<p>The package is also designed to be:<br>
+- <strong>FAIR</strong>: Findable, Accessible, Interoperable, and Reusable<br>
+- <strong>Collaborative</strong>: enabling contributions, feature requests, bug reports, and<br>
+additions from the wider community</p>
 <p>If using R for the first time, read an article here: <a href="https://bhavshah01.github.io/ConSciR/articles/ConSciR-FirstTimeR.html">Using R for the first time</a></p>
 <div class="section level2">
 <h2 id="tools">Tools<a class="anchor" aria-label="anchor" href="#tools"></a>
 </h2>
 <ul>
-<li>Humidity calculations, conservator tools, sustainability</li>
+<li>Humidity calculations, conservator tools, sustainability metrics</li>
 <li>Mould growth models, damage functions</li>
 <li>Graphs: TRH plots, psychometric chart</li>
 <li>Tidying data: Meaco, Hanwell data</li>
@@ -114,16 +118,21 @@
 <div class="section level2">
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h2>
-<p>This is a basic example of some commons tasks:</p>
+<p>This section demonstrates some common tasks you can perform with the ConSciR package.</p>
 <ul>
-<li>Load packages</li>
+<li>
+<strong>Load packages</strong><br>
+Load ConSciR and some commonly used tidyverse packages for data manipulation and plotting.</li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bhavshah01.github.io/ConSciR/">ConSciR</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></code></pre></div>
 <ul>
-<li>Pre-loaded dataset is availabe for testing</li>
+<li>
+<strong>Access an example dataset</strong><br>
+A pre-loaded dataset (<code>mydata</code>) is included for testing and demonstration. Use <code><a href="https://rdrr.io/r/utils/head.html" class="external-link">head()</a></code> to view the first few rows and inspect the data structure.</li>
+<li>Users can rename columns and structure their own datasets similarly to <code>mydata</code> to ensure compatibility with ConSciR functions, which expect variables such as temperature and relative humidity in specific column names.</li>
 </ul>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># My TRH data</span></span>
@@ -138,7 +147,9 @@
 <span><span class="co">#&gt; 5 London Room 1 2024-01-01 00:59:59  21.7  36.5</span></span>
 <span><span class="co">#&gt; 6 London Room 1 2024-01-01 01:14:59  21.7  36.2</span></span></code></pre></div>
 <ul>
-<li>Use functions, for example use the existing data to add dew point and absolute humidity. Performance metrics are also being added like lifetime multiplier, preservation index and mould calculations.</li>
+<li>
+<strong>Perform calculations on the data</strong><br>
+Use ConSciR functions to add environmental metrics such as dew point (<strong><code>calcDP</code></strong>), absolute humidity (<strong><code>calcAH</code></strong>), lifetime multiplier (<strong><code>calcLM</code></strong>), and preservation index (<strong><code>calcPI</code></strong>) to the dataset. More functions are available in the package ‘Reference’.</li>
 </ul>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Peform calculations</span></span>
@@ -159,7 +170,9 @@
 <span><span class="co">#&gt; 5 London Room 1 2024-01-01 00:59:59  21.7  36.5  6.18  6.95     1.11  46.2</span></span>
 <span><span class="co">#&gt; 6 London Room 1 2024-01-01 01:14:59  21.7  36.2  6.06  6.90     1.11  46.6</span></span></code></pre></div>
 <ul>
-<li>Combine analysis with graphs</li>
+<li>
+<strong>Combine analysis with visualisation</strong><br>
+Add a dew point line to the temperature-relative humidity graph using the package’s built-in plotting function <strong><code><a href="reference/graph_TRH.html">graph_TRH()</a></code></strong>.</li>
 </ul>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
@@ -169,7 +182,9 @@
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-graphTRH_DewPoint-1.png" alt="graphTRH" width="100%"></p>
 <ul>
-<li>Conservator tools: for example estimate mould growth</li>
+<li>
+<strong>Conservator tools: mould growth estimation</strong><br>
+Calculate mould growth risk using <strong><code><a href="reference/calcMould_Zeng.html">calcMould_Zeng()</a></code></strong> and visualise it alongside humidity data.</li>
 </ul>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
@@ -182,7 +197,9 @@
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-mould_risk-1.png" alt="mould" width="100%"></p>
 <ul>
-<li>Humidity functions: for example psychrometric chart</li>
+<li>
+<strong>Humidity functions: generate a psychrometric chart</strong><br>
+Visualise the dataset in a psychrometric chart with <strong><code><a href="reference/graph_psychrometric.html">graph_psychrometric()</a></code></strong>.</li>
 </ul>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
