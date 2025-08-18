@@ -96,11 +96,11 @@ additions from the wider community</p>
 <h2 id="tools">Tools<a class="anchor" aria-label="anchor" href="#tools"></a>
 </h2>
 <ul>
-<li>Humidity calculations, conservator tools, sustainability metrics</li>
-<li>Mould growth models, damage functions</li>
-<li>Graphs: TRH plots, psychometric chart</li>
-<li>Tidying data: Meaco, Hanwell data</li>
-<li>Interactive Shiny applications</li>
+<li>Humidity calculations, conservator tools, and sustainability metrics.</li>
+<li>Mould growth models and damage risk functions.</li>
+<li>Graphical outputs including temperature-relative humidity (TRH) plots, psychrometric charts and data for other applications.</li>
+<li>Data tidying functions compatible with Meaco and Hanwell environmental monitoring devices.</li>
+<li>Interactive Shiny applications enabling dynamic data exploration and visualisation.</li>
 </ul>
 </div>
 <div class="section level2">
@@ -149,7 +149,7 @@ A pre-loaded dataset (<code>mydata</code>) is included for testing and demonstra
 <ul>
 <li>
 <strong>Perform calculations on the data</strong><br>
-Use ConSciR functions to add environmental metrics such as dew point (<strong><code>calcDP</code></strong>), absolute humidity (<strong><code>calcAH</code></strong>), lifetime multiplier (<strong><code>calcLM</code></strong>), and preservation index (<strong><code>calcPI</code></strong>) to the dataset. More functions are available in the package ‘Reference’.</li>
+Use ConSciR functions to add environmental metrics such as dew point (<strong><code>calcDP</code></strong>), absolute humidity (<strong><code>calcAH</code></strong>), lifetime multiplier (<strong><code>calcLM</code></strong>), and preservation index (<strong><code>calcPI</code></strong>) to the dataset. More functions are available; see the package Reference for details.</li>
 </ul>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Peform calculations</span></span>
@@ -199,12 +199,28 @@ Calculate mould growth risk using <strong><code><a href="reference/calcMould_Zen
 <ul>
 <li>
 <strong>Humidity functions: generate a psychrometric chart</strong><br>
-Visualise the dataset in a psychrometric chart with <strong><code><a href="reference/graph_psychrometric.html">graph_psychrometric()</a></code></strong>.</li>
+Visualise the dataset using a psychrometric chart with the function <code><a href="reference/graph_psychrometric.html">graph_psychrometric()</a></code>. The first example shows a basic plot, while the second demonstrates how to customise parameters such as data transparency, temperature and humidity ranges, and the y-axis function. See the full documentation with <code><a href="reference/graph_psychrometric.html">?graph_psychrometric</a></code>.</li>
 </ul>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="reference/graph_psychrometric.html">graph_psychrometric</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span></span>
+<span><span class="co"># Basic</span></span>
+<span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/graph_psychrometric.html">graph_psychrometric</a></span><span class="op">(</span><span class="op">)</span> </span></code></pre></div>
 <p><img src="reference/figures/README-psychart-1.png" alt="psych_chart" width="100%"></p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># Customise </span></span>
+<span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/graph_psychrometric.html">graph_psychrometric</a></span><span class="op">(</span></span>
+<span>    data_alpha <span class="op">=</span> <span class="fl">0.2</span>,</span>
+<span>    LowT <span class="op">=</span> <span class="fl">8</span>, </span>
+<span>    HighT <span class="op">=</span> <span class="fl">28</span>,</span>
+<span>    LowRH <span class="op">=</span> <span class="fl">30</span>,</span>
+<span>    HighRH <span class="op">=</span> <span class="fl">70</span>,</span>
+<span>    y_func <span class="op">=</span> <span class="va">calcAH</span></span>
+<span>    <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-psychart-2.png" alt="psych_chart" width="100%"></p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
