@@ -14,9 +14,11 @@ Authors@R: c(
            comment = c(ORCID = "0000-0003-1304-8591"))
   )
 Maintainer: Bhavesh Shah <bhaveshshah01@gmail.com>
-Description: Data science toolbox for conservation science.
-    'ConSciR' is an R package conatining tools to help conservators, 
-    scientists and engineers in cultural heritage.
+Description: Provides data science tools for conservation science, including
+    methods for environmental analysis applications, humidity calculations,
+    sustainability metrics, engineering calculations, and data
+    visualisation. Supports conservators, scientists, and engineers
+    working with cultural heritage data.
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true

@@ -7,19 +7,28 @@
 
 <!-- badges: end -->
 
-ConSciR is an R package designed to assist conservators, scientists and
-engineers by providing a toolkit for performing calculations and
-streamlining common tasks in cultural heritage conservation.
+`ConSciR` is an R package that provides data science tools for
+conservation science.  
+It includes functions for environmental applications, humidity
+calculations, sustainability metrics, engineering calculations, and data
+visualisations such as psychrometric charts.  
+The toolkit is designed to assist conservators, scientists, and
+engineers in performing  
+calculations, analysing data, and streamlining common tasks in cultural
+heritage conservation.
 
-ConSciR is designed for and to be:
+`ConSciR` is intended for:  
+- Conservators working in museums, galleries, and heritage sites  
+- Conservation scientists, engineers, and researchers  
+- Data scientists developing applications for conservation  
+- Cultural heritage professionals involved in preventive conservation  
+- Students and educators in conservation and heritage science programmes
 
-- Conservators working in museums, galleries, and heritage sites
-- Conservation scientists, engineers and researchers
-- Cultural heritage professionals involved in preventive conservation
-- Students and educators in conservation and heritage science programs
-- FAIR: Findable, Accessible, Interoperable, and Reusable
-- Collaborative: allowing anyone to upload code, raise requests, report
-  bugs, and add functionality to the package
+The package is also designed to be:  
+- **FAIR**: Findable, Accessible, Interoperable, and Reusable  
+- **Collaborative**: enabling contributions, feature requests, bug
+reports, and  
+additions from the wider community
 
 If using R for the first time, read an article here: [Using R for the
 first
@@ -27,7 +36,7 @@ time](https://bhavshah01.github.io/ConSciR/articles/ConSciR-FirstTimeR.html)
 
 ## Tools
 
-- Humidity calculations, conservator tools, sustainability
+- Humidity calculations, conservator tools, sustainability metrics
 - Mould growth models, damage functions
 - Graphs: TRH plots, psychometric chart
 - Tidying data: Meaco, Hanwell data
@@ -52,9 +61,12 @@ devtools::install_github("BhavShah01/ConSciR")
 
 ## Examples
 
-This is a basic example of some commons tasks:
+This section demonstrates some common tasks you can perform with the
+ConSciR package.
 
-- Load packages
+- **Load packages**  
+  Load ConSciR and some commonly used tidyverse packages for data
+  manipulation and plotting.
 
 ``` r
 library(ConSciR)
@@ -62,7 +74,14 @@ library(dplyr)
 library(ggplot2)
 ```
 
-- Pre-loaded dataset is availabe for testing
+- **Access an example dataset**  
+  A pre-loaded dataset (`mydata`) is included for testing and
+  demonstration. Use `head()` to view the first few rows and inspect the
+  data structure.
+- Users can rename columns and structure their own datasets similarly
+  to `mydata` to ensure compatibility with ConSciR functions, which
+  expect variables such as temperature and relative humidity in specific
+  column names.
 
 ``` r
 # My TRH data
@@ -78,9 +97,11 @@ head(mydata)
 #> 6 London Room 1 2024-01-01 01:14:59  21.7  36.2
 ```
 
-- Use functions, for example use the existing data to add dew point and
-  absolute humidity. Performance metrics are also being added like
-  lifetime multiplier, preservation index and mould calculations.
+- **Perform calculations on the data**  
+  Use ConSciR functions to add environmental metrics such as dew point
+  (**`calcDP`**), absolute humidity (**`calcAH`**), lifetime multiplier
+  (**`calcLM`**), and preservation index (**`calcPI`**) to the dataset.
+  More functions are available in the package ‘Reference’.
 
 ``` r
 # Peform calculations
@@ -102,7 +123,9 @@ head(mydata) |>
 #> 6 London Room 1 2024-01-01 01:14:59  21.7  36.2  6.06  6.90     1.11  46.6
 ```
 
-- Combine analysis with graphs
+- **Combine analysis with visualisation**  
+  Add a dew point line to the temperature-relative humidity graph using
+  the package’s built-in plotting function **`graph_TRH()`**.
 
 ``` r
 mydata |>
@@ -114,7 +137,9 @@ mydata |>
 
 <img src="man/figures/README-graphTRH_DewPoint-1.png" alt="graphTRH" width="100%" />
 
-- Conservator tools: for example estimate mould growth
+- **Conservator tools: mould growth estimation**  
+  Calculate mould growth risk using **`calcMould_Zeng()`** and visualise
+  it alongside humidity data.
 
 ``` r
 mydata |>
@@ -129,7 +154,9 @@ mydata |>
 
 <img src="man/figures/README-mould_risk-1.png" alt="mould" width="100%" />
 
-- Humidity functions: for example psychrometric chart
+- **Humidity functions: generate a psychrometric chart**  
+  Visualise the dataset in a psychrometric chart with
+  **`graph_psychrometric()`**.
 
 ``` r
 mydata |>

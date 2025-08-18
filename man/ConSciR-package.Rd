@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Data science toolbox for conservation science. 'ConSciR' is an R package conatining tools to help conservators, scientists and engineers in cultural heritage.
+Provides data science tools for conservation science, including methods for environmental analysis applications, humidity calculations, sustainability metrics, engineering calculations, and data visualisation. Supports conservators, scientists, and engineers working with cultural heritage data.
 }
 \seealso{
 Useful links:
