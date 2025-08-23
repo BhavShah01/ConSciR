@@ -14,6 +14,7 @@ Provides data science tools for conservation science, including methods for envi
 Useful links:
 \itemize{
   \item \url{https://bhavshah01.github.io/ConSciR/}
+  \item \url{https://github.com/BhavShah01/ConSciR}
   \item Report bugs at \url{https://github.com/BhavShah01/ConSciR/issues}
 }
 
