@@ -24,7 +24,7 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.2
 VignetteBuilder: knitr
-URL: https://bhavshah01.github.io/ConSciR/
+URL: https://bhavshah01.github.io/ConSciR/, https://github.com/BhavShah01/ConSciR
 BugReports: https://github.com/BhavShah01/ConSciR/issues
 Config/testthat/edition: 3
 Suggests: 
