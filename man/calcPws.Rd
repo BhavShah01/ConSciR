@@ -4,27 +4,38 @@
 \alias{calcPws}
 \title{Calculate Water Vapour Saturation Pressure}
 \usage{
-calcPws(Temp, P_atm = 1013.25, method = "IAPWS")
+calcPws(Temp, P_atm = 1013.25, method = "Buck")
 }
 \arguments{
 \item{Temp}{Temperature (°Celsius)}
 
 \item{P_atm}{Atmospheric pressure = 1013.25 (hPa)}
 
-\item{method}{Character. Method to use for calculation. Options are "IAPWS" (default) or "Magnus".}
+\item{method}{Character. Method to use for calculation. Options are "Buck" (default), "IAPWS", "Magnus" or "VAISALA".}
 }
 \value{
 Pws, Saturation vapor pressure (hPa)
 }
 \description{
 Function to calculate water vapour saturation pressure (hPa) from temperature (°C)
-using the International Association for the Properties of Water and Steam (IAPWS as default) or
-August-Roche-Magnus approximation.
+using the International Association for the Properties of Water and Steam (IAPWS as default),
+Arden Buck equation (Buck), August-Roche-Magnus approximation (Magnus) or VAISALA conversion formula.
 
 Water vapour saturation pressure is the maximum partial pressure of water vapour that
 can be present in gas at a given temperature.
+
+Different formulations for calculating water vapour pressure are available:
+\itemize{
+  \item Arden Buck equation ("Buck")
+  \item International Association for the Properties of Water and Steam ("IAPWS")
+  \item August-Roche-Magnus approximation ("Magnus")
+  \item VAISALA humidity conversion formula ("VAISALA")
+}
 }
 \note{
+See Wikipedia for a discussion of the accuarcy of each approach:
+https://en.wikipedia.org/wiki/Vapour_pressure_of_water
+
 If lower accuracy or a limited temperature range can be tolerated a simpler formula
 can be used for the water vapour saturation pressure over water (and over ice):
 
@@ -32,16 +43,23 @@ Pws = 6.116441 x 10^( (7.591386 x Temp) / (Temp + 240.7263) )
 }
 \examples{
 calcPws(20)
-
+calcPws(20, method = "Buck")
 calcPws(20, method = "IAPWS")
 calcPws(20, method = "Magnus")
+calcPws(20, method = "VAISALA")
 
-# Calculate relative humidity at 50\%RH
-calcPw(20, 50) / calcPws(20, method = "IAPWS") * 100
-calcPw(20, 50) / calcPws(20, method = "Magnus") * 100
+# Check of calculations of relative humidity at 50\%RH
+calcPw(20, 50, method = "Buck") / calcPws(20, method = "Buck") * 100
+calcPw(20, 50, method = "IAPWS") / calcPws(20, method = "IAPWS") * 100
+calcPw(20, 50, method = "Magnus") / calcPws(20, method = "Magnus") * 100
+calcPw(20, 50, method = "VAISALA") / calcPws(20, method = "VAISALA") * 100
 
 head(mydata) |> dplyr::mutate(Pws = calcPws(Temp))
 
+head(mydata) |> dplyr::mutate(Buck = calcPws(Temp, method = "Buck"),
+                              IAPWS = calcPws(Temp, method = "IAPWS"),
+                              Magnus = calcPws(Temp, method = "Magnus"),
+                              VAISALA = calcPws(Temp, method = "VAISALA"))
 
 }
 \references{
@@ -51,6 +69,15 @@ Physical and Chemical Reference Data, 31(2), 387-535.
 
 Alduchov, O. A., and R. E. Eskridge, 1996: Improved Magnus' form approximation of
 saturation vapor pressure. J. Appl. Meteor., 35, 601-609.
+
+Buck, A. L., 1981: New Equations for Computing Vapor Pressure and Enhancement Factor.
+J. Appl. Meteor. Climatol., 20, 1527–1532,
+https://doi.org/10.1175/1520-0450(1981)020<1527:NEFCVP>2.0.CO;2.
+
+Buck (1996), Buck (1996), Buck Research CR-1A User's Manual, Appendix 1.
+
+VAISALA. Humidity Conversions:
+Formulas and methods for calculating humidity parameters. Ref. B210973EN-O
 }
 \seealso{
 \code{\link{calcMR}} for calculating mixing ratio

@@ -410,6 +410,13 @@ TRHgrid |>
 
 -   Saturation vapor pressure calculation
 
+Function to calculate water vapour saturation pressure (hPa) from temperature (°C)
+using the International Association for the Properties of Water and Steam (IAPWS as default), Arden Buck equation (Buck) or August-Roche-Magnus approximation (Magnus).
+
+A discussion of each formulation is given in Wikipedia and the benefits of each equation: 
+https://en.wikipedia.org/wiki/Vapour_pressure_of_water#cite_note-1
+
+
 ```{r message=FALSE, warning=FALSE}
 
 # Graph Saturation vapor pressure 
@@ -423,6 +430,21 @@ TRHgrid |>
   geom_contour_filled(bins = 20) + 
   theme_bw()
 
+
+# Graph Saturation vapor pressure using different equations
+mydata |>
+  dplyr::mutate(
+    Pw_IAPWS = calcPws(Temp, method = "IAPWS"),
+    Pw_Buck = calcPws(Temp, method = "Buck"),
+    Pw_Magnus = calcPws(Temp, method = "Magnus"),
+    Pw_VAISALA = calcPws(Temp, method = "VAISALA")
+    ) |>
+  ggplot() +
+  geom_line(aes(Date, Pw_IAPWS), col = "darkblue", alpha = 0.5) + 
+  geom_line(aes(Date, Pw_Buck), col = "blue", alpha = 0.5) + 
+  geom_line(aes(Date, Pw_Magnus), col = "purple", alpha = 0.5) + 
+  geom_line(aes(Date, Pw_VAISALA), col = "violet", alpha = 0.5) + 
+  theme_bw()
 ```
 
 ### Water vapour pressure

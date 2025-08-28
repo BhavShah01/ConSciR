@@ -5,6 +5,14 @@
 #'
 #' Water vapour pressure is the pressure exerted by water vapour in a gas.
 #'
+#' Different formulations for calculating water vapour pressure are available:
+#' \itemize{
+#'   \item Arden Buck equation ("Buck")
+#'   \item International Association for the Properties of Water and Steam ("IAPWS")
+#'   \item August-Roche-Magnus approximation ("Magnus")
+#'   \item VAISALA humidity conversion formula ("VAISALA")
+#' }
+#'
 #'
 #' @details
 #' The water vapor pressure (P_w) is calculated using the following equation:
@@ -19,6 +27,11 @@
 #'    \item Temp is the temperature in degrees Celsius.
 #' }
 #'
+#' @note
+#' See Wikipedia for a discussion of the accuarcy of each approach:
+#' https://en.wikipedia.org/wiki/Vapour_pressure_of_water
+#'
+#'
 #' @seealso \code{\link{calcMR}} for calculating mixing ratio
 #' @seealso \code{\link{calcAD}} for calculating air density
 #' @seealso \code{\link{calcPw}} for calculating water vapour pressure
@@ -32,6 +45,15 @@
 #'
 #' Alduchov, O. A., and R. E. Eskridge, 1996: Improved Magnus' form approximation of
 #' saturation vapor pressure. J. Appl. Meteor., 35, 601-609.
+#'
+#' Buck, A. L., 1981: New Equations for Computing Vapor Pressure and Enhancement Factor.
+#' J. Appl. Meteor. Climatol., 20, 1527–1532,
+#' https://doi.org/10.1175/1520-0450(1981)020<1527:NEFCVP>2.0.CO;2.
+#'
+#' Buck (1996), Buck (1996), Buck Research CR-1A User's Manual, Appendix 1.
+#'
+#' VAISALA. Humidity Conversions:
+#' Formulas and methods for calculating humidity parameters. Ref. B210973EN-O
 #'
 #'
 #' @param Temp Temperature (°Celsius)
@@ -48,6 +70,11 @@
 #' calcPw(20, 50) / calcPws(20) * 100
 #'
 #' head(mydata) |> dplyr::mutate(Pw = calcPw(Temp, RH))
+#'
+#' head(mydata) |> dplyr::mutate(Buck = calcPw(Temp, RH, method = "Buck"),
+#'                               IAPWS = calcPw(Temp, RH, method = "IAPWS"),
+#'                               Magnus = calcPw(Temp, RH, method = "Magnus"),
+#'                               VAISALA = calcPw(Temp, RH, method = "VAISALA"))
 #'
 #'
 calcPw <- function(Temp, RH, ...) {

@@ -15,6 +15,12 @@ knitr::opts_chunk$set(
 
 ```
 
+
+<!-- badges: start -->
+
+<!-- badges: end -->
+
+
 ## Introduction
 
 `ConSciR` is an R package specifically designed to assist conservators, scientists, and engineers\

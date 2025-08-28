@@ -2,11 +2,19 @@
 #'
 #' @description
 #' Function to calculate water vapour saturation pressure (hPa) from temperature (°C)
-#' using the International Association for the Properties of Water and Steam (IAPWS as default) or
-#' August-Roche-Magnus approximation.
+#' using the International Association for the Properties of Water and Steam (IAPWS as default),
+#' Arden Buck equation (Buck), August-Roche-Magnus approximation (Magnus) or VAISALA conversion formula.
 #'
 #' Water vapour saturation pressure is the maximum partial pressure of water vapour that
 #' can be present in gas at a given temperature.
+#'
+#' Different formulations for calculating water vapour pressure are available:
+#' \itemize{
+#'   \item Arden Buck equation ("Buck")
+#'   \item International Association for the Properties of Water and Steam ("IAPWS")
+#'   \item August-Roche-Magnus approximation ("Magnus")
+#'   \item VAISALA humidity conversion formula ("VAISALA")
+#' }
 #'
 #'
 #'
@@ -16,6 +24,9 @@
 #' @seealso \code{\link{calcPws}} for calculating water vapour saturation pressure
 #'
 #' @note
+#' See Wikipedia for a discussion of the accuarcy of each approach:
+#' https://en.wikipedia.org/wiki/Vapour_pressure_of_water
+#'
 #' If lower accuracy or a limited temperature range can be tolerated a simpler formula
 #' can be used for the water vapour saturation pressure over water (and over ice):
 #'
@@ -30,28 +41,46 @@
 #' Alduchov, O. A., and R. E. Eskridge, 1996: Improved Magnus' form approximation of
 #' saturation vapor pressure. J. Appl. Meteor., 35, 601-609.
 #'
+#' Buck, A. L., 1981: New Equations for Computing Vapor Pressure and Enhancement Factor.
+#' J. Appl. Meteor. Climatol., 20, 1527–1532,
+#' https://doi.org/10.1175/1520-0450(1981)020<1527:NEFCVP>2.0.CO;2.
+#'
+#' Buck (1996), Buck (1996), Buck Research CR-1A User's Manual, Appendix 1.
+#'
+#' VAISALA. Humidity Conversions:
+#' Formulas and methods for calculating humidity parameters. Ref. B210973EN-O
+#'
 #'
 #' @param Temp Temperature (°Celsius)
 #' @param P_atm Atmospheric pressure = 1013.25 (hPa)
-#' @param method Character. Method to use for calculation. Options are "IAPWS" (default) or "Magnus".
+#' @param method Character. Method to use for calculation. Options are "Buck" (default), "IAPWS", "Magnus" or "VAISALA".
 #'
 #' @return Pws, Saturation vapor pressure (hPa)
 #' @export
 #'
 #' @examples
 #' calcPws(20)
-#'
+#' calcPws(20, method = "Buck")
 #' calcPws(20, method = "IAPWS")
 #' calcPws(20, method = "Magnus")
+#' calcPws(20, method = "VAISALA")
 #'
-#' # Calculate relative humidity at 50%RH
-#' calcPw(20, 50) / calcPws(20, method = "IAPWS") * 100
-#' calcPw(20, 50) / calcPws(20, method = "Magnus") * 100
+#' # Check of calculations of relative humidity at 50%RH
+#' calcPw(20, 50, method = "Buck") / calcPws(20, method = "Buck") * 100
+#' calcPw(20, 50, method = "IAPWS") / calcPws(20, method = "IAPWS") * 100
+#' calcPw(20, 50, method = "Magnus") / calcPws(20, method = "Magnus") * 100
+#' calcPw(20, 50, method = "VAISALA") / calcPws(20, method = "VAISALA") * 100
 #'
 #' head(mydata) |> dplyr::mutate(Pws = calcPws(Temp))
 #'
+#' head(mydata) |> dplyr::mutate(Buck = calcPws(Temp, method = "Buck"),
+#'                               IAPWS = calcPws(Temp, method = "IAPWS"),
+#'                               Magnus = calcPws(Temp, method = "Magnus"),
+#'                               VAISALA = calcPws(Temp, method = "VAISALA"))
 #'
-calcPws <- function(Temp, P_atm = 1013.25, method = "IAPWS") {
+calcPws <- function(Temp, P_atm = 1013.25, method = "Buck") {
+
+  TempK = Temp + 273.15
 
   if (method == "Magnus") {
 
@@ -65,7 +94,6 @@ calcPws <- function(Temp, P_atm = 1013.25, method = "IAPWS") {
   } else if (method == "IAPWS") {
 
     # IAPWS formulation
-    TempK <- Temp + 273.15
     Tc = 647.096
     Pc = 220640  # Critical pressure
     C1 = -7.85951783
@@ -83,8 +111,45 @@ calcPws <- function(Temp, P_atm = 1013.25, method = "IAPWS") {
     Pws = Pc * exp(lnPwsPc)
 
 
+  } else if (method == "Buck") {
+
+    # Saturation vapor pressure over water in hPa
+    Pws_water = 6.1121 * exp((18.678 - (Temp / 234.5)) * (Temp / (257.14 + Temp)))
+    # Saturation vapor pressure over ice in hPa
+    Pws_ice = 6.1115 * exp((23.036 - (Temp / 333.7)) * (Temp / (279.82 + Temp)))
+
+    Pws = ifelse(Temp < 0, Pws_ice, Pws_water)
+
+
+  } else if (method == "VAISALA") {
+
+    a0_w = 1 # Pa
+    a1_w = -6096.9385 # K
+    a2_w = 21.2409642 #
+    a3_w = -0.02711193 # K-1
+    a4_w = 1.673952e-05 # K-2
+    a5_w = 2.433502
+    a6_w = 1 # K-1
+
+    a0_i = 1 # Pa
+    a1_i = -6024.5282 # K
+    a2_i = 29.32707 #
+    a3_i = 0.010613868 # K-1
+    a4_i = -1.3198825e-05 # K-2
+    a5_i = -0.4938258
+    a6_i = 1 # K-1
+
+    # Saturation vapor pressure over water in Pa
+    Pws_water = a0_w * exp((a1_w / TempK) + a2_w + (a3_w * TempK) +
+                             (a4_w * TempK^2) + (a5_w * log(a6_w * TempK)))
+    # Saturation vapor pressure over ice in Pa
+    Pws_ice = a0_i * exp((a1_i / TempK) + a2_i + (a3_i * TempK) +
+                                       (a4_i * TempK^2) + (a5_i * log(a6_i * TempK)))
+
+    Pws = ifelse(Temp < 0, Pws_ice, Pws_water) / 100 # return in hPa
+
   } else {
-    stop("Invalid method. Choose 'Magnus' or 'IAPWS'.")
+    stop("Invalid method. Choose 'IAPWS', 'Buck' or 'Magnus'.")
   }
 
   # If lower accuracy or a limited temperature range can be tolerated a simpler formula can be used for the water vapour saturation pressure over water (and over ice):
