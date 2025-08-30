@@ -84,7 +84,8 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bhavshah01.github.io/ConSciR/">ConSciR</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></code></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org" class="external-link">readxl</a></span><span class="op">)</span></span></code></pre></div>
 <p>The relationships between humidity functions are shown below, which
 are important for calculations used by engineers and scientists, for
 example to understand air conditioning systems. These functions may play
@@ -130,7 +131,10 @@ example heritage sites.</p>
 </table>
 <p>Example usage to load the dataset from the package:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mydata</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># mydata &lt;- </span></span>
+<span><span class="co">#   read_excel(data_file_path("mydata.xlsx"), sheet = "mydata") |&gt; </span></span>
+<span><span class="co">#   filter(Sensor == "Room = 1") # select "Room 1" sensor</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mydata</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 5</span></span></span>
 <span><span class="co">#&gt;   Site   Sensor Date                 Temp    RH</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
@@ -208,7 +212,7 @@ used can be calculated:</p>
 <span><span class="co">#&gt; $ RH                         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 36.8<span style="color: #949494;">, </span>36.7<span style="color: #949494;">, </span>36.6<span style="color: #949494;">, </span>36.6<span style="color: #949494;">, </span>36.5<span style="color: #949494;">, </span>36.2</span></span>
 <span><span class="co">#&gt; $ Absolute_Humidity          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 7.052415<span style="color: #949494;">, </span>7.033251<span style="color: #949494;">, </span>7.014087<span style="color: #949494;">, </span>6.973723<span style="color: #949494;">, </span>6.9…</span></span>
 <span><span class="co">#&gt; $ Dew_Point                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 6.383970<span style="color: #949494;">, </span>6.344456<span style="color: #949494;">, </span>6.304848<span style="color: #949494;">, </span>6.216205<span style="color: #949494;">, </span>6.1…</span></span>
-<span><span class="co">#&gt; $ Frost_Point                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 5.610038<span style="color: #949494;">, </span>5.575636<span style="color: #949494;">, </span>5.541149<span style="color: #949494;">, </span>5.463941<span style="color: #949494;">, </span>5.4…</span></span>
+<span><span class="co">#&gt; $ Frost_Point                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 8.260808<span style="color: #949494;">, </span>8.225778<span style="color: #949494;">, </span>8.190662<span style="color: #949494;">, </span>8.100017<span style="color: #949494;">, </span>8.0…</span></span>
 <span><span class="co">#&gt; $ Mixing_Ratio               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 5.957278<span style="color: #949494;">, </span>5.940935<span style="color: #949494;">, </span>5.924593<span style="color: #949494;">, </span>5.888156<span style="color: #949494;">, </span>5.8…</span></span>
 <span><span class="co">#&gt; $ Specific_Humidity          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.8562656<span style="color: #949494;">, </span>0.8559272<span style="color: #949494;">, </span>0.8555872<span style="color: #949494;">, </span>0.8548233<span style="color: #949494;">,</span>…</span></span>
 <span><span class="co">#&gt; $ Humidity_Ratio             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 5.957278<span style="color: #949494;">, </span>5.940935<span style="color: #949494;">, </span>5.924593<span style="color: #949494;">, </span>5.888156<span style="color: #949494;">, </span>5.8…</span></span>
