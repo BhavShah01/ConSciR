@@ -83,6 +83,7 @@ head(mydata) |>
   mutate(
     Absolute_Humidity = calcAH(Temp, RH), 
     Dew_Point = calcDP(Temp, RH), 
+    Frost_Point = calcFP(Temp, RH),
     Mixing_Ratio = calcMR(Temp, RH), 
     Specific_Humidity = calcSH(Temp, RH),
     Humidity_Ratio = calcHR(Temp, RH),
@@ -516,6 +517,35 @@ TRHgrid |>
   geom_contour_filled(bins = 15) +    
   labs(title = "Dew Point", x = "Temperature (°C)", y = "Humidity (%)",        
        fill = "°C") +   
+  theme_bw()
+```
+
+### Frost Point
+
+-   `calcFP`
+
+**Frost Point (FP)** is the temperature at which water vapor in air condenses as ice rather than liquid water. It is relevant when air temperature and dew point fall below freezing, indicating conditions for frost formation. Frost point helps in understanding moisture behavior in cold environments, which is crucial for conservation, meteorology, and climate control.
+
+The calcFP function computes frost point temperature from measured air temperature and relative humidity, extending dew point calculations below 0°C by considering vapor pressure over ice.
+
+
+```{r}
+
+# Calculate Frost Point and add to mydata
+mydata |>
+  mutate(FP = calcFP(Temp, RH)) |>
+  graph_TRH() +
+  geom_line(aes(Date, FP), col = "cornflowerblue") + 
+  labs(title = "Frost Point (light blue)") +
+  theme_bw()
+
+# Contour plot of frost point temperature over temperature and relative humidity grid
+TRHgrid |>
+  mutate(FrostPoint = calcFP(Temp, RH)) |>
+  ggplot(aes(Temp, RH, z = FrostPoint)) + 
+  geom_contour_filled(bins = 15) + 
+  labs(title = "Frost Point", x = "Temperature (°C)", y = "Humidity (%)",
+       fill = "°C") +
   theme_bw()
 ```
 

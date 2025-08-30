@@ -1,10 +1,11 @@
 # ConSciR 0.2.0
 
-* Corrections for resubmission.
 * Added Buck equation as default for `calcPws`.
+* Added Frost Point calculation `calcFP`.
 * Correction to Humidity Ratio function `calcHR`.
 * Correction to Air Density function `calcAD`.
 * Updated Humidity functions article. 
+* Corrections for resubmission.
 
 # ConSciR 0.1.1
 
