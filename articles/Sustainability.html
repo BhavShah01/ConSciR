@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ConSciR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,8 +86,77 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bhavshah01.github.io/ConSciR/">ConSciR</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></code></pre></div>
-<p><img src="Sustainability_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
-  </main>
+<div class="section level3">
+<h3 id="mydata-built-in-example-dataset">mydata: Built-in Example Dataset<a class="anchor" aria-label="anchor" href="#mydata-built-in-example-dataset"></a>
+</h3>
+<p>This dataset contains environmental monitoring data collected from
+example heritage sites.</p>
+<p>It includes measurements of temperature (°C) and relative humidity
+(%) recorded by sensors over time.</p>
+<table class="table">
+<thead><tr class="header">
+<th align="left"><strong>Variable</strong></th>
+<th align="left"><strong>Description</strong></th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Site</td>
+<td align="left">Location name, e.g., “Museum”, “London”</td>
+</tr>
+<tr class="even">
+<td align="left">Sensor</td>
+<td align="left">Identifier for the specific sensor</td>
+</tr>
+<tr class="odd">
+<td align="left">Date</td>
+<td align="left">Timestamp of the measurement (POSIXct format)</td>
+</tr>
+<tr class="even">
+<td align="left">Temp</td>
+<td align="left">Air temperature in degrees Celsius</td>
+</tr>
+<tr class="odd">
+<td align="left">RH</td>
+<td align="left">Relative humidity as percentage (0-100%)</td>
+</tr>
+</tbody>
+</table>
+<p>Example usage to load the dataset from the package:</p>
+<pre><code><span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 5</span></span></span>
+<span><span class="co">#&gt;   Site   Sensor Date                 Temp    RH</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> London Room 1 2024-01-01 <span style="color: #949494;">00:00:00</span>  21.8  36.8</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> London Room 1 2024-01-01 <span style="color: #949494;">00:15:00</span>  21.8  36.7</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> London Room 1 2024-01-01 <span style="color: #949494;">00:29:59</span>  21.8  36.6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> London Room 1 2024-01-01 <span style="color: #949494;">00:44:59</span>  21.7  36.6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> London Room 1 2024-01-01 <span style="color: #949494;">00:59:59</span>  21.7  36.5</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> London Room 1 2024-01-01 <span style="color: #949494;">01:14:59</span>  21.7  36.2</span></span></code></pre>
+</div>
+<div class="section level3">
+<h3 id="trhgrid-dataset-used-to-visualise-the-functions">TRHgrid: Dataset used to visualise the functions<a class="anchor" aria-label="anchor" href="#trhgrid-dataset-used-to-visualise-the-functions"></a>
+</h3>
+<p>This dataset consists of a grid of temperature and relative humidity
+values used to visualize function behavior. Temperatures range from 0°C
+to 100°C in 0.25°C increments, and relative humidity (RH) ranges from 0%
+to 100% in 1% increments. The complete factorial combination of
+temperature and RH values is created using expand.grid(), where each
+pair represents a unique condition.</p>
+<p>Contour plots are generated to show interactions between derived
+variables across the temperature-RH grid. The dataset also supports
+validation checks for temperature and humidity calculations to
+understand relationships among the functions.</p>
+<p>Example R code to generate the dataset:</p>
+<pre><code><span><span class="co">#&gt;       Temp           RH     </span></span>
+<span><span class="co">#&gt;  Min.   :  0   Min.   :  0  </span></span>
+<span><span class="co">#&gt;  1st Qu.: 25   1st Qu.: 25  </span></span>
+<span><span class="co">#&gt;  Median : 50   Median : 50  </span></span>
+<span><span class="co">#&gt;  Mean   : 50   Mean   : 50  </span></span>
+<span><span class="co">#&gt;  3rd Qu.: 75   3rd Qu.: 75  </span></span>
+<span><span class="co">#&gt;  Max.   :100   Max.   :100</span></span></code></pre>
+<p><img src="Sustainability_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+</div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 

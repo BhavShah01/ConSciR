@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ConSciR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,25 +91,69 @@ example to understand air conditioning systems. These functions may play
 a key role in developing more energy-efficient systems. Understanding
 the stability of these functions is shown, as they underpin many
 methodologies in this field.</p>
-<p>A grid of temperature and relative humidity values, ranging from 0°C
-to 100°C and 0% to 100% RH respectively, was used to test the functions.
-Contour plots are used to visualise interactions between derived
-variables across the temperature-humidity grid. The analysis includes
-validation checks for temperature and relative humidity calculations, to
-identify how the function interact with each other.</p>
 <p>Note: the humidity functions assume atmospheric pressure.</p>
 <div class="section level3">
-<h3 id="trhgrid-dataset-used-to-visualise-the-functions">TRHgrid: Dataset used to visualise the functions<a class="anchor" aria-label="anchor" href="#trhgrid-dataset-used-to-visualise-the-functions"></a>
+<h3 id="datasets">Datasets<a class="anchor" aria-label="anchor" href="#datasets"></a>
 </h3>
-<p>A grid of temperature and relative humidity values is used to
-analysis the relationship between derived variables. A grid of
-temperature and humidity between 0 to 100°C and 0 to 100%RH with 0.25°C
-and 1%RH spacing. The expand.grid() function creates a complete
-factorial combination of all temperature and relative humidity values,
-where each unique temperature-humidity pair is represented..</p>
+<p><strong>mydata</strong></p>
+<p>This dataset contains environmental monitoring data collected from
+example heritage sites.</p>
+<p>It includes measurements of temperature (°C) and relative humidity
+(%) recorded by sensors over time.</p>
+<table class="table">
+<thead><tr class="header">
+<th align="left"><strong>Variable</strong></th>
+<th align="left"><strong>Description</strong></th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Site</td>
+<td align="left">Location name, e.g., “Museum”, “London”</td>
+</tr>
+<tr class="even">
+<td align="left">Sensor</td>
+<td align="left">Identifier for the specific sensor</td>
+</tr>
+<tr class="odd">
+<td align="left">Date</td>
+<td align="left">Timestamp of the measurement (POSIXct format)</td>
+</tr>
+<tr class="even">
+<td align="left">Temp</td>
+<td align="left">Air temperature in degrees Celsius</td>
+</tr>
+<tr class="odd">
+<td align="left">RH</td>
+<td align="left">Relative humidity as percentage (0-100%)</td>
+</tr>
+</tbody>
+</table>
+<p>Example usage to load the dataset from the package:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="va">Temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span>, <span class="fl">0.25</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mydata</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 5</span></span></span>
+<span><span class="co">#&gt;   Site   Sensor Date                 Temp    RH</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> London Room 1 2024-01-01 <span style="color: #949494;">00:00:00</span>  21.8  36.8</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> London Room 1 2024-01-01 <span style="color: #949494;">00:15:00</span>  21.8  36.7</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> London Room 1 2024-01-01 <span style="color: #949494;">00:29:59</span>  21.8  36.6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> London Room 1 2024-01-01 <span style="color: #949494;">00:44:59</span>  21.7  36.6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> London Room 1 2024-01-01 <span style="color: #949494;">00:59:59</span>  21.7  36.5</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> London Room 1 2024-01-01 <span style="color: #949494;">01:14:59</span>  21.7  36.2</span></span></code></pre></div>
+<p><strong>TRHgrid: Dataset used to visualise the functions</strong></p>
+<p>This dataset consists of a grid of temperature and relative humidity
+values used to visualise function behavior. Temperatures range from 0°C
+to 100°C in 0.25°C increments, and relative humidity (RH) ranges from 0%
+to 100% in 1% increments. The complete factorial combination of
+temperature and RH values is created using expand.grid(), where each
+pair represents a unique condition.</p>
+<p>Contour plots are generated to show interactions between derived
+variables across the temperature-RH grid. The dataset also supports
+validation checks for temperature and humidity calculations to
+understand relationships among the functions.</p>
+<p>Example R code to generate the dataset:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">Temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span>, <span class="fl">0.25</span><span class="op">)</span></span>
 <span><span class="va">RH</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span>, <span class="fl">1</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">TRHgrid</span> <span class="op">&lt;-</span> </span>
@@ -127,21 +171,27 @@ where each unique temperature-humidity pair is represented..</p>
 <span><span class="co">#&gt;  Max.   :100   Max.   :100</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="examples-of-use-of-the-functions">Examples of use of the functions<a class="anchor" aria-label="anchor" href="#examples-of-use-of-the-functions"></a>
+<h3 id="example-workflows">Example workflows<a class="anchor" aria-label="anchor" href="#example-workflows"></a>
 </h3>
-<p>Starting with input data of temperature and relative humidity, a wide
-range of derived variables can be computed.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="section level4">
+<h4 id="adjusting-humidity-using-the-package-functions">Adjusting Humidity using the package functions<a class="anchor" aria-label="anchor" href="#adjusting-humidity-using-the-package-functions"></a>
+</h4>
+<p>Starting with measurements of temperature (<code>Temp</code>) and
+relative humidity (<code>RH</code>), several derived variables commonly
+used can be calculated:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Functions applied on the mydata dataset</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mydata</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
 <span>    Absolute_Humidity <span class="op">=</span> <span class="fu"><a href="../reference/calcAH.html">calcAH</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>, </span>
 <span>    Dew_Point <span class="op">=</span> <span class="fu"><a href="../reference/calcDP.html">calcDP</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>, </span>
 <span>    Mixing_Ratio <span class="op">=</span> <span class="fu"><a href="../reference/calcMR.html">calcMR</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>, </span>
+<span>    Specific_Humidity <span class="op">=</span> <span class="fu"><a href="../reference/calcSH.html">calcSH</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>,</span>
 <span>    Humidity_Ratio <span class="op">=</span> <span class="fu"><a href="../reference/calcHR.html">calcHR</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>,</span>
 <span>    Enthalpy <span class="op">=</span> <span class="fu"><a href="../reference/calcEnthalpy.html">calcEnthalpy</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>, </span>
 <span>    Saturation_Vapour_Pressure <span class="op">=</span> <span class="fu"><a href="../reference/calcPws.html">calcPws</a></span><span class="op">(</span><span class="va">Temp</span><span class="op">)</span>, </span>
 <span>    Actual_Vapour_Pressure <span class="op">=</span> <span class="fu"><a href="../reference/calcPw.html">calcPw</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>, </span>
+<span>    RH_VP <span class="op">=</span> <span class="fl">100</span> <span class="op">*</span> <span class="op">(</span><span class="va">Actual_Vapour_Pressure</span> <span class="op">/</span> <span class="va">Saturation_Vapour_Pressure</span><span class="op">)</span>,</span>
 <span>    Air_Density <span class="op">=</span> <span class="fu"><a href="../reference/calcAD.html">calcAD</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>,</span>
 <span>    Temp_calc <span class="op">=</span> <span class="fu"><a href="../reference/calcTemp.html">calcTemp</a></span><span class="op">(</span><span class="va">RH</span>, <span class="va">Dew_Point</span><span class="op">)</span>,</span>
 <span>    RH_AH_calc <span class="op">=</span> <span class="fu"><a href="../reference/calcRH_AH.html">calcRH_AH</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">Absolute_Humidity</span><span class="op">)</span>,</span>
@@ -149,7 +199,7 @@ range of derived variables can be computed.</p>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 6</span></span>
-<span><span class="co">#&gt; Columns: 16</span></span>
+<span><span class="co">#&gt; Columns: 18</span></span>
 <span><span class="co">#&gt; $ Site                       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "London"<span style="color: #949494;">, </span>"London"<span style="color: #949494;">, </span>"London"<span style="color: #949494;">, </span>"London"<span style="color: #949494;">, </span>"Lo…</span></span>
 <span><span class="co">#&gt; $ Sensor                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Room 1"<span style="color: #949494;">, </span>"Room 1"<span style="color: #949494;">, </span>"Room 1"<span style="color: #949494;">, </span>"Room 1"<span style="color: #949494;">, </span>"Ro…</span></span>
 <span><span class="co">#&gt; $ Date                       <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span> 2024-01-01 00:00:00<span style="color: #949494;">, </span>2024-01-01 00:15:00<span style="color: #949494;">, </span>…</span></span>
@@ -158,108 +208,126 @@ range of derived variables can be computed.</p>
 <span><span class="co">#&gt; $ Absolute_Humidity          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 7.052415<span style="color: #949494;">, </span>7.033251<span style="color: #949494;">, </span>7.014087<span style="color: #949494;">, </span>6.973723<span style="color: #949494;">, </span>6.9…</span></span>
 <span><span class="co">#&gt; $ Dew_Point                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 6.383970<span style="color: #949494;">, </span>6.344456<span style="color: #949494;">, </span>6.304848<span style="color: #949494;">, </span>6.216205<span style="color: #949494;">, </span>6.1…</span></span>
 <span><span class="co">#&gt; $ Mixing_Ratio               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 5.957278<span style="color: #949494;">, </span>5.940935<span style="color: #949494;">, </span>5.924593<span style="color: #949494;">, </span>5.888156<span style="color: #949494;">, </span>5.8…</span></span>
-<span><span class="co">#&gt; $ Humidity_Ratio             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.8562656<span style="color: #949494;">, </span>0.8559272<span style="color: #949494;">, </span>0.8555872<span style="color: #949494;">, </span>0.8548233<span style="color: #949494;">,</span>…</span></span>
+<span><span class="co">#&gt; $ Specific_Humidity          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.8562656<span style="color: #949494;">, </span>0.8559272<span style="color: #949494;">, </span>0.8555872<span style="color: #949494;">, </span>0.8548233<span style="color: #949494;">,</span>…</span></span>
+<span><span class="co">#&gt; $ Humidity_Ratio             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 5.957278<span style="color: #949494;">, </span>5.940935<span style="color: #949494;">, </span>5.924593<span style="color: #949494;">, </span>5.888156<span style="color: #949494;">, </span>5.8…</span></span>
 <span><span class="co">#&gt; $ Enthalpy                   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 37.15665<span style="color: #949494;">, </span>37.11512<span style="color: #949494;">, </span>37.07359<span style="color: #949494;">, </span>36.87888<span style="color: #949494;">, </span>36.…</span></span>
 <span><span class="co">#&gt; $ Saturation_Vapour_Pressure <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 26.12119<span style="color: #949494;">, </span>26.12119<span style="color: #949494;">, </span>26.12119<span style="color: #949494;">, </span>25.96205<span style="color: #949494;">, </span>25.…</span></span>
 <span><span class="co">#&gt; $ Actual_Vapour_Pressure     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 9.612598<span style="color: #949494;">, </span>9.586477<span style="color: #949494;">, </span>9.560356<span style="color: #949494;">, </span>9.502110<span style="color: #949494;">, </span>9.4…</span></span>
-<span><span class="co">#&gt; $ Air_Density                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1.196694<span style="color: #949494;">, </span>1.196694<span style="color: #949494;">, </span>1.196694<span style="color: #949494;">, </span>1.197100<span style="color: #949494;">, </span>1.1…</span></span>
+<span><span class="co">#&gt; $ RH_VP                      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 36.8<span style="color: #949494;">, </span>36.7<span style="color: #949494;">, </span>36.6<span style="color: #949494;">, </span>36.6<span style="color: #949494;">, </span>36.5<span style="color: #949494;">, </span>36.2</span></span>
+<span><span class="co">#&gt; $ Air_Density                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1.192445<span style="color: #949494;">, </span>1.192457<span style="color: #949494;">, </span>1.192469<span style="color: #949494;">, </span>1.192899<span style="color: #949494;">, </span>1.1…</span></span>
 <span><span class="co">#&gt; $ Temp_calc                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 21.8<span style="color: #949494;">, </span>21.8<span style="color: #949494;">, </span>21.8<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.7</span></span>
 <span><span class="co">#&gt; $ RH_AH_calc                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 36.8<span style="color: #949494;">, </span>36.7<span style="color: #949494;">, </span>36.6<span style="color: #949494;">, </span>36.6<span style="color: #949494;">, </span>36.5<span style="color: #949494;">, </span>36.2</span></span>
 <span><span class="co">#&gt; $ RH_DP_calc                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 36.8<span style="color: #949494;">, </span>36.7<span style="color: #949494;">, </span>36.6<span style="color: #949494;">, </span>36.6<span style="color: #949494;">, </span>36.5<span style="color: #949494;">, </span>36.2</span></span></code></pre></div>
-<p>Using the relationship between temperature, absolute humidity and dew
-point can be used to adjust the relative humidity. The functions can be
-used in combination to determine the adjustments needed to reach a
-target relative humidity. This approach assumes constant pressure, which
-is typical for most indoor situations.</p>
-<p>Adjustment Methods:</p>
-<ol style="list-style-type: lower-alpha">
-<li>Changing Absolute Humidity:
+<p><strong>Principles of Humidity Adjustment</strong></p>
+<p>Humidity adjustment involves manipulating Absolute Humidity (AH), Dew
+Point, or Temperature to achieve a target Relative Humidity (RH). The
+following principles guide adjustments under the assumption of constant
+atmospheric pressure (typical for indoor environments):</p>
 <ul>
-<li>Increasing absolute humidity at a constant temperature will increase
-RH.</li>
-<li>Decreasing absolute humidity at a constant temperature will decrease
-RH.</li>
+<li>
+<p><strong>Changing Absolute Humidity:</strong></p>
+<ul>
+<li>Increasing AH at constant temperature raises RH.</li>
+<li>Decreasing AH at constant temperature lowers RH.</li>
 </ul>
 </li>
-<li>Changing Temperature:
+<li>
+<p><strong>Changing Temperature:</strong></p>
 <ul>
-<li>Decreasing temperature at constant absolute humidity will increase
-RH.</li>
-<li>Increasing temperature at constant absolute humidity will decrease
-RH.</li>
+<li>Lowering temperature at constant AH raises RH.</li>
+<li>Raising temperature at constant AH lowers RH.</li>
 </ul>
 </li>
-<li>Using Dew Point:
+<li>
+<p><strong>Using Dew Point:</strong></p>
 <ul>
-<li>The difference between air temperature and dew point indicates how
-close the air is to saturation.</li>
-<li>Adjusting temperature closer to the dew point increases RH, while
-moving it away decreases RH.</li>
+<li>The smaller the difference between air temperature and dew point,
+the closer the air is to saturation (100% RH).</li>
+<li>Moving temperature closer to dew point increases RH, whereas moving
+it away decreases RH.</li>
 </ul>
 </li>
-</ol>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span> </span>
-<span><span class="co"># Graph Absolute Humidity</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mydata</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/graph_psychrometric.html">graph_psychrometric</a></span><span class="op">(</span>y_func <span class="op">=</span> <span class="va">calcAH</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+</ul>
+<p><strong>Changing Absolute Humidity</strong></p>
+<p>The example below demonstrates adjusting RH by calculating a new
+absolute humidity corresponding to a target RH
+(<strong><code>tRH</code></strong>) at the measured temperature, and
+computing the effects on RH:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
+<span><span class="co"># Psychrometric chart of mydata</span></span>
+<span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Sensor</span> <span class="op">==</span> <span class="st">"Room 1"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/graph_psychrometric.html">graph_psychrometric</a></span><span class="op">(</span>y_func <span class="op">=</span> <span class="va">calcAH</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Room 1 Before Adjustment"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="co"># Changing Absolute Humidity </span></span>
-<span><span class="va">using_calcAH</span> <span class="op">&lt;-</span> <span class="va">mydata</span> <span class="op">|&gt;</span> </span>
+<span><span class="va">using_calcAH</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="va">mydata</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Sensor</span> <span class="op">==</span> <span class="st">"Room 1"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
-<span>    <span class="co"># Absolute humidity, AH</span></span>
+<span>    <span class="co"># Calculate the Absolute humidity, AH</span></span>
 <span>    AH <span class="op">=</span> <span class="fu"><a href="../reference/calcAH.html">calcAH</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>, </span>
-<span>    <span class="co"># Dew point, DP</span></span>
+<span>    <span class="co"># Calculate the Dew point, DP</span></span>
 <span>    DP <span class="op">=</span> <span class="fu"><a href="../reference/calcDP.html">calcDP</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>, </span>
-<span>    <span class="co"># Target RH</span></span>
+<span>    <span class="co"># Target RH, tRH </span></span>
 <span>    tRH <span class="op">=</span> <span class="fl">50</span>,           </span>
-<span>    <span class="co"># AH*: AHstar new absolute humidity using the target relative humidity (tRH)</span></span>
+<span>    <span class="co"># Target Absolute Humidity, AH*</span></span>
 <span>    AHstar <span class="op">=</span> <span class="fu"><a href="../reference/calcAH.html">calcAH</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">tRH</span><span class="op">)</span>,     </span>
-<span>    <span class="co"># Difference in measured AH and AH* </span></span>
+<span>    <span class="co"># Required AH change, difference between AH and AH* </span></span>
 <span>    dAH <span class="op">=</span> <span class="va">AHstar</span> <span class="op">-</span> <span class="va">AH</span>, </span>
-<span>    <span class="co"># Check</span></span>
+<span>    <span class="co"># Validation check (should be near zero)</span></span>
 <span>    AHcheck <span class="op">=</span> <span class="va">AHstar</span> <span class="op">-</span> <span class="op">(</span><span class="va">AH</span> <span class="op">+</span> <span class="va">dAH</span><span class="op">)</span>, </span>
-<span>    <span class="co"># RH*: RH star - the new RH using AH* and measured temperature</span></span>
+<span>    <span class="co"># New RH after adjustment, RH*</span></span>
 <span>    RHstarAH <span class="op">=</span> <span class="fu"><a href="../reference/calcRH_AH.html">calcRH_AH</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">AHstar</span><span class="op">)</span>, </span>
-<span>    <span class="co"># Difference from target</span></span>
+<span>    <span class="co"># RH difference from target</span></span>
 <span>    RHerrorAH <span class="op">=</span> <span class="va">RHstarAH</span> <span class="op">-</span> <span class="va">tRH</span>, </span>
 <span>  <span class="op">)</span> </span>
 <span></span>
-<span><span class="co"># Graph the results </span></span>
+<span><span class="co"># View adjustment summary</span></span>
+<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">using_calcAH</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Rows: 35,136</span></span>
+<span><span class="co">#&gt; Columns: 13</span></span>
+<span><span class="co">#&gt; $ Site      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "London"<span style="color: #949494;">, </span>"London"<span style="color: #949494;">, </span>"London"<span style="color: #949494;">, </span>"London"<span style="color: #949494;">, </span>"London"<span style="color: #949494;">, </span>"London"<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ Sensor    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Room 1"<span style="color: #949494;">, </span>"Room 1"<span style="color: #949494;">, </span>"Room 1"<span style="color: #949494;">, </span>"Room 1"<span style="color: #949494;">, </span>"Room 1"<span style="color: #949494;">, </span>"Room 1"<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ Date      <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span> 2024-01-01 00:00:00<span style="color: #949494;">, </span>2024-01-01 00:15:00<span style="color: #949494;">, </span>2024-01-01 00:29:…</span></span>
+<span><span class="co">#&gt; $ Temp      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 21.8<span style="color: #949494;">, </span>21.8<span style="color: #949494;">, </span>21.8<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.6<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ RH        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 36.8<span style="color: #949494;">, </span>36.7<span style="color: #949494;">, </span>36.6<span style="color: #949494;">, </span>36.6<span style="color: #949494;">, </span>36.5<span style="color: #949494;">, </span>36.2<span style="color: #949494;">, </span>36.3<span style="color: #949494;">, </span>36.4<span style="color: #949494;">, </span>36.0<span style="color: #949494;">, </span>36.0<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ AH        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 7.052415<span style="color: #949494;">, </span>7.033251<span style="color: #949494;">, </span>7.014087<span style="color: #949494;">, </span>6.973723<span style="color: #949494;">, </span>6.954670<span style="color: #949494;">, </span>6.897508<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ DP        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 6.383970<span style="color: #949494;">, </span>6.344456<span style="color: #949494;">, </span>6.304848<span style="color: #949494;">, </span>6.216205<span style="color: #949494;">, </span>6.176529<span style="color: #949494;">, </span>6.056922<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ tRH       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ AHstar    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 9.582086<span style="color: #949494;">, </span>9.582086<span style="color: #949494;">, </span>9.582086<span style="color: #949494;">, </span>9.526945<span style="color: #949494;">, </span>9.526945<span style="color: #949494;">, </span>9.526945<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ dAH       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 2.529671<span style="color: #949494;">, </span>2.548835<span style="color: #949494;">, </span>2.567999<span style="color: #949494;">, </span>2.553221<span style="color: #949494;">, </span>2.572275<span style="color: #949494;">, </span>2.629437<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ AHcheck   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ RHstarAH  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ RHerrorAH <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 7.105427e-15<span style="color: #949494;">, </span>7.105427e-15<span style="color: #949494;">, </span>7.105427e-15<span style="color: #949494;">, </span>0.000000e+00<span style="color: #949494;">, </span>0.00…</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># Plot of the difference in Absolute humidity and RH error</span></span>
 <span><span class="va">using_calcAH</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">Temp</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"red"</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">RH</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"blue"</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">AH</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"green"</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">RHstarAH</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"darkblue"</span><span class="op">)</span> <span class="op">+</span> <span class="co"># should be a straight line (see below)</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">AHstar</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"darkgreen"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Using absolute humidity to adjust relative humidity"</span>, </span>
-<span>       subtitle <span class="op">=</span> <span class="st">"Measure absolute humidity (light green), new absolute humidity (dark green),</span></span>
-<span><span class="st">       resultant relative humidity (dark blue)"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-4-2.png" width="700"></p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="co"># Plot the difference and check the error</span></span>
-<span><span class="va">using_calcAH</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">dAH</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"darkgreen"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">RHerrorAH</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"darkblue"</span><span class="op">)</span> <span class="op">+</span> <span class="co"># should be a straight line (see below)</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">dAH</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"cyan4"</span>, alpha <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">RHerrorAH</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"goldenrod"</span>, alpha <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html" class="external-link">geom_smooth</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">dAH</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Using absolute humidity to adjust relative humidity"</span>, </span>
-<span>       subtitle <span class="op">=</span> <span class="st">"Positve values means adding humidity and vice-versa"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Absolute Humidity Required to Achieve Target RH"</span>, </span>
+<span>       subtitle <span class="op">=</span> <span class="st">"Positive values indicate addition of humidity"</span>,</span>
+<span>       x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="st">"Absolute Humidity (g/m^3)"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-4-3.png" width="700"></p>
+<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-5-2.png" width="700"></p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="co"># Graph Air Density</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mydata</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/graph_psychrometric.html">graph_psychrometric</a></span><span class="op">(</span>y_func <span class="op">=</span> <span class="va">calcAD</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<span></span>
+<span><span class="co"># Psychrometric chart of new data (using_calcAH) after adjustment </span></span>
+<span><span class="va">using_calcAH</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Sensor</span> <span class="op">==</span> <span class="st">"Room 1"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/graph_psychrometric.html">graph_psychrometric</a></span><span class="op">(</span>RH <span class="op">=</span> <span class="st">"RHstarAH"</span>, y_func <span class="op">=</span> <span class="va">calcAH</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Room 1 After Humidity Adjustment"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-5-3.png" width="700"></p>
+<p><strong>Changing Temperature</strong></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># Changing Temperature</span></span>
@@ -284,38 +352,54 @@ moving it away decreases RH.</li>
 <span>    RHerrorT <span class="op">=</span> <span class="va">RHstarT</span> <span class="op">-</span> <span class="va">tRH</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Graph the results </span></span>
-<span><span class="va">using_calcTemp</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">Temp</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"red"</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">RH</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"blue"</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">Tstar</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"darkred"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">RHstarT</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"darkblue"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Using temperature to adjust relative humidity"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-5-2.png" width="700"></p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">using_calcTemp</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Rows: 35,136</span></span>
+<span><span class="co">#&gt; Columns: 13</span></span>
+<span><span class="co">#&gt; $ Site     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "London"<span style="color: #949494;">, </span>"London"<span style="color: #949494;">, </span>"London"<span style="color: #949494;">, </span>"London"<span style="color: #949494;">, </span>"London"<span style="color: #949494;">, </span>"London"<span style="color: #949494;">, </span>"…</span></span>
+<span><span class="co">#&gt; $ Sensor   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Room 1"<span style="color: #949494;">, </span>"Room 1"<span style="color: #949494;">, </span>"Room 1"<span style="color: #949494;">, </span>"Room 1"<span style="color: #949494;">, </span>"Room 1"<span style="color: #949494;">, </span>"Room 1"<span style="color: #949494;">, </span>"…</span></span>
+<span><span class="co">#&gt; $ Date     <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span> 2024-01-01 00:00:00<span style="color: #949494;">, </span>2024-01-01 00:15:00<span style="color: #949494;">, </span>2024-01-01 00:29:5…</span></span>
+<span><span class="co">#&gt; $ Temp     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 21.8<span style="color: #949494;">, </span>21.8<span style="color: #949494;">, </span>21.8<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.6<span style="color: #949494;">, </span>2…</span></span>
+<span><span class="co">#&gt; $ RH       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 36.8<span style="color: #949494;">, </span>36.7<span style="color: #949494;">, </span>36.6<span style="color: #949494;">, </span>36.6<span style="color: #949494;">, </span>36.5<span style="color: #949494;">, </span>36.2<span style="color: #949494;">, </span>36.3<span style="color: #949494;">, </span>36.4<span style="color: #949494;">, </span>36.0<span style="color: #949494;">, </span>36.0<span style="color: #949494;">, </span>3…</span></span>
+<span><span class="co">#&gt; $ AH       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 7.052415<span style="color: #949494;">, </span>7.033251<span style="color: #949494;">, </span>7.014087<span style="color: #949494;">, </span>6.973723<span style="color: #949494;">, </span>6.954670<span style="color: #949494;">, </span>6.897508<span style="color: #949494;">, </span>6…</span></span>
+<span><span class="co">#&gt; $ DP       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 6.383970<span style="color: #949494;">, </span>6.344456<span style="color: #949494;">, </span>6.304848<span style="color: #949494;">, </span>6.216205<span style="color: #949494;">, </span>6.176529<span style="color: #949494;">, </span>6.056922<span style="color: #949494;">, </span>6…</span></span>
+<span><span class="co">#&gt; $ tRH      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>5…</span></span>
+<span><span class="co">#&gt; $ Tstar    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 16.87424<span style="color: #949494;">, </span>16.83134<span style="color: #949494;">, </span>16.78833<span style="color: #949494;">, </span>16.69208<span style="color: #949494;">, </span>16.64899<span style="color: #949494;">, </span>16.51913<span style="color: #949494;">, </span>1…</span></span>
+<span><span class="co">#&gt; $ dTemp    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -4.925756<span style="color: #949494;">, </span>-4.968663<span style="color: #949494;">, </span>-5.011672<span style="color: #949494;">, </span>-5.007924<span style="color: #949494;">, </span>-5.051005<span style="color: #949494;">, </span>-5.180…</span></span>
+<span><span class="co">#&gt; $ Tcheck   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0…</span></span>
+<span><span class="co">#&gt; $ RHstarT  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>5…</span></span>
+<span><span class="co">#&gt; $ RHerrorT <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -7.105427e-15<span style="color: #949494;">, </span>1.421085e-14<span style="color: #949494;">, </span>1.421085e-14<span style="color: #949494;">, </span>1.421085e-14<span style="color: #949494;">, </span>0.00…</span></span>
+<span></span>
 <span><span class="co"># Plot the difference and check the error</span></span>
 <span><span class="va">using_calcTemp</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">dTemp</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"darkred"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">RHerrorT</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"darkblue"</span><span class="op">)</span> <span class="op">+</span> <span class="co"># should be a straight line (see below)</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">dTemp</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"firebrick"</span>, alpha <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">RHerrorT</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"goldenrod"</span>, alpha <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html" class="external-link">geom_smooth</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">dTemp</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Using temperature to adjust relative humidity"</span>, </span>
-<span>       subtitle <span class="op">=</span> <span class="st">"Positve values means increasing the temperature and vice-versa"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Temperature Required to Achieve Target RH"</span>,</span>
+<span>       subtitle <span class="op">=</span> <span class="st">"Positive values indicate increasing the temperature"</span>,</span>
+<span>       x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="st">"Temperature (°C)"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-5-3.png" width="700"></p>
+<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">using_calcTemp</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/graph_psychrometric.html">graph_psychrometric</a></span><span class="op">(</span>RH <span class="op">=</span> <span class="st">"RHstarT"</span>, y_func <span class="op">=</span> <span class="va">calcAH</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Room 1 After Temperature Adjustment"</span>,</span>
+<span>       subtitle <span class="op">=</span> <span class="st">"Temperature (°C)"</span><span class="op">)</span> <span class="op">+</span>  </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-6-2.png" width="700"></p>
+<p><strong>Using Dew Point</strong></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># Graph Dew Point</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mydata</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/graph_psychrometric.html">graph_psychrometric</a></span><span class="op">(</span>y_func <span class="op">=</span> <span class="va">calcDP</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Room 1 Before Adjustment"</span>,</span>
+<span>       subtitle <span class="op">=</span> <span class="st">"Dew Point"</span><span class="op">)</span> <span class="op">+</span>  </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span></span>
 <span><span class="co"># Using Dew Point</span></span>
 <span></span>
 <span><span class="va">using_calcDP</span> <span class="op">&lt;-</span> </span>
@@ -337,104 +421,246 @@ moving it away decreases RH.</li>
 <span>    RHerrorDP <span class="op">=</span> <span class="va">RHstarDP</span> <span class="op">-</span> <span class="va">tRH</span></span>
 <span>  <span class="op">)</span> </span>
 <span></span>
-<span><span class="va">using_calcDP</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">Temp</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"red"</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">RH</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"blue"</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">DP</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"hotpink"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">DPstar</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"purple"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">RHstarDP</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"darkblue"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Using dew point to adjust relative humidity"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-6-2.png" width="700"></p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">using_calcDP</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Rows: 35,136</span></span>
+<span><span class="co">#&gt; Columns: 12</span></span>
+<span><span class="co">#&gt; $ Site      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "London"<span style="color: #949494;">, </span>"London"<span style="color: #949494;">, </span>"London"<span style="color: #949494;">, </span>"London"<span style="color: #949494;">, </span>"London"<span style="color: #949494;">, </span>"London"<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ Sensor    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Room 1"<span style="color: #949494;">, </span>"Room 1"<span style="color: #949494;">, </span>"Room 1"<span style="color: #949494;">, </span>"Room 1"<span style="color: #949494;">, </span>"Room 1"<span style="color: #949494;">, </span>"Room 1"<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ Date      <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span> 2024-01-01 00:00:00<span style="color: #949494;">, </span>2024-01-01 00:15:00<span style="color: #949494;">, </span>2024-01-01 00:29:…</span></span>
+<span><span class="co">#&gt; $ Temp      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 21.8<span style="color: #949494;">, </span>21.8<span style="color: #949494;">, </span>21.8<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.6<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ RH        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 36.8<span style="color: #949494;">, </span>36.7<span style="color: #949494;">, </span>36.6<span style="color: #949494;">, </span>36.6<span style="color: #949494;">, </span>36.5<span style="color: #949494;">, </span>36.2<span style="color: #949494;">, </span>36.3<span style="color: #949494;">, </span>36.4<span style="color: #949494;">, </span>36.0<span style="color: #949494;">, </span>36.0<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ AH        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 7.052415<span style="color: #949494;">, </span>7.033251<span style="color: #949494;">, </span>7.014087<span style="color: #949494;">, </span>6.973723<span style="color: #949494;">, </span>6.954670<span style="color: #949494;">, </span>6.897508<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ DP        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 6.383970<span style="color: #949494;">, </span>6.344456<span style="color: #949494;">, </span>6.304848<span style="color: #949494;">, </span>6.216205<span style="color: #949494;">, </span>6.176529<span style="color: #949494;">, </span>6.056922<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ tRH       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ DPstar    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 10.91667<span style="color: #949494;">, </span>10.91667<span style="color: #949494;">, </span>10.91667<span style="color: #949494;">, </span>10.82472<span style="color: #949494;">, </span>10.82472<span style="color: #949494;">, </span>10.82472<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ RHstarDP  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ dDP       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 4.532701<span style="color: #949494;">, </span>4.572214<span style="color: #949494;">, </span>4.611823<span style="color: #949494;">, </span>4.608514<span style="color: #949494;">, </span>4.648190<span style="color: #949494;">, </span>4.767797<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ RHerrorDP <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1.421085e-14<span style="color: #949494;">, </span>1.421085e-14<span style="color: #949494;">, </span>1.421085e-14<span style="color: #949494;">, </span>0.000000e+00<span style="color: #949494;">, </span>0.00…</span></span>
+<span></span>
 <span><span class="co"># Plot the difference and check the error</span></span>
 <span><span class="va">using_calcDP</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">dDP</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"purple"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">RHerrorDP</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"darkblue"</span><span class="op">)</span> <span class="op">+</span> <span class="co"># should be a straight line (see below)</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">dDP</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"mediumvioletred"</span>, alpha <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">RHerrorDP</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"goldenrod"</span>, alpha <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html" class="external-link">geom_smooth</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">dDP</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Using dew point to adjust relative humidity"</span>, </span>
-<span>       subtitle <span class="op">=</span> <span class="st">"Positve values means increasing the dew point and vice-versa"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Dew Point Required to Achieve Target RH"</span>, </span>
+<span>       x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="st">"Dew Point (°C)"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-6-3.png" width="700"></p>
+<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-7-2.png" width="700"></p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span></span>
+<span><span class="va">using_calcDP</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/graph_psychrometric.html">graph_psychrometric</a></span><span class="op">(</span>RH <span class="op">=</span> <span class="st">"RHstarDP"</span>, y_func <span class="op">=</span> <span class="va">calcDP</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Room 1 After Dew Point Adjustment"</span>,</span>
+<span>       subtitle <span class="op">=</span> <span class="st">"Dew Point (°C)"</span><span class="op">)</span> <span class="op">+</span>  </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-7-3.png" width="700"></p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a>
+</h2>
+<div class="section level3">
+<h3 id="water-vapour-saturation-pressure">Water Vapour Saturation Pressure<a class="anchor" aria-label="anchor" href="#water-vapour-saturation-pressure"></a>
+</h3>
+<ul>
+<li><code>calcPws</code></li>
+</ul>
+<p><strong>Water vapour saturation pressure</strong> is the pressure at
+which water vapour in the air is balanced with liquid water at a certain
+temperature. It is the maximum amount of moisture air can hold at a
+temperature before the moisture starts to condense into water droplets
+(like dew or fog). This pressure increases as the temperature rises
+because warm air can hold more moisture than cold air.</p>
+<p>The <code>calcPws</code> function calculates the water vapour
+saturation pressure (in hPa) from temperature (in °C) based on one of
+several empirical formulations:</p>
+<ul>
+<li>Arden Buck equation (“Buck”) [default]</li>
+<li>International Association for the Properties of Water and Steam
+(“IAPWS”)</li>
+<li>August-Roche-Magnus approximation (“Magnus”)</li>
+<li>VAISALA humidity conversion formula (“VAISALA”)</li>
+</ul>
+<p>Each formulation provides slightly different estimates of saturation
+pressure, with varying complexities and accuracies suited to different
+applications. A discussion of the benefits and comparative accuracy of
+each equation can be found on Wikipedia: <a href="https://en.wikipedia.org/wiki/Vapour_pressure_of_water#cite_note-1" class="external-link uri">https://en.wikipedia.org/wiki/Vapour_pressure_of_water#cite_note-1</a></p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># Psychrometric graph of Saturation vapour Pressure calculated via `calcPws` </span></span>
+<span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/graph_psychrometric.html">graph_psychrometric</a></span><span class="op">(</span>y_func <span class="op">=</span> <span class="va">calcPws</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># Contour plot of saturation vapour pressure over temperature and humidity grid</span></span>
+<span><span class="va">TRHgrid</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Pws <span class="op">=</span> <span class="fu"><a href="../reference/calcPws.html">calcPws</a></span><span class="op">(</span><span class="va">Temp</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span>, z <span class="op">=</span> <span class="va">Pws</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour_filled</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">15</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Saturation Vapour Pressure"</span>, x <span class="op">=</span> <span class="st">"Temperature (°C)"</span>, y <span class="op">=</span> <span class="st">"Humidity (%)"</span>,</span>
+<span>       fill <span class="op">=</span> <span class="st">"hPa"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-8-2.png" width="700"></p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># Comparison of saturation vapour pressure calculated using different methods</span></span>
+<span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>    Pw_Buck <span class="op">=</span> <span class="fu"><a href="../reference/calcPws.html">calcPws</a></span><span class="op">(</span><span class="va">Temp</span>, method <span class="op">=</span> <span class="st">"Buck"</span><span class="op">)</span>,</span>
+<span>    Pw_IAPWS <span class="op">=</span> <span class="fu"><a href="../reference/calcPws.html">calcPws</a></span><span class="op">(</span><span class="va">Temp</span>, method <span class="op">=</span> <span class="st">"IAPWS"</span><span class="op">)</span>,</span>
+<span>    Pw_Magnus <span class="op">=</span> <span class="fu"><a href="../reference/calcPws.html">calcPws</a></span><span class="op">(</span><span class="va">Temp</span>, method <span class="op">=</span> <span class="st">"Magnus"</span><span class="op">)</span>,</span>
+<span>    Pw_VAISALA <span class="op">=</span> <span class="fu"><a href="../reference/calcPws.html">calcPws</a></span><span class="op">(</span><span class="va">Temp</span>, method <span class="op">=</span> <span class="st">"VAISALA"</span><span class="op">)</span></span>
+<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">Pw_Buck</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"darkblue"</span>, alpha <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">Pw_IAPWS</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"darkred"</span>, alpha <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">Pw_Magnus</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"darkgreen"</span>, alpha <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">Pw_VAISALA</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"orange"</span>, alpha <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Comparison of saturation vapour pressure equations"</span>, </span>
+<span>       subtitle <span class="op">=</span> <span class="st">"Buck (blue), IAPWS (red), Magnus (green), VAISALA (orange)"</span>, </span>
+<span>       y <span class="op">=</span> <span class="st">"Water vapour saturation pressure (hPa)"</span>, x <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-8-3.png" width="700"></p>
+</div>
+<div class="section level3">
+<h3 id="water-vapour-pressure">Water Vapour Pressure<a class="anchor" aria-label="anchor" href="#water-vapour-pressure"></a>
+</h3>
+<ul>
+<li><code>calcPw</code></li>
+</ul>
+<p><strong>Water vapour pressure</strong> is the pressure exerted by
+water molecules when they are in the air as a gas. It reflects how much
+moisture is actually present in the air at a given temperature.</p>
+<p>Unlike saturation vapour pressure—which is the maximum water vapour
+pressure the air can hold at that temperature—water vapour pressure
+tells us the current moisture level in the air.</p>
+<p>The function <code>calcPw</code> calculates this water vapour
+pressure from temperature and relative humidity.</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># Psychrometric graph of Water Vapour Pressure calculated via `calcPw`, Buck method</span></span>
+<span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/graph_psychrometric.html">graph_psychrometric</a></span><span class="op">(</span>y_func <span class="op">=</span> <span class="va">calcPw</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># # Contour plot of water vapour pressure over temperature and humidity grid</span></span>
+<span><span class="va">TRHgrid</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Pw <span class="op">=</span> <span class="fu"><a href="../reference/calcPw.html">calcPw</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span>, z <span class="op">=</span> <span class="va">Pw</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour_filled</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">15</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Water Vapour Pressure"</span>, </span>
+<span>       x <span class="op">=</span> <span class="st">"Temperature (°C)"</span>, y <span class="op">=</span> <span class="st">"Humidity (%)"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Water Vapour Pressure"</span>, x <span class="op">=</span> <span class="st">"Temperature (°C)"</span>, y <span class="op">=</span> <span class="st">"Humidity (%)"</span>,</span>
+<span>       fill <span class="op">=</span> <span class="st">"hPa"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-9-2.png" width="700"></p>
 </div>
 <div class="section level3">
 <h3 id="temperature">Temperature<a class="anchor" aria-label="anchor" href="#temperature"></a>
 </h3>
-<p><code>calcTemp</code></p>
-<p>The temperature calculations are explored to determine the accuracy
-of temperature derivation using dew point and relative humidity.
-Visualisation of the temperature calculation against the original
-temperature and relative humidity. The temperature calculation is
-presented as a filled contour plot of the calculated temperature using
-calcTemp through dew point which is calculated using calcDP.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mydata</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>DewPoint <span class="op">=</span> <span class="fu"><a href="../reference/calcDP.html">calcDP</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>, Temp2 <span class="op">=</span> <span class="fu"><a href="../reference/calcTemp.html">calcTemp</a></span><span class="op">(</span><span class="va">RH</span>, <span class="va">DewPoint</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 7</span></span></span>
-<span><span class="co">#&gt;   Site   Sensor Date                 Temp    RH DewPoint Temp2</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> London Room 1 2024-01-01 <span style="color: #949494;">00:00:00</span>  21.8  36.8     6.38  21.8</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> London Room 1 2024-01-01 <span style="color: #949494;">00:15:00</span>  21.8  36.7     6.34  21.8</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> London Room 1 2024-01-01 <span style="color: #949494;">00:29:59</span>  21.8  36.6     6.30  21.8</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> London Room 1 2024-01-01 <span style="color: #949494;">00:44:59</span>  21.7  36.6     6.22  21.7</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> London Room 1 2024-01-01 <span style="color: #949494;">00:59:59</span>  21.7  36.5     6.18  21.7</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> London Room 1 2024-01-01 <span style="color: #949494;">01:14:59</span>  21.7  36.2     6.06  21.7</span></span>
-<span></span>
+<ul>
+<li><code>calcTemp</code></li>
+</ul>
+<p>The temperature calculation function, <code>calcTemp</code>, uses
+measurements of dew point and relative humidity to estimate the air
+temperature. This is useful to check how accurately temperature can be
+derived from humidity-related data. Dew point is calculated using
+<code>calcDP</code></p>
+<p>The dew point is the temperature at which air becomes saturated and
+water vapour starts to condense. Using dew point and relative humidity
+together provides a way to calculate temperature indirectly.</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># Calculate Dew Point and Temperature from dataset</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mydata</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>    DewPoint <span class="op">=</span> <span class="fu"><a href="../reference/calcDP.html">calcDP</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>, </span>
+<span>    Temp_via_DP <span class="op">=</span> <span class="fu"><a href="../reference/calcTemp.html">calcTemp</a></span><span class="op">(</span><span class="va">RH</span>, <span class="va">DewPoint</span><span class="op">)</span>,</span>
+<span>    Temp_error <span class="op">=</span> <span class="va">Temp_via_DP</span> <span class="op">-</span> <span class="va">Temp</span></span>
+<span>    <span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 8</span></span></span>
+<span><span class="co">#&gt;   Site   Sensor Date                 Temp    RH DewPoint Temp_via_DP Temp_error</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> London Room 1 2024-01-01 <span style="color: #949494;">00:00:00</span>  21.8  36.8     6.38        21.8  -<span style="color: #BB0000;">3.55</span><span style="color: #949494;">e</span><span style="color: #BB0000;">-15</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> London Room 1 2024-01-01 <span style="color: #949494;">00:15:00</span>  21.8  36.7     6.34        21.8   0   <span style="color: #949494;"> </span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> London Room 1 2024-01-01 <span style="color: #949494;">00:29:59</span>  21.8  36.6     6.30        21.8   0   <span style="color: #949494;"> </span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> London Room 1 2024-01-01 <span style="color: #949494;">00:44:59</span>  21.7  36.6     6.22        21.7  -<span style="color: #BB0000;">3.55</span><span style="color: #949494;">e</span><span style="color: #BB0000;">-15</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> London Room 1 2024-01-01 <span style="color: #949494;">00:59:59</span>  21.7  36.5     6.18        21.7   0   <span style="color: #949494;"> </span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> London Room 1 2024-01-01 <span style="color: #949494;">01:14:59</span>  21.7  36.2     6.06        21.7   0   <span style="color: #949494;"> </span></span></span></code></pre></div>
+<p>The difference (<code>Temp_error</code>) between calculated and
+actual temperature reveals the accuracy of the calculation across
+varying temperature and relative humidity in the TRHgrid dataset.
+Smaller values mean less error.</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># Error plot to visualise difference between calculated and original temperature</span></span>
 <span><span class="va">TRHgrid</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
 <span>    DewPoint <span class="op">=</span> <span class="fu"><a href="../reference/calcDP.html">calcDP</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>,</span>
-<span>    TempCalc <span class="op">=</span> <span class="fu"><a href="../reference/calcTemp.html">calcTemp</a></span><span class="op">(</span><span class="va">RH</span>, <span class="va">DewPoint</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span>, z <span class="op">=</span> <span class="va">TempCalc</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour_filled</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">20</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">50</span>, <span class="fl">100</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Calculated temperature vs actual"</span>, </span>
-<span>       subtitle <span class="op">=</span> <span class="st">"calcDP(Temp, RH) &gt; DewPoint &gt; TempCalc"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
-<p>Visualisation of the temperature calculation against the original
-temperature and relative humidity. The plot aims to validate the
-accuracy and consistency of temperature calculations based on relative
-humidity and dew point.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">TRHgrid</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
-<span>    DewPoint <span class="op">=</span> <span class="fu"><a href="../reference/calcDP.html">calcDP</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>,</span>
-<span>    TempCalc <span class="op">=</span> <span class="fu"><a href="../reference/calcTemp.html">calcTemp</a></span><span class="op">(</span><span class="va">RH</span>, <span class="va">DewPoint</span><span class="op">)</span>, </span>
-<span>    Temp_error <span class="op">=</span> <span class="va">TempCalc</span> <span class="op">-</span> <span class="va">Temp</span></span>
+<span>    Temp_via_DP <span class="op">=</span> <span class="fu"><a href="../reference/calcTemp.html">calcTemp</a></span><span class="op">(</span><span class="va">RH</span>, <span class="va">DewPoint</span><span class="op">)</span>, </span>
+<span>    Temp_error <span class="op">=</span> <span class="va">Temp_via_DP</span> <span class="op">-</span> <span class="va">Temp</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span>, z <span class="op">=</span> <span class="va">Temp_error</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour_filled</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Difference between calculated temperature vs actual"</span>, </span>
-<span>       subtitle <span class="op">=</span> <span class="st">"calcDP(Temp, RH) &gt; DewPoint &gt; TempCalc - Temp (original)"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour_filled</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Difference between calculated and actual temperature"</span>, </span>
+<span>       subtitle <span class="op">=</span> <span class="st">"Shows accuracy of calculation"</span>,</span>
+<span>       x <span class="op">=</span> <span class="st">"Temperature (°C)"</span>, y <span class="op">=</span> <span class="st">"Humidity (%)"</span>, fill <span class="op">=</span> <span class="st">"Difference"</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
+<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 </div>
 <div class="section level3">
 <h3 id="relative-humidity">Relative Humidity<a class="anchor" aria-label="anchor" href="#relative-humidity"></a>
 </h3>
-<p><code>calcRH_AH</code> and <code>calcRH_DP</code></p>
-<p>This section investigates relative humidity calculations using
-derivations from dew point and absolute humidity. Contour plots
-demonstrate the relationships between calculated and original relative
-humidity values and the errors.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<ul>
+<li>
+<code>calcRH_AH</code> and <code>calcRH_DP</code>
+</li>
+</ul>
+<p><strong>Relative humidity (RH)</strong> is a measure of how much
+moisture is in the air compared to the maximum amount the air can hold
+at that temperature. It is expressed as a percentage: 100% means the air
+is fully saturated and can hold no more moisture.</p>
+<p>The package includes two ways to calculate relative humidity:</p>
+<ul>
+<li>
+<strong>Using Dew Point</strong> (<code>calcRH_DP</code>): This
+method uses the temperature and the dew point (the temperature at which
+air becomes saturated) to calculate relative humidity. It’s a common
+approach because dew point is often directly measured or estimated.</li>
+<li>
+<strong>Using Absolute Humidity</strong> (<code>calcRH_AH</code>):
+This method uses the temperature and absolute humidity (the actual
+amount of moisture in the air) to calculate relative humidity.</li>
+</ul>
+<p>Contour plots compare the relative humidity calculated from these
+functions against the original measured RH values, showing how closely
+they match, and where errors or differences occur.</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="va">TRHgrid</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span><span class="co"># Calculate RH from Dew Point</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mydata</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
 <span>    DewPoint <span class="op">=</span> <span class="fu"><a href="../reference/calcDP.html">calcDP</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>,</span>
-<span>    RH_DPcalc <span class="op">=</span> <span class="fu"><a href="../reference/calcRH_DP.html">calcRH_DP</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">DewPoint</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span>, z <span class="op">=</span> <span class="va">RH_DPcalc</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour_filled</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">20</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Calculated humidity via dew point vs actual"</span>, </span>
-<span>       subtitle <span class="op">=</span> <span class="st">"calcDP(Temp, RH) &gt; DewPoint &gt; RHcalc"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<span>    RH_via_DP <span class="op">=</span> <span class="fu"><a href="../reference/calcRH_DP.html">calcRH_DP</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">DewPoint</span><span class="op">)</span>, </span>
+<span>    RH_DP_error <span class="op">=</span> <span class="va">RH_via_DP</span> <span class="op">-</span> <span class="va">RH</span></span>
+<span>    <span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 8</span></span></span>
+<span><span class="co">#&gt;   Site   Sensor Date                 Temp    RH DewPoint RH_via_DP RH_DP_error</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> London Room 1 2024-01-01 <span style="color: #949494;">00:00:00</span>  21.8  36.8     6.38      36.8    0   <span style="color: #949494;"> </span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> London Room 1 2024-01-01 <span style="color: #949494;">00:15:00</span>  21.8  36.7     6.34      36.7    7.11<span style="color: #949494;">e</span><span style="color: #BB0000;">-15</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> London Room 1 2024-01-01 <span style="color: #949494;">00:29:59</span>  21.8  36.6     6.30      36.6    0   <span style="color: #949494;"> </span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> London Room 1 2024-01-01 <span style="color: #949494;">00:44:59</span>  21.7  36.6     6.22      36.6    0   <span style="color: #949494;"> </span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> London Room 1 2024-01-01 <span style="color: #949494;">00:59:59</span>  21.7  36.5     6.18      36.5    0   <span style="color: #949494;"> </span>   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> London Room 1 2024-01-01 <span style="color: #949494;">01:14:59</span>  21.7  36.2     6.06      36.2    0   <span style="color: #949494;"> </span></span></span>
 <span></span>
+<span><span class="co"># Error plot for RH from Dew Point</span></span>
 <span><span class="va">TRHgrid</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
 <span>    DewPoint <span class="op">=</span> <span class="fu"><a href="../reference/calcDP.html">calcDP</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>,</span>
@@ -442,261 +668,325 @@ humidity values and the errors.</p>
 <span>    RH_DP_error <span class="op">=</span> <span class="va">RH_DPcalc</span> <span class="op">-</span> <span class="va">RH</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span>, z <span class="op">=</span> <span class="va">RH_DP_error</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Calculated humidity vs actual"</span>, </span>
-<span>       subtitle <span class="op">=</span> <span class="st">"calcDP(Temp, RH) &gt; DewPoint &gt; RHcalc - RH (original)"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour_filled</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Difference between calculated and actual humidity"</span>, </span>
+<span>       subtitle <span class="op">=</span> <span class="st">"RH calc from dew point minus original RH"</span>,</span>
+<span>       x <span class="op">=</span> <span class="st">"Temperature (°C)"</span>, y <span class="op">=</span> <span class="st">"Humidity (%)"</span>, fill <span class="op">=</span> <span class="st">"Difference"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour_filled</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-9-2.png" width="700"></p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="va">TRHgrid</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>RH_AHcalc <span class="op">=</span> <span class="fu"><a href="../reference/calcRH_AH.html">calcRH_AH</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="fu"><a href="../reference/calcAH.html">calcAH</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span>, z <span class="op">=</span> <span class="va">RH_AHcalc</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour_filled</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">20</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Calculated humidity via absolute humidity vs actual"</span>, </span>
-<span>       subtitle <span class="op">=</span> <span class="st">"calcAH(Temp, RH) &gt; Absolute humidity &gt; RHcalc - RH (original)"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<span><span class="co"># Calculate RH from Absolute Humidity</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mydata</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>    AH <span class="op">=</span> <span class="fu"><a href="../reference/calcAH.html">calcAH</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>,</span>
+<span>    RH_via_AH <span class="op">=</span> <span class="fu"><a href="../reference/calcRH_AH.html">calcRH_AH</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">AH</span><span class="op">)</span>, </span>
+<span>    RH_AH_error <span class="op">=</span> <span class="va">RH_via_AH</span> <span class="op">-</span> <span class="va">RH</span></span>
+<span>    <span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 8</span></span></span>
+<span><span class="co">#&gt;   Site   Sensor Date                 Temp    RH    AH RH_via_AH RH_AH_error</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> London Room 1 2024-01-01 <span style="color: #949494;">00:00:00</span>  21.8  36.8  7.05      36.8    7.11<span style="color: #949494;">e</span><span style="color: #BB0000;">-15</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> London Room 1 2024-01-01 <span style="color: #949494;">00:15:00</span>  21.8  36.7  7.03      36.7    7.11<span style="color: #949494;">e</span><span style="color: #BB0000;">-15</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> London Room 1 2024-01-01 <span style="color: #949494;">00:29:59</span>  21.8  36.6  7.01      36.6    7.11<span style="color: #949494;">e</span><span style="color: #BB0000;">-15</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> London Room 1 2024-01-01 <span style="color: #949494;">00:44:59</span>  21.7  36.6  6.97      36.6    7.11<span style="color: #949494;">e</span><span style="color: #BB0000;">-15</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> London Room 1 2024-01-01 <span style="color: #949494;">00:59:59</span>  21.7  36.5  6.95      36.5    7.11<span style="color: #949494;">e</span><span style="color: #BB0000;">-15</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> London Room 1 2024-01-01 <span style="color: #949494;">01:14:59</span>  21.7  36.2  6.90      36.2    0   <span style="color: #949494;"> </span></span></span>
+<span></span>
+<span><span class="co"># Error plot for RH from Absolute Humidity</span></span>
 <span><span class="va">TRHgrid</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>RH_AH_error <span class="op">=</span> <span class="fu"><a href="../reference/calcRH_AH.html">calcRH_AH</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="fu"><a href="../reference/calcAH.html">calcAH</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span><span class="op">)</span> <span class="op">-</span> <span class="va">RH</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span>, z <span class="op">=</span> <span class="va">RH_AH_error</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Calculated humidity via absolute humidity vs actual"</span>, </span>
-<span>       subtitle <span class="op">=</span> <span class="st">"calcAH(Temp, RH) &gt; Absolute humidity &gt; RHcalc - RH (original)"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour_filled</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Difference between calculated and actual humidity"</span>, </span>
+<span>       subtitle <span class="op">=</span> <span class="st">"RH calc from absolute humidity minus original RH"</span>,</span>
+<span>       x <span class="op">=</span> <span class="st">"Temperature (°C)"</span>, y <span class="op">=</span> <span class="st">"Humidity (%)"</span>, fill <span class="op">=</span> <span class="st">"Difference"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour_filled</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-10-2.png" width="700"></p>
+<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
 </div>
 <div class="section level3">
-<h3 id="absolute-humidity">Absolute humidity<a class="anchor" aria-label="anchor" href="#absolute-humidity"></a>
+<h3 id="absolute-humidity">Absolute Humidity<a class="anchor" aria-label="anchor" href="#absolute-humidity"></a>
 </h3>
-<p><code>calcAH</code></p>
-<p>The graph shows how absolute temperature varies with changing
-temperature and relative humidity.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="co"># Graph Absolute Humidity</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mydata</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<ul>
+<li><code>calcAH</code></li>
+</ul>
+<p><strong>Absolute humidity (AH)</strong> measures the actual amount of
+water vapour present in the air, regardless of temperature. It is
+expressed as the mass of water vapour per volume of air (e.g., grams per
+cubic meter). In contrast to relative humidity, absolute humidity
+represents the true moisture content and does not change directly when
+temperature changes.</p>
+<p>The function <code>calcAH</code> calculates absolute humidity from
+temperature and relative humidity measurements.</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Graph Absolute Humidity </span></span>
+<span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/graph_psychrometric.html">graph_psychrometric</a></span><span class="op">(</span>y_func <span class="op">=</span> <span class="va">calcAH</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
+<span><span class="co"># Contour plot over temperature-relative humidity grid</span></span>
 <span><span class="va">TRHgrid</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>AH <span class="op">=</span> <span class="fu"><a href="../reference/calcAH.html">calcAH</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span>, z <span class="op">=</span> <span class="va">AH</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour_filled</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour_filled</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">15</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Absolute Humidity"</span>, x <span class="op">=</span> <span class="st">"Temperature (°C)"</span>, y <span class="op">=</span> <span class="st">"Humidity (%)"</span>,</span>
+<span>       fill <span class="op">=</span> <span class="st">"g/m^3"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-11-2.png" width="700"></p>
-</div>
-<div class="section level3">
-<h3 id="specific-humidity">Specific humidity<a class="anchor" aria-label="anchor" href="#specific-humidity"></a>
-</h3>
-<p><code>calcSH</code></p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="co"># Graph Specific Humidity</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mydata</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/graph_psychrometric.html">graph_psychrometric</a></span><span class="op">(</span>y_func <span class="op">=</span> <span class="va">calcSH</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="va">TRHgrid</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>SpecificHumidity <span class="op">=</span> <span class="fu"><a href="../reference/calcSH.html">calcSH</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span>, z <span class="op">=</span> <span class="va">SpecificHumidity</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour_filled</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-12-2.png" width="700"></p>
+<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-14-2.png" width="700"></p>
 </div>
 <div class="section level3">
 <h3 id="dew-point">Dew Point<a class="anchor" aria-label="anchor" href="#dew-point"></a>
 </h3>
-<p><code>calcDP</code></p>
-<p>The graphs shows how the dew point temperature varies with changing
-temperature and relative humidity.</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="co"># Graph Dew Point</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mydata</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/graph_psychrometric.html">graph_psychrometric</a></span><span class="op">(</span>y_func <span class="op">=</span> <span class="va">calcDP</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="va">TRHgrid</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>DP <span class="op">=</span> <span class="fu"><a href="../reference/calcDP.html">calcDP</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span>, z <span class="op">=</span> <span class="va">DP</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour_filled</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-13-2.png" width="700"></p>
-</div>
-<div class="section level3">
-<h3 id="water-vapour-saturation-pressure">Water vapour saturation pressure<a class="anchor" aria-label="anchor" href="#water-vapour-saturation-pressure"></a>
-</h3>
-<p><code>calcPws</code></p>
 <ul>
-<li>Saturation vapor pressure calculation</li>
+<li><code>calcDP</code></li>
 </ul>
-<p>Function to calculate water vapour saturation pressure (hPa) from
-temperature (°C) using the International Association for the Properties
-of Water and Steam (IAPWS as default), Arden Buck equation (Buck) or
-August-Roche-Magnus approximation (Magnus).</p>
-<p>A discussion of each formulation is given in Wikipedia and the
-benefits of each equation: <a href="https://en.wikipedia.org/wiki/Vapour_pressure_of_water#cite_note-1" class="external-link uri">https://en.wikipedia.org/wiki/Vapour_pressure_of_water#cite_note-1</a></p>
+<p><strong>Dew point (DP)</strong> is the temperature at which air
+becomes fully saturated with moisture and water vapour begins to
+condense into liquid water—forming dew, fog, or frost. It basically
+tells us how much moisture is in the air.</p>
+<ul>
+<li>If the air cools down to the dew point temperature, moisture will
+start to appear as water droplets.</li>
+<li>The closer the dew point is to the actual air temperature, the
+higher the relative humidity and the muggier or damper the air
+feels.</li>
+<li>Dew point stays the same even if the air temperature changes, making
+it a reliable indicator of moisture content.</li>
+</ul>
+<p>The function <code>calcDP</code> calculates the dew point temperature
+from measured air temperature and relative humidity.</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Psychrometric graph of dew point</span></span>
+<span><span class="va">mydata</span> <span class="op">|&gt;</span>   </span>
+<span>  <span class="fu"><a href="../reference/graph_psychrometric.html">graph_psychrometric</a></span><span class="op">(</span>y_func <span class="op">=</span> <span class="va">calcDP</span><span class="op">)</span> <span class="op">+</span>   </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span>  </span></code></pre></div>
+<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="co"># Graph Saturation vapor pressure </span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mydata</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/graph_psychrometric.html">graph_psychrometric</a></span><span class="op">(</span>y_func <span class="op">=</span> <span class="va">calcPws</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="va">TRHgrid</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Pws <span class="op">=</span> <span class="fu"><a href="../reference/calcPws.html">calcPws</a></span><span class="op">(</span><span class="va">Temp</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span>, z <span class="op">=</span> <span class="va">Pws</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour_filled</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-14-2.png" width="700"></p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span></span>
-<span><span class="co"># Graph Saturation vapor pressure using different equations</span></span>
-<span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
-<span>    Pw_IAPWS <span class="op">=</span> <span class="fu"><a href="../reference/calcPws.html">calcPws</a></span><span class="op">(</span><span class="va">Temp</span>, method <span class="op">=</span> <span class="st">"IAPWS"</span><span class="op">)</span>,</span>
-<span>    Pw_Buck <span class="op">=</span> <span class="fu"><a href="../reference/calcPws.html">calcPws</a></span><span class="op">(</span><span class="va">Temp</span>, method <span class="op">=</span> <span class="st">"Buck"</span><span class="op">)</span>,</span>
-<span>    Pw_Magnus <span class="op">=</span> <span class="fu"><a href="../reference/calcPws.html">calcPws</a></span><span class="op">(</span><span class="va">Temp</span>, method <span class="op">=</span> <span class="st">"Magnus"</span><span class="op">)</span>,</span>
-<span>    Pw_VAISALA <span class="op">=</span> <span class="fu"><a href="../reference/calcPws.html">calcPws</a></span><span class="op">(</span><span class="va">Temp</span>, method <span class="op">=</span> <span class="st">"VAISALA"</span><span class="op">)</span></span>
-<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">Pw_IAPWS</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"darkblue"</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">Pw_Buck</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"blue"</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">Pw_Magnus</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"purple"</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">Pw_VAISALA</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"violet"</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-14-3.png" width="700"></p>
-</div>
-<div class="section level3">
-<h3 id="water-vapour-pressure">Water vapour pressure<a class="anchor" aria-label="anchor" href="#water-vapour-pressure"></a>
-</h3>
-<p><code>calcPw</code></p>
-<ul>
-<li>Actual water vapor pressure determination</li>
-</ul>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="co"># Graph Saturation vapor pressure </span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mydata</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/graph_psychrometric.html">graph_psychrometric</a></span><span class="op">(</span>y_func <span class="op">=</span> <span class="va">calcPw</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="va">TRHgrid</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Pw <span class="op">=</span> <span class="fu"><a href="../reference/calcPw.html">calcPw</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span>, z <span class="op">=</span> <span class="va">Pw</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour_filled</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op">+</span> </span>
+<span><span class="co"># Contour plot of dew point over temperature and RH</span></span>
+<span><span class="va">TRHgrid</span> <span class="op">|&gt;</span>   </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>DP <span class="op">=</span> <span class="fu"><a href="../reference/calcDP.html">calcDP</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span>   </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span>, z <span class="op">=</span> <span class="va">DP</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>    </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour_filled</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">15</span><span class="op">)</span> <span class="op">+</span>    </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Dew Point"</span>, x <span class="op">=</span> <span class="st">"Temperature (°C)"</span>, y <span class="op">=</span> <span class="st">"Humidity (%)"</span>,        </span>
+<span>       fill <span class="op">=</span> <span class="st">"°C"</span><span class="op">)</span> <span class="op">+</span>   </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Humidity-functions_files/figure-html/unnamed-chunk-15-2.png" width="700"></p>
 </div>
 <div class="section level3">
-<h3 id="mixing-ratio">Mixing ratio<a class="anchor" aria-label="anchor" href="#mixing-ratio"></a>
+<h3 id="specific-humidity">Specific Humidity<a class="anchor" aria-label="anchor" href="#specific-humidity"></a>
 </h3>
-<p><code>calcMR</code></p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<ul>
+<li><code>calcSH</code></li>
+</ul>
+<p><strong>Specific humidity (SH)</strong> measures the amount of water
+vapour in the air relative to the total mass of the air, including both
+dry air and the water vapour. It is usually expressed in grams of water
+vapour per kilogram of moist air (g/kg).</p>
+<p>Unlike relative humidity, which depends on temperature, specific
+humidity directly quantifies the actual moisture content in the air and
+does not change with temperature or pressure.</p>
+<ul>
+<li>Specific humidity differs slightly from the mixing ratio, which
+measures the mass of water vapor relative only to the mass of dry air.
+The key difference is that specific humidity divides by the total air
+mass (dry air plus water vapor), while the mixing ratio divides only by
+the dry air mass. Because the mass of water vapor is usually much
+smaller than the mass of dry air, the two values are very similar, but
+specific humidity is always slightly less than the mixing ratio.</li>
+</ul>
+<p>The function <code>calcSH</code> calculates specific humidity from
+temperature and relative humidity data, which helps in understanding the
+true moisture amount in air regardless of changes in temperature.</p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="co"># Graph Mixing Ratio</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mydata</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/graph_psychrometric.html">graph_psychrometric</a></span><span class="op">(</span>y_func <span class="op">=</span> <span class="va">calcMR</span><span class="op">)</span> <span class="op">+</span></span>
+<span><span class="co"># Psychrometric graph of specific humidity</span></span>
+<span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/graph_psychrometric.html">graph_psychrometric</a></span><span class="op">(</span>y_func <span class="op">=</span> <span class="va">calcSH</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Humidity-functions_files/figure-html/unnamed-chunk-16-1.png" width="700"></p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
+<span><span class="co"># Contour plot of specific humidity over temperature and RH</span></span>
 <span><span class="va">TRHgrid</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>MR <span class="op">=</span> <span class="fu"><a href="../reference/calcMR.html">calcMR</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span>, z <span class="op">=</span> <span class="va">MR</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour_filled</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>SH <span class="op">=</span> <span class="fu"><a href="../reference/calcSH.html">calcSH</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span>, z <span class="op">=</span> <span class="va">SH</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour_filled</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">15</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Specific Humidity"</span>, x <span class="op">=</span> <span class="st">"Temperature (°C)"</span>, y <span class="op">=</span> <span class="st">"Humidity (%)"</span>,</span>
+<span>       fill <span class="op">=</span> <span class="st">"g/kg"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Humidity-functions_files/figure-html/unnamed-chunk-16-2.png" width="700"></p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+</div>
+<div class="section level3">
+<h3 id="mixing-ratio">Mixing Ratio<a class="anchor" aria-label="anchor" href="#mixing-ratio"></a>
+</h3>
+<ul>
+<li><code>calcMR</code></li>
+</ul>
+<p><strong>Mixing ratio (MR)</strong> is the mass of water vapor per
+unit mass of dry air in a given volume. It is commonly expressed in
+grams of water vapor per kilogram of dry air (g/kg). This measure is
+important because it remains nearly constant when the air changes
+temperature or pressure, making it useful for tracking moisture content
+in moving air masses.</p>
+<ul>
+<li>The mixing ratio tells us how much water vapor is mixed into dry
+air.</li>
+<li>It differs slightly from specific humidity (which is water vapor per
+total moist air) but is closely related.</li>
+<li>While both mixing ratio and specific humidity measure how much water
+vapor is in the air, the key difference lies in their denominators:
+mixing ratio expresses the mass of water vapor relative only to the mass
+of dry air, whereas specific humidity expresses it relative to the total
+mass of the moist air (dry air plus water vapor). Because the mass of
+water vapor is usually small compared to dry air, both values are very
+similar, but specific humidity is always slightly less than the mixing
+ratio.</li>
+<li>The mixing ratio is a fundamental concept used in meteorology, air
+conditioning, and conservation for understanding and controlling
+humidity.</li>
+</ul>
+<p>The function <code>calcMR</code> calculates the mixing ratio from
+temperature and relative humidity data.</p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
+<span><span class="co"># Psychrometric graph of mixing ratio</span></span>
+<span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/graph_psychrometric.html">graph_psychrometric</a></span><span class="op">(</span>y_func <span class="op">=</span> <span class="va">calcMR</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># Contour plot of mixing ratio over temperature and RH</span></span>
 <span><span class="va">TRHgrid</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>MR_log10 <span class="op">=</span> <span class="fu"><a href="../reference/calcMR.html">calcMR</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span>, z <span class="op">=</span> <span class="va">MR_log10</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour_filled</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-16-3.png" width="700"></p>
-</div>
-<div class="section level3">
-<h3 id="humidity-ratio">Humidity ratio<a class="anchor" aria-label="anchor" href="#humidity-ratio"></a>
-</h3>
-<p><code>calcHR</code></p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="co"># Graph Humidity Ratio</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mydata</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/graph_psychrometric.html">graph_psychrometric</a></span><span class="op">(</span>y_func <span class="op">=</span> <span class="va">calcHR</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="va">TRHgrid</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>HumidityRatio <span class="op">=</span> <span class="fu"><a href="../reference/calcHR.html">calcHR</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span>, z <span class="op">=</span> <span class="va">HumidityRatio</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour_filled</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour_filled</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">15</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Mixing Ratio (log)"</span>, x <span class="op">=</span> <span class="st">"Temperature (°C)"</span>, y <span class="op">=</span> <span class="st">"Humidity (%)"</span>,</span>
+<span>       fill <span class="op">=</span> <span class="st">"log10(g/kg)"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Humidity-functions_files/figure-html/unnamed-chunk-17-2.png" width="700"></p>
 </div>
 <div class="section level3">
-<h3 id="air-density">Air density<a class="anchor" aria-label="anchor" href="#air-density"></a>
+<h3 id="humidity-ratio">Humidity Ratio<a class="anchor" aria-label="anchor" href="#humidity-ratio"></a>
 </h3>
-<p><code>calcAD</code></p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<ul>
+<li><code>calcHR</code></li>
+</ul>
+<p><strong>Humidity ratio (HR)</strong> (also known as the mixing ratio)
+is the mass of water vapour present per unit mass of dry air, typically
+expressed in grams of water vapour per kilogram of dry air (g/kg). It
+quantifies the actual moisture content in the air relative to the dry
+air component only.</p>
+<ul>
+<li>Humidity ratio is an essential measure in meteorology, HVAC, and
+conservation, as it stays almost constant with changes in temperature or
+pressure, except when air is cooled below its dew point.</li>
+<li>It is used as a standard axis in psychrometric charts to represent
+moisture content.</li>
+<li>Unlike absolute humidity (which is mass of water vapour per volume
+of air), humidity ratio expresses water vapour relative to dry air mass,
+making it more stable for air mass comparisons.</li>
+</ul>
+<p>The function <code>calcHR</code> calculates humidity ratio from
+temperature and relative humidity data.</p>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="co"># Graph Air Density</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mydata</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/graph_psychrometric.html">graph_psychrometric</a></span><span class="op">(</span>y_func <span class="op">=</span> <span class="va">calcAD</span><span class="op">)</span> <span class="op">+</span></span>
+<span><span class="co"># Psychrometric graph of humidity ratio</span></span>
+<span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/graph_psychrometric.html">graph_psychrometric</a></span><span class="op">(</span>y_func <span class="op">=</span> <span class="va">calcHR</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Humidity-functions_files/figure-html/unnamed-chunk-18-1.png" width="700"></p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
+<span><span class="co"># Contour plot of humidity ratio over temperature and RH</span></span>
 <span><span class="va">TRHgrid</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>AirDensity <span class="op">=</span> <span class="fu"><a href="../reference/calcAD.html">calcAD</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span>, z <span class="op">=</span> <span class="va">AirDensity</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour_filled</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>HumidityRatio <span class="op">=</span> <span class="fu"><a href="../reference/calcHR.html">calcHR</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span>, z <span class="op">=</span> <span class="va">HumidityRatio</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour_filled</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">15</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Humidity Ratio"</span>, x <span class="op">=</span> <span class="st">"Temperature (°C)"</span>, y <span class="op">=</span> <span class="st">"Humidity (%)"</span>,</span>
+<span>       fill <span class="op">=</span> <span class="st">"log10(g/kg)"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Humidity-functions_files/figure-html/unnamed-chunk-18-2.png" width="700"></p>
 </div>
 <div class="section level3">
-<h3 id="enthalpy">Enthalpy<a class="anchor" aria-label="anchor" href="#enthalpy"></a>
+<h3 id="air-density">Air Density<a class="anchor" aria-label="anchor" href="#air-density"></a>
 </h3>
-<p><code>calcEnthalpy</code></p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<ul>
+<li><code>calcAD</code></li>
+</ul>
+<p><strong>Air density (AD)</strong> is the mass of air per unit volume,
+typically expressed in kilograms per cubic meter (kg/m³). It depends on
+temperature, atmospheric pressure, and humidity.</p>
+<ul>
+<li>Warm air is less dense than cold air because increasing temperature
+causes air to expand and occupy a larger volume.</li>
+<li>Humid air is less dense than dry air because water vapour has a
+lower molecular weight than the major components of dry air.</li>
+<li>Air density influences many physical processes, including heat
+exchange, airflow, and buoyancy.</li>
+</ul>
+<p>The function <strong><code>calcAD</code></strong> calculates air
+density based on temperature and relative humidity values.</p>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
-<span><span class="co"># Graph Enthalpy</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mydata</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/graph_psychrometric.html">graph_psychrometric</a></span><span class="op">(</span>y_func <span class="op">=</span> <span class="va">calcEnthalpy</span><span class="op">)</span> <span class="op">+</span></span>
+<span><span class="co"># Psychrometric graph of air density</span></span>
+<span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/graph_psychrometric.html">graph_psychrometric</a></span><span class="op">(</span>y_func <span class="op">=</span> <span class="va">calcAD</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Humidity-functions_files/figure-html/unnamed-chunk-19-1.png" width="700"></p>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
+<span><span class="co"># Contour plot of air density over temperature and RH</span></span>
 <span><span class="va">TRHgrid</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Enthalpy <span class="op">=</span> <span class="fu"><a href="../reference/calcEnthalpy.html">calcEnthalpy</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span>, z <span class="op">=</span> <span class="va">Enthalpy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour_filled</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>AirDensity <span class="op">=</span> <span class="fu"><a href="../reference/calcAD.html">calcAD</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span>, z <span class="op">=</span> <span class="va">AirDensity</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour_filled</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">15</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Air Density"</span>, x <span class="op">=</span> <span class="st">"Temperature (°C)"</span>, y <span class="op">=</span> <span class="st">"Humidity (%)"</span>,</span>
+<span>       fill <span class="op">=</span> <span class="st">"kg/m³"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Humidity-functions_files/figure-html/unnamed-chunk-19-2.png" width="700"></p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+</div>
+<div class="section level3">
+<h3 id="enthalpy">Enthalpy<a class="anchor" aria-label="anchor" href="#enthalpy"></a>
+</h3>
+<ul>
+<li><code>calcEnthalpy</code></li>
+</ul>
+<p><strong>Enthalpy</strong> is the total heat energy content in moist
+air, combining both the sensible heat from air temperature and the
+latent heat carried by water vapour. It is usually measured in
+kilojoules per kilogram (kJ/kg) of dry air.</p>
+<ul>
+<li>Enthalpy increases with both higher air temperature and higher
+moisture content.</li>
+<li>It is a key quantity for understanding heating, cooling, and
+humidification processes, as it reflects the energy required to change
+air temperature or moisture.</li>
+</ul>
+<p>The function <strong><code>calcEnthalpy</code></strong> computes
+enthalpy using temperature and relative humidity.</p>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
+<span><span class="co"># Psychrometric graph of enthalpy</span></span>
+<span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/graph_psychrometric.html">graph_psychrometric</a></span><span class="op">(</span>y_func <span class="op">=</span> <span class="va">calcEnthalpy</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-20-1.png" width="700"></p>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># Contour plot of enthalpy over temperature and RH</span></span>
 <span><span class="va">TRHgrid</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Enthalpy_log10 <span class="op">=</span> <span class="fu"><a href="../reference/calcEnthalpy.html">calcEnthalpy</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span>, z <span class="op">=</span> <span class="va">Enthalpy_log10</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour_filled</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour_filled</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">15</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Enthalpy (log)"</span>, x <span class="op">=</span> <span class="st">"Temperature (°C)"</span>, y <span class="op">=</span> <span class="st">"Humidity (%)"</span>,</span>
+<span>       fill <span class="op">=</span> <span class="st">"log(kJ/kg)"</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-19-3.png" width="700"></p>
+<p><img src="Humidity-functions_files/figure-html/unnamed-chunk-20-2.png" width="700"></p>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

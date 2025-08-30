@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ConSciR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -98,18 +98,18 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">calcAD</span><span class="op">(</span><span class="fl">20</span>, <span class="fl">50</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.204032</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.198833</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mydata</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>AirDensity <span class="op">=</span> <span class="fu">calcAD</span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 6</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Site   Sensor Date                 Temp    RH AirDensity</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> London Room 1 2024-01-01 <span style="color: #949494;">00:00:00</span>  21.8  36.8       1.20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> London Room 1 2024-01-01 <span style="color: #949494;">00:15:00</span>  21.8  36.7       1.20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> London Room 1 2024-01-01 <span style="color: #949494;">00:29:59</span>  21.8  36.6       1.20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> London Room 1 2024-01-01 <span style="color: #949494;">00:44:59</span>  21.7  36.6       1.20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> London Room 1 2024-01-01 <span style="color: #949494;">00:59:59</span>  21.7  36.5       1.20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> London Room 1 2024-01-01 <span style="color: #949494;">01:14:59</span>  21.7  36.2       1.20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> London Room 1 2024-01-01 <span style="color: #949494;">00:00:00</span>  21.8  36.8       1.19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> London Room 1 2024-01-01 <span style="color: #949494;">00:15:00</span>  21.8  36.7       1.19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> London Room 1 2024-01-01 <span style="color: #949494;">00:29:59</span>  21.8  36.6       1.19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> London Room 1 2024-01-01 <span style="color: #949494;">00:44:59</span>  21.7  36.6       1.19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> London Room 1 2024-01-01 <span style="color: #949494;">00:59:59</span>  21.7  36.5       1.19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> London Room 1 2024-01-01 <span style="color: #949494;">01:14:59</span>  21.7  36.2       1.19</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
