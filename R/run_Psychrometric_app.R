@@ -34,7 +34,9 @@
 #' @importFrom shiny runApp
 #'
 #' @examples
-#' # run_Psychrometric_app()
+#' if(interactive()) {
+#'     run_Psychrometric_app()
+#' }
 #'
 run_Psychrometric_app <- function() {
   app_dir <- system.file("shiny", "ConSciR-Psychrometric", package = "ConSciR")

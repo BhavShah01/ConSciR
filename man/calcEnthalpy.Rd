@@ -11,7 +11,7 @@ calcEnthalpy(Temp, RH, ...)
 
 \item{RH}{Relative Humidity (0-100\%)}
 
-\item{...}{Additional arguments to supply to \code{\link{calcPws}}}
+\item{...}{Additional arguments to supply to \code{\link{calcPws}} and \code{\link{calcMR}}}
 }
 \value{
 h Enthalpy (kJ/kg)

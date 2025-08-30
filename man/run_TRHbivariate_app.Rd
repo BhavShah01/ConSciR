@@ -16,6 +16,8 @@ A summary of the data is also produced by specifying a temperature and humidity 
 CSV or Excel formatted data with "Temp" and "RH" columns can be uploaded to the application.
 }
 \examples{
-# run_Psychrometric_app()
+if(interactive()) {
+    run_TRHbivariate_app()
+}
 
 }

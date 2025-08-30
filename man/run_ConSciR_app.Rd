@@ -13,6 +13,8 @@ Shiny object
 Run ConSciR Shiny Application
 }
 \examples{
-# run_ConSciR_app()
+if(interactive()) {
+    run_ConSciR_app()
+}
 
 }

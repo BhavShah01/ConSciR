@@ -34,9 +34,8 @@
 #' @importFrom stringr str_replace
 #'
 #' @examples
-#'
 #' \dontrun{
-#' hanwell_data <- "path/to/your/EMS_MinMax_data.csv"
+#' # Example usage: hanwell_data <- "path/to/your/EMS_MinMax_data.csv"
 #' ems_data <- tidy_Hanwell(hanwell_data)
 #' }
 #'

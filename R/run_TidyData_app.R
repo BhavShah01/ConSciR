@@ -13,7 +13,9 @@
 #' @importFrom shiny runApp
 #'
 #' @examples
-#' # run_TidyData_app()
+#' if(interactive()) {
+#'     run_TidyData_app()
+#' }
 #'
 run_TidyData_app <- function() {
   app_dir <- system.file("shiny", "ConSciR-TidyData", package = "ConSciR")

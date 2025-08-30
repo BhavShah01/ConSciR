@@ -5,6 +5,8 @@
 #'
 #' Specific humidity is the ratio of the mass of water vapor to the mass of air.
 #'
+#' Function uses \code{\link{calcMR}}
+#'
 #' @references
 #' Wallace, J.M. and Hobbs, P.V. (2006). Atmospheric Science: An Introductory Survey.
 #' Academic Press, 2nd edition.
@@ -19,10 +21,14 @@
 #' @param Temp Temperature (°Celsius)
 #' @param RH Relative Humidity (0-100\%)
 #' @param P_atm Atmospheric pressure = 1013.25 (hPa)
-#' @param ... Additional arguments to supply to \code{\link{calcPws}}
+#' @param B B = 621.9907 g/kg for air
+#' @param ... Additional arguments to supply to \code{\link{calcPws}} and \code{\link{calcMR}}
 #'
 #' @return SH Specific Humidity (g/kg)
 #' @export
+#'
+#' @note
+#' This function requires the \code{\link{calcMR}} function to be available in the environment.
 #'
 #' @examples
 #' calcSH(20, 50)
@@ -31,22 +37,8 @@
 #'
 #'
 #'
-calcSH <- function(Temp, RH, P_atm = 1013.25, ...) {
-
-  # Calculate saturation vapor pressure
-  Pws = calcPws(Temp, ...)
-
-  # Calculate actual vapor pressure
-  Pw = calcPws(Temp, ...) * RH / 100
-
-  # Calculate absolute humidity
-  AH = calcAH(Temp, RH)
-
-  # Calculate density of moist air
-  rho_moist = calcAD(Temp, RH, P_atm)
-
-  # Calculate specific humidity
-  SH = AH / rho_moist  # Convert g/m³ to g/kg
-
+calcSH <- function(Temp, RH, P_atm = 1013.25, B = 621.9907, ...) {
+  MR = calcMR(Temp, RH, P_atm, B)
+  SH = MR / (1 + MR)
   return(SH)
 }

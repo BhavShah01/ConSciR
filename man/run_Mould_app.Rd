@@ -22,7 +22,9 @@ Functions available:
  }
 }
 \examples{
-# run_Mould_app()
+if(interactive()) {
+    run_Mould_app()
+}
 
 
 }

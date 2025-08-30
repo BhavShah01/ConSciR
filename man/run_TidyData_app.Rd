@@ -15,6 +15,8 @@ Shiny application to help with tidying data.
 CSV or Excel formatted data can be uploaded to the application.
 }
 \examples{
-# run_TidyData_app()
+if(interactive()) {
+    run_TidyData_app()
+}
 
 }

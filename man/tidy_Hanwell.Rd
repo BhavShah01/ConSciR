@@ -30,9 +30,8 @@ This function reads and processes Hanwell Environmental Monitoring System (EMS) 
 transforming it into a tidy format suitable for analysis.
 }
 \examples{
-
 \dontrun{
-hanwell_data <- "path/to/your/EMS_MinMax_data.csv"
+# Example usage: hanwell_data <- "path/to/your/EMS_MinMax_data.csv"
 ems_data <- tidy_Hanwell(hanwell_data)
 }
 

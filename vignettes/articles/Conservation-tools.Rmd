@@ -15,16 +15,50 @@ knitr::opts_chunk$set(
 library(ConSciR)
 library(ggplot2)
 library(dplyr)
+library(readr)
 ```
 
 This R package provides tools for the analysis of conservation data to assess risks to objects and collections. It includes functions for calculating preservation metrics and predicting mould growth, which can be used to compare spaces for potential object risks or evaluate improvements after conservation actions. These functions can be combined with others in the package to estimate required changes and/or reduce energy consumption. The package aims to support data-driven decision-making for storage and display environments.
 
-The examples below demonstrate the application of these functions to data and illustrate their behavior across various temperature and humidity ranges, showcasing their performance under different environmental conditions.
+
+### Datasets
+
+**mydata**
+
+This dataset contains environmental monitoring data collected from example heritage sites.
+
+It includes measurements of temperature (°C) and relative humidity (%) recorded by sensors over time.
+
+| **Variable** | **Description**                               |
+|:-------------|:----------------------------------------------|
+| Site         | Location name, e.g., "Museum", "London"       |
+| Sensor       | Identifier for the specific sensor            |
+| Date         | Timestamp of the measurement (POSIXct format) |
+| Temp         | Air temperature in degrees Celsius            |
+| RH           | Relative humidity as percentage (0-100%)      |
+
+Example usage to load the dataset from the package:
 
 ```{r}
-# Temperature and humidity grid to demonstrate functions
+# filepath <- system.file("extdata", "mydata.rda", package = "ConSciR")
+# mydata <- load(filepath)
 
-Temp <- seq(0, 60, 0.25)
+head(mydata)
+```
+
+**TRHgrid: Dataset used to visualise the functions**
+
+This dataset consists of a grid of temperature and relative humidity values used to visualise function behavior.
+Temperatures range from 0°C to 100°C in 0.25°C increments, and relative humidity (RH) ranges from 0% to 100% in 1% increments.
+The complete factorial combination of temperature and RH values is created using expand.grid(), where each pair represents a unique condition.
+
+Contour plots are generated to show interactions between derived variables across the temperature-RH grid.
+The dataset also supports validation checks for temperature and humidity calculations to understand relationships among the functions.
+
+Example R code to generate the dataset:
+
+```{r}
+Temp <- seq(0, 100, 0.25)
 RH <- seq(0, 100, 1)
 
 TRHgrid <- 
@@ -32,7 +66,9 @@ TRHgrid <-
   tibble() |> 
   rename(Temp = Var1, RH = Var2) 
 
+summary(TRHgrid)
 ```
+
 
 ### Mould
 
@@ -57,15 +93,6 @@ TRHgrid |>
   labs(title = "Mould Isoline Limit: LM0", fill = "RH Limit") + 
   theme_bw()
 
-# TRHgrid |>
-#   mutate(Mould_growth = calcMould_Zeng(Temp, RH, label = TRUE)) |>
-#   ggplot(aes(Temp, RH, fill = Mould_growth, group = Mould_growth)) +
-#   # geom_raster() +
-#   geom_contour_filled() +
-#   labs(title = "Mould Growth Rates", fill = "Growth Rates") +
-#   # scale_fill_brewer(palette = "Set2") +
-#   theme_bw()
-
 head(mydata) |>
   mutate(
     Mould_LIM0 = calcMould_Zeng(Temp, RH),
@@ -76,19 +103,7 @@ mydata |>
   mutate(Mould_LIM0 = calcMould_Zeng(Temp, RH)) |>
   ggplot() +
   geom_line(aes(Date, Mould_LIM0), col = "purple") +
-  geom_line(aes(Date, RH), col = "blue") + 
-  labs(title = "Mould Isoline Limit", 
-       y = "Mould Limit (purple) and Humidity (blue)") + 
-  theme_bw()
-
-mydata |>
-  mutate(Mould_growth_rate = calcMould_Zeng(Temp, RH, label = TRUE)) |>
-  filter(!is.na(Mould_growth_rate)) |>
-  ggplot() +
-  geom_bar(aes(Mould_growth_rate, fill = Mould_growth_rate)) +
-  coord_flip() +
-  labs(title = "Distribution of mould growth risk categories", 
-       y = NULL, x = NULL) + 
+  labs(title = "Mould Isoline Limit", y = "Mould Limit") + 
   theme_bw()
 
 ```

@@ -3,7 +3,7 @@
 #' @description
 #' Function to calculate mixing ratio (g/kg) from temperature (°C) and relative humidity (\%).
 #'
-#' Mixing Ratio is the ratio of water vapour mass to the mass of dry gas.
+#' Mixing Ratio is the mass of water vapor present in a given volume of air relative to the mass of dry air.
 #'
 #'
 #' @details

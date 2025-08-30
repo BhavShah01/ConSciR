@@ -1,7 +1,7 @@
 Package: ConSciR
 Type: Package
 Title: Tools for Conservation Science
-Version: 0.1.1
+Version: 0.2.0
 Authors@R: c(
     person("Bhavesh", "Shah", , "bhaveshshah01@gmail.com", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0001-8673-0589")),
@@ -19,6 +19,10 @@ Description: Provides data science tools for conservation science, including
     sustainability metrics, engineering calculations, and data
     visualisation. Supports conservators, scientists, and engineers
     working with cultural heritage data.
+    The package was motivated by the developing tools and frameworks outlined 
+    in Cosaert and Beltran et al. (2022) 
+    "Tools for the Analysis of Collection Environments" 
+    <https://www.getty.edu/conservation/publications_resources/pdf_publications/tools_for_the_analysis_of_collection_environments.html>.  
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
@@ -46,4 +50,4 @@ Imports:
     lubridate,
     padr
 Depends: 
-    R (>= 2.10)
+    R (>= 3.5)

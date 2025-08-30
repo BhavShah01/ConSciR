@@ -15,7 +15,9 @@
 #' @importFrom shiny runApp
 #'
 #' @examples
-#' # run_SilicaGel_app()
+#' if(interactive()) {
+#'     run_SilicaGel_app()
+#' }
 #'
 run_SilicaGel_app <- function() {
 

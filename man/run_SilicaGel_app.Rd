@@ -17,6 +17,8 @@ and air exchange rate (AER) if known, as inputs.
 CSV or Excel data with "Date", "Temp" and "RH" columns can be uploaded to the application.
 }
 \examples{
-# run_SilicaGel_app()
+if(interactive()) {
+    run_SilicaGel_app()
+}
 
 }

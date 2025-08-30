@@ -7,7 +7,9 @@
 #' @importFrom shiny runApp
 #'
 #' @examples
-#' # run_ConSciR_app()
+#' if(interactive()) {
+#'     run_ConSciR_app()
+#' }
 #'
 run_ConSciR_app <- function() {
   app_dir <- system.file("shiny", "ConSciR-App", package = "ConSciR")

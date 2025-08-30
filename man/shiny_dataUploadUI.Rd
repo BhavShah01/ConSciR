@@ -19,7 +19,7 @@ This function creates a Shiny UI module for uploading data files. It provides
 a file input interface that can be integrated into a larger Shiny application.
 }
 \examples{
-\dontrun{
+if(interactive()) {
 
 # In a Shiny app:
 ui <- fluidPage(

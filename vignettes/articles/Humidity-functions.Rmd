@@ -24,20 +24,42 @@ The relationships between humidity functions are shown below, which are importan
 These functions may play a key role in developing more energy-efficient systems.
 Understanding the stability of these functions is shown, as they underpin many methodologies in this field.
 
-A grid of temperature and relative humidity values, ranging from 0°C to 100°C and 0% to 100% RH respectively, was used to test the functions.
-Contour plots are used to visualise interactions between derived variables across the temperature-humidity grid.
-The analysis includes validation checks for temperature and relative humidity calculations, to identify how the function interact with each other.
-
 Note: the humidity functions assume atmospheric pressure.
 
-### TRHgrid: Dataset used to visualise the functions
+### Datasets
 
-A grid of temperature and relative humidity values is used to analysis the relationship between derived variables.
-A grid of temperature and humidity between 0 to 100°C and 0 to 100%RH with 0.25°C and 1%RH spacing.
-The expand.grid() function creates a complete factorial combination of all temperature and relative humidity values, where each unique temperature-humidity pair is represented..
+**mydata**
+
+This dataset contains environmental monitoring data collected from example heritage sites.
+
+It includes measurements of temperature (°C) and relative humidity (%) recorded by sensors over time.
+
+| **Variable** | **Description**                               |
+|:-------------|:----------------------------------------------|
+| Site         | Location name, e.g., "Museum", "London"       |
+| Sensor       | Identifier for the specific sensor            |
+| Date         | Timestamp of the measurement (POSIXct format) |
+| Temp         | Air temperature in degrees Celsius            |
+| RH           | Relative humidity as percentage (0-100%)      |
+
+Example usage to load the dataset from the package:
 
 ```{r}
+head(mydata)
+```
 
+**TRHgrid: Dataset used to visualise the functions**
+
+This dataset consists of a grid of temperature and relative humidity values used to visualise function behavior.
+Temperatures range from 0°C to 100°C in 0.25°C increments, and relative humidity (RH) ranges from 0% to 100% in 1% increments.
+The complete factorial combination of temperature and RH values is created using expand.grid(), where each pair represents a unique condition.
+
+Contour plots are generated to show interactions between derived variables across the temperature-RH grid.
+The dataset also supports validation checks for temperature and humidity calculations to understand relationships among the functions.
+
+Example R code to generate the dataset:
+
+```{r}
 Temp <- seq(0, 100, 0.25)
 RH <- seq(0, 100, 1)
 
@@ -47,13 +69,13 @@ TRHgrid <-
   rename(Temp = Var1, RH = Var2) 
 
 summary(TRHgrid)
-
-
 ```
 
-### Examples of use of the functions
+### Example workflows
 
-Starting with input data of temperature and relative humidity, a wide range of derived variables can be computed.
+#### Adjusting Humidity using the package functions
+
+Starting with measurements of temperature (`Temp`) and relative humidity (`RH`), several derived variables commonly used can be calculated:
 
 ```{r}
 # Functions applied on the mydata dataset
@@ -62,10 +84,12 @@ head(mydata) |>
     Absolute_Humidity = calcAH(Temp, RH), 
     Dew_Point = calcDP(Temp, RH), 
     Mixing_Ratio = calcMR(Temp, RH), 
+    Specific_Humidity = calcSH(Temp, RH),
     Humidity_Ratio = calcHR(Temp, RH),
     Enthalpy = calcEnthalpy(Temp, RH), 
     Saturation_Vapour_Pressure = calcPws(Temp), 
     Actual_Vapour_Pressure = calcPw(Temp, RH), 
+    RH_VP = 100 * (Actual_Vapour_Pressure / Saturation_Vapour_Pressure),
     Air_Density = calcAD(Temp, RH),
     Temp_calc = calcTemp(RH, Dew_Point),
     RH_AH_calc = calcRH_AH(Temp, Absolute_Humidity),
@@ -75,81 +99,89 @@ head(mydata) |>
 
 ```
 
-Using the relationship between temperature, absolute humidity and dew point can be used to adjust the relative humidity.
-The functions can be used in combination to determine the adjustments needed to reach a target relative humidity.
-This approach assumes constant pressure, which is typical for most indoor situations.
+**Principles of Humidity Adjustment**
 
-Adjustment Methods:
+Humidity adjustment involves manipulating Absolute Humidity (AH), Dew Point, or Temperature to achieve a target Relative Humidity (RH).
+The following principles guide adjustments under the assumption of constant atmospheric pressure (typical for indoor environments):
 
-a)  Changing Absolute Humidity:
-    -   Increasing absolute humidity at a constant temperature will increase RH.
-    -   Decreasing absolute humidity at a constant temperature will decrease RH.
-b)  Changing Temperature:
-    -   Decreasing temperature at constant absolute humidity will increase RH.
-    -   Increasing temperature at constant absolute humidity will decrease RH.
-c)  Using Dew Point:
-    -   The difference between air temperature and dew point indicates how close the air is to saturation.
-    -   Adjusting temperature closer to the dew point increases RH, while moving it away decreases RH.
+-   **Changing Absolute Humidity:**
 
-```{r message=FALSE, warning=FALSE}
- 
-# Graph Absolute Humidity
-head(mydata) |>
+    -   Increasing AH at constant temperature raises RH.
+    -   Decreasing AH at constant temperature lowers RH.
+
+-   **Changing Temperature:**
+
+    -   Lowering temperature at constant AH raises RH.
+    -   Raising temperature at constant AH lowers RH.
+
+-   **Using Dew Point:**
+
+    -   The smaller the difference between air temperature and dew point, the closer the air is to saturation (100% RH).
+    -   Moving temperature closer to dew point increases RH, whereas moving it away decreases RH.
+
+**Changing Absolute Humidity**
+
+The example below demonstrates adjusting RH by calculating a new absolute humidity corresponding to a target RH (**`tRH`**) at the measured temperature, and computing the effects on RH:
+
+```{r}
+
+# Psychrometric chart of mydata
+mydata |>
+  filter(Sensor == "Room 1") |>
   graph_psychrometric(y_func = calcAH) +
-  theme_bw()
+  labs(title = "Room 1 Before Adjustment") + 
+  theme_classic()
 
 # Changing Absolute Humidity 
-using_calcAH <- mydata |> 
+using_calcAH <- 
+  mydata |> 
+  filter(Sensor == "Room 1") |>
   mutate(
-    # Absolute humidity, AH
+    # Calculate the Absolute humidity, AH
     AH = calcAH(Temp, RH), 
-    # Dew point, DP
+    # Calculate the Dew point, DP
     DP = calcDP(Temp, RH), 
-    # Target RH
+    # Target RH, tRH 
     tRH = 50, 			
-    # AH*: AHstar new absolute humidity using the target relative humidity (tRH)
+    # Target Absolute Humidity, AH*
     AHstar = calcAH(Temp, tRH), 	
-    # Difference in measured AH and AH* 
+    # Required AH change, difference between AH and AH* 
     dAH = AHstar - AH, 
-    # Check
+    # Validation check (should be near zero)
     AHcheck = AHstar - (AH + dAH), 
-    # RH*: RH star - the new RH using AH* and measured temperature
+    # New RH after adjustment, RH*
     RHstarAH = calcRH_AH(Temp, AHstar), 
-    # Difference from target
+    # RH difference from target
     RHerrorAH = RHstarAH - tRH, 
   ) 
 
-# Graph the results 
-using_calcAH |>
-  ggplot() +
-  geom_line(aes(Date, Temp), col = "red", alpha = 0.5) +
-  geom_line(aes(Date, RH), col = "blue", alpha = 0.5) + 
-  geom_line(aes(Date, AH), col = "green", alpha = 0.5) + 
-  geom_line(aes(Date, RHstarAH), col = "darkblue") + # should be a straight line (see below)
-  geom_line(aes(Date, AHstar), col = "darkgreen") + 
-  labs(title = "Using absolute humidity to adjust relative humidity", 
-       subtitle = "Measure absolute humidity (light green), new absolute humidity (dark green),
-       resultant relative humidity (dark blue)") +
-  theme_bw()
+# View adjustment summary
+glimpse(using_calcAH)
 
-# Plot the difference and check the error
+
+# Plot of the difference in Absolute humidity and RH error
 using_calcAH |>
   ggplot() +
-  geom_line(aes(Date, dAH), col = "darkgreen") + 
-  geom_line(aes(Date, RHerrorAH), col = "darkblue") + # should be a straight line (see below)
+  geom_line(aes(Date, dAH), col = "cyan4", alpha = 0.8) + 
+  geom_line(aes(Date, RHerrorAH), col = "goldenrod", alpha = 0.8) + 
   geom_smooth(aes(Date, dAH)) + 
-  labs(title = "Using absolute humidity to adjust relative humidity", 
-       subtitle = "Positve values means adding humidity and vice-versa") +
+  labs(title = "Absolute Humidity Required to Achieve Target RH", 
+       subtitle = "Positive values indicate addition of humidity",
+       x = NULL, y = "Absolute Humidity (g/m^3)") +
   theme_bw()
 
+
+# Psychrometric chart of new data (using_calcAH) after adjustment 
+using_calcAH |>
+  filter(Sensor == "Room 1") |>
+  graph_psychrometric(RH = "RHstarAH", y_func = calcAH) +
+  labs(title = "Room 1 After Humidity Adjustment") + 
+  theme_classic()
 ```
 
-```{r message=FALSE, warning=FALSE}
+**Changing Temperature**
 
-# Graph Air Density
-head(mydata) |>
-  graph_psychrometric(y_func = calcAD) +
-  theme_bw()
+```{r}
 
 # Changing Temperature
 using_calcTemp <- 
@@ -173,35 +205,36 @@ using_calcTemp <-
     RHerrorT = RHstarT - tRH
   )
 
-# Graph the results 
-using_calcTemp |>
-  ggplot() +
-  geom_line(aes(Date, Temp), col = "red", alpha = 0.5) +
-  geom_line(aes(Date, RH), col = "blue", alpha = 0.5) + 
-  geom_line(aes(Date, Tstar), col = "darkred") +
-  geom_line(aes(Date, RHstarT), col = "darkblue") +
-  labs(title = "Using temperature to adjust relative humidity") +
-  theme_bw()
+glimpse(using_calcTemp)
 
 # Plot the difference and check the error
 using_calcTemp |>
   ggplot() +
-  geom_line(aes(Date, dTemp), col = "darkred") + 
-  geom_line(aes(Date, RHerrorT), col = "darkblue") + # should be a straight line (see below)
+  geom_line(aes(Date, dTemp), col = "firebrick", alpha = 0.8) + 
+  geom_line(aes(Date, RHerrorT), col = "goldenrod", alpha = 0.8) + 
   geom_smooth(aes(Date, dTemp)) + 
-  labs(title = "Using temperature to adjust relative humidity", 
-       subtitle = "Positve values means increasing the temperature and vice-versa") +
+  labs(title = "Temperature Required to Achieve Target RH",
+       subtitle = "Positive values indicate increasing the temperature",
+       x = NULL, y = "Temperature (°C)") +
   theme_bw()
 
+using_calcTemp |>
+  graph_psychrometric(RH = "RHstarT", y_func = calcAH) +
+  labs(title = "Room 1 After Temperature Adjustment",
+       subtitle = "Temperature (°C)") +  
+  theme_classic()
 ```
 
-```{r message=FALSE, warning=FALSE}
+**Using Dew Point**
+
+```{r}
 
 # Graph Dew Point
-head(mydata) |>
+mydata |>
   graph_psychrometric(y_func = calcDP) +
-  theme_bw()
-
+  labs(title = "Room 1 Before Adjustment",
+       subtitle = "Dew Point") +  
+  theme_classic()
 
 # Using Dew Point
 
@@ -224,90 +257,178 @@ using_calcDP <-
     RHerrorDP = RHstarDP - tRH
   ) 
 
-using_calcDP |>
-  ggplot() +
-  geom_line(aes(Date, Temp), col = "red", alpha = 0.5) +
-  geom_line(aes(Date, RH), col = "blue", alpha = 0.5) +
-  geom_line(aes(Date, DP), col = "hotpink") +
-  geom_line(aes(Date, DPstar), col = "purple") +
-  geom_line(aes(Date, RHstarDP), col = "darkblue") +
-  labs(title = "Using dew point to adjust relative humidity") +
-  theme_bw()
+glimpse(using_calcDP)
 
 # Plot the difference and check the error
 using_calcDP |>
   ggplot() +
-  geom_line(aes(Date, dDP), col = "purple") + 
-  geom_line(aes(Date, RHerrorDP), col = "darkblue") + # should be a straight line (see below)
+  geom_line(aes(Date, dDP), col = "mediumvioletred", alpha = 0.8) + 
+  geom_line(aes(Date, RHerrorDP), col = "goldenrod", alpha = 0.8) + 
   geom_smooth(aes(Date, dDP)) + 
-  labs(title = "Using dew point to adjust relative humidity", 
-       subtitle = "Positve values means increasing the dew point and vice-versa") +
+  labs(title = "Dew Point Required to Achieve Target RH", 
+       x = NULL, y = "Dew Point (°C)") +
   theme_bw()
 
+
+using_calcDP |>
+  graph_psychrometric(RH = "RHstarDP", y_func = calcDP) +
+  labs(title = "Room 1 After Dew Point Adjustment",
+       subtitle = "Dew Point (°C)") +  
+  theme_classic()
+```
+
+## Functions
+
+### Water Vapour Saturation Pressure
+
+-   `calcPws`
+
+**Water vapour saturation pressure** is the pressure at which water vapour in the air is balanced with liquid water at a certain temperature.
+It is the maximum amount of moisture air can hold at a temperature before the moisture starts to condense into water droplets (like dew or fog).
+This pressure increases as the temperature rises because warm air can hold more moisture than cold air.
+
+The `calcPws` function calculates the water vapour saturation pressure (in hPa) from temperature (in °C) based on one of several empirical formulations:
+
+-   Arden Buck equation ("Buck") [default]
+-   International Association for the Properties of Water and Steam ("IAPWS")
+-   August-Roche-Magnus approximation ("Magnus")
+-   VAISALA humidity conversion formula ("VAISALA")
+
+Each formulation provides slightly different estimates of saturation pressure, with varying complexities and accuracies suited to different applications.
+A discussion of the benefits and comparative accuracy of each equation can be found on Wikipedia: <https://en.wikipedia.org/wiki/Vapour_pressure_of_water#cite_note-1>
+
+```{r}
+
+# Psychrometric graph of Saturation vapour Pressure calculated via `calcPws` 
+mydata |>
+  graph_psychrometric(y_func = calcPws) +
+  theme_bw()
+
+# Contour plot of saturation vapour pressure over temperature and humidity grid
+TRHgrid |>
+  mutate(Pws = calcPws(Temp)) |>
+  ggplot(aes(Temp, RH, z = Pws)) + 
+  geom_contour_filled(bins = 15) + 
+  labs(title = "Saturation Vapour Pressure", x = "Temperature (°C)", y = "Humidity (%)",
+       fill = "hPa") +
+  theme_bw()
+
+# Comparison of saturation vapour pressure calculated using different methods
+mydata |>
+  dplyr::mutate(
+    Pw_Buck = calcPws(Temp, method = "Buck"),
+    Pw_IAPWS = calcPws(Temp, method = "IAPWS"),
+    Pw_Magnus = calcPws(Temp, method = "Magnus"),
+    Pw_VAISALA = calcPws(Temp, method = "VAISALA")
+    ) |>
+  ggplot() +
+  geom_line(aes(Date, Pw_Buck), col = "darkblue", alpha = 0.2) + 
+  geom_line(aes(Date, Pw_IAPWS), col = "darkred", alpha = 0.2) + 
+  geom_line(aes(Date, Pw_Magnus), col = "darkgreen", alpha = 0.2) + 
+  geom_line(aes(Date, Pw_VAISALA), col = "orange", alpha = 0.2) + 
+  labs(title = "Comparison of saturation vapour pressure equations", 
+       subtitle = "Buck (blue), IAPWS (red), Magnus (green), VAISALA (orange)", 
+       y = "Water vapour saturation pressure (hPa)", x = NULL) + 
+  theme_bw()
+```
+
+### Water Vapour Pressure
+
+-   `calcPw`
+
+**Water vapour pressure** is the pressure exerted by water molecules when they are in the air as a gas.
+It reflects how much moisture is actually present in the air at a given temperature.
+
+Unlike saturation vapour pressure—which is the maximum water vapour pressure the air can hold at that temperature—water vapour pressure tells us the current moisture level in the air.
+
+The function `calcPw` calculates this water vapour pressure from temperature and relative humidity.
+
+```{r}
+
+# Psychrometric graph of Water Vapour Pressure calculated via `calcPw`, Buck method
+mydata |>
+  graph_psychrometric(y_func = calcPw) +
+  theme_bw()
+
+# # Contour plot of water vapour pressure over temperature and humidity grid
+TRHgrid |>
+  mutate(Pw = calcPw(Temp, RH)) |>
+  ggplot(aes(Temp, RH, z = Pw)) + 
+  geom_contour_filled(bins = 15) + 
+  labs(title = "Water Vapour Pressure", 
+       x = "Temperature (°C)", y = "Humidity (%)") + 
+  labs(title = "Water Vapour Pressure", x = "Temperature (°C)", y = "Humidity (%)",
+       fill = "hPa") +
+  theme_bw()
 ```
 
 ### Temperature
 
-`calcTemp`
+-   `calcTemp`
 
-The temperature calculations are explored to determine the accuracy of temperature derivation using dew point and relative humidity.
-Visualisation of the temperature calculation against the original temperature and relative humidity.
-The temperature calculation is presented as a filled contour plot of the calculated temperature using calcTemp through dew point which is calculated using calcDP.
+The temperature calculation function, `calcTemp`, uses measurements of dew point and relative humidity to estimate the air temperature.
+This is useful to check how accurately temperature can be derived from humidity-related data.
+Dew point is calculated using `calcDP`
+
+The dew point is the temperature at which air becomes saturated and water vapour starts to condense.
+Using dew point and relative humidity together provides a way to calculate temperature indirectly.
 
 ```{r}
-head(mydata) |> dplyr::mutate(DewPoint = calcDP(Temp, RH), Temp2 = calcTemp(RH, DewPoint))
 
-TRHgrid |>
-  mutate(
-    DewPoint = calcDP(Temp, RH),
-    TempCalc = calcTemp(RH, DewPoint)
-  ) |>
-  ggplot(aes(Temp, RH, z = TempCalc)) + 
-  geom_contour_filled(bins = 20, breaks = seq(-50, 100, 10)) +
-  labs(title = "Calculated temperature vs actual", 
-       subtitle = "calcDP(Temp, RH) > DewPoint > TempCalc") + 
-  theme_bw()
+# Calculate Dew Point and Temperature from dataset
+head(mydata) |> 
+  dplyr::mutate(
+    DewPoint = calcDP(Temp, RH), 
+    Temp_via_DP = calcTemp(RH, DewPoint),
+    Temp_error = Temp_via_DP - Temp
+    )
 ```
 
-Visualisation of the temperature calculation against the original temperature and relative humidity.
-The plot aims to validate the accuracy and consistency of temperature calculations based on relative humidity and dew point.
+The difference (`Temp_error`) between calculated and actual temperature reveals the accuracy of the calculation across varying temperature and relative humidity in the TRHgrid dataset.
+Smaller values mean less error.
 
 ```{r}
+
+# Error plot to visualise difference between calculated and original temperature
 TRHgrid |>
   mutate(
     DewPoint = calcDP(Temp, RH),
-    TempCalc = calcTemp(RH, DewPoint), 
-    Temp_error = TempCalc - Temp
+    Temp_via_DP = calcTemp(RH, DewPoint), 
+    Temp_error = Temp_via_DP - Temp
   ) |>
   ggplot(aes(Temp, RH, z = Temp_error)) + 
-  geom_contour_filled(bins = 20) + 
-  labs(title = "Difference between calculated temperature vs actual", 
-       subtitle = "calcDP(Temp, RH) > DewPoint > TempCalc - Temp (original)") + 
+  geom_contour_filled() + 
+  labs(title = "Difference between calculated and actual temperature", 
+       subtitle = "Shows accuracy of calculation",
+       x = "Temperature (°C)", y = "Humidity (%)", fill = "Difference") + 
   theme_bw()
-
 ```
 
 ### Relative Humidity
 
-`calcRH_AH` and `calcRH_DP`
+-   `calcRH_AH` and `calcRH_DP`
 
-This section investigates relative humidity calculations using derivations from dew point and absolute humidity.
-Contour plots demonstrate the relationships between calculated and original relative humidity values and the errors.
+**Relative humidity (RH)** is a measure of how much moisture is in the air compared to the maximum amount the air can hold at that temperature.
+It is expressed as a percentage: 100% means the air is fully saturated and can hold no more moisture.
+
+The package includes two ways to calculate relative humidity:
+
+-   **Using Dew Point** (`calcRH_DP`): This method uses the temperature and the dew point (the temperature at which air becomes saturated) to calculate relative humidity. It’s a common approach because dew point is often directly measured or estimated.
+-   **Using Absolute Humidity** (`calcRH_AH`): This method uses the temperature and absolute humidity (the actual amount of moisture in the air) to calculate relative humidity.
+
+Contour plots compare the relative humidity calculated from these functions against the original measured RH values, showing how closely they match, and where errors or differences occur.
 
 ```{r}
 
-TRHgrid |>
-  mutate(
+# Calculate RH from Dew Point
+head(mydata) |> 
+  dplyr::mutate(
     DewPoint = calcDP(Temp, RH),
-    RH_DPcalc = calcRH_DP(Temp, DewPoint)
-  ) |>
-  ggplot(aes(Temp, RH, z = RH_DPcalc)) + 
-  geom_contour_filled(bins = 20, breaks = seq(0, 100, 5)) + 
-  labs(title = "Calculated humidity via dew point vs actual", 
-       subtitle = "calcDP(Temp, RH) > DewPoint > RHcalc") + 
-  theme_bw()
+    RH_via_DP = calcRH_DP(Temp, DewPoint), 
+    RH_DP_error = RH_via_DP - RH
+    )
 
-
+# Error plot for RH from Dew Point
 TRHgrid |>
   mutate(
     DewPoint = calcDP(Temp, RH),
@@ -315,245 +436,236 @@ TRHgrid |>
     RH_DP_error = RH_DPcalc - RH
   ) |>
   ggplot(aes(Temp, RH, z = RH_DP_error)) + 
-  labs(title = "Calculated humidity vs actual", 
-       subtitle = "calcDP(Temp, RH) > DewPoint > RHcalc - RH (original)") +
-  geom_contour_filled(bins = 20) + 
+  labs(title = "Difference between calculated and actual humidity", 
+       subtitle = "RH calc from dew point minus original RH",
+       x = "Temperature (°C)", y = "Humidity (%)", fill = "Difference") +
+  geom_contour_filled() + 
   theme_bw()
-
-
 ```
 
 ```{r}
 
-TRHgrid |>
-  mutate(RH_AHcalc = calcRH_AH(Temp, calcAH(Temp, RH))) |>
-  ggplot(aes(Temp, RH, z = RH_AHcalc)) + 
-  geom_contour_filled(bins = 20, breaks = seq(0, 100, 5)) + 
-  labs(title = "Calculated humidity via absolute humidity vs actual", 
-       subtitle = "calcAH(Temp, RH) > Absolute humidity > RHcalc - RH (original)") +
-  theme_bw()
+# Calculate RH from Absolute Humidity
+head(mydata) |> 
+  dplyr::mutate(
+    AH = calcAH(Temp, RH),
+    RH_via_AH = calcRH_AH(Temp, AH), 
+    RH_AH_error = RH_via_AH - RH
+    )
 
+# Error plot for RH from Absolute Humidity
 TRHgrid |>
   mutate(RH_AH_error = calcRH_AH(Temp, calcAH(Temp, RH)) - RH) |>
   ggplot(aes(Temp, RH, z = RH_AH_error)) + 
-  labs(title = "Calculated humidity via absolute humidity vs actual", 
-       subtitle = "calcAH(Temp, RH) > Absolute humidity > RHcalc - RH (original)") +
-  geom_contour_filled(bins = 20) + 
+  labs(title = "Difference between calculated and actual humidity", 
+       subtitle = "RH calc from absolute humidity minus original RH",
+       x = "Temperature (°C)", y = "Humidity (%)", fill = "Difference") +
+  geom_contour_filled() + 
   theme_bw()
-
 ```
 
-### Absolute humidity
+### Absolute Humidity
 
-`calcAH`
+-   `calcAH`
 
-The graph shows how absolute temperature varies with changing temperature and relative humidity.
+**Absolute humidity (AH)** measures the actual amount of water vapour present in the air, regardless of temperature.
+It is expressed as the mass of water vapour per volume of air (e.g., grams per cubic meter).
+In contrast to relative humidity, absolute humidity represents the true moisture content and does not change directly when temperature changes.
 
-```{r message=FALSE, warning=FALSE}
+The function `calcAH` calculates absolute humidity from temperature and relative humidity measurements.
 
-# Graph Absolute Humidity
-head(mydata) |>
+```{r}
+# Graph Absolute Humidity 
+mydata |>
   graph_psychrometric(y_func = calcAH) +
   theme_bw()
 
+# Contour plot over temperature-relative humidity grid
 TRHgrid |>
   mutate(AH = calcAH(Temp, RH)) |>
   ggplot(aes(Temp, RH, z = AH)) + 
-  geom_contour_filled(bins = 20) + 
+  geom_contour_filled(bins = 15) + 
+  labs(title = "Absolute Humidity", x = "Temperature (°C)", y = "Humidity (%)",
+       fill = "g/m^3") +
   theme_bw()
-
-```
-
-### Specific humidity
-
-`calcSH`
-
-```{r message=FALSE, warning=FALSE}
-
-# Graph Specific Humidity
-head(mydata) |>
-  graph_psychrometric(y_func = calcSH) +
-  theme_bw()
-
-TRHgrid |>
-  mutate(SpecificHumidity = calcSH(Temp, RH)) |>
-  ggplot(aes(Temp, RH, z = SpecificHumidity)) + 
-  geom_contour_filled(bins = 20) + 
-  theme_bw()
-
 ```
 
 ### Dew Point
 
-`calcDP`
+-   `calcDP`
 
-The graphs shows how the dew point temperature varies with changing temperature and relative humidity.
+**Dew point (DP)** is the temperature at which air becomes fully saturated with moisture and water vapour begins to condense into liquid water—forming dew, fog, or frost.
+It basically tells us how much moisture is in the air.
 
-```{r message=FALSE, warning=FALSE}
+-   If the air cools down to the dew point temperature, moisture will start to appear as water droplets.
+-   The closer the dew point is to the actual air temperature, the higher the relative humidity and the muggier or damper the air feels.
+-   Dew point stays the same even if the air temperature changes, making it a reliable indicator of moisture content.
 
-# Graph Dew Point
-head(mydata) |>
-  graph_psychrometric(y_func = calcDP) +
+The function `calcDP` calculates the dew point temperature from measured air temperature and relative humidity.
+
+```{r}
+# Psychrometric graph of dew point
+mydata |>   
+  graph_psychrometric(y_func = calcDP) +   
+  theme_bw()  
+
+# Contour plot of dew point over temperature and RH
+TRHgrid |>   
+  mutate(DP = calcDP(Temp, RH)) |>   
+  ggplot(aes(Temp, RH, z = DP)) +    
+  geom_contour_filled(bins = 15) +    
+  labs(title = "Dew Point", x = "Temperature (°C)", y = "Humidity (%)",        
+       fill = "°C") +   
   theme_bw()
-
-TRHgrid |>
-  mutate(DP = calcDP(Temp, RH)) |>
-  ggplot(aes(Temp, RH, z = DP)) + 
-  geom_contour_filled(bins = 20) + 
-  theme_bw()
-
 ```
 
-### Water vapour saturation pressure
+### Specific Humidity
 
-`calcPws`
+-   `calcSH`
 
--   Saturation vapor pressure calculation
+**Specific humidity (SH)** measures the amount of water vapour in the air relative to the total mass of the air, including both dry air and the water vapour.
+It is usually expressed in grams of water vapour per kilogram of moist air (g/kg).
 
-Function to calculate water vapour saturation pressure (hPa) from temperature (°C)
-using the International Association for the Properties of Water and Steam (IAPWS as default), Arden Buck equation (Buck) or August-Roche-Magnus approximation (Magnus).
+Unlike relative humidity, which depends on temperature, specific humidity directly quantifies the actual moisture content in the air and does not change with temperature or pressure.
 
-A discussion of each formulation is given in Wikipedia and the benefits of each equation: 
-https://en.wikipedia.org/wiki/Vapour_pressure_of_water#cite_note-1
+-   Specific humidity differs slightly from the mixing ratio, which measures the mass of water vapor relative only to the mass of dry air. The key difference is that specific humidity divides by the total air mass (dry air plus water vapor), while the mixing ratio divides only by the dry air mass. Because the mass of water vapor is usually much smaller than the mass of dry air, the two values are very similar, but specific humidity is always slightly less than the mixing ratio.
 
+The function `calcSH` calculates specific humidity from temperature and relative humidity data, which helps in understanding the true moisture amount in air regardless of changes in temperature.
 
-```{r message=FALSE, warning=FALSE}
+```{r}
 
-# Graph Saturation vapor pressure 
-head(mydata) |>
-  graph_psychrometric(y_func = calcPws) +
-  theme_bw()
-
-TRHgrid |>
-  mutate(Pws = calcPws(Temp)) |>
-  ggplot(aes(Temp, RH, z = Pws)) + 
-  geom_contour_filled(bins = 20) + 
-  theme_bw()
-
-
-# Graph Saturation vapor pressure using different equations
+# Psychrometric graph of specific humidity
 mydata |>
-  dplyr::mutate(
-    Pw_IAPWS = calcPws(Temp, method = "IAPWS"),
-    Pw_Buck = calcPws(Temp, method = "Buck"),
-    Pw_Magnus = calcPws(Temp, method = "Magnus"),
-    Pw_VAISALA = calcPws(Temp, method = "VAISALA")
-    ) |>
-  ggplot() +
-  geom_line(aes(Date, Pw_IAPWS), col = "darkblue", alpha = 0.5) + 
-  geom_line(aes(Date, Pw_Buck), col = "blue", alpha = 0.5) + 
-  geom_line(aes(Date, Pw_Magnus), col = "purple", alpha = 0.5) + 
-  geom_line(aes(Date, Pw_VAISALA), col = "violet", alpha = 0.5) + 
-  theme_bw()
-```
-
-### Water vapour pressure
-
-`calcPw`
-
--   Actual water vapor pressure determination
-
-```{r message=FALSE, warning=FALSE}
-
-# Graph Saturation vapor pressure 
-head(mydata) |>
-  graph_psychrometric(y_func = calcPw) +
+  graph_psychrometric(y_func = calcSH) +
   theme_bw()
 
+# Contour plot of specific humidity over temperature and RH
 TRHgrid |>
-  mutate(Pw = calcPw(Temp, RH)) |>
-  ggplot(aes(Temp, RH, z = Pw)) + 
-  geom_contour_filled(bins = 20) + 
+  mutate(SH = calcSH(Temp, RH)) |>
+  ggplot(aes(Temp, RH, z = SH)) + 
+  geom_contour_filled(bins = 15) + 
+  labs(title = "Specific Humidity", x = "Temperature (°C)", y = "Humidity (%)",
+       fill = "g/kg") +
   theme_bw()
-
 ```
 
-### Mixing ratio
+### Mixing Ratio
 
-`calcMR`
+-   `calcMR`
 
-```{r message=FALSE, warning=FALSE}
+**Mixing ratio (MR)** is the mass of water vapor per unit mass of dry air in a given volume.
+It is commonly expressed in grams of water vapor per kilogram of dry air (g/kg).
+This measure is important because it remains nearly constant when the air changes temperature or pressure, making it useful for tracking moisture content in moving air masses.
 
-# Graph Mixing Ratio
-head(mydata) |>
+-   The mixing ratio tells us how much water vapor is mixed into dry air.
+-   It differs slightly from specific humidity (which is water vapor per total moist air) but is closely related.
+-   While both mixing ratio and specific humidity measure how much water vapor is in the air, the key difference lies in their denominators: mixing ratio expresses the mass of water vapor relative only to the mass of dry air, whereas specific humidity expresses it relative to the total mass of the moist air (dry air plus water vapor). Because the mass of water vapor is usually small compared to dry air, both values are very similar, but specific humidity is always slightly less than the mixing ratio.
+-   The mixing ratio is a fundamental concept used in meteorology, air conditioning, and conservation for understanding and controlling humidity.
+
+The function `calcMR` calculates the mixing ratio from temperature and relative humidity data.
+
+```{r}
+
+# Psychrometric graph of mixing ratio
+mydata |>
   graph_psychrometric(y_func = calcMR) +
   theme_bw()
 
-TRHgrid |>
-  mutate(MR = calcMR(Temp, RH)) |>
-  ggplot(aes(Temp, RH, z = MR)) + 
-  geom_contour_filled(bins = 20) + 
-  theme_bw()
-
+# Contour plot of mixing ratio over temperature and RH
 TRHgrid |>
   mutate(MR_log10 = calcMR(Temp, RH) |> log10()) |>
   ggplot(aes(Temp, RH, z = MR_log10)) + 
-  geom_contour_filled(bins = 20) + 
+  geom_contour_filled(bins = 15) + 
+  labs(title = "Mixing Ratio (log)", x = "Temperature (°C)", y = "Humidity (%)",
+       fill = "log10(g/kg)") +
   theme_bw()
-
 ```
 
-### Humidity ratio
+### Humidity Ratio
 
-`calcHR`
+-   `calcHR`
 
-```{r message=FALSE, warning=FALSE}
+**Humidity ratio (HR)** (also known as the mixing ratio) is the mass of water vapour present per unit mass of dry air, typically expressed in grams of water vapour per kilogram of dry air (g/kg).
+It quantifies the actual moisture content in the air relative to the dry air component only.
 
-# Graph Humidity Ratio
-head(mydata) |>
+-   Humidity ratio is an essential measure in meteorology, HVAC, and conservation, as it stays almost constant with changes in temperature or pressure, except when air is cooled below its dew point.
+-   It is used as a standard axis in psychrometric charts to represent moisture content.
+-   Unlike absolute humidity (which is mass of water vapour per volume of air), humidity ratio expresses water vapour relative to dry air mass, making it more stable for air mass comparisons.
+
+The function `calcHR` calculates humidity ratio from temperature and relative humidity data.
+
+```{r}
+
+# Psychrometric graph of humidity ratio
+mydata |>
   graph_psychrometric(y_func = calcHR) +
   theme_bw()
 
+# Contour plot of humidity ratio over temperature and RH
 TRHgrid |>
-  mutate(HumidityRatio = calcHR(Temp, RH)) |>
+  mutate(HumidityRatio = calcHR(Temp, RH) |> log10()) |>
   ggplot(aes(Temp, RH, z = HumidityRatio)) + 
-  geom_contour_filled(bins = 20) + 
+  geom_contour_filled(bins = 15) + 
+  labs(title = "Humidity Ratio", x = "Temperature (°C)", y = "Humidity (%)",
+       fill = "log10(g/kg)") +
   theme_bw()
-
 ```
 
-### Air density
+### Air Density
 
-`calcAD`
+-   `calcAD`
 
-```{r message=FALSE, warning=FALSE}
+**Air density (AD)** is the mass of air per unit volume, typically expressed in kilograms per cubic meter (kg/m³).
+It depends on temperature, atmospheric pressure, and humidity.
 
-# Graph Air Density
-head(mydata) |>
+-   Warm air is less dense than cold air because increasing temperature causes air to expand and occupy a larger volume.
+-   Humid air is less dense than dry air because water vapour has a lower molecular weight than the major components of dry air.
+-   Air density influences many physical processes, including heat exchange, airflow, and buoyancy.
+
+The function **`calcAD`** calculates air density based on temperature and relative humidity values.
+
+```{r}
+
+# Psychrometric graph of air density
+mydata |>
   graph_psychrometric(y_func = calcAD) +
   theme_bw()
 
+# Contour plot of air density over temperature and RH
 TRHgrid |>
   mutate(AirDensity = calcAD(Temp, RH)) |>
   ggplot(aes(Temp, RH, z = AirDensity)) + 
-  geom_contour_filled(bins = 20) + 
+  geom_contour_filled(bins = 15) + 
+  labs(title = "Air Density", x = "Temperature (°C)", y = "Humidity (%)",
+       fill = "kg/m³") +
   theme_bw()
-
 ```
 
 ### Enthalpy
 
-`calcEnthalpy`
+-   `calcEnthalpy`
 
-```{r message=FALSE, warning=FALSE}
+**Enthalpy** is the total heat energy content in moist air, combining both the sensible heat from air temperature and the latent heat carried by water vapour.
+It is usually measured in kilojoules per kilogram (kJ/kg) of dry air.
 
-# Graph Enthalpy
-head(mydata) |>
+-   Enthalpy increases with both higher air temperature and higher moisture content.
+-   It is a key quantity for understanding heating, cooling, and humidification processes, as it reflects the energy required to change air temperature or moisture.
+
+The function **`calcEnthalpy`** computes enthalpy using temperature and relative humidity.
+
+```{r}
+
+# Psychrometric graph of enthalpy
+mydata |>
   graph_psychrometric(y_func = calcEnthalpy) +
   theme_bw()
 
-TRHgrid |>
-  mutate(Enthalpy = calcEnthalpy(Temp, RH)) |>
-  ggplot(aes(Temp, RH, z = Enthalpy)) + 
-  geom_contour_filled(bins = 20) + 
-  theme_bw()
-
+# Contour plot of enthalpy over temperature and RH
 TRHgrid |>
   mutate(Enthalpy_log10 = calcEnthalpy(Temp, RH) |> log10()) |>
   ggplot(aes(Temp, RH, z = Enthalpy_log10)) + 
-  geom_contour_filled(bins = 20) + 
+  geom_contour_filled(bins = 15) + 
+  labs(title = "Enthalpy (log)", x = "Temperature (°C)", y = "Humidity (%)",
+       fill = "log(kJ/kg)") + 
   theme_bw()
-
 ```
-
-

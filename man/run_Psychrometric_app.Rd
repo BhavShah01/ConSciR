@@ -36,6 +36,8 @@ Functions available:
 }
 }
 \examples{
-# run_Psychrometric_app()
+if(interactive()) {
+    run_Psychrometric_app()
+}
 
 }

@@ -4,7 +4,8 @@
 #'
 #' @format A data frame with 35,136 rows and 5 columns:
 #' \describe{
-#'   \item{Site, Sensor}{Sensor location and name}
+#'   \item{Site}{Site location name}
+#'   \item{Sensor}{Sensor name, unique to the site}
 #'   \item{Date}{Date is ISOdate time format}
 #'   \item{Temp, RH}{Temperature (C) and relative humidity (\%)}
 #'   ...

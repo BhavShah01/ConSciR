@@ -14,7 +14,9 @@
 #' @importFrom shiny runApp
 #'
 #' @examples
-#' # run_Psychrometric_app()
+#' if(interactive()) {
+#'     run_TRHbivariate_app()
+#' }
 #'
 run_TRHbivariate_app <- function() {
   app_dir <- system.file("shiny", "ConSciR-TRHbivariate", package = "ConSciR")

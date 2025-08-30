@@ -20,7 +20,9 @@
 #' @importFrom shiny runApp
 #'
 #' @examples
-#' # run_Mould_app()
+#' if(interactive()) {
+#'     run_Mould_app()
+#' }
 #'
 #'
 run_Mould_app <- function() {

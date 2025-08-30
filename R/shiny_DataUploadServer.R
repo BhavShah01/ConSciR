@@ -29,7 +29,7 @@
 #'
 #'
 #' @examples
-#' \dontrun{
+#' if(interactive()) {
 #'
 #' # In a Shiny app:
 #' ui <- fluidPage(

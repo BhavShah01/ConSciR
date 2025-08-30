@@ -26,7 +26,7 @@ This function creates a Shiny module server for uploading CSV or Excel files,
 processing the data, and returning a tidied dataset.
 }
 \examples{
-\dontrun{
+if(interactive()) {
 
 # In a Shiny app:
 ui <- fluidPage(

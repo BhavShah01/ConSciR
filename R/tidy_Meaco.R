@@ -38,10 +38,8 @@
 #' @importFrom padr pad
 #'
 #' @examples
-#'
 #' \dontrun{
-#'
-#' meaco_data <- read.csv("path/to/your/meaco_data.csv")
+#' # Example usage: meaco_data <- read.csv("path/to/your/meaco_data.csv")
 #' meaco_tidy <- tidy_Meaco(meaco_data)
 #'
 #' }

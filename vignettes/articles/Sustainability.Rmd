@@ -18,6 +18,53 @@ library(dplyr)
 library(ggplot2)
 ```
 
+### mydata: Built-in Example Dataset
+
+This dataset contains environmental monitoring data collected from example heritage sites.
+
+It includes measurements of temperature (°C) and relative humidity (%) recorded by sensors over time.
+
+| **Variable** | **Description**                               |
+|:-------------|:----------------------------------------------|
+| Site         | Location name, e.g., "Museum", "London"       |
+| Sensor       | Identifier for the specific sensor            |
+| Date         | Timestamp of the measurement (POSIXct format) |
+| Temp         | Air temperature in degrees Celsius            |
+| RH           | Relative humidity as percentage (0-100%)      |
+
+
+Example usage to load the dataset from the package:
+
+```{r}
+# filepath <- system.file("extdata", "mydata.rda", package = "ConSciR")
+# mydata <- load(filepath)
+
+head(mydata)
+```
+
+### TRHgrid: Dataset used to visualise the functions
+
+This dataset consists of a grid of temperature and relative humidity values used to visualize function behavior.
+Temperatures range from 0°C to 100°C in 0.25°C increments, and relative humidity (RH) ranges from 0% to 100% in 1% increments.
+The complete factorial combination of temperature and RH values is created using expand.grid(), where each pair represents a unique condition.
+
+Contour plots are generated to show interactions between derived variables across the temperature-RH grid.
+The dataset also supports validation checks for temperature and humidity calculations to understand relationships among the functions.
+
+Example R code to generate the dataset:
+
+```{r}
+Temp <- seq(0, 100, 0.25)
+RH <- seq(0, 100, 1)
+
+TRHgrid <- 
+  expand.grid(Temp, RH) |> 
+  tibble() |> 
+  rename(Temp = Var1, RH = Var2) 
+
+summary(TRHgrid)
+```
+
 ```{r}
 mydata |> 
   ggplot() +

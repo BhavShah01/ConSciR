@@ -4,7 +4,7 @@
 \alias{calcSH}
 \title{Calculate Specific Humidity}
 \usage{
-calcSH(Temp, RH, P_atm = 1013.25, ...)
+calcSH(Temp, RH, P_atm = 1013.25, B = 621.9907, ...)
 }
 \arguments{
 \item{Temp}{Temperature (°Celsius)}
@@ -13,7 +13,9 @@ calcSH(Temp, RH, P_atm = 1013.25, ...)
 
 \item{P_atm}{Atmospheric pressure = 1013.25 (hPa)}
 
-\item{...}{Additional arguments to supply to \code{\link{calcPws}}}
+\item{B}{B = 621.9907 g/kg for air}
+
+\item{...}{Additional arguments to supply to \code{\link{calcPws}} and \code{\link{calcMR}}}
 }
 \value{
 SH Specific Humidity (g/kg)
@@ -22,6 +24,11 @@ SH Specific Humidity (g/kg)
 Function to calculate the specific humidity (g/kg) from temperature (°C) and relative humidity (\%).
 
 Specific humidity is the ratio of the mass of water vapor to the mass of air.
+
+Function uses \code{\link{calcMR}}
+}
+\note{
+This function requires the \code{\link{calcMR}} function to be available in the environment.
 }
 \examples{
 calcSH(20, 50)

@@ -28,22 +28,22 @@
 #'
 calcAD <- function(Temp, RH, P_atm = 1013.25, R_dry = 287.058, R_vap = 461.495, ...) {
 
-  # Temperature in Kelvin
-  TempK = Temp + 273.15
+  # Convert Temperature to Kelvin
+  TempK <- Temp + 273.15
 
-  # Pressure in Pa
-  P_atm_Pa = P_atm * 100
+  # Partial pressure of water vapour (Pw) in hPa
+  Pws <- calcPws(Temp, ...)        # Saturation vapour pressure (hPa)
+  Pw <- Pws * RH / 100             # Actual vapour pressure (hPa)
 
-  # Saturation water vapour pressure
-  Pws = calcPws(Temp, ...)
+  # Partial pressure of dry air (Pd) in hPa
+  Pd <- P_atm - Pw
 
-  # Actual water vapour pressure
-  Pw = calcPws(Temp, ...) * RH / 100
+  # Convert hPa to Pa for calculation (1 hPa = 100 Pa)
+  Pd_Pa <- Pd * 100
+  Pw_Pa <- Pw * 100
 
-  # Partial pressure of dry air
-  Pd = P_atm_Pa - Pw
-
-  AirDensity = (Pd / (R_dry * TempK)) + (Pw / (R_vap * TempK))
+  # Air density calculation in kg/m³
+  AirDensity <- (Pd_Pa / (R_dry * TempK)) + (Pw_Pa / (R_vap * TempK))
 
   return(AirDensity)
 }

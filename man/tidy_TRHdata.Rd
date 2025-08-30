@@ -57,8 +57,7 @@ sensor, and date. The function also pads the data to ensure hourly intervals.
 }
 \examples{
 \dontrun{
-# Example usage:
-mydata <- read.csv("path/to/your/data.csv")
+# Example usage: mydata <- read.csv("path/to/your/data.csv")
 tidy_data <- tidy_TRHdata(mydata,
                            Site_col = "RECEIVER",
                            Sensor_col = "TRANSMITTER",
