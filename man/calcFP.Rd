@@ -4,14 +4,12 @@
 \alias{calcFP}
 \title{Calculate Frost Point}
 \usage{
-calcFP(Temp, RH, ...)
+calcFP(Temp, RH)
 }
 \arguments{
 \item{Temp}{Temperature (°Celsius)}
 
 \item{RH}{Relative Humidity (0-100\%)}
-
-\item{...}{Additional arguments to supply to \code{\link{calcPws}}}
 }
 \value{
 Tf, Frost Point (°Celsius)
@@ -20,11 +18,13 @@ Tf, Frost Point (°Celsius)
 Function to calculate frost point (°C) from temperature (°C) and relative humidity (\%).
 }
 \details{
-Formula coefficients
+Formula coefficients from Arden Buck equation (1981, 1996) saturation vapor pressure over ice.
 
 \itemize{
-  \item a_ice = 22.452
-  \item b_ice = 272.55
+  \item a = 6.1115
+  \item b = 23.036
+  \item c = 279.82
+  \item d = 333.7
 }
 }
 \examples{

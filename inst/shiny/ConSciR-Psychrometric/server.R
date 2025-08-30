@@ -27,6 +27,7 @@ server <- function(input, output) {
     "Specific Humidity (g/kg)" = "calcSH",
     "Air Density (kg/m³)" = "calcAD",
     "Dew Point (°C)" = "calcDP",
+    "Frost Point (°C)" = "calcFP",
     "Enthalpy (kJ/kg)" = "calcEnthalpy",
     "Saturation Vapour Pressure (hPa)" = "calcPws",
     "Water Vapour Pressure (hPa)" = "calcPw",

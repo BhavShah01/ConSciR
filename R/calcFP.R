@@ -5,18 +5,19 @@
 #'
 #'
 #' @details
-#' Formula coefficients
+#' Formula coefficients from Arden Buck equation (1981, 1996) saturation vapor pressure over ice.
 #'
 #' \itemize{
-#'   \item a_ice = 22.452
-#'   \item b_ice = 272.55
+#'   \item a = 6.1115
+#'   \item b = 23.036
+#'   \item c = 279.82
+#'   \item d = 333.7
 #' }
 #'
 #'
 #'
 #' @param Temp Temperature (°Celsius)
 #' @param RH Relative Humidity (0-100\%)
-#' @param ... Additional arguments to supply to \code{\link{calcPws}}
 #'
 #' @returns Tf, Frost Point (°Celsius)
 #' @export
@@ -28,17 +29,20 @@
 #' head(mydata) |> dplyr::mutate(FrostPoint = calcFP(Temp, RH))
 #'
 #'
-calcFP <- function(Temp, RH, ...) {
-  # Calculate actual vapor pressure in hPa
-  Pw = calcPw(Temp, RH)
+calcFP <- function(Temp, RH) {
 
-  # Constants for vapor pressure over ice (Magnus type formula coefficients)
-  a_ice = 22.452
-  b_ice = 272.55
-  c_ice = 0.0
+  ## Arden Buck equation (1981, 1996) saturation vapor pressure over ice
+  a = 6.1115
+  b = 23.036
+  c = 279.82
+  d = 333.7
 
-  # Calculate frost point T_f (C) using inversion of Magnus-form for ice
-  FrostPoint <- (b_ice * log(Pw/6.112)) / (a_ice - log(Pw/6.112))
+  Pws_ice = a * exp((b - (Temp / d)) * (Temp / (c + Temp)))
+  Pw = Pws_ice * RH / 100
 
-  return(FrostPoint)
+  ## Enhancement factor γ(T, RH)
+  Ef = log((RH / 100) * exp((b - (Temp / d)) * (Temp / (c + Temp))))
+  Tf = (c * Ef) / (b - Ef)
+  return(Tf)
+
 }

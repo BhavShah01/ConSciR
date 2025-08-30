@@ -18,6 +18,7 @@ knitr::opts_chunk$set(
 library(ConSciR)
 library(dplyr)
 library(ggplot2)
+library(readxl)
 ```
 
 The relationships between humidity functions are shown below, which are important for calculations used by engineers and scientists, for example to understand air conditioning systems.
@@ -45,6 +46,9 @@ It includes measurements of temperature (°C) and relative humidity (%) recorded
 Example usage to load the dataset from the package:
 
 ```{r}
+# mydata <- 
+#   read_excel(data_file_path("mydata.xlsx"), sheet = "mydata") |> 
+#   filter(Sensor == "Room = 1") # select "Room 1" sensor
 head(mydata)
 ```
 

@@ -12,6 +12,7 @@
 #'    \item calcSH: Specific Humidity (g/kg)
 #'    \item calcAD: Air Density (kg/m^3)
 #'    \item calcDP: Dew Point (°C)
+#'    \item calcFP: Frost Point (°C)
 #'    \item calcEnthalpy: Enthalpy (kJ/kg)
 #'    \item calcPws: Saturation vapor pressure (hPa)
 #'    \item calcPw: Water Vapour Pressure (hPa)
@@ -139,6 +140,7 @@ graph_psychrometric <- function(mydata,
            "calcSH" = "Specific Humidity (g/kg)",
            "calcAD" = "Air Density (kg/m^3)",
            "calcDP" = "Dew Point (C)",
+           "calcFP" = "Frost Point (C)",
            "calcEnthalpy" = "Enthalpy (kJ/kg)",
            "calcPws" = "Saturation vapor pressure (hPa)",
            "calcPw" = "Water Vapour Pressure (hPa)",
