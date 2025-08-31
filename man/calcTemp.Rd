@@ -4,41 +4,64 @@
 \alias{calcTemp}
 \title{Calculate Temperature from relative humidity and dew point}
 \usage{
-calcTemp(RH, DewP)
+calcTemp(RH, DewP, method = c("Magnus", "Buck"))
 }
 \arguments{
 \item{RH}{Relative Humidity (0-100\%)}
 
-\item{DewP}{Td, Dew Point (°Celsius)}
+\item{DewP}{Td (DP), Dew Point (°Celsius)}
+
+\item{method}{Calculation method: either \code{"Magnus"} or \code{"Buck"}.
+Defaults to \code{"Magnus"}.}
 }
 \value{
 Temp, Temperature (°Celsius)
 }
 \description{
-This function calculates the temperature (°C) from relative humidity (\%) and dew point temperature (°C).
+This function calculates the temperature (°C) from relative humidity (\%)
+and dew point temperature (°C).
 }
 \details{
-The temperature is calculated using the following equation derived from the August-Roche-Magnus approximation:
-
-\deqn{TempC=\frac{243.04\times\left(\frac{17.625\times DewP}{243.04+DewP}-\log\left(\frac{RH}{100}\right)\right)}{17.625+\log\left(\frac{RH}{100}\right)-\frac{17.625\times DewP}{243.04+DewP}}}
-
-Where:
-
+This function supports two methods for temperature calculation:
 \itemize{
-  \item Temp is the calculated temperature in Celsius
-  \item RH is the relative humidity in percent
-  \item DewP is the dew point temperature in Celsius
+  \item \code{"Magnus"} (default): Uses the August-Roche-Magnus approximation,
+  valid for 0°C < Temp < 60°C and 1\% < RH < 100\%.
+  \item \code{"Buck"}: Uses the Arden Buck equation with Bögel modification,
+  valid for -30°C < Temp < 60°C and 1\% < RH < 100\%.
 }
+The methods calculate temperature based on vapor pressure and saturation vapour
+pressure relationships.
+The Magnus method is chosen as the default because it is more stable
+when used with the \code{\link{calcDP}} and \code{\link{calcRH_DP}} functions.
 }
 \examples{
-# Calculate temperature for RH of 50\% and dew point of 15°C
+# Calculate temperature for RH 50\\% and Dew Point 15°C using Magnus method
 calcTemp(50, 15)
+
+# Using Buck method
+calcTemp(50, 15, method = "Buck")
 
 calcTemp(50, calcDP(20, 50))
 
-head(mydata) |> dplyr::mutate(DewPoint = calcDP(Temp, RH), Temp2 = calcTemp(RH, DewPoint))
+head(mydata) |>
+  dplyr::mutate(
+    DewPoint = calcDP(Temp, RH),
+    Temp_default = calcTemp(RH, DewPoint),
+    Temp_Buck = calcTemp(RH, DewPoint))
 
 
+}
+\references{
+Alduchov, O. A., and R. E. Eskridge, 1996: Improved Magnus' form approximation of saturation
+vapor pressure. J. Appl. Meteor., 35, 601–609
+
+Buck, A. L., 1981: New Equations for Computing Vapor Pressure and Enhancement Factor.
+J. Appl. Meteor. Climatol., 20, 1527–1532,
+https://doi.org/10.1175/1520-0450(1981)020<1527:NEFCVP>2.0.CO;2.
+
+Buck (1996), Buck (1996), Buck Research CR-1A User's Manual, Appendix 1.
+
+https://bmcnoldy.earth.miami.edu/Humidity.html
 }
 \seealso{
 \code{\link{calcTemp}} for calculating temperature

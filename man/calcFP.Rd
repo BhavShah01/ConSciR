@@ -16,6 +16,8 @@ Tf, Frost Point (°Celsius)
 }
 \description{
 Function to calculate frost point (°C) from temperature (°C) and relative humidity (\%).
+
+This function is under development.
 }
 \details{
 Formula coefficients from Arden Buck equation (1981, 1996) saturation vapor pressure over ice.

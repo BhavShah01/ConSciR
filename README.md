@@ -134,8 +134,9 @@ head(mydata) |>
 mydata |>
   mutate(DewPoint = calcDP(Temp, RH)) |>
   graph_TRH() + 
-  geom_line(aes(Date, DewPoint), col = "purple") + # add dewpoint line in purple
-  theme_minimal()
+  geom_line(aes(Date, DewPoint), col = "cyan4") + # add dew point
+  labs(title = "Room 1") +
+  theme_bw()
 ```
 
 <img src="man/figures/README-graphTRH_DewPoint-1.png" alt="graphTRH" width="100%" />
@@ -148,11 +149,12 @@ mydata |>
 mydata |>
   mutate(Mould = calcMould_Zeng(Temp, RH)) |>
   ggplot() +
-  geom_line(aes(Date, RH), col = "blue") +
-  geom_line(aes(Date, Mould), col = "darkgreen", size = 1) +
+  geom_line(aes(Date, RH), col = "royalblue3") +
+  geom_line(aes(Date, Mould), col = "darkorchid", size = 1) +
   labs(title = "Mould Growth Rate Limits", 
-       y = "Humidity (blue) and Mould Limit (green)") + 
-  theme_bw()
+       subtitle = "Mould growth initiates when RH goes above threshold",
+       x = NULL, y = "%rh") + 
+  theme_classic(base_size = 14)
 ```
 
 <img src="man/figures/README-mould_risk-1.png" alt="mould" width="100%" />

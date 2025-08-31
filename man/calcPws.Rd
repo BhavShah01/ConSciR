@@ -4,7 +4,11 @@
 \alias{calcPws}
 \title{Calculate Water Vapour Saturation Pressure}
 \usage{
-calcPws(Temp, P_atm = 1013.25, method = "Buck")
+calcPws(
+  Temp,
+  P_atm = 1013.25,
+  method = c("Buck", "IAPWS", "Magnus", "VAISALA")
+)
 }
 \arguments{
 \item{Temp}{Temperature (°Celsius)}
@@ -23,7 +27,8 @@ Arden Buck equation (Buck), August-Roche-Magnus approximation (Magnus) or VAISAL
 
 Water vapour saturation pressure is the maximum partial pressure of water vapour that
 can be present in gas at a given temperature.
-
+}
+\details{
 Different formulations for calculating water vapour pressure are available:
 \itemize{
   \item Arden Buck equation ("Buck")

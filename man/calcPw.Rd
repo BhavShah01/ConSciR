@@ -20,7 +20,8 @@ Pw, Water Vapour Pressure (hPa)
 Function to calculate water vapour pressure (hPa) from temperature (°C) and relative humidity (\%).
 
 Water vapour pressure is the pressure exerted by water vapour in a gas.
-
+}
+\details{
 Different formulations for calculating water vapour pressure are available:
 \itemize{
   \item Arden Buck equation ("Buck")
@@ -28,8 +29,7 @@ Different formulations for calculating water vapour pressure are available:
   \item August-Roche-Magnus approximation ("Magnus")
   \item VAISALA humidity conversion formula ("VAISALA")
 }
-}
-\details{
+
 The water vapor pressure (P_w) is calculated using the following equation:
 
 \deqn{P_w=\frac{P_{ws}\left(Temp\right)\times RH}{100}}

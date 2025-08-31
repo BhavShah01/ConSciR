@@ -5,6 +5,7 @@
 #'
 #' Water vapour pressure is the pressure exerted by water vapour in a gas.
 #'
+#' @details
 #' Different formulations for calculating water vapour pressure are available:
 #' \itemize{
 #'   \item Arden Buck equation ("Buck")
@@ -13,8 +14,6 @@
 #'   \item VAISALA humidity conversion formula ("VAISALA")
 #' }
 #'
-#'
-#' @details
 #' The water vapor pressure (P_w) is calculated using the following equation:
 #'
 #' \deqn{P_w=\frac{P_{ws}\left(Temp\right)\times RH}{100}}

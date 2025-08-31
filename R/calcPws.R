@@ -8,6 +8,8 @@
 #' Water vapour saturation pressure is the maximum partial pressure of water vapour that
 #' can be present in gas at a given temperature.
 #'
+#'
+#' @details
 #' Different formulations for calculating water vapour pressure are available:
 #' \itemize{
 #'   \item Arden Buck equation ("Buck")
@@ -78,18 +80,19 @@
 #'                               Magnus = calcPws(Temp, method = "Magnus"),
 #'                               VAISALA = calcPws(Temp, method = "VAISALA"))
 #'
-calcPws <- function(Temp, P_atm = 1013.25, method = "Buck") {
+calcPws <- function(Temp, P_atm = 1013.25, method = c("Buck", "IAPWS", "Magnus", "VAISALA")) {
+  method <- match.arg(method)
 
   TempK = Temp + 273.15
 
-  if (method == "Magnus") {
+  if (method == "Buck") {
 
-    # August-Roche-Magnus approximation
-    Pws = 6.1094 * exp((17.625 * Temp) / (243.04 + Temp))
+    # Saturation vapor pressure over water in hPa
+    Pws_water = 6.1121 * exp((18.678 - (Temp / 234.5)) * (Temp / (257.14 + Temp)))
+    # Saturation vapor pressure over ice in hPa
+    Pws_ice = 6.1115 * exp((23.036 - (Temp / 333.7)) * (Temp / (279.82 + Temp)))
 
-    # Pressure correction factor
-    Pws = Pws * (P_atm / 1013.25)
-
+    Pws = ifelse(Temp < 0, Pws_ice, Pws_water)
 
   } else if (method == "IAPWS") {
 
@@ -111,14 +114,13 @@ calcPws <- function(Temp, P_atm = 1013.25, method = "Buck") {
     Pws = Pc * exp(lnPwsPc)
 
 
-  } else if (method == "Buck") {
+  } else if (method == "Magnus") {
 
-    # Saturation vapor pressure over water in hPa
-    Pws_water = 6.1121 * exp((18.678 - (Temp / 234.5)) * (Temp / (257.14 + Temp)))
-    # Saturation vapor pressure over ice in hPa
-    Pws_ice = 6.1115 * exp((23.036 - (Temp / 333.7)) * (Temp / (279.82 + Temp)))
+    # August-Roche-Magnus approximation
+    Pws = 6.1094 * exp((17.625 * Temp) / (243.04 + Temp))
 
-    Pws = ifelse(Temp < 0, Pws_ice, Pws_water)
+    # Pressure correction factor
+    Pws = Pws * (P_atm / 1013.25)
 
 
   } else if (method == "VAISALA") {
