@@ -32,17 +32,17 @@
 calcFP <- function(Temp, RH) {
 
   ## Arden Buck equation (1981, 1996) saturation vapor pressure over ice
-  a = 6.1115
-  b = 23.036
-  c = 279.82
-  d = 333.7
+  a_ice = 6.1115
+  b_ice = 23.036
+  c_ice = 279.82
+  d_ice = 333.7
 
-  Pws_ice = a * exp((b - (Temp / d)) * (Temp / (c + Temp)))
+  Pws_ice = a_ice * exp((b_ice - (Temp / d_ice)) * (Temp / (c_ice + Temp)))
   Pw = Pws_ice * RH / 100
 
   ## Enhancement factor γ(T, RH)
-  Ef = log((RH / 100) * exp((b - (Temp / d)) * (Temp / (c + Temp))))
-  Tf = (c * Ef) / (b - Ef)
+  Ef = log((RH / 100) * exp((b_ice - (Temp / d_ice)) * (Temp / (c_ice + Temp))))
+  Tf = (c_ice * Ef) / (b_ice - Ef)
   return(Tf)
 
 }
