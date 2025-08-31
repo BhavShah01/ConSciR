@@ -86,13 +86,23 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org" class="external-link">readxl</a></span><span class="op">)</span></span></code></pre></div>
-<p>The relationships between humidity functions are shown below, which
-are important for calculations used by engineers and scientists, for
-example to understand air conditioning systems. These functions may play
-a key role in developing more energy-efficient systems. Understanding
-the stability of these functions is shown, as they underpin many
-methodologies in this field.</p>
-<p>Note: the humidity functions assume atmospheric pressure.</p>
+<p>Humidity tells us how much water vapour is in the air. Conservators,
+scientists and engineers use different ways, called humidity functions,
+to describe these water vapour levels and how they relate to temperature
+and moisture in the air.</p>
+<p>These functions are very important for things like designing and
+improving air conditioning systems and managing micro-climates. They
+also play a role in understanding and preventing damage to humidity
+sensitive materials and heritage objects, which can be harmed by too
+much or too little moisture. The humidity functions explained here show
+how temperature and relative humidity connect. Knowing these
+relationships helps predict when moisture will form as dew or frost,
+which can cause problems if not controlled.</p>
+<p>It’s important to note that these functions assume normal atmospheric
+pressure and have been tested for temperatures roughly between 0.5°C and
+50°C and for all levels of humidity from dry to fully saturated air
+(0–100% RH). Outside these ranges, the calculations might be less
+reliable.</p>
 <div class="section level3">
 <h3 id="datasets">Datasets<a class="anchor" aria-label="anchor" href="#datasets"></a>
 </h3>
@@ -231,21 +241,21 @@ following principles guide adjustments under the assumption of constant
 atmospheric pressure (typical for indoor environments):</p>
 <ul>
 <li>
-<p><strong>Changing Absolute Humidity:</strong></p>
+<strong>Changing Absolute Humidity:</strong>
 <ul>
 <li>Increasing AH at constant temperature raises RH.</li>
 <li>Decreasing AH at constant temperature lowers RH.</li>
 </ul>
 </li>
 <li>
-<p><strong>Changing Temperature:</strong></p>
+<strong>Changing Temperature:</strong>
 <ul>
 <li>Lowering temperature at constant AH raises RH.</li>
 <li>Raising temperature at constant AH lowers RH.</li>
 </ul>
 </li>
 <li>
-<p><strong>Using Dew Point:</strong></p>
+<strong>Using Dew Point:</strong>
 <ul>
 <li>The smaller the difference between air temperature and dew point,
 the closer the air is to saturation (100% RH).</li>
@@ -577,7 +587,7 @@ pressure from temperature and relative humidity.</p>
 measurements of dew point and relative humidity to estimate the air
 temperature. This is useful to check how accurately temperature can be
 derived from humidity-related data. Dew point is calculated using
-<code>calcDP</code></p>
+<code>calcDP</code>.</p>
 <p>The dew point is the temperature at which air becomes saturated and
 water vapour starts to condense. Using dew point and relative humidity
 together provides a way to calculate temperature indirectly.</p>
@@ -762,7 +772,14 @@ feels.</li>
 it a reliable indicator of moisture content.</li>
 </ul>
 <p>The function <code>calcDP</code> calculates the dew point temperature
-from measured air temperature and relative humidity.</p>
+from measured air temperature and relative humidity. It offers two
+calculation methods:</p>
+<ul>
+<li>Magnus (default): August-Roche-Magnus approximation, suitable for
+temperatures 0°C to 60°C and humidity 1% to 100%.</li>
+<li>Buck: Arden Buck equation with Bögel modification, often providing
+greater accuracy, especially at low temperatures (down to -30°C).</li>
+</ul>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Psychrometric graph of dew point</span></span>
 <span><span class="va">mydata</span> <span class="op">|&gt;</span>   </span>
@@ -788,14 +805,14 @@ from measured air temperature and relative humidity.</p>
 <li><code>calcFP</code></li>
 </ul>
 <p><strong>Frost Point (FP)</strong> is the temperature at which water
-vapor in air condenses as ice rather than liquid water. It is relevant
+vapour in air condenses as ice rather than liquid water. It is relevant
 when air temperature and dew point fall below freezing, indicating
 conditions for frost formation. Frost point helps in understanding
 moisture behavior in cold environments, which is crucial for
 conservation, meteorology, and climate control.</p>
 <p>The calcFP function computes frost point temperature from measured
 air temperature and relative humidity, extending dew point calculations
-below 0°C by considering vapor pressure over ice.</p>
+below 0°C by considering vapour pressure over ice.</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># Calculate Frost Point and add to mydata</span></span>
@@ -833,10 +850,10 @@ humidity directly quantifies the actual moisture content in the air and
 does not change with temperature or pressure.</p>
 <ul>
 <li>Specific humidity differs slightly from the mixing ratio, which
-measures the mass of water vapor relative only to the mass of dry air.
+measures the mass of water vapour relative only to the mass of dry air.
 The key difference is that specific humidity divides by the total air
-mass (dry air plus water vapor), while the mixing ratio divides only by
-the dry air mass. Because the mass of water vapor is usually much
+mass (dry air plus water vapour), while the mixing ratio divides only by
+the dry air mass. Because the mass of water vapour is usually much
 smaller than the mass of dry air, the two values are very similar, but
 specific humidity is always slightly less than the mixing ratio.</li>
 </ul>
@@ -868,25 +885,25 @@ true moisture amount in air regardless of changes in temperature.</p>
 <ul>
 <li><code>calcMR</code></li>
 </ul>
-<p><strong>Mixing ratio (MR)</strong> is the mass of water vapor per
+<p><strong>Mixing ratio (MR)</strong> is the mass of water vapour per
 unit mass of dry air in a given volume. It is commonly expressed in
-grams of water vapor per kilogram of dry air (g/kg). This measure is
+grams of water vapour per kilogram of dry air (g/kg). This measure is
 important because it remains nearly constant when the air changes
 temperature or pressure, making it useful for tracking moisture content
 in moving air masses.</p>
 <ul>
-<li>The mixing ratio tells us how much water vapor is mixed into dry
+<li>The mixing ratio tells us how much water vapour is mixed into dry
 air.</li>
-<li>It differs slightly from specific humidity (which is water vapor per
-total moist air) but is closely related.</li>
+<li>It differs slightly from specific humidity (which is water vapour
+per total moist air) but is closely related.</li>
 <li>While both mixing ratio and specific humidity measure how much water
-vapor is in the air, the key difference lies in their denominators:
-mixing ratio expresses the mass of water vapor relative only to the mass
-of dry air, whereas specific humidity expresses it relative to the total
-mass of the moist air (dry air plus water vapor). Because the mass of
-water vapor is usually small compared to dry air, both values are very
-similar, but specific humidity is always slightly less than the mixing
-ratio.</li>
+vapour is in the air, the key difference lies in their denominators:
+mixing ratio expresses the mass of water vapour relative only to the
+mass of dry air, whereas specific humidity expresses it relative to the
+total mass of the moist air (dry air plus water vapour). Because the
+mass of water vapour is usually small compared to dry air, both values
+are very similar, but specific humidity is always slightly less than the
+mixing ratio.</li>
 <li>The mixing ratio is a fundamental concept used in meteorology, air
 conditioning, and conservation for understanding and controlling
 humidity.</li>
