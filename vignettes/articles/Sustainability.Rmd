@@ -12,13 +12,16 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-knitr::opts_chunk$set(echo = FALSE)
 library(ConSciR)
 library(dplyr)
 library(ggplot2)
 ```
 
-### mydata: Built-in Example Dataset
+
+
+### Datasets
+
+**mydata**
 
 This dataset contains environmental monitoring data collected from example heritage sites.
 
@@ -32,24 +35,22 @@ It includes measurements of temperature (°C) and relative humidity (%) recorded
 | Temp         | Air temperature in degrees Celsius            |
 | RH           | Relative humidity as percentage (0-100%)      |
 
-
 Example usage to load the dataset from the package:
 
 ```{r}
-# filepath <- system.file("extdata", "mydata.rda", package = "ConSciR")
-# mydata <- load(filepath)
+filepath <- data_file_path("mydata.xlsx")
+mydata <- readxl::read_excel(filepath, sheet = "mydata") |> filter(Sensor == "Room 1")
 
 head(mydata)
+
+mydata |> graph_TRH() + theme_bw() + labs(title = "Room 1", subtitle = "mydata")
 ```
 
-### TRHgrid: Dataset used to visualise the functions
+**TRHgrid: Dataset used to visualise the functions**
 
-This dataset consists of a grid of temperature and relative humidity values used to visualize function behavior.
-Temperatures range from 0°C to 100°C in 0.25°C increments, and relative humidity (RH) ranges from 0% to 100% in 1% increments.
-The complete factorial combination of temperature and RH values is created using expand.grid(), where each pair represents a unique condition.
+This dataset consists of a grid of temperature and relative humidity values used to visualise function behavior. Temperatures range from 0°C to 100°C in 0.25°C increments, and relative humidity (RH) ranges from 0% to 100% in 1% increments. The complete factorial combination of temperature and RH values is created using expand.grid(), where each pair represents a unique condition.
 
-Contour plots are generated to show interactions between derived variables across the temperature-RH grid.
-The dataset also supports validation checks for temperature and humidity calculations to understand relationships among the functions.
+Contour plots are generated to show interactions between derived variables across the temperature-RH grid. The dataset also supports validation checks for temperature and humidity calculations to understand relationships among the functions.
 
 Example R code to generate the dataset:
 
@@ -65,14 +66,80 @@ TRHgrid <-
 summary(TRHgrid)
 ```
 
+
+### Sustainability
+
 ```{r}
-mydata |> 
+# Changing Temperature
+using_calcTemp <- 
+  mydata |> 
+  mutate(
+    # Absolute humidity, AH
+    AH = calcAH(Temp, RH), 
+    # Dew point, DP
+    DP = calcDP(Temp, RH), 
+    # Target RH
+    tRH = 50, 			
+    # T*: Tstar new temperature at target RH 
+    Tstar = calcTemp(tRH, DP), 
+    # Difference in measure temperature and new temperature
+    dTemp = Tstar - Temp, 
+    # Check
+    Tcheck = Tstar - (Temp + dTemp), 
+    # RHstarT: New humidity with new temperature 
+    RHstarT = calcRH_DP(Tstar, DP),
+    # Error 
+    RHerrorT = RHstarT - tRH
+  )
+
+glimpse(using_calcTemp)
+
+# Plot the difference and check the error
+using_calcTemp |>
   ggplot() +
-  geom_line(aes(Date, Temp), col = "red") +
-  geom_line(aes(Date, RH), col = "blue") +
-  labs(title = "Climate",
-       y = "Temperature (red) & Humidity (blue)") + 
+  geom_line(aes(Date, dTemp), col = "firebrick", alpha = 0.8) + 
+  geom_line(aes(Date, RHerrorT), col = "goldenrod", alpha = 0.8) + 
+  geom_smooth(aes(Date, dTemp)) + 
+  labs(title = "Temperature Required to Achieve Target RH",
+       subtitle = "Positive values indicate increasing the temperature",
+       x = NULL, y = "Temperature (°C)") +
+  theme_bw()
+
+using_calcTemp |>
+  graph_psychrometric(RH = "RHstarT", y_func = calcAH) +
+  labs(title = "Room 1 After Temperature Adjustment",
+       subtitle = "Temperature (°C)") +  
+  theme_classic()
+```
+
+Energy required to condition space by temperature control
+
+```{r}
+using_calcTemp <- 
+  using_calcTemp |>
+  mutate(
+    SensibleHeating = calcSensibleHeating(Temp, Tstar, RH, volumeFlowRate = 0.5),
+    CoolingPower = calcCoolingPower(Temp, Tstar, RH, tRH, volumeFlowRate = 0.5)
+  )
+
+glimpse(using_calcTemp)
+
+using_calcTemp |>
+  filter(SensibleHeating > 0) |>
+  ggplot() +
+  geom_line(aes(Date, SensibleHeating), col = "deeppink") + 
+  labs(x = NULL, y = "Sensible heat (kW)", 
+       title = "Sensible Heating") +
+  theme_bw()
+  
+using_calcTemp |>
+  filter(CoolingPower > 0) |>
+  ggplot() +
+  geom_line(aes(Date, CoolingPower), col = "lightblue") +
+  labs(x = NULL, y = "Cooling power (kW)", 
+       title = "Cooling Power") +
   theme_bw()
 
 ```
+
 

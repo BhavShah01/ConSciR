@@ -27,7 +27,12 @@ from a dry gas at 0°C.
 \examples{
 calcEnthalpy(20, 50)
 
-head(mydata) |> dplyr::mutate(Enthalpy = calcEnthalpy(Temp, RH))
+
+# mydata file
+filepath <- data_file_path("mydata.xlsx")
+mydata <- readxl::read_excel(filepath, sheet = "mydata", n_max = 5)
+
+mydata |> dplyr::mutate(Enthalpy = calcEnthalpy(Temp, RH))
 
 
 }

@@ -25,7 +25,12 @@ calcRH_AH(20, 8.630534)
 
 calcRH_AH(20, calcAH(20, 50))
 
-head(mydata) |> dplyr::mutate(Abs = calcAH(Temp, RH), RH2 = calcRH_AH(Temp, Abs))
+
+# mydata file
+filepath <- data_file_path("mydata.xlsx")
+mydata <- readxl::read_excel(filepath, sheet = "mydata", n_max = 5)
+
+mydata |> dplyr::mutate(Abs = calcAH(Temp, RH), RH2 = calcRH_AH(Temp, Abs))
 
 
 }

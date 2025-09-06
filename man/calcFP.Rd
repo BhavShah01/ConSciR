@@ -33,7 +33,12 @@ Formula coefficients from Arden Buck equation (1981, 1996) saturation vapor pres
 calcFP(20, 50)
 calcFP(0, 50)
 
-head(mydata) |> dplyr::mutate(FrostPoint = calcFP(Temp, RH))
+
+# mydata file
+filepath <- data_file_path("mydata.xlsx")
+mydata <- readxl::read_excel(filepath, sheet = "mydata", n_max = 5)
+
+mydata |> dplyr::mutate(FrostPoint = calcFP(Temp, RH))
 
 
 }

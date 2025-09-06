@@ -43,7 +43,12 @@ calcTemp(50, 15, method = "Buck")
 
 calcTemp(50, calcDP(20, 50))
 
-head(mydata) |>
+
+# mydata file
+filepath <- data_file_path("mydata.xlsx")
+mydata <- readxl::read_excel(filepath, sheet = "mydata", n_max = 5)
+
+mydata |>
   dplyr::mutate(
     DewPoint = calcDP(Temp, RH),
     Temp_default = calcTemp(RH, DewPoint),

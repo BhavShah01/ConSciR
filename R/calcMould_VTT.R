@@ -52,7 +52,11 @@
 #'
 #' calcMould_VTT(Temp = 18, RH = 70, M_prev = 2, sensitivity = "medium", wood = 1, surface = 1)
 #'
-#' head(mydata) |>
+#' # mydata file
+#' filepath <- data_file_path("mydata.xlsx")
+#' mydata <- readxl::read_excel(filepath, sheet = "mydata", n_max = 5)
+#'
+#' mydata |>
 #'    dplyr::mutate(
 #'       MouldIndex = calcMould_VTT(Temp, RH),
 #'       MouldIndex_sensitve = calcMould_VTT(Temp, RH, sensitivity = "sensitive")

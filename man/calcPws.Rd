@@ -59,9 +59,14 @@ calcPw(20, 50, method = "IAPWS") / calcPws(20, method = "IAPWS") * 100
 calcPw(20, 50, method = "Magnus") / calcPws(20, method = "Magnus") * 100
 calcPw(20, 50, method = "VAISALA") / calcPws(20, method = "VAISALA") * 100
 
-head(mydata) |> dplyr::mutate(Pws = calcPws(Temp))
 
-head(mydata) |> dplyr::mutate(Buck = calcPws(Temp, method = "Buck"),
+# mydata file
+filepath <- data_file_path("mydata.xlsx")
+mydata <- readxl::read_excel(filepath, sheet = "mydata", n_max = 5)
+
+mydata |> dplyr::mutate(Pws = calcPws(Temp))
+
+mydata |> dplyr::mutate(Buck = calcPws(Temp, method = "Buck"),
                               IAPWS = calcPws(Temp, method = "IAPWS"),
                               Magnus = calcPws(Temp, method = "Magnus"),
                               VAISALA = calcPws(Temp, method = "VAISALA"))

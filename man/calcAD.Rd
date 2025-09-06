@@ -28,7 +28,12 @@ Function to calculate air density based on temperature (°C), relative humidity 
 \examples{
 calcAD(20, 50)
 
-head(mydata) |> dplyr::mutate(AirDensity = calcAD(Temp, RH))
+
+# mydata file
+filepath <- data_file_path("mydata.xlsx")
+mydata <- readxl::read_excel(filepath, sheet = "mydata", n_max = 5)
+
+mydata |> dplyr::mutate(AirDensity = calcAD(Temp, RH))
 
 
 }

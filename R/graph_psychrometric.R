@@ -46,20 +46,22 @@
 #'
 #' @examples
 #'
+#' # mydata file
+#' filepath <- data_file_path("mydata.xlsx")
+#' mydata <- readxl::read_excel(filepath, sheet = "mydata", n_max = 100)
+#'
 #' # Basic usage with default settings
-#' graph_psychrometric(head(mydata, 100), Temp, RH)
+#' graph_psychrometric(mydata, Temp, RH)
 #'
 #' # Custom temperature and humidity ranges
-#' graph_psychrometric(head(mydata, 100), Temp, RH, LowT = 8, HighT = 28, LowRH = 30, HighRH = 70)
+#' graph_psychrometric(mydata, Temp, RH, LowT = 8, HighT = 28, LowRH = 30, HighRH = 70)
 #'
 #' # Using a different psychrometric function (e.g., Absolute Humidity)
-#' graph_psychrometric(head(mydata, 100), Temp, RH, y_func = calcAH)
+#' graph_psychrometric(mydata, Temp, RH, y_func = calcAH)
 #'
 #' # Adjusting the overall temperature range of the chart
-#' graph_psychrometric(head(mydata, 100), Temp, RH, Temp_range = c(12, 30))
+#' graph_psychrometric(mydata, Temp, RH, Temp_range = c(12, 30))
 #'
-#' # Change the colour of the points to a variable
-#' graph_psychrometric(head(mydata, 100), Temp, RH, data_colour = "Sensor", y_func = calcDP)
 #'
 #'
 graph_psychrometric <- function(mydata,

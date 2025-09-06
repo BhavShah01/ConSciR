@@ -8,12 +8,12 @@
 <!-- badges: end -->
 
 `ConSciR` is an R package that provides data science tools for
-conservation science.  
+conservation science.
+
 It includes functions for environmental applications, humidity
 calculations, sustainability metrics, engineering calculations, and data
-visualisations such as psychrometric charts.  
-The toolkit is designed to assist conservators, scientists, and
-engineers in performing  
+visualisations such as psychrometric charts. The toolkit is designed to
+assist conservators, scientists, and engineers in performing
 calculations, analysing data, and streamlining common tasks in cultural
 heritage conservation.
 
@@ -48,7 +48,7 @@ time](https://bhavshah01.github.io/ConSciR/articles/ConSciR-FirstTimeR.html)
 ## Installation
 
 You can install the development version of ConSciR from
-[GitHub](https://github.com/) with:
+[GitHub](https://github.com/BhavShah01/ConSciR) with:
 
 ``` r
 install.packages("pak")
@@ -79,15 +79,19 @@ library(ggplot2)
 
 - **Access an example dataset**  
   A pre-loaded dataset (`mydata`) is included for testing and
-  demonstration. Use `head()` to view the first few rows and inspect the
+  demonstration. Use `head()` to view the first few rows and inspect the
   data structure.
-- Users can rename columns and structure their own datasets similarly
-  to `mydata` to ensure compatibility with ConSciR functions, which
-  expect variables such as temperature and relative humidity in specific
-  column names.
+- Users can rename columns and structure their own datasets similarly to
+  `mydata` to ensure compatibility with ConSciR functions, which expect
+  variables such as temperature and relative humidity in specific column
+  names.
 
 ``` r
 # My TRH data
+filepath <- data_file_path("mydata.xlsx")
+mydata <- readxl::read_excel(filepath, sheet = "mydata")
+mydata <- mydata |> filter(Sensor == "Room 1")
+
 head(mydata)
 #> # A tibble: 6 × 5
 #>   Site   Sensor Date                 Temp    RH
@@ -160,11 +164,11 @@ mydata |>
 <img src="man/figures/README-mould_risk-1.png" alt="mould" width="100%" />
 
 - **Humidity functions: generate a psychrometric chart**  
-  Visualise the dataset using a psychrometric chart with the
-  function `graph_psychrometric()`. The first example shows a basic
-  plot, while the second demonstrates how to customise parameters such
-  as data transparency, temperature and humidity ranges, and the y-axis
-  function. See the full documentation with `?graph_psychrometric`.
+  Visualise the dataset using a psychrometric chart with the function
+  `graph_psychrometric()`. The first example shows a basic plot, while
+  the second demonstrates how to customise parameters such as data
+  transparency, temperature and humidity ranges, and the y-axis
+  function. See the full documentation with `?graph_psychrometric`.
 
 ``` r
 

@@ -43,19 +43,10 @@
 #' @importFrom padr pad
 #'
 #' @examples
-#' \dontrun{
-#' # Example usage: mydata <- read.csv("path/to/your/data.csv")
-#' tidy_data <- tidy_TRHdata(mydata,
-#'                            Site_col = "RECEIVER",
-#'                            Sensor_col = "TRANSMITTER",
-#'                            Date_col = "DATE",
-#'                            Temp_col = "TEMPERATURE",
-#'                            RH_col = "HUMIDITY")
 #'
-#' # View the tidy data
-#' head(tidy_data)
+#' \donttest{
+#' # Example usage: TRH_data <- tidy_TRHdata("path/to/your/TRHdata.csv")
 #' }
-#'
 #'
 #'
 tidy_TRHdata <- function(mydata,

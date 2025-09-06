@@ -48,9 +48,14 @@
 #'
 #' calcLM(20, 50, EA = 70)
 #'
-#' head(mydata) |> dplyr::mutate(LifeTime = calcLM(Temp, RH))
 #'
-#' head(mydata) |>
+#' # mydata file
+#' filepath <- data_file_path("mydata.xlsx")
+#' mydata <- readxl::read_excel(filepath, sheet = "mydata", n_max = 5)
+#'
+#' mydata |> dplyr::mutate(LifeTime = calcLM(Temp, RH))
+#'
+#' mydata |>
 #'   dplyr::mutate(LM = calcLM(Temp, RH)) |>
 #'    dplyr::summarise(LM_avg = mean(LM, na.rm = TRUE))
 #'

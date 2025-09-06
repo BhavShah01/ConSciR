@@ -16,7 +16,13 @@
 #' @importFrom ggplot2 ggplot aes geom_line labs lims scale_y_continuous sec_axis theme_bw theme element_text
 #'
 #' @examples
-#' graph_TRH(mydata, Date = "Date", Temp = "Temp", RH = "RH")
+#'
+#' # mydata file
+#' filepath <- data_file_path("mydata.xlsx")
+#' mydata <- readxl::read_excel(filepath, sheet = "mydata", n_max = 1000)
+#'
+#' graph_TRH(mydata)
+#'
 #'
 #'
 graph_TRH <- function(mydata, Date = "Date", Temp = "Temp", RH = "RH") {

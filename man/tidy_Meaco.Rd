@@ -50,10 +50,9 @@ This function takes raw Meaco sensor data and performs several cleaning and proc
 }
 }
 \examples{
-\dontrun{
-# Example usage: meaco_data <- read.csv("path/to/your/meaco_data.csv")
-meaco_tidy <- tidy_Meaco(meaco_data)
 
+\donttest{
+# Example usage: meaco_data <- tidy_Meaco("path/to/your/meaco_data.csv")
 }
 
 

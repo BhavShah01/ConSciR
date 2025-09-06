@@ -22,7 +22,13 @@ A ggplot graph of temperature and relative humidity.
 Use this tool to produce a simple temperature and humidity plot
 }
 \examples{
-graph_TRH(mydata, Date = "Date", Temp = "Temp", RH = "RH")
+
+# mydata file
+filepath <- data_file_path("mydata.xlsx")
+mydata <- readxl::read_excel(filepath, sheet = "mydata", n_max = 1000)
+
+graph_TRH(mydata)
+
 
 
 }

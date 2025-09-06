@@ -52,7 +52,12 @@ The results at very low and high RH can be unreliable.
 \examples{
 calcPI(20, 50)
 
-head(mydata) |> dplyr::mutate(PI = calcPI(Temp, RH))
+
+# mydata file
+filepath <- data_file_path("mydata.xlsx")
+mydata <- readxl::read_excel(filepath, sheet = "mydata", n_max = 5)
+
+mydata |> dplyr::mutate(PI = calcPI(Temp, RH))
 
 
 }

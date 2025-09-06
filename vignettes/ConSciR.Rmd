@@ -12,7 +12,6 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-
 ```
 
 
@@ -23,8 +22,8 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-`ConSciR` is an R package specifically designed to assist conservators, scientists, and engineers\
-by providing a toolkit for performing calculations and streamlining common tasks in cultural\
+`ConSciR` is an R package specifically designed to assist conservators, scientists, and engineers 
+by providing a toolkit for performing calculations and streamlining common tasks in cultural 
 heritage conservation.
 
 ## Install and load
@@ -61,6 +60,11 @@ library(ggplot2)
 Enrich your dataset with environmental metrics computed by ConSciR functions:
 
 ```{r table of calculated values, message=FALSE, warning=FALSE}
+filepath <- data_file_path("mydata.xlsx")
+mydata <- readxl::read_excel(filepath, sheet = "mydata")
+mydata <- mydata |> filter(Sensor == "Room 1")
+
+
 # Add calculated values using mutate
 head(mydata) |> 
   mutate(

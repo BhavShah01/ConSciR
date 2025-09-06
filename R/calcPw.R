@@ -68,9 +68,14 @@
 #' # Calculate relative humidity at 50%RH
 #' calcPw(20, 50) / calcPws(20) * 100
 #'
-#' head(mydata) |> dplyr::mutate(Pw = calcPw(Temp, RH))
 #'
-#' head(mydata) |> dplyr::mutate(Buck = calcPw(Temp, RH, method = "Buck"),
+#' # mydata file
+#' filepath <- data_file_path("mydata.xlsx")
+#' mydata <- readxl::read_excel(filepath, sheet = "mydata", n_max = 5)
+#'
+#' mydata |> dplyr::mutate(Pw = calcPw(Temp, RH))
+#'
+#' mydata |> dplyr::mutate(Buck = calcPw(Temp, RH, method = "Buck"),
 #'                               IAPWS = calcPw(Temp, RH, method = "IAPWS"),
 #'                               Magnus = calcPw(Temp, RH, method = "Magnus"),
 #'                               VAISALA = calcPw(Temp, RH, method = "VAISALA"))

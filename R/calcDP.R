@@ -64,8 +64,12 @@
 #' calcDP(20, calcRH_DP(20, calcDP(20, 50)))
 #' calcDP(20, calcRH_DP(20, calcDP(20, 50, method = "Buck"), method = "Buck"), method = "Buck")
 #'
-#' # Example
-#' head(mydata) |>
+#'
+#' # mydata file
+#' filepath <- data_file_path("mydata.xlsx")
+#' mydata <- readxl::read_excel(filepath, sheet = "mydata", n_max = 5)
+#'
+#' mydata |>
 #'   dplyr::mutate(
 #'     DewPoint = calcDP(Temp, RH),
 #'     DewPoint_Buck = calcDP(Temp, RH, method = "Buck"))

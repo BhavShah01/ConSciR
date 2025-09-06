@@ -7,11 +7,17 @@ This is a resubmission. In this version I have:
 
 * Corrected help files with if(interactive()){} wrapper.
 
-* Added inst/extdata folder. 
+* Corrected help files with {donttest} wrapper.
 
-* Added data path function.
+* Added inst/extdata folder containing 'mydata.xlsx'. 
 
-* Added to calcPWs humidity function.
+* Added data path function to 'mydata.xlsx' for vignettes and examples. 
+
+* Added mydata to internal data. 
+
+* Added to calcPWs, calcDP, calcTemp, calcRH_DP humidity functions.
+
+* Added to calcFP function.
 
 
 ## R CMD check results

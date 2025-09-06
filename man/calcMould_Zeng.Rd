@@ -53,7 +53,12 @@ calcMould_Zeng(20, 85)
 calcMould_Zeng(20, 85, LIM = 2)
 calcMould_Zeng(20, 85, label = TRUE)
 
-head(mydata) |>
+
+# mydata file
+filepath <- data_file_path("mydata.xlsx")
+mydata <- readxl::read_excel(filepath, sheet = "mydata", n_max = 5)
+
+mydata |>
    dplyr::mutate(
       RH_LIM0 = calcMould_Zeng(Temp, RH),
       RH_LIM1 = calcMould_Zeng(Temp, RH, LIM = 1),

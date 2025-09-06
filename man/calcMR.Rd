@@ -35,7 +35,11 @@ X = 621.9907 x 73.75 / (998 - 73.75) = 49.63 g/kg
 \examples{
 calcMR(20, 50)
 
-head(mydata) |> dplyr::mutate(MixingRatio = calcMR(Temp, RH))
+# mydata file
+filepath <- data_file_path("mydata.xlsx")
+mydata <- readxl::read_excel(filepath, sheet = "mydata", n_max = 5)
+
+mydata |> dplyr::mutate(MixingRatio = calcMR(Temp, RH))
 
 
 }

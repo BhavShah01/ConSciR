@@ -26,7 +26,12 @@ temperature and relative humidity.
 \examples{
 calcEMC_wood(20, 50)
 
-head(mydata) |> dplyr::mutate(EMC = calcEMC_wood(Temp, RH))
+
+# mydata file
+filepath <- data_file_path("mydata.xlsx")
+mydata <- readxl::read_excel(filepath, sheet = "mydata", n_max = 5)
+
+mydata |> dplyr::mutate(EMC = calcEMC_wood(Temp, RH))
 
 
 }

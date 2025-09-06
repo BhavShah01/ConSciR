@@ -51,10 +51,13 @@ It includes measurements of temperature (°C) and relative humidity (%) recorded
 Example usage to load the dataset from the package:
 
 ```{r}
-# mydata <- 
-#   read_excel(data_file_path("mydata.xlsx"), sheet = "mydata") |> 
-#   filter(Sensor == "Room = 1") # select "Room 1" sensor
+filepath <- data_file_path("mydata.xlsx")
+mydata <- readxl::read_excel(filepath, sheet = "mydata")
+mydata <- mydata |> filter(Sensor == "Room 1")
+
 head(mydata)
+
+mydata |> graph_TRH() + theme_bw() + labs(title = "Room 1", subtitle = "mydata")
 ```
 
 **TRHgrid: Dataset used to visualise the functions**

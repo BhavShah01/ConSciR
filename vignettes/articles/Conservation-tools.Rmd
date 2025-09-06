@@ -20,7 +20,6 @@ library(readr)
 
 This R package provides tools for the analysis of conservation data to assess risks to objects and collections. It includes functions for calculating preservation metrics and predicting mould growth, which can be used to compare spaces for potential object risks or evaluate improvements after conservation actions. These functions can be combined with others in the package to estimate required changes and/or reduce energy consumption. The package aims to support data-driven decision-making for storage and display environments.
 
-
 ### Datasets
 
 **mydata**
@@ -40,20 +39,20 @@ It includes measurements of temperature (°C) and relative humidity (%) recorded
 Example usage to load the dataset from the package:
 
 ```{r}
-# filepath <- system.file("extdata", "mydata.rda", package = "ConSciR")
-# mydata <- load(filepath)
+filepath <- data_file_path("mydata.xlsx")
+mydata <- readxl::read_excel(filepath, sheet = "mydata")
+mydata <- mydata |> filter(Sensor == "Room 1")
 
 head(mydata)
+
+mydata |> graph_TRH() + theme_bw() + labs(title = "Room 1", subtitle = "mydata")
 ```
 
 **TRHgrid: Dataset used to visualise the functions**
 
-This dataset consists of a grid of temperature and relative humidity values used to visualise function behavior.
-Temperatures range from 0°C to 100°C in 0.25°C increments, and relative humidity (RH) ranges from 0% to 100% in 1% increments.
-The complete factorial combination of temperature and RH values is created using expand.grid(), where each pair represents a unique condition.
+This dataset consists of a grid of temperature and relative humidity values used to visualise function behavior. Temperatures range from 0°C to 100°C in 0.25°C increments, and relative humidity (RH) ranges from 0% to 100% in 1% increments. The complete factorial combination of temperature and RH values is created using expand.grid(), where each pair represents a unique condition.
 
-Contour plots are generated to show interactions between derived variables across the temperature-RH grid.
-The dataset also supports validation checks for temperature and humidity calculations to understand relationships among the functions.
+Contour plots are generated to show interactions between derived variables across the temperature-RH grid. The dataset also supports validation checks for temperature and humidity calculations to understand relationships among the functions.
 
 Example R code to generate the dataset:
 
@@ -69,7 +68,6 @@ TRHgrid <-
 summary(TRHgrid)
 ```
 
-
 ### Mould
 
 #### Mould Isoline and Growth Rates
@@ -77,6 +75,15 @@ summary(TRHgrid)
 `calcMould_Zeng`
 
 The Zeng et al. (2023) model for predicting mould growth is a dynamic model that considers temperature and relative humidity to assess the risk of mould formation. This model was developed to predict the risk of mould growth in building envelopes under various conditions. It establishes an isoline model describing mould growth on surfaces and predicts growth rates between and outside the isoline areas by modifying the Sautour model for relevant air temperature and humidity conditions.
+
+-   LIM0: Low limit of mould growth
+-   LIM0.1: 0.1 mm/day growth rate
+-   LIM0.5: 0.5 mm/day growth rate
+-   LIM1: 1 mm/day growth rate
+-   LIM2: 2 mm/day growth rate
+-   LIM3: 3 mm/day growth rate
+-   LIM4: 4 mm/day growth rate
+-   Above LIM4: Greater than 4 mm/day growth rate (9 mm/day theorectical maximum)
 
 The code provided generates several visualisations to help understand this model. First, a contour plot shows the relationship between temperature, relative humidity, and mould growth potential across a grid of temperature and humidity values. A time series plot illustrates how the mould growth risk changes over time in relation to relative humidity. A bar chart displays the distribution of mould growth risk categories. These visualisations help to identify high-risk periods or conditions that may require inspection or intervention to prevent mould.
 
@@ -89,21 +96,28 @@ Zeng L, Chen Y, Ma M, et al. Prediction of mould growth rate within building env
 TRHgrid |>
   mutate(Mould_LIM = calcMould_Zeng(Temp, RH)) |>
   ggplot(aes(Temp, RH, z = Mould_LIM)) +
-  geom_contour_filled(bins = 20) +
-  labs(title = "Mould Isoline Limit: LM0", fill = "RH Limit") + 
+  geom_contour_filled(bins = 15) +
+  labs(x = "Temperature (°C)", y = "Humidity (%)",
+    title = "Mould Isoline Limit: LM0", fill = "RH Limit") + 
   theme_bw()
 
 head(mydata) |>
   mutate(
-    Mould_LIM0 = calcMould_Zeng(Temp, RH),
+    Mould_LIM0 = calcMould_Zeng(Temp, RH, LIM = 0), # 0.1, 0.5, 1, 2, 3, 4
     Mould_growth_rate = calcMould_Zeng(Temp, RH, label = TRUE),
     ) 
 
-mydata |>
-  mutate(Mould_LIM0 = calcMould_Zeng(Temp, RH)) |>
-  ggplot() +
+mydata_Zeng <- mydata |>
+  mutate(Mould_LIM0 = calcMould_Zeng(Temp, RH))
+
+ymin <- min(mydata_Zeng$Mould_LIM0, na.rm = TRUE)
+ymax <- max(mydata_Zeng$Mould_LIM0, na.rm = TRUE)
+
+ggplot(mydata_Zeng) +
   geom_line(aes(Date, Mould_LIM0), col = "purple") +
-  labs(title = "Mould Isoline Limit", y = "Mould Limit") + 
+  geom_line(aes(Date, RH), col = "blue") +
+  coord_cartesian(ylim = c(ymin, ymax)) +
+  labs(title = "Mould Isoline Limit", y = "Mould Limit") +
   theme_bw()
 
 ```
@@ -130,18 +144,18 @@ TRHgrid |>
   mutate(Mould_Index = calcMould_VTT(Temp, RH)) |>
   filter(Mould_Index > 0) |>
   ggplot(aes(Temp, RH, z = Mould_Index)) +
-  geom_contour_filled(bins = 20) +
-  labs(title = "VTT Model", fill = "Mould Index") + 
+  geom_contour_filled(bins = 15) +
+  labs(x = "Temperature (°C)", y = "Humidity (%)",
+    title = "VTT Model", fill = "Mould Index") + 
   theme_bw()
 
-mydata |>
+head(mydata) |>
   mutate(Mould_VTT = calcMould_VTT(Temp, RH))
 
 mydata |>
   mutate(Mould_VTT = calcMould_VTT(Temp, RH)) |>
   ggplot() +
-  geom_line(aes(Date, Mould_VTT), col = "purple") +
-  # geom_line(aes(Date, RH), col = "blue") + 
+  geom_area(aes(Date, Mould_VTT), fill = "purple") +
   labs(title = "VTT Model: Mould Index", x = NULL, y = "Mould Index") + 
   theme_bw()
 
@@ -151,7 +165,9 @@ mydata |>
 
 `calcLM`
 
-The calcLM function calculates the lifetime multiplier for chemical degradation of objects based on temperature and relative humidity conditions. This metric provides an estimate of an object's expected lifetime relative to standard conditions (20°C and 50% RH), with values closer to 1 indicating more suitable environments. The function incorporates the Arrhenius equation to account for temperature effects and a power law relationship for relative humidity, making it applicable to various materials such as paper, synthetic films, and dyes. This approach allows conservators to assess environmental conditions and identify periods when objects may be at higher risk of degradation.
+The calcLM function calculates the lifetime multiplier for chemical degradation of objects based on temperature and relative humidity conditions. This metric provides an estimate of an object's expected lifetime relative to standard conditions (20°C and 50% RH); values \>1 indicate conditions that prolong lifetime; values \<1 indicate higher risk of chemical degradation.
+
+Lifetime multiplier incorporates the Arrhenius equation to account for temperature effects and a power law relationship for relative humidity, making it applicable to various materials such as paper, synthetic films, and dyes. This approach allows conservators to assess environmental conditions and identify periods when objects may be at higher risk of degradation.
 
 Michalski, S. (2002). Double the life for each five-degree drop, more than double the life for each halving of relative humidity. In R. Vontobel (Ed.), Preprints of the 13th ICOM-CC Triennial Meeting in Rio de Janeiro (Vol. I, pp. 66-72). London: James & James.
 
@@ -160,29 +176,33 @@ Michalski, S. (2002). Double the life for each five-degree drop, more than doubl
 TRHgrid |>
   mutate(LifeTime = calcLM(Temp, RH)) |>
   ggplot(aes(Temp, RH, z = LifeTime)) +
-  geom_contour_filled(bins = 20) +
-  labs(title = "Lifetime multiplier", fill = "Lifetime") + 
+  geom_contour_filled(bins = 15) +
+  labs(title = "Lifetime multiplier", fill = "Lifetime", 
+       subtitle = "Relative expected lifetime of heritage materials compared to 20°C and 50%rh",
+       x = "Temperature (°C)", y = "Humidity (%)") + 
   theme_bw()
 
 mydata |>
   mutate(Lifetime = calcLM(Temp, RH)) |>
   ggplot() +
-  geom_line(aes(Date, Lifetime), col = "hotpink", size = 1) + 
+  geom_line(aes(Date, Lifetime), col = "cyan4", size = 1) + 
   # add 20C and 50%RH reference line
-  geom_hline(yintercept = calcLM(20, 50), col = "violet", size = 1) + 
+  geom_hline(yintercept = calcLM(20, 50), col = "mediumvioletred", size = 1) + 
   labs(
-    title = "Lifetime multiplier of 'mydata'", x = NULL, y = NULL,
-    subtitle = "Lifetime multiplier (pink) and 20C and 50%RH reference line") +
+    title = "Lifetime multiplier of 'mydata'", 
+    x = NULL, y = "Lifetime multiplier",
+    subtitle = "Lifetime multiplier over time, with reference to standard conditions (20°C, 50%rh)") +
   theme_bw()
 
 mydata |>
   mutate(Lifetime = calcLM(Temp, RH)) |>
   ggplot() + 
-  geom_density(aes(Lifetime), fill = "hotpink", alpha = 0.4) +
+  geom_density(aes(Lifetime), fill = "cyan4", alpha = 0.4) +
   # add 20C and 50%RH reference line
-  geom_vline(xintercept = calcLM(20, 50), col = "violet", size = 1) + 
-  labs(title = "Lifetime multiplier", x = NULL,
-       subtitle = "20C and 50%RH reference line") +
+  geom_vline(xintercept = calcLM(20, 50), col = "mediumvioletred", size = 1) + 
+  labs(title = "Lifetime Multiplier Distribution",
+       x = "Lifetime multiplier", 
+       subtitle = "Reference conditions of 20°C and 50%rh") +
   theme_bw()
 
 ```
@@ -196,45 +216,34 @@ The Preservation Index, developed by the Image Permanence Institute, is a chemic
 More information on the Preservation Index can be found here: <https://s3.cad.rit.edu/ipi-assets/publications/understanding_preservation_metrics.pdf>
 
 ```{r}
-
-# Preservation Index plotted at different temperature and relative humidity
-TRHgrid |>
-  mutate(PI = calcPI(Temp, RH)) |>
-  ggplot(aes(Temp, RH, z = PI)) +
-  geom_contour_filled(bins = 20) +
-  labs(title = "Preservation Index", fill = "PI") + 
-  theme_bw()
-
 # Log-Preservation Index 
 TRHgrid |>
   mutate(PI_log10 = calcPI(Temp, RH) |> log10()) |>
   ggplot(aes(Temp, RH, z = PI_log10)) +
-  geom_contour_filled(bins = 20) +
-  labs(title = "Log Preservation Index", fill = "log10(PI)") + 
+  geom_contour_filled(bins = 15) +
+  labs(title = "Preservation Index (log10)", fill = "log10(PI)",
+       x = "Temperature (°C)", y = "Humidity (%)") + 
   theme_bw()
 
 # Applying the Preservation Index on `mydata`
 mydata |>
   mutate(PI = calcPI(Temp, RH)) |>
   ggplot() + 
-  geom_line(aes(Date, Temp), col = "red", alpha = 0.1) +
-  geom_line(aes(Date, RH), col = "blue", alpha = 0.1) +
-  geom_line(aes(Date, PI), col = "hotpink", size = 1) + 
+  geom_line(aes(Date, PI), col = "violet", size = 1) + 
   # add 20C and 50%RH reference line
-  geom_hline(yintercept = calcPI(20, 50), col = "violet", size = 1) + 
-  labs(
-    title = "Preservation Index", x = NULL, y = NULL,
-    subtitle = "Temperature (red), Humidity (blue), Preservation Index, years (pink)") +
+  geom_hline(yintercept = calcPI(20, 50), col = "mediumvioletred", size = 1) + 
+  labs(title = "Preservation Index", x = NULL,  y = "Preservation Index, years",
+       subtitle = "Years to detoriation over time, with reference to standard conditions (20°C, 50%rh)") +
   theme_bw()
 
 mydata |>
   mutate(PI = calcPI(Temp, RH)) |>
   ggplot() + 
-  geom_density(aes(PI), fill = "hotpink", alpha = 0.4) +
+  geom_density(aes(PI), fill = "violet", alpha = 0.4) +
   # add 20C and 50%RH reference line
-  geom_vline(xintercept = calcPI(20, 50), col = "violet", size = 1) + 
-  labs(title = "Preservation Index", x = NULL,
-       subtitle = "20C and 50%RH reference line") +
+  geom_vline(xintercept = calcPI(20, 50), col = "mediumvioletred", size = 1) + 
+  labs(title = "Preservation Index", x = "Years to detoriation",
+       subtitle = "20C and 50%rh reference line") +
   theme_bw()
 
 ```
@@ -257,15 +266,16 @@ Hailwood, A. J., & Horrobin, S. (1946). "Absorption of water by polymers." Journ
 TRHgrid |>
   mutate(EMC = calcEMC_wood(Temp, RH)) |>
   ggplot(aes(Temp, RH, z = EMC)) +
-  geom_contour_filled(bins = 20) +
-  labs(title = "Equilibrium Moisture Content (EMC)", fill = "EMC") + 
+  geom_contour_filled(bins = 15) +
+  labs(title = "Equilibrium Moisture Content (EMC)", fill = "EMC", 
+       x = "Temperature (°C)", y = "Humidity (%)") + 
   theme_bw()
 
 # EMC on `mydata`
 mydata |>
   mutate(EMC = calcEMC_wood(Temp, RH)) |>
   ggplot() + 
-  geom_line(aes(Date, EMC), col = "violet", size = 1) + 
+  geom_line(aes(Date, EMC), col = "hotpink", size = 1) + 
   labs(title = "Equilibrium Moisture Content (EMC)", x = NULL, y = "EMC") +
   theme_bw()
 
@@ -273,7 +283,7 @@ mydata |>
   mutate(EMC = calcEMC_wood(Temp, RH)) |>
   ggplot() + 
   geom_density(aes(EMC), fill = "hotpink", alpha = 0.4) +
-  geom_vline(xintercept = calcEMC_wood(20, 50), col = "violet", size = 1) + 
+  geom_vline(xintercept = calcEMC_wood(20, 50), col = "mediumvioletred", size = 1) + 
   labs(title = "Equilibrium Moisture Content", x = NULL,
        subtitle = "20C and 50%RH reference line") +
   theme_bw()
