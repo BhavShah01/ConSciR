@@ -176,29 +176,26 @@ calcEMC_wood: Equilibrium Moisture Content (wood)
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># mydata file</span></span></span>
+<span class="r-in"><span><span class="va">filepath</span> <span class="op">&lt;-</span> <span class="fu"><a href="data_file_path.html">data_file_path</a></span><span class="op">(</span><span class="st">"mydata.xlsx"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mydata</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html" class="external-link">read_excel</a></span><span class="op">(</span><span class="va">filepath</span>, sheet <span class="op">=</span> <span class="st">"mydata"</span>, n_max <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Basic usage with default settings</span></span></span>
-<span class="r-in"><span><span class="fu">graph_psychrometric</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mydata</span>, <span class="fl">100</span><span class="op">)</span>, <span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">graph_psychrometric</span><span class="op">(</span><span class="va">mydata</span>, <span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="graph_psychrometric-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Custom temperature and humidity ranges</span></span></span>
-<span class="r-in"><span><span class="fu">graph_psychrometric</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mydata</span>, <span class="fl">100</span><span class="op">)</span>, <span class="va">Temp</span>, <span class="va">RH</span>, LowT <span class="op">=</span> <span class="fl">8</span>, HighT <span class="op">=</span> <span class="fl">28</span>, LowRH <span class="op">=</span> <span class="fl">30</span>, HighRH <span class="op">=</span> <span class="fl">70</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">graph_psychrometric</span><span class="op">(</span><span class="va">mydata</span>, <span class="va">Temp</span>, <span class="va">RH</span>, LowT <span class="op">=</span> <span class="fl">8</span>, HighT <span class="op">=</span> <span class="fl">28</span>, LowRH <span class="op">=</span> <span class="fl">30</span>, HighRH <span class="op">=</span> <span class="fl">70</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="graph_psychrometric-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Using a different psychrometric function (e.g., Absolute Humidity)</span></span></span>
-<span class="r-in"><span><span class="fu">graph_psychrometric</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mydata</span>, <span class="fl">100</span><span class="op">)</span>, <span class="va">Temp</span>, <span class="va">RH</span>, y_func <span class="op">=</span> <span class="va">calcAH</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">graph_psychrometric</span><span class="op">(</span><span class="va">mydata</span>, <span class="va">Temp</span>, <span class="va">RH</span>, y_func <span class="op">=</span> <span class="va">calcAH</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="graph_psychrometric-3.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Adjusting the overall temperature range of the chart</span></span></span>
-<span class="r-in"><span><span class="fu">graph_psychrometric</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mydata</span>, <span class="fl">100</span><span class="op">)</span>, <span class="va">Temp</span>, <span class="va">RH</span>, Temp_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">30</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">graph_psychrometric</span><span class="op">(</span><span class="va">mydata</span>, <span class="va">Temp</span>, <span class="va">RH</span>, Temp_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">30</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="graph_psychrometric-4.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Change the colour of the points to a variable</span></span></span>
-<span class="r-in"><span><span class="fu">graph_psychrometric</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mydata</span>, <span class="fl">100</span><span class="op">)</span>, <span class="va">Temp</span>, <span class="va">RH</span>, data_colour <span class="op">=</span> <span class="st">"Sensor"</span>, y_func <span class="op">=</span> <span class="va">calcDP</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 41 rows containing missing values or values outside the scale range</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_line()`).</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Removed 1 row containing missing values or values outside the scale range</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> (`geom_text()`).</span>
-<span class="r-plt img"><img src="graph_psychrometric-5.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

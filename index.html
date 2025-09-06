@@ -77,10 +77,8 @@
 </div>
 <!-- badges: start -->
 <!-- badges: end -->
-<p><code>ConSciR</code> is an R package that provides data science tools for conservation science.<br>
-It includes functions for environmental applications, humidity calculations, sustainability metrics, engineering calculations, and data visualisations such as psychrometric charts.<br>
-The toolkit is designed to assist conservators, scientists, and engineers in performing<br>
-calculations, analysing data, and streamlining common tasks in cultural heritage conservation.</p>
+<p><code>ConSciR</code> is an R package that provides data science tools for conservation science.</p>
+<p>It includes functions for environmental applications, humidity calculations, sustainability metrics, engineering calculations, and data visualisations such as psychrometric charts. The toolkit is designed to assist conservators, scientists, and engineers in performing calculations, analysing data, and streamlining common tasks in cultural heritage conservation.</p>
 <p><code>ConSciR</code> is intended for:<br>
 - Conservators working in museums, galleries, and heritage sites<br>
 - Conservation scientists, engineers, and researchers<br>
@@ -106,7 +104,7 @@ additions from the wider community</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of ConSciR from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<p>You can install the development version of ConSciR from <a href="https://github.com/BhavShah01/ConSciR" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"pak"</span><span class="op">)</span></span>
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"BhavShah01/ConSciR"</span><span class="op">)</span></span></code></pre></div>
@@ -131,11 +129,15 @@ Load ConSciR and some commonly used tidyverse packages for data manipulation and
 <ul>
 <li>
 <strong>Access an example dataset</strong><br>
-A pre-loaded dataset (<code>mydata</code>) is included for testing and demonstration. Use <code><a href="https://rdrr.io/r/utils/head.html" class="external-link">head()</a></code> to view the first few rows and inspect the data structure.</li>
-<li>Users can rename columns and structure their own datasets similarly to <code>mydata</code> to ensure compatibility with ConSciR functions, which expect variables such as temperature and relative humidity in specific column names.</li>
+A pre-loaded dataset (<code>mydata</code>) is included for testing and demonstration. Use <code><a href="https://rdrr.io/r/utils/head.html" class="external-link">head()</a></code> to view the first few rows and inspect the data structure.</li>
+<li>Users can rename columns and structure their own datasets similarly to <code>mydata</code> to ensure compatibility with ConSciR functions, which expect variables such as temperature and relative humidity in specific column names.</li>
 </ul>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># My TRH data</span></span>
+<span><span class="va">filepath</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/data_file_path.html">data_file_path</a></span><span class="op">(</span><span class="st">"mydata.xlsx"</span><span class="op">)</span></span>
+<span><span class="va">mydata</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html" class="external-link">read_excel</a></span><span class="op">(</span><span class="va">filepath</span>, sheet <span class="op">=</span> <span class="st">"mydata"</span><span class="op">)</span></span>
+<span><span class="va">mydata</span> <span class="op">&lt;-</span> <span class="va">mydata</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Sensor</span> <span class="op">==</span> <span class="st">"Room 1"</span><span class="op">)</span></span>
+<span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mydata</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 6 × 5</span></span>
 <span><span class="co">#&gt;   Site   Sensor Date                 Temp    RH</span></span>
@@ -201,7 +203,7 @@ Calculate mould growth risk using <strong><code><a href="reference/calcMould_Zen
 <ul>
 <li>
 <strong>Humidity functions: generate a psychrometric chart</strong><br>
-Visualise the dataset using a psychrometric chart with the function <code><a href="reference/graph_psychrometric.html">graph_psychrometric()</a></code>. The first example shows a basic plot, while the second demonstrates how to customise parameters such as data transparency, temperature and humidity ranges, and the y-axis function. See the full documentation with <code><a href="reference/graph_psychrometric.html">?graph_psychrometric</a></code>.</li>
+Visualise the dataset using a psychrometric chart with the function <code><a href="reference/graph_psychrometric.html">graph_psychrometric()</a></code>. The first example shows a basic plot, while the second demonstrates how to customise parameters such as data transparency, temperature and humidity ranges, and the y-axis function. See the full documentation with <code><a href="reference/graph_psychrometric.html">?graph_psychrometric</a></code>.</li>
 </ul>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
