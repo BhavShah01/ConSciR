@@ -29,5 +29,10 @@ calcSensibleHeatRatio <- function(Temp1, Temp2, RH1, RH2, volumeFlowRate) {
 
   SHR <- 100 * sensibleHeat / totalHeat
 
-  return(SHR)
+  # Return 0 if the sensible heat is negative
+  if (SHR < 0) {
+    return(0)
+  } else {
+    return(SHR)
+  }
 }

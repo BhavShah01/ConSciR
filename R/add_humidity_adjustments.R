@@ -1,9 +1,13 @@
 #' Adjust Humidity with temperature and/or absolute humidity, RH zones and Energy costs
 #'
-#' This function calculates and adjusts humidity and temperature-related variables
-#' in a dataframe. It classifies data into zones based on temperature (Temp)
-#' and relative humidity (RH) thresholds and computes related derived variables
-#' such as dew point, absolute humidity, temperature and humidity deviations.
+#' This function calculates and adjusts humidity in a dataframe.
+#' It classifies data into zones based on defined TRH input.
+#'
+#' @details
+#' This function processes a dataframe with temperature and relative humidity data,
+#' computes humidity-related variables, and classifies the data into climate control zones.
+#' It generates adjusted temperature and humidity values based on specified thresholds.
+#'
 #'
 #' @param mydata A dataframe containing temperature and relative humidity data.
 #' @param Temp Character string name of the temperature column (default "Temp").
@@ -17,17 +21,26 @@
 #'
 #' @return The input dataframe augmented with multiple humidity and temperature adjustment columns.
 #'
-#' @importFrom dplyr mutate case_when
+#' @importFrom dplyr mutate case_when select
 #' @export
 #'
 #' @details
 #' The function adds:
-#' \itemize{
-#'   \item Direct calculations: absolute humidity, dew point.
-#'   \item Logical zone classifications based on thresholds.
-#'   \item Reference curves for relative humidity adjusted by temperature.
-#'   \item Adjusted temperature and absolute humidity values per zone conditions.
-#'   \item Differences between new and original temperature, humidity variables.
+#' \describe{
+#'   \item{AH}{Absolute Humidity (g/m³): The mass of water vapor per unit volume of air.}
+#'   \item{DP}{Dew Point (°C): The temperature at which air becomes saturated and water vapor condenses.}
+#'   \item{zone}{Categorical variable defining climate control action zones based on combined temperature and RH thresholds.}
+#'   \item{TRH_zone}{Simplified temperature-relative humidity category for ease of interpretation.}
+#'   \item{T_zone}{Temperature zone classification relative to thresholds: 'Cold', 'Within', or 'Hot'.}
+#'   \item{RH_zone}{Relative humidity zone classification: 'Dry', 'Within', or 'Humid'.}
+#'   \item{dTemp}{Temperature difference from comfort thresholds (°C), indicating required heating or cooling.}
+#'   \item{dRH}{Relative humidity difference from comfort thresholds (\%), indicating humidification or dehumidification needs.}
+#'   \item{newTemp_TRHadj}{Adjusted temperature (°C) after applying temperature and relative humidity correction based on zone.}
+#'   \item{newAH_TRHadj}{Adjusted absolute humidity (g/m³) aligned to comfort zones.}
+#'   \item{newRH_TRHadj}{Adjusted relative humidity (\%) reflecting new temperature and absolute humidity.}
+#'   \item{dTemp_TRHadj, dAH_TRHadj, dRH_TRHadj}{Differences between adjusted and original temperature, absolute humidity, and relative humidity respectively.}
+#'   \item{newTemp_AHadj, newAH_AHadj, newRH_AHadj}{Adjustments based on absolute humidity only.}
+#'   \item{newTemp_Tadj, newRH_Tadj, newAH_Tadj}{Adjustments based on temperature only.}
 #' }
 #'
 #' @examples
@@ -41,10 +54,15 @@
 add_humidity_adjustments <- function(
     mydata, Temp = "Temp", RH = "RH", LowT = 16, HighT = 25, LowRH = 40, HighRH = 60, P_atm = 1013.25, ...) {
 
+  # TempSym <- rlang::sym(Temp)
+  # RHSym <- rlang::sym(RH)
+
   df <-
     mydata |>
     mutate(
-      Abs = calcAH(Temp, RH, ...),
+      # Temp = !!TempSym,
+      # RH = !!RHSym,
+      AH = calcAH(Temp, RH, ...),
       DP = calcDP(Temp, RH, ...),
 
       # Logical flags for temperature and relative humidity ranges
@@ -122,29 +140,25 @@ add_humidity_adjustments <- function(
       # Relative Humidity difference based on TRH_zone
       dRH = case_when(
         TRH_zone %in% c("Within", "Cold", "Hot") ~ 0,
-        TRH_zone == "Cold and humid" ~ RH - HighRH,
-        TRH_zone == "Cold and dry" ~ RH - LowRH,
-        TRH_zone == "Hot and humid" ~ RH - HighRH,
-        TRH_zone == "Hot and dry" ~ RH - LowRH,
-        TRH_zone == "Humid" ~ RH - HighRH,
-        TRH_zone == "Dry" ~ RH - LowRH,
+        TRH_zone %in% c("Cold and humid", "Hot and humid", "Humid") ~ RH - HighRH,
+        TRH_zone %in% c("Cold and dry", "Hot and dry", "Dry") ~ RH - LowRH,
         TRUE ~ NA_real_
       ),
 
-      # Additional derived absolute humidity variables
-      New_Absrhmin = calcAH(Temp, LowRH),
-      New_Absrhmax = calcAH(Temp, HighRH),
-      Abs_toCurvemin = calcAH(Temp, RH_lowcurve),
-      Abs_toCurvemax = calcAH(Temp, RH_highcurve),
+      # AH and Temp values to different adjustment points
+      New_AHrhmin = calcAH(Temp, LowRH),
+      New_AHrhmax = calcAH(Temp, HighRH),
+      AH_toCurvemin = calcAH(Temp, RH_lowcurve),
+      AH_toCurvemax = calcAH(Temp, RH_highcurve),
       Temp_toRHmin = calcTemp(LowRH, calcDP(Temp, RH)),
       Temp_toRHmax = calcTemp(HighRH, calcDP(Temp, RH)),
-      Temp_toCurvemin = calcTemp(LowRH, calcDP(Temp, calcRH_AH(Temp, Abs_toCurvemin))),
-      Temp_toCurvemax = calcTemp(HighRH, calcDP(Temp, calcRH_AH(Temp, Abs_toCurvemax))),
+      Temp_toCurvemin = calcTemp(LowRH, calcDP(Temp, calcRH_AH(Temp, AH_toCurvemin))),
+      Temp_toCurvemax = calcTemp(HighRH, calcDP(Temp, calcRH_AH(Temp, AH_toCurvemax))),
 
-      # New temperature based on zone and Abs
-      New_Temp = case_when(
-        zone == "Heating only" & calcRH_AH(LowT, Abs) > HighRH ~ Temp_toRHmax,
-        zone == "Heating only" & calcRH_AH(LowT, Abs) <= HighRH ~ LowT,
+      # TRH both adjusted: new temperature (based on zone)
+      newTemp_TRHadj = case_when(
+        zone == "Heating only" & calcRH_AH(LowT, AH) > HighRH ~ Temp_toRHmax,
+        zone == "Heating only" & calcRH_AH(LowT, AH) <= HighRH ~ LowT,
         zone == "Dehum or heating" ~ Temp_toRHmax,
         zone == "Dehum only" ~ Temp,
         zone == "Cooling and dehum" ~ HighT,
@@ -152,76 +166,74 @@ add_humidity_adjustments <- function(
         zone == "Heating and hum" ~ LowT,
         zone == "Hum only" ~ Temp,
         zone == "Hum or cooling" ~ Temp,
-        zone == "Cooling only" & calcRH_AH(HighT, Abs) < LowRH ~ Temp_toRHmin,
-        zone == "Cooling only" & calcRH_AH(HighT, Abs) >= LowRH ~ HighT,
+        zone == "Cooling only" & calcRH_AH(HighT, AH) < LowRH ~ Temp_toRHmin,
+        zone == "Cooling only" & calcRH_AH(HighT, AH) >= LowRH ~ HighT,
         zone == "Cooling and hum" ~ LowT,
         zone == "Within" ~ Temp,
         is.na(zone) ~ Temp
       ),
 
-      # New Absolute Humidity based on zone
-      New_Abs = case_when(
-        zone == "Heating only" ~ Abs,
-        zone == "Dehum or heating" ~ Abs,
-        zone == "Dehum only" ~ New_Absrhmax,
-        zone == "Cooling and dehum" ~ Abs_toCurvemax,
-        zone == "Heating and dehum" ~ Abs_toCurvemax,
-        zone == "Heating and hum" ~ Abs_toCurvemin,
-        zone == "Hum only" ~ New_Absrhmin,
-        zone == "Hum or cooling" ~ New_Absrhmin,
-        zone == "Cooling only" ~ Abs,
-        zone == "Cooling and hum" ~ Abs_toCurvemin,
-        zone == "Within" ~ Abs,
-        TRUE ~ Abs
+      # TRH both adjusted: new absolute humidity (based on zone)
+      newAH_TRHadj = case_when(
+        zone == "Heating only" ~ AH,
+        zone == "Dehum or heating" ~ AH,
+        zone == "Dehum only" ~ New_AHrhmax,
+        zone == "Cooling and dehum" ~ AH_toCurvemax,
+        zone == "Heating and dehum" ~ AH_toCurvemax,
+        zone == "Heating and hum" ~ AH_toCurvemin,
+        zone == "Hum only" ~ New_AHrhmin,
+        zone == "Hum or cooling" ~ New_AHrhmin,
+        zone == "Cooling only" ~ AH,
+        zone == "Cooling and hum" ~ AH_toCurvemin,
+        zone == "Within" ~ AH,
+        TRUE ~ AH
       ),
 
-      # New Absolute Humidity with Temperature adjustment (similar to New_Abs)
-      New_AbsT = case_when(
-        zone == "Heating only" ~ Abs,
-        zone == "Dehum or heating" ~ Abs,
-        zone == "Dehum only" ~ New_Absrhmax,
-        zone == "Cooling and dehum" ~ Abs_toCurvemax,
-        zone == "Heating and dehum" ~ Abs_toCurvemax,
-        zone == "Heating and hum" ~ Abs_toCurvemin,
-        zone == "Hum only" ~ New_Absrhmin,
-        zone == "Hum or cooling" ~ New_Absrhmin,
-        zone == "Cooling only" ~ Abs,
-        zone == "Cooling and hum" ~ Abs_toCurvemin,
-        zone == "Within" ~ Abs,
-        TRUE ~ Abs
+      # TRH both adjusted: new and differences in Temp, RH and AH
+      dTemp_TRHadj = newTemp_TRHadj - Temp, # should match dTemp
+      dAH_TRHadj = newAH_TRHadj - AH,
+      newRH_TRHadj = calcRH_AH(newTemp_TRHadj, newAH_TRHadj),
+      dRH_TRHadj = newRH_TRHadj - RH,
+
+      # RH adjusted by AH (absolute humidity)
+      newAH_AHadj = case_when(
+        RH_zone == "Dry" ~ New_AHrhmin,
+        RH_zone == "Humid" ~ New_AHrhmax,
+        RH_zone == "Within" ~ AH,
+        TRUE ~ AH
       ),
+      dAH_AHadj = newAH_AHadj - AH,
+      newRH_AHadj = calcRH_AH(Temp, newAH_AHadj),
+      dRH_AHadj = newRH_AHadj - RH,
+      newTemp_AHadj = Temp,
+      dTemp_AHadj = newTemp_AHadj - Temp,
 
-      # Difference calculations for temperature and absolute humidity
-      Temp_diff = New_Temp - Temp,
-      Abs_diff = New_Abs - Abs,
-
-      # New Relative Humidity from updated Abs and Temp
-      New_RH = calcRH_AH(New_Temp, New_Abs),
-      RH_diff = New_RH - RH,
-
-      # Absolute humidity adjustments for RH only zones
-      New_Abs_RHonly = case_when(
-        RH_zone == "Dry" ~ New_Absrhmin,
-        RH_zone == "Humid" ~ New_Absrhmax,
-        RH_zone == "Within" ~ Abs,
-        TRUE ~ Abs
-      ),
-      Abs_diff_RHonly = New_Abs_RHonly - Abs,
-      New_RH_AbsRHonly = calcRH_AH(Temp, New_Abs_RHonly),
-      RH_diff_AbsRHonly = New_RH_AbsRHonly - RH,
-
-      # Temperature adjustments for RH only zones
-      New_Temp_RHonly = case_when(
+      # Temperature adjustments for RH only
+      newTemp_Tadj = case_when(
         RH_zone == "Dry" ~ Temp_toRHmin,
         RH_zone == "Humid" ~ Temp_toRHmax,
         RH_zone == "Within" ~ Temp,
         TRUE ~ Temp
       ),
-      Temp_diff_RHonly = New_Temp_RHonly - Temp,
-      New_RH_TempRHonly = calcRH_AH(New_Temp_RHonly, Abs),
-      RH_diff_TempRHonly = New_RH_TempRHonly - RH,
-      New_Abs_TempRHonly = calcAH(New_Temp_RHonly, RH)
+      dTemp_Tadj = newTemp_Tadj - Temp,
+      newRH_Tadj = calcRH_AH(newTemp_Tadj, AH),
+      dRH_Tadj = newRH_Tadj - RH,
+      newAH_Tadj = calcAH(newTemp_Tadj, RH),
+      dAH_Tadj = newAH_Tadj - AH
     )
+
+  df <-
+    df |>
+    select(
+      -T_within_range, -RH_within_range,
+      -RH_lowcurve, -RH_highcurve,
+      -RH_withincurve, -RH_abovecurve, -RH_belowcurve,
+      -New_AHrhmin, -New_AHrhmax,
+      -AH_toCurvemin, -AH_toCurvemax,
+      -Temp_toRHmin, -Temp_toRHmax,
+      -Temp_toCurvemin, -Temp_toCurvemax,
+
+           )
 
 
   return(df)

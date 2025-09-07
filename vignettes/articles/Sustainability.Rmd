@@ -1,5 +1,8 @@
 ---
 title: "Sustainability"
+editor_options: 
+  markdown: 
+    wrap: sentence
 ---
 
 ```{r, include = FALSE}
@@ -15,9 +18,13 @@ knitr::opts_chunk$set(
 library(ConSciR)
 library(dplyr)
 library(ggplot2)
+library(forcats)
 ```
 
+Cultural heritage organisations can reduce energy consumption by for example broadening specifications that are used to manage risks to the collections.
 
+An example assessment of a space of theoretical reduction of energy by broadening specifications from 16-25°C and 45-55%rh to 12-28°C and 30-70%rh.
+The increase/decrease of risks is also assessed using the Conservation tools available in the package.
 
 ### Datasets
 
@@ -29,117 +36,233 @@ It includes measurements of temperature (°C) and relative humidity (%) recorded
 
 | **Variable** | **Description**                               |
 |:-------------|:----------------------------------------------|
-| Site         | Location name, e.g., "Museum", "London"       |
-| Sensor       | Identifier for the specific sensor            |
+| Site         | "London"                                      |
+| Sensor       | "External", "Room 1", "Room 1 Case"           |
 | Date         | Timestamp of the measurement (POSIXct format) |
-| Temp         | Air temperature in degrees Celsius            |
+| Temp         | Air temperature in degrees Celsius (°C)       |
 | RH           | Relative humidity as percentage (0-100%)      |
 
 Example usage to load the dataset from the package:
 
 ```{r}
 filepath <- data_file_path("mydata.xlsx")
-mydata <- readxl::read_excel(filepath, sheet = "mydata") |> filter(Sensor == "Room 1")
+mydata <- readxl::read_excel(filepath, sheet = "mydata")
 
 head(mydata)
 
-mydata |> graph_TRH() + theme_bw() + labs(title = "Room 1", subtitle = "mydata")
+mydata |> graph_TRH() + theme_bw() + labs(title = "mydata") + facet_grid(~Sensor)
 ```
-
-**TRHgrid: Dataset used to visualise the functions**
-
-This dataset consists of a grid of temperature and relative humidity values used to visualise function behavior. Temperatures range from 0°C to 100°C in 0.25°C increments, and relative humidity (RH) ranges from 0% to 100% in 1% increments. The complete factorial combination of temperature and RH values is created using expand.grid(), where each pair represents a unique condition.
-
-Contour plots are generated to show interactions between derived variables across the temperature-RH grid. The dataset also supports validation checks for temperature and humidity calculations to understand relationships among the functions.
-
-Example R code to generate the dataset:
-
-```{r}
-Temp <- seq(0, 100, 0.25)
-RH <- seq(0, 100, 1)
-
-TRHgrid <- 
-  expand.grid(Temp, RH) |> 
-  tibble() |> 
-  rename(Temp = Var1, RH = Var2) 
-
-summary(TRHgrid)
-```
-
 
 ### Sustainability
 
+Use the `add_humidity_adjustments` function to calculate how to adjust the humidity in each space using the humidity funcitons.
+
+The `add_humidity_adjustments` function applies humidity adjustment calculations based on user-defined specifications for temperature and RH.
+Adjusted variables like newTemp_TRHadj and newRH_TRHadj are the new temperature and humidity values following heating, cooling, humidification and dehumidification.
+An energy estimate is provided for temperature adjustement (heating and coooling).
+Adjustment of humdity by humidification and dehumidification is being developed.
+
 ```{r}
-# Changing Temperature
-using_calcTemp <- 
+mydata_adj <- 
   mydata |> 
+  group_by(Sensor) |>
+  add_humidity_adjustments(LowT = 16, HighT = 25, LowRH = 45, HighRH = 55) |>
   mutate(
-    # Absolute humidity, AH
-    AH = calcAH(Temp, RH), 
-    # Dew point, DP
-    DP = calcDP(Temp, RH), 
-    # Target RH
-    tRH = 50, 			
-    # T*: Tstar new temperature at target RH 
-    Tstar = calcTemp(tRH, DP), 
-    # Difference in measure temperature and new temperature
-    dTemp = Tstar - Temp, 
-    # Check
-    Tcheck = Tstar - (Temp + dTemp), 
-    # RHstarT: New humidity with new temperature 
-    RHstarT = calcRH_DP(Tstar, DP),
-    # Error 
-    RHerrorT = RHstarT - tRH
+    SensibleHeating = calcSensibleHeating(Temp, newTemp_TRHadj, RH, volumeFlowRate = 0.5),
+    CoolingPower = calcCoolingPower(Temp, newTemp_TRHadj, RH, newRH_TRHadj, volumeFlowRate = 0.5)
   )
 
-glimpse(using_calcTemp)
+glimpse(mydata_adj)
+```
 
-# Plot the difference and check the error
-using_calcTemp |>
-  ggplot() +
-  geom_line(aes(Date, dTemp), col = "firebrick", alpha = 0.8) + 
-  geom_line(aes(Date, RHerrorT), col = "goldenrod", alpha = 0.8) + 
-  geom_smooth(aes(Date, dTemp)) + 
-  labs(title = "Temperature Required to Achieve Target RH",
-       subtitle = "Positive values indicate increasing the temperature",
-       x = NULL, y = "Temperature (°C)") +
-  theme_bw()
+Adjustment before and after applying calculations in the `add_humidity_adjustments` function.
 
-using_calcTemp |>
-  graph_psychrometric(RH = "RHstarT", y_func = calcAH) +
-  labs(title = "Room 1 After Temperature Adjustment",
-       subtitle = "Temperature (°C)") +  
+```{r}
+graph_psychrometric(mydata_adj, y_func = calcAH, data_col = "TRH_zone",
+                    LowT = 16, HighT = 25, LowRH = 45, HighRH = 55) +  
+  facet_wrap(~Sensor) + 
+  labs(title = "Before TRH Adjustment", subtitle = "mydata", col = "") + 
+  theme_classic()
+
+mydata_adj |>
+  graph_psychrometric(Temp = "newTemp_TRHadj", RH = "newRH_TRHadj", 
+                      y_func = calcAH, data_col = "zone",
+                      LowT = 16, HighT = 25, LowRH = 45, HighRH = 55) +
+  labs(title = "After TRH Adjustment - narrow specification", 
+       subtitle = "Adjusted to 16-25°C and 45-55%RH",
+       col = "") +  
+  facet_grid(~Sensor) + 
   theme_classic()
 ```
 
-Energy required to condition space by temperature control
+**Energy Implications**
+
+The calculations of sensible heating and cooling power estimate the energy required to condition heritage spaces to specified humidity and temperature levels.
 
 ```{r}
-using_calcTemp <- 
-  using_calcTemp |>
-  mutate(
-    SensibleHeating = calcSensibleHeating(Temp, Tstar, RH, volumeFlowRate = 0.5),
-    CoolingPower = calcCoolingPower(Temp, Tstar, RH, tRH, volumeFlowRate = 0.5)
-  )
 
-glimpse(using_calcTemp)
+# Plot the temperature changes required to achieve target conditions 
+mydata_adj |>
+  ggplot() +
+  geom_line(aes(Date, dTemp_TRHadj), col = "firebrick", alpha = 0.8) + 
+  geom_smooth(aes(Date, dTemp_TRHadj)) + 
+  labs(title = "Temperature change required to achieve Narrow TRH specification",
+       subtitle = "Positive values indicate increasing the temperature",
+       x = NULL, y = "Temperature (°C)") +
+  facet_grid(~Sensor) + 
+  theme_bw()
 
-using_calcTemp |>
-  filter(SensibleHeating > 0) |>
+mydata_adj |>
   ggplot() +
   geom_line(aes(Date, SensibleHeating), col = "deeppink") + 
   labs(x = NULL, y = "Sensible heat (kW)", 
-       title = "Sensible Heating") +
+       title = "Sensible Heating", subtitle = "Narrow: 16-25°C, 45-55%RH") +
+  facet_grid(~Sensor) + 
   theme_bw()
   
-using_calcTemp |>
-  filter(CoolingPower > 0) |>
+mydata_adj |>
   ggplot() +
-  geom_line(aes(Date, CoolingPower), col = "lightblue") +
+  geom_line(aes(Date, CoolingPower), col = "dodgerblue") +
   labs(x = NULL, y = "Cooling power (kW)", 
-       title = "Cooling Power") +
+       title = "Cooling Power", subtitle = "Narrow: 16-25°C, 45-55%RH") +
+  facet_grid(~Sensor) + 
   theme_bw()
 
 ```
 
+**Comparing Environmental Specifications**
 
+Using broader or narrower environmental control specifications impacts both energy consumption and heritage risks.
+
+-   Narrow specification: 16-25°C and 45-55%rh
+-   Broader specification: 12-28°C and 30-70%rh
+
+```{r}
+mydata_adj2 <- 
+  mydata |> 
+  group_by(Sensor) |>
+  add_humidity_adjustments(LowT = 12, HighT = 28, LowRH = 30, HighRH = 70) |>
+  mutate(
+    SensibleHeating = calcSensibleHeating(Temp, newTemp_TRHadj, RH, volumeFlowRate = 0.5),
+    CoolingPower = calcCoolingPower(Temp, newTemp_TRHadj, RH, newRH_TRHadj, volumeFlowRate = 0.5)
+  )
+
+mydata_adj2 |>
+  graph_psychrometric(Temp = "newTemp_TRHadj", RH = "newRH_TRHadj", 
+                      y_func = calcAH, data_col = "zone",
+                      LowT = 12, HighT = 28, LowRH = 30, HighRH = 70) +
+  labs(title = "After TRH Adjustment - broader specification", 
+       subtitle = "Adjusted to 12-28°C, 30-70%RH",
+       col = "") +  
+  facet_grid(~Sensor) + 
+  theme_classic()
+```
+
+```{r}
+mydata_adj2 |>
+  ggplot() +
+  geom_line(aes(Date, SensibleHeating), col = "deeppink") + 
+  labs(x = NULL, y = "Sensible heat (kW)", 
+       title = "Sensible Heating - broader specification", subtitle = "Adjusted to 12-28°C, 30-70%RH") +
+  facet_grid(~Sensor) + 
+  theme_bw()
+  
+mydata_adj2 |>
+  ggplot() +
+  geom_line(aes(Date, CoolingPower), col = "dodgerblue") +
+  labs(x = NULL, y = "Cooling power (kW)", 
+       title = "Cooling Power - broader specification", subtitle = "Adjusted to 12-28°C, 30-70%RH") +
+  facet_grid(~Sensor) + 
+  theme_bw()
+
+```
+
+Combine datasets for comparison and add conservation risk metrics.
+
+```{r}
+mydata_no_adj <- 
+  mydata |>
+  # Doing nothing costs no energy
+  mutate(
+    SensibleHeating = 0, CoolingPower = 0
+  ) |>
+  add_conservation_calcs()
+
+mydata_adj <- 
+  mydata_adj |>
+  add_conservation_calcs(Temp = "newTemp_TRHadj", RH = "newRH_TRHadj")
+
+mydata_adj2 <- 
+  mydata_adj2 |>
+  add_conservation_calcs(Temp = "newTemp_TRHadj", RH = "newRH_TRHadj")
+
+mydata_bind <- 
+  bind_rows(
+    mydata_no_adj |> mutate(Specification = "1) Do Nothing"),
+    mydata_adj |> mutate(Specification = "2) Narrow Specs"), 
+    mydata_adj2 |> mutate(Specification = "3) Broader Specs")) 
+```
+
+Comparison of the risks and energy savings made by making the specification broader.
+
+```{r}
+mydata_bind |>
+  ggplot() +
+  geom_col(aes(fct_rev(Specification), CoolingPower), fill = "dodgerblue3") +
+  coord_flip() +
+  facet_grid(Sensor ~ .) + 
+  labs(title = "Cooling required to adjust TRH", subtitle = "Narrow vs Broader specifications",
+       x = NULL, y = "Sum of energy required (kW)") +
+  theme_classic()
+
+mydata_bind |>
+  ggplot() +
+  geom_col(aes(fct_rev(Specification), SensibleHeating), fill = "deeppink3") +
+  coord_flip() +
+  facet_grid(Sensor ~ .) + 
+  labs(title = "Heating required to adjust TRH", subtitle = "Narrow vs Broader specifications",
+       x = NULL, y = "Sum of energy required (kW)") + 
+  theme_classic()
+
+
+```
+
+**Heritage Risk Indicators**
+
+Summary metrics such as lifetime multiplier, preservation index, equilibrium moisture content (EMC) of wood, and mould risk indices provide a quantitative assessment of heritage risk under different environmental control strategies.
+
+-   Lifetime multiplier - compared to 20°C and 50%rh, values \>1 are conditions prolong lifetime.
+-   Preservation index - years to deterioration, higher values are more favorable.
+-   Equilibrium moisture content wood between 6-20% - time spent within safer range (1 = 100%).
+-   Mould growth risk - lower values are better.
+
+```{r}
+mydata_summary <- 
+  mydata_bind |>
+  group_by(Sensor, Specification) |>
+  summarise(
+    Lifetime = mean(Lifetime, na.rm = TRUE), 
+    PreservationIndex = mean(PreservationIndex, na.rm = TRUE), 
+    EMC_wood = mean(EMC_wood >= 6 & EMC_wood <= 20, na.rm = TRUE), 
+    Mould_LIM = sum(RH > Mould_LIM, na.rm = TRUE),
+    Mould_index = sum(Mould_index, na.rm = TRUE)
+  )
+
+mydata_summary
+```
+
+-   The **“Do Nothing”** specification shows baseline risk levels and zero energy consumption. Mould risk are present but relatively high preservation indicators (ironically outdoors).
+-   The **“Narrow Specifications”** target tighter environmental ranges (e.g., 16-25°C and 45-55% RH). This tends to a slightly lower lifetime and preservation indices indoors than doing nothing. The risk of mould risk indoors decreases but there remains the question of the significance. Energy consumption is greater than "Do Nothing" and “Broader” specification.
+-   The **“Broader Specifications”** with a wider acceptable temperature and humidity range (e.g., 12-28°C and 30-70% RH) typically maintain similar lifetime multipliers and preservation indices as narrow ranges indoors. There is no energy consumption with no heating or cooling required indoors, however humidification/dehumidification are not considered (being developed). Mould risk remains similar to "Do Nothing".
+
+**Limitations: Research required**
+
+Other conservation risk metrics not considered.
+For example, the stress-strain behavior of materials which are more relevant to the collections housed in a space.
+
+Assumed that heating and cooling are 100% efficient and instantaneous.
+The calculations based on the time-series stamped data are not realistically managed at this rate.
+Establishing how spaces behave and how fast and efficiently heating/cooling systems introduce heat and cooling into a space needs to be established.
+Humidification and dehumification energy consumption models also need to be developed.
+
+Spaces are not typically conditioned directly from physical calculations and other factors are needed to understand the energy consumption (e.g. off-coil chiller dew point, chilled water temperature, etc.).

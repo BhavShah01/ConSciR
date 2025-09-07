@@ -16,7 +16,14 @@ add_conservation_calcs(mydata, Temp = "Temp", RH = "RH", ...)
 \item{...}{Additional parameters passed to humidity calculation functions.}
 }
 \value{
+Dataframe augmented with conservation variables:
 
+- Mould_LIM: Mould risk threshold humidity (numeric, from Zeng equation).
+- Mould_rate: Mould growth rate index (from Zeng equation, labelled output).
+- Mould_index: Mould risk index (continuous scale, VTT model).
+- PreservationIndex: Preservation Index for collection longevity.
+- Lifetime: Lifetime Multiplier for object material degradation risk.
+- EMC_wood: Wood equilibrium moisture content (%) under current climate conditions.
 }
 \description{
 Appends columns for conservation-risks: mould risk, preservation indices, equilibrium moisture,

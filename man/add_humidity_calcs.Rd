@@ -19,18 +19,17 @@ add_humidity_calcs(mydata, Temp = "Temp", RH = "RH", P_atm = 1013.25, ...)
 }
 \value{
 The input dataframe augmented with columns for vapor pressure, dew point, absolute humidity,
-        air density, mixing ratio, specific humidity, frost point, and enthalpy.
-\describe{
-  \item{Pws}{Saturated vapour pressure at given temperature (hPa).}
-  \item{Pw}{Partial pressure of water vapour present (hPa).}
-  \item{DP}{Dew Point, condensation temperature based on RH (°C).}
-  \item{AH}{Mass of water vapour per air volume (g/m³).}
-  \item{AD}{Moist air density (kg/m³).}
-  \item{MR}{Ratio of water vapour to dry air mass (g/kg).}
-  \item{SH}{Ratio of water vapour to total air mass (g/kg).}
-  \item{FP}{Frost formation temperature (°C; experimental).}
-  \item{Enthalpy}{Total enthalpy, h, of air-vapour mixture (kJ/kg).}
-}
+  air density, mixing ratio, specific humidity, frost point, and enthalpy.
+
+- Pws: Saturated vapour pressure at given temperature (hPa).
+- Pw: Partial pressure of water vapour present (hPa).
+- DP: Dew Point, condensation temperature based on RH (°C).
+- AH: Mass of water vapour per air volume (g/m³).
+- AD: Moist air density (kg/m³).
+- MR: Ratio of water vapour to dry air mass (g/kg).
+- SH: Ratio of water vapour to total air mass (g/kg).
+- FP: Frost formation temperature (°C; experimental).
+- Enthalpy: Total enthalpy, h, of air-vapour mixture (kJ/kg).
 }
 \description{
 This function adds several humidity variables

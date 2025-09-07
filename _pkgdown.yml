@@ -13,8 +13,8 @@ reference:
   - run_TRHbivariate_app
   - run_SilicaGel_app
   - run_TidyData_app
-- title: Tidying, adding variables and graphing
-  desc: Tools for tidying, adding variables, summarises and graphing data.
+- title: Tidying, adding variables, summarises and graphing
+  desc: Tools for the analysis of data.
   contents:
   - graph_TRH
   - graph_psychrometric

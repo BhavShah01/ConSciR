@@ -39,19 +39,30 @@ add_humidity_adjustments(
 The input dataframe augmented with multiple humidity and temperature adjustment columns.
 }
 \description{
-This function calculates and adjusts humidity and temperature-related variables
-in a dataframe. It classifies data into zones based on temperature (Temp)
-and relative humidity (RH) thresholds and computes related derived variables
-such as dew point, absolute humidity, temperature and humidity deviations.
+This function calculates and adjusts humidity in a dataframe.
+It classifies data into zones based on defined TRH input.
 }
 \details{
+This function processes a dataframe with temperature and relative humidity data,
+computes humidity-related variables, and classifies the data into climate control zones.
+It generates adjusted temperature and humidity values based on specified thresholds.
+
 The function adds:
-\itemize{
-  \item Direct calculations: absolute humidity, dew point.
-  \item Logical zone classifications based on thresholds.
-  \item Reference curves for relative humidity adjusted by temperature.
-  \item Adjusted temperature and absolute humidity values per zone conditions.
-  \item Differences between new and original temperature, humidity variables.
+\describe{
+  \item{AH}{Absolute Humidity (g/m³): The mass of water vapor per unit volume of air.}
+  \item{DP}{Dew Point (°C): The temperature at which air becomes saturated and water vapor condenses.}
+  \item{zone}{Categorical variable defining climate control action zones based on combined temperature and RH thresholds.}
+  \item{TRH_zone}{Simplified temperature-relative humidity category for ease of interpretation.}
+  \item{T_zone}{Temperature zone classification relative to thresholds: 'Cold', 'Within', or 'Hot'.}
+  \item{RH_zone}{Relative humidity zone classification: 'Dry', 'Within', or 'Humid'.}
+  \item{dTemp}{Temperature difference from comfort thresholds (°C), indicating required heating or cooling.}
+  \item{dRH}{Relative humidity difference from comfort thresholds (\%), indicating humidification or dehumidification needs.}
+  \item{newTemp_TRHadj}{Adjusted temperature (°C) after applying temperature and relative humidity correction based on zone.}
+  \item{newAH_TRHadj}{Adjusted absolute humidity (g/m³) aligned to comfort zones.}
+  \item{newRH_TRHadj}{Adjusted relative humidity (\%) reflecting new temperature and absolute humidity.}
+  \item{dTemp_TRHadj, dAH_TRHadj, dRH_TRHadj}{Differences between adjusted and original temperature, absolute humidity, and relative humidity respectively.}
+  \item{newTemp_AHadj, newAH_AHadj, newRH_AHadj}{Adjustments based on absolute humidity only.}
+  \item{newTemp_Tadj, newRH_Tadj, newAH_Tadj}{Adjustments based on temperature only.}
 }
 }
 \examples{

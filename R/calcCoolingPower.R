@@ -30,22 +30,12 @@
 #'
 #'
 calcCoolingPower <- function(Temp1, Temp2, RH1, RH2, volumeFlowRate) {
-
-  # Calculate enthalpies
-  h1 = calcEnthalpy(Temp1, RH1)
-  h2 = calcEnthalpy(Temp2, RH2)
-
-  # Calculate air density at initial conditions
-  rho = calcAD(Temp1, RH1)
-
-  # Calculate mass flow rate
-  massFlowRate = volumeFlowRate * rho
-
-  # Calculate cooling power in watts
-  coolingPowerWatts = massFlowRate * (h1 - h2)
-
-  # Convert watts to kilowatts
-  coolingPowerKW = coolingPowerWatts / 1000
-
+  h1 <- calcEnthalpy(Temp1, RH1)
+  h2 <- calcEnthalpy(Temp2, RH2)
+  rho <- calcAD(Temp1, RH1)
+  massFlowRate <- volumeFlowRate * rho
+  coolingPowerWatts <- massFlowRate * (h1 - h2)
+  coolingPowerKW <- coolingPowerWatts / 1000
+  coolingPowerKW <- pmax(coolingPowerKW, 0)
   return(coolingPowerKW)
 }

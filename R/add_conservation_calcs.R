@@ -10,14 +10,14 @@
 #' @param ... Additional parameters passed to humidity calculation functions.
 #'
 #' @return Dataframe augmented with conservation variables:
-#' \describe{
-#'   \item{Mould_LIM}{Mould risk threshold humidity (numeric, from Zeng equation).}
-#'   \item{Mould_rate}{Mould growth rate index (from Zeng equation, labelled output).}
-#'   \item{Mould_index}{Mould risk index (continuous scale, VTT model).}
-#'   \item{PreservationIndex}{Preservation Index for collection longevity.}
-#'   \item{Lifetime}{Lifetime Multiplier for object material degradation risk.}
-#'   \item{EMC_wood}{Wood equilibrium moisture content (%) under current climate conditions.}
-#' }
+#'
+#' - Mould_LIM: Mould risk threshold humidity (numeric, from Zeng equation).
+#' - Mould_rate: Mould growth rate index (from Zeng equation, labelled output).
+#' - Mould_index: Mould risk index (continuous scale, VTT model).
+#' - PreservationIndex: Preservation Index for collection longevity.
+#' - Lifetime: Lifetime Multiplier for object material degradation risk.
+#' - EMC_wood: Wood equilibrium moisture content (%) under current climate conditions.
+#'
 #'
 #' @importFrom dplyr mutate
 #' @importFrom rlang sym

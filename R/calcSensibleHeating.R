@@ -26,17 +26,10 @@
 #'
 #'
 calcSensibleHeating <- function(Temp1, Temp2, RH = 50, volumeFlowRate) {
-  # Constants
-  Cp_air <- 1.006  # Specific heat capacity of air in kJ/(kg·K)
-
-  # Calculate air density using calcAD function
-  rho_air <- calcAD(Temp1, RH)
-
-  # Calculate temperature difference
-  deltaT <- Temp2 - Temp1
-
-  # Calculate sensible heat in kW
-  sensibleHeat <- rho_air * Cp_air * volumeFlowRate * deltaT
-
-  return(sensibleHeat)
+    Cp_air <- 1.006  # kJ/(kg·K)
+    rho_air <- calcAD(Temp1, RH)
+    deltaT <- Temp2 - Temp1
+    sensibleHeat <- rho_air * Cp_air * volumeFlowRate * deltaT
+    sensibleHeat <- pmax(sensibleHeat, 0)
+    return(sensibleHeat)
 }

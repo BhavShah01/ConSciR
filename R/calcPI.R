@@ -2,11 +2,14 @@
 #'
 #' @description
 #' Calculates the Preservation Index (PI) to estimate the natural decay speed of objects.
-#' Uses acetate film as a reference for early warning of chemical deterioration in
-#' organic and synthetic objects. Results are in years for each data point, showing
-#' periods of higher and lower risk. Model based on acetate films or similarly
-#' unstable objects under specific temperature and relative humidity conditions.
-#' The model is less reliable at high and low RH values.
+#'
+#' The Preservation Index, developed by the Image Permanence Institute,
+#' is a chemical kinetics metric that determines the rate of deterioration of
+#' materials based on temperature and relative humidity.
+#' The `calcPI` function returns the estimated years to deterioration,
+#' with higher values indicating conditions that are more hygro-thermodynamically
+#' favorable for an object.
+#'
 #'
 #' @details
 #' The formula is based on Arrhenius equation (for molecular energy) and an
@@ -25,13 +28,13 @@
 #'
 #' -  Preservation Index, PI = 1/k
 #'
-#' @note
 #' This metric is an early version of a lifetime multiplier based on chemical
 #' deterioration of acetate film. This last object is naturally relatively unstable
 #' and there lies the biggest difference with other chemical metrics together with
 #' the fact that it is not relative to the lifetime of the object.
 #' All lifetime multipliers give similar results between 20\% and 60\% RH.
 #' The results at very low and high RH can be unreliable.
+#'
 #'
 #'
 #' @references

@@ -95,6 +95,7 @@ Zeng L, Chen Y, Ma M, et al. Prediction of mould growth rate within building env
 
 TRHgrid |>
   mutate(Mould_LIM = calcMould_Zeng(Temp, RH)) |>
+  filter(Mould_LIM < 100) |>
   ggplot(aes(Temp, RH, z = Mould_LIM)) +
   geom_contour_filled(bins = 15) +
   labs(x = "Temperature (°C)", y = "Humidity (%)",
