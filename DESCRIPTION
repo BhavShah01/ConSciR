@@ -35,7 +35,8 @@ Suggests:
     knitr,
     rmarkdown,
     testthat (>= 3.0.0),
-    bslib
+    bslib,
+    IAPWS95
 Imports:
     stats,
     tools,
