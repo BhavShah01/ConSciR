@@ -114,7 +114,7 @@ head(mydata) |>
 
 **Principles of Humidity Adjustment**
 
-```{r echo=FALSE}
+```{r eval=FALSE, include=FALSE}
 library(Ternary)
 TernaryPlot(
   atip = "",
