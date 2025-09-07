@@ -254,7 +254,7 @@ mydata |>
 
 Equilibrium Moisture Content (EMC) determine the ideal relative humidity for storing materials, as it indicates the point at which an object neither gains nor loses moisture from its environment. Maintaining appropriate EMC levels prevents issues such as mold growth, warping, cracking, or dimensional changes in organic materials like wood, textiles, and paper.
 
--   Wood: The safe EMC range for wood is typically between 6% and 20%. This range helps to prevent issues such as warping, cracking, and mold growth, which can occur if the moisture content falls below or exceeds these levels.
+-   Wood: A safe EMC range for wood is typically between 6% and 20%. This range helps to prevent issues such as warping, cracking, and mold growth, which can occur if the moisture content falls below or exceeds these levels.
 
 Simpson, W. T. (1998). "Equilibrium moisture content of wood in outdoor locations in the United States and worldwide." Res. Note FPL-RN-0268. U.S. Department of Agriculture, Forest Service, Forest Products Laboratory.
 
@@ -276,16 +276,19 @@ mydata |>
   mutate(EMC = calcEMC_wood(Temp, RH)) |>
   ggplot() + 
   geom_line(aes(Date, EMC), col = "hotpink", size = 1) + 
-  labs(title = "Equilibrium Moisture Content (EMC)", x = NULL, y = "EMC") +
+  geom_hline(yintercept = c(6, 20), col = "mediumvioletred", size = 1) + 
+  labs(title = "Equilibrium Moisture Content (EMC)", 
+       subtitle = "6-20% lines - 'safe' EMC range",
+       x = NULL, y = "EMC") +
   theme_bw()
 
 mydata |>
   mutate(EMC = calcEMC_wood(Temp, RH)) |>
   ggplot() + 
   geom_density(aes(EMC), fill = "hotpink", alpha = 0.4) +
-  geom_vline(xintercept = calcEMC_wood(20, 50), col = "mediumvioletred", size = 1) + 
+  geom_vline(xintercept = c(6, 20), col = "mediumvioletred", size = 1) + 
   labs(title = "Equilibrium Moisture Content", x = NULL,
-       subtitle = "20C and 50%RH reference line") +
+       subtitle = "6-20% lines - 'safe' EMC range") +
   theme_bw()
 
 ```

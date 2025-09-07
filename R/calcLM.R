@@ -1,4 +1,4 @@
-#' Life-time multiplier for chemical degradation
+#' Calculate Life-time Multiplier for chemical degradation
 #'
 #' @description
 #' Function to calculate lifetime multiplier from temperature and relative humidity.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/calcLM.R
 \name{calcLM}
 \alias{calcLM}
-\title{Life-time multiplier for chemical degradation}
+\title{Calculate Life-time Multiplier for chemical degradation}
 \usage{
 calcLM(Temp, RH, EA = 100)
 }

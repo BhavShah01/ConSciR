@@ -8,7 +8,7 @@ graph_psychrometric(
   mydata,
   Temp = "Temp",
   RH = "RH",
-  data_colour = "RH",
+  data_col = "RH",
   data_alpha = 0.5,
   LowT = 16,
   HighT = 25,
@@ -26,7 +26,7 @@ graph_psychrometric(
 
 \item{RH}{Column name in mydata for relative humidity values.}
 
-\item{data_colour}{Column name to use to colour the data points. Default is "RH".}
+\item{data_col}{Column name to use to colour the data points. Default is "RH".}
 
 \item{data_alpha}{Value to supply for make points more or less transparent. Default is 0.5.}
 

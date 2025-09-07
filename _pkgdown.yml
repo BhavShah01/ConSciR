@@ -13,11 +13,18 @@ reference:
   - run_TRHbivariate_app
   - run_SilicaGel_app
   - run_TidyData_app
-- title: Graphs
-  desc: Tools for graphing data.
+- title: Tidying, adding variables and graphing
+  desc: Tools for tidying, adding variables, summarises and graphing data.
   contents:
   - graph_TRH
   - graph_psychrometric
+  - add_conservation_calcs
+  - add_humidity_calcs
+  - add_humidity_adjustments
+  - add_time_vars
+  - tidy_TRHdata
+  - tidy_Meaco
+  - tidy_Hanwell
 - title: Conservation tools
   desc: Tools for the analysis of data for conservators.
   contents:
@@ -52,11 +59,8 @@ reference:
   - calcTotalHeating
   - calcSensibleHeatRatio
 - title: Data
-  desc: Tools to tidy data and in-built datasets to demonstrate functions.
+  desc: In-built datasets and data helper functions.
   contents:
-  - tidy_TRHdata
-  - tidy_Meaco
-  - tidy_Hanwell
   - mydata
   - TRHdata
   - data_file_path

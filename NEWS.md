@@ -1,3 +1,7 @@
+# ConSciR 0.3.0
+
+* Added humidity, time, adjustment functions - currently under development.
+
 # ConSciR 0.2.0
 
 * Added Buck equation as default for `calcPws`.

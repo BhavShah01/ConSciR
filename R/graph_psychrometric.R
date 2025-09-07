@@ -25,7 +25,7 @@
 #' @param mydata A data frame containing temperature and relative humidity data.
 #' @param Temp Column name in mydata for temperature values.
 #' @param RH Column name in mydata for relative humidity values.
-#' @param data_colour Column name to use to colour the data points. Default is "RH".
+#' @param data_col Column name to use to colour the data points. Default is "RH".
 #' @param data_alpha Value to supply for make points more or less transparent. Default is 0.5.
 #' @param LowT Numeric value for lower temperature limit of the target range. Default is 16°C.
 #' @param HighT Numeric value for upper temperature limit of the target range. Default is 25°C.
@@ -66,7 +66,7 @@
 #'
 graph_psychrometric <- function(mydata,
                                 Temp = "Temp", RH = "RH",
-                                data_colour = "RH",
+                                data_col = "RH",
                                 data_alpha = 0.5,
                                 LowT = 16, HighT = 25,
                                 LowRH = 40, HighRH = 60,
@@ -89,7 +89,7 @@ graph_psychrometric <- function(mydata,
   # Column names are converted to symbols from the data
   Temp = rlang::ensym(Temp)
   RH = rlang::ensym(RH)
-  data_colour = rlang::ensym(data_colour)
+  data_col = rlang::ensym(data_col)
 
   # Calculate the variable for the y-axis
   mydata = mydata |>
@@ -183,7 +183,7 @@ graph_psychrometric <- function(mydata,
                        col = 'blue', alpha = 0.5, size = 1, data = envelope_df) +
 
     # Overlay your TRH data
-    ggplot2::geom_point(aes(x = !!Temp, y = y_Axis, col = !!data_colour),
+    ggplot2::geom_point(aes(x = !!Temp, y = y_Axis, col = !!data_col),
                         alpha = data_alpha) +
 
     # Add limits to x and y axis

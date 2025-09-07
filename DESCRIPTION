@@ -1,7 +1,7 @@
 Package: ConSciR
 Type: Package
 Title: Tools for Conservation Science
-Version: 0.2.0
+Version: 0.3.0
 Authors@R: c(
     person("Bhavesh", "Shah", , "bhaveshshah01@gmail.com", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0001-8673-0589")),
@@ -48,6 +48,7 @@ Imports:
     ggplot2,
     dplyr, 
     lubridate,
-    padr
+    padr,
+    openair
 Depends: 
     R (>= 3.5)

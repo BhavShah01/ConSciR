@@ -114,8 +114,59 @@ head(mydata) |>
 
 **Principles of Humidity Adjustment**
 
-Humidity adjustment involves manipulating Absolute Humidity (AH), Dew Point, or Temperature to achieve a target Relative Humidity (RH).
-The following principles guide adjustments under the assumption of constant atmospheric pressure (typical for indoor environments):
+```{r echo=FALSE}
+library(Ternary)
+TernaryPlot(
+  atip = "",
+  btip = "",
+  ctip = "",
+  alab = "Temperature",
+  blab = "Pressure",
+  clab = "Volume",
+  lab.offset = 0.1,
+  lab.col = "#1E90FF",
+  point = "right",
+  clockwise = TRUE,
+  xlim = NULL,
+  ylim = NULL,
+  lab.cex = 2,
+  lab.font = 1,
+  tip.cex = 1,
+  tip.font = 1,
+  tip.col = "#000000",
+  isometric = TRUE,
+  atip.rotate = NULL,
+  btip.rotate = NULL,
+  ctip.rotate = NULL,
+  atip.pos = NULL,
+  btip.pos = NULL,
+  ctip.pos = NULL,
+  padding = 0.08,
+  col = "#FFFFFF",
+  grid.lines = 2,
+  grid.col = "#E67027",
+  grid.lty = "solid",
+  grid.lwd = 6,
+  grid.minor.lines = 3,
+  grid.minor.col = "#DEBAF5",
+  grid.minor.lty = "solid",
+  grid.minor.lwd = 3.97,
+  axis.lty = "solid",
+  axis.labels = FALSE,
+  axis.cex = 0.8,
+  axis.font = 1,
+  axis.rotate = TRUE,
+  axis.tick = FALSE,
+  axis.lwd = 6,
+  ticks.lwd = 0,
+  ticks.length = 0,
+  axis.col = "#1874CD",
+  ticks.col = "#FFC0CB"
+)
+```
+
+
+The following principles guide relative humidity adjustments under the assumption of constant atmospheric pressure:
 
 -   **Changing Absolute Humidity:**
     -   Increasing AH at constant temperature raises RH.
@@ -339,6 +390,44 @@ mydata |>
        y = "Water vapour saturation pressure (hPa)", x = NULL) + 
   theme_bw()
 ```
+
+
+**Accuracy** 
+
+The `calcPws` function is tested against The International Association for the Properties of Water and Steam (IAPWS) R package `IAPWS95`. 
+
+```{r}
+# Load IAPWS95 package for standard water/steam property functions
+library(IAPWS95)
+
+# Vectorize the pSatT function for Saturation Pressure, as a Function of Temperature
+pSatT_vec <- Vectorize(pSatT) 
+
+# Create a dataframe of temperature values from triple point of water to 100C (at saturation 100%RH)
+Temp_data <- tibble(Temp = seq(0.1, 99, 0.1), RH = 100)
+
+# Calculate saturation vapor pressure using `calcPws` and vectorised `pSatT` functions 
+Temp_data <- 
+  Temp_data |>
+  mutate(
+    TempK = Temp + 273.15,
+    Pws = calcPws(Temp),
+    PwsI = 10000 * pSatT_vec(TempK), 
+    Pws_diff = Pws - PwsI
+  )
+
+# Create a density plot comparing the distributions of the two saturation pressure calculations
+Temp_data |>
+  ggplot() + 
+  geom_density(aes(PwsI), col = "black") + 
+  geom_density(aes(Pws), col = "red", alpha = 0.3) +
+  labs(title = "Comparison of Saturation Vapor Pressure Calculations",
+       subtitle = "`calcPws` Function (red) vs. IAPWS95 Standard (black)", 
+       x = "Saturation Vapor Pressure (hPa)", y = "Density") + 
+  theme_classic()
+```
+
+
 
 ### Water Vapour Pressure
 

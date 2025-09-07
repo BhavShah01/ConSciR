@@ -2,7 +2,7 @@
 % Please edit documentation in R/graph_TRH.R
 \name{graph_TRH}
 \alias{graph_TRH}
-\title{Function for graphing temperature and humidity data}
+\title{Graph temperature and humidity data}
 \usage{
 graph_TRH(mydata, Date = "Date", Temp = "Temp", RH = "RH")
 }

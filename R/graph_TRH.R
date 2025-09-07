@@ -1,4 +1,4 @@
-#' Function for graphing temperature and humidity data
+#' Graph temperature and humidity data
 #'
 #' @description
 #' Use this tool to produce a simple temperature and humidity plot
