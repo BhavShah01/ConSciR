@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ConSciR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -84,7 +84,15 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bhavshah01.github.io/ConSciR/">ConSciR</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></code></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://forcats.tidyverse.org/" class="external-link">forcats</a></span><span class="op">)</span></span></code></pre></div>
+<p>Cultural heritage organisations can reduce energy consumption by for
+example broadening specifications that are used to manage risks to the
+collections.</p>
+<p>An example assessment of a space of theoretical reduction of energy
+by broadening specifications from 16-25°C and 45-55%rh to 12-28°C and
+30-70%rh. The increase/decrease of risks is also assessed using the
+Conservation tools available in the package.</p>
 <div class="section level3">
 <h3 id="datasets">Datasets<a class="anchor" aria-label="anchor" href="#datasets"></a>
 </h3>
@@ -101,11 +109,11 @@ example heritage sites.</p>
 <tbody>
 <tr class="odd">
 <td align="left">Site</td>
-<td align="left">Location name, e.g., “Museum”, “London”</td>
+<td align="left">“London”</td>
 </tr>
 <tr class="even">
 <td align="left">Sensor</td>
-<td align="left">Identifier for the specific sensor</td>
+<td align="left">“External”, “Room 1”, “Room 1 Case”</td>
 </tr>
 <tr class="odd">
 <td align="left">Date</td>
@@ -113,7 +121,7 @@ example heritage sites.</p>
 </tr>
 <tr class="even">
 <td align="left">Temp</td>
-<td align="left">Air temperature in degrees Celsius</td>
+<td align="left">Air temperature in degrees Celsius (°C)</td>
 </tr>
 <tr class="odd">
 <td align="left">RH</td>
@@ -124,7 +132,7 @@ example heritage sites.</p>
 <p>Example usage to load the dataset from the package:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">filepath</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/data_file_path.html">data_file_path</a></span><span class="op">(</span><span class="st">"mydata.xlsx"</span><span class="op">)</span></span>
-<span><span class="va">mydata</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html" class="external-link">read_excel</a></span><span class="op">(</span><span class="va">filepath</span>, sheet <span class="op">=</span> <span class="st">"mydata"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Sensor</span> <span class="op">==</span> <span class="st">"Room 1"</span><span class="op">)</span></span>
+<span><span class="va">mydata</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html" class="external-link">read_excel</a></span><span class="op">(</span><span class="va">filepath</span>, sheet <span class="op">=</span> <span class="st">"mydata"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mydata</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 5</span></span></span>
@@ -137,112 +145,37 @@ example heritage sites.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> London Room 1 2024-01-01 <span style="color: #949494;">00:59:59</span>  21.7  36.5</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> London Room 1 2024-01-01 <span style="color: #949494;">01:14:59</span>  21.7  36.2</span></span>
 <span></span>
-<span><span class="va">mydata</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/graph_TRH.html">graph_TRH</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Room 1"</span>, subtitle <span class="op">=</span> <span class="st">"mydata"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">mydata</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/graph_TRH.html">graph_TRH</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"mydata"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html" class="external-link">facet_grid</a></span><span class="op">(</span><span class="op">~</span><span class="va">Sensor</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Sustainability_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
-<p><strong>TRHgrid: Dataset used to visualise the functions</strong></p>
-<p>This dataset consists of a grid of temperature and relative humidity
-values used to visualise function behavior. Temperatures range from 0°C
-to 100°C in 0.25°C increments, and relative humidity (RH) ranges from 0%
-to 100% in 1% increments. The complete factorial combination of
-temperature and RH values is created using expand.grid(), where each
-pair represents a unique condition.</p>
-<p>Contour plots are generated to show interactions between derived
-variables across the temperature-RH grid. The dataset also supports
-validation checks for temperature and humidity calculations to
-understand relationships among the functions.</p>
-<p>Example R code to generate the dataset:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">Temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span>, <span class="fl">0.25</span><span class="op">)</span></span>
-<span><span class="va">RH</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span>, <span class="fl">1</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">TRHgrid</span> <span class="op">&lt;-</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html" class="external-link">expand.grid</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span>Temp <span class="op">=</span> <span class="va">Var1</span>, RH <span class="op">=</span> <span class="va">Var2</span><span class="op">)</span> </span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">TRHgrid</span><span class="op">)</span></span>
-<span><span class="co">#&gt;       Temp           RH     </span></span>
-<span><span class="co">#&gt;  Min.   :  0   Min.   :  0  </span></span>
-<span><span class="co">#&gt;  1st Qu.: 25   1st Qu.: 25  </span></span>
-<span><span class="co">#&gt;  Median : 50   Median : 50  </span></span>
-<span><span class="co">#&gt;  Mean   : 50   Mean   : 50  </span></span>
-<span><span class="co">#&gt;  3rd Qu.: 75   3rd Qu.: 75  </span></span>
-<span><span class="co">#&gt;  Max.   :100   Max.   :100</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="sustainability">Sustainability<a class="anchor" aria-label="anchor" href="#sustainability"></a>
 </h3>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Changing Temperature</span></span>
-<span><span class="va">using_calcTemp</span> <span class="op">&lt;-</span> </span>
+<p>Use the <code>add_humidity_adjustments</code> function to calculate
+how to adjust the humidity in each space using the humidity
+funcitons.</p>
+<p>The <code>add_humidity_adjustments</code> function applies humidity
+adjustment calculations based on user-defined specifications for
+temperature and RH. Adjusted variables like newTemp_TRHadj and
+newRH_TRHadj are the new temperature and humidity values following
+heating, cooling, humidification and dehumidification. An energy
+estimate is provided for temperature adjustement (heating and coooling).
+Adjustment of humdity by humidification and dehumidification is being
+developed.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mydata_adj</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="va">mydata</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">Sensor</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/add_humidity_adjustments.html">add_humidity_adjustments</a></span><span class="op">(</span>LowT <span class="op">=</span> <span class="fl">16</span>, HighT <span class="op">=</span> <span class="fl">25</span>, LowRH <span class="op">=</span> <span class="fl">45</span>, HighRH <span class="op">=</span> <span class="fl">55</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
-<span>    <span class="co"># Absolute humidity, AH</span></span>
-<span>    AH <span class="op">=</span> <span class="fu"><a href="../reference/calcAH.html">calcAH</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>, </span>
-<span>    <span class="co"># Dew point, DP</span></span>
-<span>    DP <span class="op">=</span> <span class="fu"><a href="../reference/calcDP.html">calcDP</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>, </span>
-<span>    <span class="co"># Target RH</span></span>
-<span>    tRH <span class="op">=</span> <span class="fl">50</span>,           </span>
-<span>    <span class="co"># T*: Tstar new temperature at target RH </span></span>
-<span>    Tstar <span class="op">=</span> <span class="fu"><a href="../reference/calcTemp.html">calcTemp</a></span><span class="op">(</span><span class="va">tRH</span>, <span class="va">DP</span><span class="op">)</span>, </span>
-<span>    <span class="co"># Difference in measure temperature and new temperature</span></span>
-<span>    dTemp <span class="op">=</span> <span class="va">Tstar</span> <span class="op">-</span> <span class="va">Temp</span>, </span>
-<span>    <span class="co"># Check</span></span>
-<span>    Tcheck <span class="op">=</span> <span class="va">Tstar</span> <span class="op">-</span> <span class="op">(</span><span class="va">Temp</span> <span class="op">+</span> <span class="va">dTemp</span><span class="op">)</span>, </span>
-<span>    <span class="co"># RHstarT: New humidity with new temperature </span></span>
-<span>    RHstarT <span class="op">=</span> <span class="fu"><a href="../reference/calcRH_DP.html">calcRH_DP</a></span><span class="op">(</span><span class="va">Tstar</span>, <span class="va">DP</span><span class="op">)</span>,</span>
-<span>    <span class="co"># Error </span></span>
-<span>    RHerrorT <span class="op">=</span> <span class="va">RHstarT</span> <span class="op">-</span> <span class="va">tRH</span></span>
+<span>    SensibleHeating <span class="op">=</span> <span class="fu"><a href="../reference/calcSensibleHeating.html">calcSensibleHeating</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">newTemp_TRHadj</span>, <span class="va">RH</span>, volumeFlowRate <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>    CoolingPower <span class="op">=</span> <span class="fu"><a href="../reference/calcCoolingPower.html">calcCoolingPower</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">newTemp_TRHadj</span>, <span class="va">RH</span>, <span class="va">newRH_TRHadj</span>, volumeFlowRate <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">using_calcTemp</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Rows: 35,136</span></span>
-<span><span class="co">#&gt; Columns: 13</span></span>
-<span><span class="co">#&gt; $ Site     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "London"<span style="color: #949494;">, </span>"London"<span style="color: #949494;">, </span>"London"<span style="color: #949494;">, </span>"London"<span style="color: #949494;">, </span>"London"<span style="color: #949494;">, </span>"London"<span style="color: #949494;">, </span>"…</span></span>
-<span><span class="co">#&gt; $ Sensor   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Room 1"<span style="color: #949494;">, </span>"Room 1"<span style="color: #949494;">, </span>"Room 1"<span style="color: #949494;">, </span>"Room 1"<span style="color: #949494;">, </span>"Room 1"<span style="color: #949494;">, </span>"Room 1"<span style="color: #949494;">, </span>"…</span></span>
-<span><span class="co">#&gt; $ Date     <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span> 2024-01-01 00:00:00<span style="color: #949494;">, </span>2024-01-01 00:15:00<span style="color: #949494;">, </span>2024-01-01 00:29:5…</span></span>
-<span><span class="co">#&gt; $ Temp     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 21.8<span style="color: #949494;">, </span>21.8<span style="color: #949494;">, </span>21.8<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.6<span style="color: #949494;">, </span>2…</span></span>
-<span><span class="co">#&gt; $ RH       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 36.8<span style="color: #949494;">, </span>36.7<span style="color: #949494;">, </span>36.6<span style="color: #949494;">, </span>36.6<span style="color: #949494;">, </span>36.5<span style="color: #949494;">, </span>36.2<span style="color: #949494;">, </span>36.3<span style="color: #949494;">, </span>36.4<span style="color: #949494;">, </span>36.0<span style="color: #949494;">, </span>36.0<span style="color: #949494;">, </span>3…</span></span>
-<span><span class="co">#&gt; $ AH       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 7.052415<span style="color: #949494;">, </span>7.033251<span style="color: #949494;">, </span>7.014087<span style="color: #949494;">, </span>6.973723<span style="color: #949494;">, </span>6.954670<span style="color: #949494;">, </span>6.897508<span style="color: #949494;">, </span>6…</span></span>
-<span><span class="co">#&gt; $ DP       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 6.383970<span style="color: #949494;">, </span>6.344456<span style="color: #949494;">, </span>6.304848<span style="color: #949494;">, </span>6.216205<span style="color: #949494;">, </span>6.176529<span style="color: #949494;">, </span>6.056922<span style="color: #949494;">, </span>6…</span></span>
-<span><span class="co">#&gt; $ tRH      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>5…</span></span>
-<span><span class="co">#&gt; $ Tstar    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 16.87424<span style="color: #949494;">, </span>16.83134<span style="color: #949494;">, </span>16.78833<span style="color: #949494;">, </span>16.69208<span style="color: #949494;">, </span>16.64899<span style="color: #949494;">, </span>16.51913<span style="color: #949494;">, </span>1…</span></span>
-<span><span class="co">#&gt; $ dTemp    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -4.925756<span style="color: #949494;">, </span>-4.968663<span style="color: #949494;">, </span>-5.011672<span style="color: #949494;">, </span>-5.007924<span style="color: #949494;">, </span>-5.051005<span style="color: #949494;">, </span>-5.180…</span></span>
-<span><span class="co">#&gt; $ Tcheck   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0…</span></span>
-<span><span class="co">#&gt; $ RHstarT  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>5…</span></span>
-<span><span class="co">#&gt; $ RHerrorT <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -7.105427e-15<span style="color: #949494;">, </span>1.421085e-14<span style="color: #949494;">, </span>1.421085e-14<span style="color: #949494;">, </span>1.421085e-14<span style="color: #949494;">, </span>0.00…</span></span>
-<span></span>
-<span><span class="co"># Plot the difference and check the error</span></span>
-<span><span class="va">using_calcTemp</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">dTemp</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"firebrick"</span>, alpha <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">RHerrorT</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"goldenrod"</span>, alpha <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html" class="external-link">geom_smooth</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">dTemp</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Temperature Required to Achieve Target RH"</span>,</span>
-<span>       subtitle <span class="op">=</span> <span class="st">"Positive values indicate increasing the temperature"</span>,</span>
-<span>       x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="st">"Temperature (°C)"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Sustainability_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="va">using_calcTemp</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/graph_psychrometric.html">graph_psychrometric</a></span><span class="op">(</span>RH <span class="op">=</span> <span class="st">"RHstarT"</span>, y_func <span class="op">=</span> <span class="va">calcAH</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Room 1 After Temperature Adjustment"</span>,</span>
-<span>       subtitle <span class="op">=</span> <span class="st">"Temperature (°C)"</span><span class="op">)</span> <span class="op">+</span>  </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Sustainability_files/figure-html/unnamed-chunk-4-2.png" width="700"></p>
-<p>Energy required to condition space by temperature control</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">using_calcTemp</span> <span class="op">&lt;-</span> </span>
-<span>  <span class="va">using_calcTemp</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
-<span>    SensibleHeating <span class="op">=</span> <span class="fu"><a href="../reference/calcSensibleHeating.html">calcSensibleHeating</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">Tstar</span>, <span class="va">RH</span>, volumeFlowRate <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
-<span>    CoolingPower <span class="op">=</span> <span class="fu"><a href="../reference/calcCoolingPower.html">calcCoolingPower</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">Tstar</span>, <span class="va">RH</span>, <span class="va">tRH</span>, volumeFlowRate <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">using_calcTemp</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Rows: 35,136</span></span>
-<span><span class="co">#&gt; Columns: 15</span></span>
+<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">mydata_adj</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Rows: 105,408</span></span>
+<span><span class="co">#&gt; Columns: 38</span></span>
+<span><span class="co">#&gt; Groups: Sensor [3]</span></span>
 <span><span class="co">#&gt; $ Site            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "London"<span style="color: #949494;">, </span>"London"<span style="color: #949494;">, </span>"London"<span style="color: #949494;">, </span>"London"<span style="color: #949494;">, </span>"London"<span style="color: #949494;">, </span>"Lon…</span></span>
 <span><span class="co">#&gt; $ Sensor          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Room 1"<span style="color: #949494;">, </span>"Room 1"<span style="color: #949494;">, </span>"Room 1"<span style="color: #949494;">, </span>"Room 1"<span style="color: #949494;">, </span>"Room 1"<span style="color: #949494;">, </span>"Roo…</span></span>
 <span><span class="co">#&gt; $ Date            <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span> 2024-01-01 00:00:00<span style="color: #949494;">, </span>2024-01-01 00:15:00<span style="color: #949494;">, </span>2024-01-01 …</span></span>
@@ -250,33 +183,261 @@ understand relationships among the functions.</p>
 <span><span class="co">#&gt; $ RH              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 36.8<span style="color: #949494;">, </span>36.7<span style="color: #949494;">, </span>36.6<span style="color: #949494;">, </span>36.6<span style="color: #949494;">, </span>36.5<span style="color: #949494;">, </span>36.2<span style="color: #949494;">, </span>36.3<span style="color: #949494;">, </span>36.4<span style="color: #949494;">, </span>36.0<span style="color: #949494;">, </span>…</span></span>
 <span><span class="co">#&gt; $ AH              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 7.052415<span style="color: #949494;">, </span>7.033251<span style="color: #949494;">, </span>7.014087<span style="color: #949494;">, </span>6.973723<span style="color: #949494;">, </span>6.954670<span style="color: #949494;">, </span>6.89…</span></span>
 <span><span class="co">#&gt; $ DP              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 6.383970<span style="color: #949494;">, </span>6.344456<span style="color: #949494;">, </span>6.304848<span style="color: #949494;">, </span>6.216205<span style="color: #949494;">, </span>6.176529<span style="color: #949494;">, </span>6.05…</span></span>
-<span><span class="co">#&gt; $ tRH             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50…</span></span>
-<span><span class="co">#&gt; $ Tstar           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 16.87424<span style="color: #949494;">, </span>16.83134<span style="color: #949494;">, </span>16.78833<span style="color: #949494;">, </span>16.69208<span style="color: #949494;">, </span>16.64899<span style="color: #949494;">, </span>16.5…</span></span>
-<span><span class="co">#&gt; $ dTemp           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -4.925756<span style="color: #949494;">, </span>-4.968663<span style="color: #949494;">, </span>-5.011672<span style="color: #949494;">, </span>-5.007924<span style="color: #949494;">, </span>-5.051005<span style="color: #949494;">,</span>…</span></span>
-<span><span class="co">#&gt; $ Tcheck          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>…</span></span>
-<span><span class="co">#&gt; $ RHstarT         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50<span style="color: #949494;">, </span>50…</span></span>
-<span><span class="co">#&gt; $ RHerrorT        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -7.105427e-15<span style="color: #949494;">, </span>1.421085e-14<span style="color: #949494;">, </span>1.421085e-14<span style="color: #949494;">, </span>1.421085e-1…</span></span>
-<span><span class="co">#&gt; $ SensibleHeating <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -2.954468<span style="color: #949494;">, </span>-2.980233<span style="color: #949494;">, </span>-3.006059<span style="color: #949494;">, </span>-3.004896<span style="color: #949494;">, </span>-3.030775<span style="color: #949494;">,</span>…</span></span>
-<span><span class="co">#&gt; $ CoolingPower    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0.003000743<span style="color: #949494;">, </span>0.003026822<span style="color: #949494;">, </span>0.003052963<span style="color: #949494;">, </span>0.003051596<span style="color: #949494;">, </span>0.…</span></span>
-<span></span>
-<span><span class="va">using_calcTemp</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">SensibleHeating</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span><span class="co">#&gt; $ TRH_within      <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> FALSE<span style="color: #949494;">, </span>FALSE<span style="color: #949494;">, </span>FALSE<span style="color: #949494;">, </span>FALSE<span style="color: #949494;">, </span>FALSE<span style="color: #949494;">, </span>FALSE<span style="color: #949494;">, </span>FALSE<span style="color: #949494;">, </span>FALSE…</span></span>
+<span><span class="co">#&gt; $ T_lower         <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> FALSE<span style="color: #949494;">, </span>FALSE<span style="color: #949494;">, </span>FALSE<span style="color: #949494;">, </span>FALSE<span style="color: #949494;">, </span>FALSE<span style="color: #949494;">, </span>FALSE<span style="color: #949494;">, </span>FALSE<span style="color: #949494;">, </span>FALSE…</span></span>
+<span><span class="co">#&gt; $ T_higher        <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> FALSE<span style="color: #949494;">, </span>FALSE<span style="color: #949494;">, </span>FALSE<span style="color: #949494;">, </span>FALSE<span style="color: #949494;">, </span>FALSE<span style="color: #949494;">, </span>FALSE<span style="color: #949494;">, </span>FALSE<span style="color: #949494;">, </span>FALSE…</span></span>
+<span><span class="co">#&gt; $ RH_lower        <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> TRUE<span style="color: #949494;">, </span>TRUE<span style="color: #949494;">, </span>TRUE<span style="color: #949494;">, </span>TRUE<span style="color: #949494;">, </span>TRUE<span style="color: #949494;">, </span>TRUE<span style="color: #949494;">, </span>TRUE<span style="color: #949494;">, </span>TRUE<span style="color: #949494;">, </span>TRUE<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ RH_higher       <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> FALSE<span style="color: #949494;">, </span>FALSE<span style="color: #949494;">, </span>FALSE<span style="color: #949494;">, </span>FALSE<span style="color: #949494;">, </span>FALSE<span style="color: #949494;">, </span>FALSE<span style="color: #949494;">, </span>FALSE<span style="color: #949494;">, </span>FALSE…</span></span>
+<span><span class="co">#&gt; $ zone            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Hum or cooling"<span style="color: #949494;">, </span>"Hum or cooling"<span style="color: #949494;">, </span>"Hum or cooling"<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ TRH_zone        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Dry"<span style="color: #949494;">, </span>"Dry"<span style="color: #949494;">, </span>"Dry"<span style="color: #949494;">, </span>"Dry"<span style="color: #949494;">, </span>"Dry"<span style="color: #949494;">, </span>"Dry"<span style="color: #949494;">, </span>"Dry"<span style="color: #949494;">, </span>"Dry"…</span></span>
+<span><span class="co">#&gt; $ T_zone          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Within"<span style="color: #949494;">, </span>"Within"<span style="color: #949494;">, </span>"Within"<span style="color: #949494;">, </span>"Within"<span style="color: #949494;">, </span>"Within"<span style="color: #949494;">, </span>"Wit…</span></span>
+<span><span class="co">#&gt; $ RH_zone         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Dry"<span style="color: #949494;">, </span>"Dry"<span style="color: #949494;">, </span>"Dry"<span style="color: #949494;">, </span>"Dry"<span style="color: #949494;">, </span>"Dry"<span style="color: #949494;">, </span>"Dry"<span style="color: #949494;">, </span>"Dry"<span style="color: #949494;">, </span>"Dry"…</span></span>
+<span><span class="co">#&gt; $ dTemp           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ dRH             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -8.2<span style="color: #949494;">, </span>-8.3<span style="color: #949494;">, </span>-8.4<span style="color: #949494;">, </span>-8.4<span style="color: #949494;">, </span>-8.5<span style="color: #949494;">, </span>-8.8<span style="color: #949494;">, </span>-8.7<span style="color: #949494;">, </span>-8.6<span style="color: #949494;">, </span>-9.0<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ newTemp_TRHadj  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 21.8<span style="color: #949494;">, </span>21.8<span style="color: #949494;">, </span>21.8<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ newAH_TRHadj    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 8.623877<span style="color: #949494;">, </span>8.623877<span style="color: #949494;">, </span>8.623877<span style="color: #949494;">, </span>8.574250<span style="color: #949494;">, </span>8.574250<span style="color: #949494;">, </span>8.57…</span></span>
+<span><span class="co">#&gt; $ dTemp_TRHadj    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ dAH_TRHadj      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1.571462<span style="color: #949494;">, </span>1.590626<span style="color: #949494;">, </span>1.609790<span style="color: #949494;">, </span>1.600527<span style="color: #949494;">, </span>1.619581<span style="color: #949494;">, </span>1.67…</span></span>
+<span><span class="co">#&gt; $ newRH_TRHadj    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 45<span style="color: #949494;">, </span>45<span style="color: #949494;">, </span>45<span style="color: #949494;">, </span>45<span style="color: #949494;">, </span>45<span style="color: #949494;">, </span>45<span style="color: #949494;">, </span>45<span style="color: #949494;">, </span>45<span style="color: #949494;">, </span>45<span style="color: #949494;">, </span>45<span style="color: #949494;">, </span>45<span style="color: #949494;">, </span>45<span style="color: #949494;">, </span>45<span style="color: #949494;">, </span>45…</span></span>
+<span><span class="co">#&gt; $ dRH_TRHadj      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 8.2<span style="color: #949494;">, </span>8.3<span style="color: #949494;">, </span>8.4<span style="color: #949494;">, </span>8.4<span style="color: #949494;">, </span>8.5<span style="color: #949494;">, </span>8.8<span style="color: #949494;">, </span>8.7<span style="color: #949494;">, </span>8.6<span style="color: #949494;">, </span>9.0<span style="color: #949494;">, </span>9.0<span style="color: #949494;">, </span>9.2<span style="color: #949494;">,</span>…</span></span>
+<span><span class="co">#&gt; $ newAH_AHadj     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 8.623877<span style="color: #949494;">, </span>8.623877<span style="color: #949494;">, </span>8.623877<span style="color: #949494;">, </span>8.574250<span style="color: #949494;">, </span>8.574250<span style="color: #949494;">, </span>8.57…</span></span>
+<span><span class="co">#&gt; $ dAH_AHadj       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1.571462<span style="color: #949494;">, </span>1.590626<span style="color: #949494;">, </span>1.609790<span style="color: #949494;">, </span>1.600527<span style="color: #949494;">, </span>1.619581<span style="color: #949494;">, </span>1.67…</span></span>
+<span><span class="co">#&gt; $ newRH_AHadj     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 45<span style="color: #949494;">, </span>45<span style="color: #949494;">, </span>45<span style="color: #949494;">, </span>45<span style="color: #949494;">, </span>45<span style="color: #949494;">, </span>45<span style="color: #949494;">, </span>45<span style="color: #949494;">, </span>45<span style="color: #949494;">, </span>45<span style="color: #949494;">, </span>45<span style="color: #949494;">, </span>45<span style="color: #949494;">, </span>45<span style="color: #949494;">, </span>45<span style="color: #949494;">, </span>45…</span></span>
+<span><span class="co">#&gt; $ dRH_AHadj       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 8.2<span style="color: #949494;">, </span>8.3<span style="color: #949494;">, </span>8.4<span style="color: #949494;">, </span>8.4<span style="color: #949494;">, </span>8.5<span style="color: #949494;">, </span>8.8<span style="color: #949494;">, </span>8.7<span style="color: #949494;">, </span>8.6<span style="color: #949494;">, </span>9.0<span style="color: #949494;">, </span>9.0<span style="color: #949494;">, </span>9.2<span style="color: #949494;">,</span>…</span></span>
+<span><span class="co">#&gt; $ newTemp_AHadj   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 21.8<span style="color: #949494;">, </span>21.8<span style="color: #949494;">, </span>21.8<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ dTemp_AHadj     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ newTemp_Tadj    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 18.54655<span style="color: #949494;">, </span>18.50309<span style="color: #949494;">, </span>18.45953<span style="color: #949494;">, </span>18.36203<span style="color: #949494;">, </span>18.31840<span style="color: #949494;">, </span>18.1…</span></span>
+<span><span class="co">#&gt; $ dTemp_Tadj      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -3.253447<span style="color: #949494;">, </span>-3.296908<span style="color: #949494;">, </span>-3.340472<span style="color: #949494;">, </span>-3.337966<span style="color: #949494;">, </span>-3.381603<span style="color: #949494;">,</span>…</span></span>
+<span><span class="co">#&gt; $ newRH_Tadj      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 44.50688<span style="color: #949494;">, </span>44.50032<span style="color: #949494;">, </span>44.49374<span style="color: #949494;">, </span>44.49407<span style="color: #949494;">, </span>44.48749<span style="color: #949494;">, </span>44.4…</span></span>
+<span><span class="co">#&gt; $ dRH_Tadj        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 7.706876<span style="color: #949494;">, </span>7.800316<span style="color: #949494;">, </span>7.893740<span style="color: #949494;">, </span>7.894074<span style="color: #949494;">, </span>7.987487<span style="color: #949494;">, </span>8.26…</span></span>
+<span><span class="co">#&gt; $ newAH_Tadj      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 5.831209<span style="color: #949494;">, </span>5.800415<span style="color: #949494;">, </span>5.769701<span style="color: #949494;">, </span>5.736456<span style="color: #949494;">, </span>5.705996<span style="color: #949494;">, </span>5.61…</span></span>
+<span><span class="co">#&gt; $ dAH_Tadj        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> -1.221207<span style="color: #949494;">, </span>-1.232836<span style="color: #949494;">, </span>-1.244386<span style="color: #949494;">, </span>-1.237268<span style="color: #949494;">, </span>-1.248673<span style="color: #949494;">,</span>…</span></span>
+<span><span class="co">#&gt; $ SensibleHeating <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>…</span></span>
+<span><span class="co">#&gt; $ CoolingPower    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>…</span></span></code></pre></div>
+<p>Adjustment before and after applying calculations in the
+<code>add_humidity_adjustments</code> function.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/graph_psychrometric.html">graph_psychrometric</a></span><span class="op">(</span><span class="va">mydata_adj</span>, y_func <span class="op">=</span> <span class="va">calcAH</span>, data_col <span class="op">=</span> <span class="st">"TRH_zone"</span>,</span>
+<span>                    LowT <span class="op">=</span> <span class="fl">16</span>, HighT <span class="op">=</span> <span class="fl">25</span>, LowRH <span class="op">=</span> <span class="fl">45</span>, HighRH <span class="op">=</span> <span class="fl">55</span><span class="op">)</span> <span class="op">+</span>  </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">Sensor</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Before TRH Adjustment"</span>, subtitle <span class="op">=</span> <span class="st">"mydata"</span>, col <span class="op">=</span> <span class="st">""</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Sustainability_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">mydata_adj</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/graph_psychrometric.html">graph_psychrometric</a></span><span class="op">(</span>Temp <span class="op">=</span> <span class="st">"newTemp_TRHadj"</span>, RH <span class="op">=</span> <span class="st">"newRH_TRHadj"</span>, </span>
+<span>                      y_func <span class="op">=</span> <span class="va">calcAH</span>, data_col <span class="op">=</span> <span class="st">"zone"</span>,</span>
+<span>                      LowT <span class="op">=</span> <span class="fl">16</span>, HighT <span class="op">=</span> <span class="fl">25</span>, LowRH <span class="op">=</span> <span class="fl">45</span>, HighRH <span class="op">=</span> <span class="fl">55</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"After TRH Adjustment - narrow specification"</span>, </span>
+<span>       subtitle <span class="op">=</span> <span class="st">"Adjusted to 16-25°C and 45-55%RH"</span>,</span>
+<span>       col <span class="op">=</span> <span class="st">""</span><span class="op">)</span> <span class="op">+</span>  </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html" class="external-link">facet_grid</a></span><span class="op">(</span><span class="op">~</span><span class="va">Sensor</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Sustainability_files/figure-html/unnamed-chunk-4-2.png" width="700"></p>
+<p><strong>Energy Implications</strong></p>
+<p>The calculations of sensible heating and cooling power estimate the
+energy required to condition heritage spaces to specified humidity and
+temperature levels.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># Plot the temperature changes required to achieve target conditions </span></span>
+<span><span class="va">mydata_adj</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">SensibleHeating</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"deeppink"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="st">"Sensible heat (kW)"</span>, </span>
-<span>       title <span class="op">=</span> <span class="st">"Sensible Heating"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">dTemp_TRHadj</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"firebrick"</span>, alpha <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html" class="external-link">geom_smooth</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">dTemp_TRHadj</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Temperature change required to achieve Narrow TRH specification"</span>,</span>
+<span>       subtitle <span class="op">=</span> <span class="st">"Positive values indicate increasing the temperature"</span>,</span>
+<span>       x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="st">"Temperature (°C)"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html" class="external-link">facet_grid</a></span><span class="op">(</span><span class="op">~</span><span class="va">Sensor</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Sustainability_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span>  </span>
-<span><span class="va">using_calcTemp</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">CoolingPower</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<code class="sourceCode R"><span></span>
+<span><span class="va">mydata_adj</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">CoolingPower</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"lightblue"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="st">"Cooling power (kW)"</span>, </span>
-<span>       title <span class="op">=</span> <span class="st">"Cooling Power"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">SensibleHeating</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"deeppink"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="st">"Sensible heat (kW)"</span>, </span>
+<span>       title <span class="op">=</span> <span class="st">"Sensible Heating"</span>, subtitle <span class="op">=</span> <span class="st">"Narrow: 16-25°C, 45-55%RH"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html" class="external-link">facet_grid</a></span><span class="op">(</span><span class="op">~</span><span class="va">Sensor</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Sustainability_files/figure-html/unnamed-chunk-5-2.png" width="700"></p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span>  </span>
+<span><span class="va">mydata_adj</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">CoolingPower</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="st">"Cooling power (kW)"</span>, </span>
+<span>       title <span class="op">=</span> <span class="st">"Cooling Power"</span>, subtitle <span class="op">=</span> <span class="st">"Narrow: 16-25°C, 45-55%RH"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html" class="external-link">facet_grid</a></span><span class="op">(</span><span class="op">~</span><span class="va">Sensor</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Sustainability_files/figure-html/unnamed-chunk-5-3.png" width="700"></p>
+<p><strong>Comparing Environmental Specifications</strong></p>
+<p>Using broader or narrower environmental control specifications
+impacts both energy consumption and heritage risks.</p>
+<ul>
+<li>Narrow specification: 16-25°C and 45-55%rh</li>
+<li>Broader specification: 12-28°C and 30-70%rh</li>
+</ul>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mydata_adj2</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="va">mydata</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">Sensor</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/add_humidity_adjustments.html">add_humidity_adjustments</a></span><span class="op">(</span>LowT <span class="op">=</span> <span class="fl">12</span>, HighT <span class="op">=</span> <span class="fl">28</span>, LowRH <span class="op">=</span> <span class="fl">30</span>, HighRH <span class="op">=</span> <span class="fl">70</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>    SensibleHeating <span class="op">=</span> <span class="fu"><a href="../reference/calcSensibleHeating.html">calcSensibleHeating</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">newTemp_TRHadj</span>, <span class="va">RH</span>, volumeFlowRate <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>    CoolingPower <span class="op">=</span> <span class="fu"><a href="../reference/calcCoolingPower.html">calcCoolingPower</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">newTemp_TRHadj</span>, <span class="va">RH</span>, <span class="va">newRH_TRHadj</span>, volumeFlowRate <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">mydata_adj2</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/graph_psychrometric.html">graph_psychrometric</a></span><span class="op">(</span>Temp <span class="op">=</span> <span class="st">"newTemp_TRHadj"</span>, RH <span class="op">=</span> <span class="st">"newRH_TRHadj"</span>, </span>
+<span>                      y_func <span class="op">=</span> <span class="va">calcAH</span>, data_col <span class="op">=</span> <span class="st">"zone"</span>,</span>
+<span>                      LowT <span class="op">=</span> <span class="fl">12</span>, HighT <span class="op">=</span> <span class="fl">28</span>, LowRH <span class="op">=</span> <span class="fl">30</span>, HighRH <span class="op">=</span> <span class="fl">70</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"After TRH Adjustment - broader specification"</span>, </span>
+<span>       subtitle <span class="op">=</span> <span class="st">"Adjusted to 12-28°C, 30-70%RH"</span>,</span>
+<span>       col <span class="op">=</span> <span class="st">""</span><span class="op">)</span> <span class="op">+</span>  </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html" class="external-link">facet_grid</a></span><span class="op">(</span><span class="op">~</span><span class="va">Sensor</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Sustainability_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mydata_adj2</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">SensibleHeating</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"deeppink"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="st">"Sensible heat (kW)"</span>, </span>
+<span>       title <span class="op">=</span> <span class="st">"Sensible Heating - broader specification"</span>, subtitle <span class="op">=</span> <span class="st">"Adjusted to 12-28°C, 30-70%RH"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html" class="external-link">facet_grid</a></span><span class="op">(</span><span class="op">~</span><span class="va">Sensor</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Sustainability_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span>  </span>
+<span><span class="va">mydata_adj2</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">CoolingPower</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="st">"Cooling power (kW)"</span>, </span>
+<span>       title <span class="op">=</span> <span class="st">"Cooling Power - broader specification"</span>, subtitle <span class="op">=</span> <span class="st">"Adjusted to 12-28°C, 30-70%RH"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html" class="external-link">facet_grid</a></span><span class="op">(</span><span class="op">~</span><span class="va">Sensor</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Sustainability_files/figure-html/unnamed-chunk-7-2.png" width="700"></p>
+<p>Combine datasets for comparison and add conservation risk
+metrics.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mydata_no_adj</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="va">mydata</span> <span class="op">|&gt;</span></span>
+<span>  <span class="co"># Doing nothing costs no energy</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>    SensibleHeating <span class="op">=</span> <span class="fl">0</span>, CoolingPower <span class="op">=</span> <span class="fl">0</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/add_conservation_calcs.html">add_conservation_calcs</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">mydata_adj</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="va">mydata_adj</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/add_conservation_calcs.html">add_conservation_calcs</a></span><span class="op">(</span>Temp <span class="op">=</span> <span class="st">"newTemp_TRHadj"</span>, RH <span class="op">=</span> <span class="st">"newRH_TRHadj"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">mydata_adj2</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="va">mydata_adj2</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/add_conservation_calcs.html">add_conservation_calcs</a></span><span class="op">(</span>Temp <span class="op">=</span> <span class="st">"newTemp_TRHadj"</span>, RH <span class="op">=</span> <span class="st">"newRH_TRHadj"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">mydata_bind</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span></span>
+<span>    <span class="va">mydata_no_adj</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Specification <span class="op">=</span> <span class="st">"1) Do Nothing"</span><span class="op">)</span>,</span>
+<span>    <span class="va">mydata_adj</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Specification <span class="op">=</span> <span class="st">"2) Narrow Specs"</span><span class="op">)</span>, </span>
+<span>    <span class="va">mydata_adj2</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Specification <span class="op">=</span> <span class="st">"3) Broader Specs"</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div>
+<p>Comparison of the risks and energy savings made by making the
+specification broader.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mydata_bind</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_col</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_rev.html" class="external-link">fct_rev</a></span><span class="op">(</span><span class="va">Specification</span><span class="op">)</span>, <span class="va">CoolingPower</span><span class="op">)</span>, fill <span class="op">=</span> <span class="st">"dodgerblue3"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html" class="external-link">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html" class="external-link">facet_grid</a></span><span class="op">(</span><span class="va">Sensor</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Cooling required to adjust TRH"</span>, subtitle <span class="op">=</span> <span class="st">"Narrow vs Broader specifications"</span>,</span>
+<span>       x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="st">"Sum of energy required (kW)"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Sustainability_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">mydata_bind</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_col</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_rev.html" class="external-link">fct_rev</a></span><span class="op">(</span><span class="va">Specification</span><span class="op">)</span>, <span class="va">SensibleHeating</span><span class="op">)</span>, fill <span class="op">=</span> <span class="st">"deeppink3"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html" class="external-link">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html" class="external-link">facet_grid</a></span><span class="op">(</span><span class="va">Sensor</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Heating required to adjust TRH"</span>, subtitle <span class="op">=</span> <span class="st">"Narrow vs Broader specifications"</span>,</span>
+<span>       x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="st">"Sum of energy required (kW)"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Sustainability_files/figure-html/unnamed-chunk-9-2.png" width="700"></p>
+<p><strong>Heritage Risk Indicators</strong></p>
+<p>Summary metrics such as lifetime multiplier, preservation index,
+equilibrium moisture content (EMC) of wood, and mould risk indices
+provide a quantitative assessment of heritage risk under different
+environmental control strategies.</p>
+<ul>
+<li>Lifetime multiplier - compared to 20°C and 50%rh, values &gt;1 are
+conditions prolong lifetime.</li>
+<li>Preservation index - years to deterioration, higher values are more
+favorable.</li>
+<li>Equilibrium moisture content wood between 6-20% - time spent within
+safer range (1 = 100%).</li>
+<li>Mould growth risk - lower values are better.</li>
+</ul>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mydata_summary</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="va">mydata_bind</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">Sensor</span>, <span class="va">Specification</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span></span>
+<span>    Lifetime <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">Lifetime</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, </span>
+<span>    PreservationIndex <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">PreservationIndex</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, </span>
+<span>    EMC_wood <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">EMC_wood</span> <span class="op">&gt;=</span> <span class="fl">6</span> <span class="op">&amp;</span> <span class="va">EMC_wood</span> <span class="op">&lt;=</span> <span class="fl">20</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, </span>
+<span>    Mould_LIM <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">RH</span> <span class="op">&gt;</span> <span class="va">Mould_LIM</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    Mould_index <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">Mould_index</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">mydata_summary</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 9 × 7</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># Groups:   Sensor [3]</span></span></span>
+<span><span class="co">#&gt;   Sensor Specification Lifetime PreservationIndex EMC_wood Mould_LIM Mould_index</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Exter… 1) Do Nothing    0.912              89.5    0.935      <span style="text-decoration: underline;">8</span>497     141.   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Exter… 2) Narrow Sp…    0.993              54.7    1         <span style="text-decoration: underline;">13</span>122       0.953</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Exter… 3) Broader S…    0.952              72.5    1.000     <span style="text-decoration: underline;">11</span>226      17.5  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Room 1 1) Do Nothing    1.04               43.7    0.978         4       0.502</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Room 1 2) Narrow Sp…    1.01               39.3    1             6       0.157</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Room 1 3) Broader S…    1.04               43.5    1             6       0.465</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> Room … 1) Do Nothing    1.07               42.1    0.971         0       0.140</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span> Room … 2) Narrow Sp…    1.02               37.3    1             0       0.135</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">9</span> Room … 3) Broader S…    1.06               42.0    1             0       0.140</span></span></code></pre></div>
+<ul>
+<li>The <strong>“Do Nothing”</strong> specification shows baseline risk
+levels and zero energy consumption. Mould risk are present but
+relatively high preservation indicators (ironically outdoors).</li>
+<li>The <strong>“Narrow Specifications”</strong> target tighter
+environmental ranges (e.g., 16-25°C and 45-55% RH). This tends to a
+slightly lower lifetime and preservation indices indoors than doing
+nothing. The risk of mould risk indoors decreases but there remains the
+question of the significance. Energy consumption is greater than “Do
+Nothing” and “Broader” specification.</li>
+<li>The <strong>“Broader Specifications”</strong> with a wider
+acceptable temperature and humidity range (e.g., 12-28°C and 30-70% RH)
+typically maintain similar lifetime multipliers and preservation indices
+as narrow ranges indoors. There is no energy consumption with no heating
+or cooling required indoors, however humidification/dehumidification are
+not considered (being developed). Mould risk remains similar to “Do
+Nothing”.</li>
+</ul>
+<p><strong>Limitations: Research required</strong></p>
+<p>Other conservation risk metrics not considered. For example, the
+stress-strain behavior of materials which are more relevant to the
+collections housed in a space.</p>
+<p>Assumed that heating and cooling are 100% efficient and
+instantaneous. The calculations based on the time-series stamped data
+are not realistically managed at this rate. Establishing how spaces
+behave and how fast and efficiently heating/cooling systems introduce
+heat and cooling into a space needs to be established. Humidification
+and dehumification energy consumption models also need to be
+developed.</p>
+<p>Spaces are not typically conditioned directly from physical
+calculations and other factors are needed to understand the energy
+consumption (e.g. off-coil chiller dew point, chilled water temperature,
+etc.).</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
