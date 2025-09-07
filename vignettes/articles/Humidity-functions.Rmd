@@ -19,6 +19,7 @@ library(ConSciR)
 library(dplyr)
 library(ggplot2)
 library(readxl)
+library(IAPWS95)
 ```
 
 Humidity tells us how much water vapour is in the air.
