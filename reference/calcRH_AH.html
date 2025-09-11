@@ -52,7 +52,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">calcRH_AH</span><span class="op">(</span><span class="va">Temp</span>, <span class="va">Abs</span>, P_atm <span class="op">=</span> <span class="fl">1013.25</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">calcRH_AH</span><span class="op">(</span><span class="va">Temp</span>, <span class="va">AH</span>, P_atm <span class="op">=</span> <span class="fl">1013.25</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -63,7 +63,7 @@
 <dd><p>Temperature (°Celsius)</p></dd>
 
 
-<dt id="arg-abs">Abs<a class="anchor" aria-label="anchor" href="#arg-abs"></a></dt>
+<dt id="arg-ah">AH<a class="anchor" aria-label="anchor" href="#arg-ah"></a></dt>
 <dd><p>Absolute Humidity (g/m³)</p></dd>
 
 
@@ -90,7 +90,7 @@ Journal of Applied Meteorology, 20(12), 1527-1532.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Calculate RH for temperature of 20°C and absolute humidity of 8.645471 g/m³</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Relative humidity (RH) at temperature of 20°C (Temp) and absolute humidity of 8.645471 g/m³ (AH)</span></span></span>
 <span class="r-in"><span><span class="fu">calcRH_AH</span><span class="op">(</span><span class="fl">20</span>, <span class="fl">8.630534</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 50</span>
 <span class="r-in"><span></span></span>
