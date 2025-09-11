@@ -11,15 +11,18 @@ Authors@R: c(
     person("Emily R", "Long", , "", role = c("ctb"), 
            comment = c(ORCID = "0000-0003-3162-4521")),
     person("Marcin", "Zygmunt", , "", role = c("ctb"), 
-           comment = c(ORCID = "0000-0003-1304-8591"))
+           comment = c(ORCID = "0000-0003-1304-8591")),
+    person("Hebe", "Halstead", , "", role = c("ctb")),   
+    person("Avery", "Bazemore", , "", role = c("ctb"), 
+           comment = c(ORCID = "0009-0007-9704-6759"))        
   )
 Maintainer: Bhavesh Shah <bhaveshshah01@gmail.com>
 Description: Provides data science tools for conservation science, including
     methods for environmental analysis applications, humidity calculations,
     sustainability metrics, engineering calculations, and data
     visualisation. Supports conservators, scientists, and engineers
-    working with cultural heritage data.
-    The package was motivated by the developing tools and frameworks outlined 
+    working with cultural heritage preventive conservation data.
+    The package is motivated by the framework outlined 
     in Cosaert and Beltran et al. (2022) 
     "Tools for the Analysis of Collection Environments" 
     <https://www.getty.edu/conservation/publications_resources/pdf_publications/tools_for_the_analysis_of_collection_environments.html>.  
@@ -48,7 +51,6 @@ Imports:
     shiny,
     ggplot2,
     dplyr, 
-    forcats,
     lubridate,
     padr,
     openair

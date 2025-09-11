@@ -4,12 +4,12 @@
 \alias{calcRH_AH}
 \title{Calculate Relative Humidity from temperature and absolute humidity}
 \usage{
-calcRH_AH(Temp, Abs, P_atm = 1013.25)
+calcRH_AH(Temp, AH, P_atm = 1013.25)
 }
 \arguments{
 \item{Temp}{Temperature (°Celsius)}
 
-\item{Abs}{Absolute Humidity (g/m³)}
+\item{AH}{Absolute Humidity (g/m³)}
 
 \item{P_atm}{Atmospheric pressure = 1013.25 (hPa)}
 }
@@ -20,7 +20,7 @@ Relative Humidity (0-100\%)
 Function to calculate relative humidity (\%) from temperature (°C) and absolute humidity (g/m^3)
 }
 \examples{
-# Calculate RH for temperature of 20°C and absolute humidity of 8.645471 g/m³
+# Relative humidity (RH) at temperature of 20°C (Temp) and absolute humidity of 8.645471 g/m³ (AH)
 calcRH_AH(20, 8.630534)
 
 calcRH_AH(20, calcAH(20, 50))

@@ -26,6 +26,7 @@ Air density in kg/m³
 Function to calculate air density based on temperature (°C), relative humidity in (\%), and atmospheric pressure (hPa).
 }
 \examples{
+# Air density at 20°C (Temp) and 50\% relative humidity (RH)
 calcAD(20, 50)
 
 

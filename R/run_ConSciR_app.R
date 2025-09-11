@@ -1,5 +1,5 @@
 # R/run_ConSciR_app.R
-#' Run ConSciR Shiny Application
+#' Run ConSciR Shiny Application (TRH, Psychrometric, Bivariate charts)
 #'
 #' @return Shiny object
 #' @export

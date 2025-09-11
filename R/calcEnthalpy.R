@@ -19,6 +19,7 @@
 #' @export
 #'
 #' @examples
+#' # Enthalpy at at 20°C (Temp) and 50% relative humidity (RH)
 #' calcEnthalpy(20, 50)
 #'
 #'

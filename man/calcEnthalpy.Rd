@@ -25,6 +25,7 @@ Enthalpy is the amount of energy required to bring a gas to its current state
 from a dry gas at 0°C.
 }
 \examples{
+# Enthalpy at at 20°C (Temp) and 50\% relative humidity (RH)
 calcEnthalpy(20, 50)
 
 

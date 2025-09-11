@@ -4,7 +4,12 @@
 \alias{calcAH}
 \title{Calculate Absolute Humidity}
 \usage{
-calcAH(Temp, RH, P_atm = 1013.25)
+calcAH(
+  Temp,
+  RH,
+  P_atm = 1013.25,
+  method = c("Buck_EF", "Buck", "IAPWS", "Magnus", "VAISALA")
+)
 }
 \arguments{
 \item{Temp}{Temperature (°Celsius)}
@@ -12,18 +17,25 @@ calcAH(Temp, RH, P_atm = 1013.25)
 \item{RH}{Relative Humidity (0-100\%)}
 
 \item{P_atm}{Atmospheric pressure = 1013.25 (hPa)}
+
+\item{method}{Character. Calculation method:
+- "Buck": uses \code{calcPws} Buck equation (default)
+- "Buck_EF": Buck formula with enhancement factor
+- "IAPWS", "Magnus", "VAISALA": use \code{calcPws} methods for saturation vapor pressure}
 }
 \value{
 AH Absolute Humidity (g/m³)
 }
 \description{
 Function to calculate the absolute humidity (g/m³) from temperature (°C) and relative humidity (\%).
-
-Absolute humidity is the mass of water in a unit volume of air at a given temperature and pressure.
+Supports multiple methods: the Buck equation (default), Buck formula with enhancement factor, and others.
 }
 \examples{
+# Absolute humidity at 20°C (Temp) and 50\% relative humidity (RH)
 calcAH(20, 50)
-
+calcAH(20, 50, method = "Buck_EF") # Buck formula with enhancement factor (default)
+calcAH(20, 50, method = "Buck") # Buck method via calcPws
+calcAH(20, 50, method = "IAPWS") # IAPWS
 
 # mydata file
 filepath <- data_file_path("mydata.xlsx")
@@ -31,8 +43,4 @@ mydata <- readxl::read_excel(filepath, sheet = "mydata", n_max = 5)
 
 mydata |> dplyr::mutate(Abs = calcAH(Temp, RH))
 
-
-}
-\references{
-Buck, A. L. (1981). New equations for computing vapor pressure and enhancement factor. Journal of Applied Meteorology, 20(12), 1527-1532.
 }

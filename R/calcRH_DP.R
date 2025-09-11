@@ -45,7 +45,7 @@
 #' @export
 #'
 #' @examples
-#' # RH at air tempertaure of 20°C and dew point of 15°C
+#' # Relative humidity (RH) at tempertaure of 20°C (Temp) and dew point of 15°C (DewP)
 #' calcRH_DP(20, 15)
 #' calcRH_DP(20, 15, method = "Buck")
 #'

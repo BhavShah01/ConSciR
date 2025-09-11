@@ -47,6 +47,7 @@
 #' @export
 #'
 #' @examples
+#' # Lifetime multiplier at 20°C (Temp) and 50% relative humidity (RH)
 #' calcLM(20, 50)
 #'
 #' calcLM(20, 50, EA = 70)

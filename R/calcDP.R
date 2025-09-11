@@ -54,6 +54,7 @@
 #' @importFrom dplyr mutate
 #'
 #' @examples
+#' # Dew point at 20°C and 50% relative humidity (RH)
 #' # Default Magnus method
 #' calcDP(20, 50)
 #'

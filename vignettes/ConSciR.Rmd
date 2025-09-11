@@ -24,27 +24,30 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-`ConSciR` is an R package specifically designed to assist conservators, scientists, and engineers 
-by providing a toolkit for performing calculations and streamlining common tasks in cultural 
-heritage conservation.
+`ConSciR` is an R package that provides data science tools for conservation science. It is designed to support conservators, scientists, and engineers by streamlining common calculations and tasks encountered in heritage conservation workflows.
 
 ## Install and load
 
-You can install the development version of the package from GitHub using either the `pak` or `devtools` package:
+``` r
+install.packages("ConSciR")
+library(ConSciR)
+```
+
+You can install the development version of the package from GitHub using the `pak` package:
 
 ``` r
 install.packages("pak")
 pak::pak("BhavShah01/ConSciR")
-```
 
--or-
-
-``` r
+# Alternatively
 # install.packages("devtools")
-devtools::install_github("BhavShah01/ConSciR")
+# devtools::install_github("BhavShah01/ConSciR")
 ```
+
 
 Visit the package GitHub page for updates and source code: [ConSciR Github](https://github.com/BhavShah01/ConSciR)
+
+This vignette provides a practical introduction to the package’s functionalities. For full details on all functions, see the package [Reference](https://bhavshah01.github.io/ConSciR/reference/index.html) manual or use `?function_name` within R.
 
 ## Examples
 
@@ -57,7 +60,7 @@ library(dplyr)
 library(ggplot2)
 ```
 
-### Add calculated values using `mutate`
+### Add calculated values 
 
 Enrich your dataset with environmental metrics computed by ConSciR functions:
 
@@ -87,7 +90,7 @@ head(mydata) |>
 ```
 
 
-### Visualise and explore data with calculations
+### Visualise and explore data 
 
 Combine calculations and plotting to explore patterns visually:
 
@@ -126,20 +129,10 @@ mydata |>
 
 
 
-### Built-in psychrometric chart
+### Psychrometric Chart 
 
-Visualise the first 100 rows of the dataset with a psychrometric chart:
-
-```{r psychrometric chart, message=FALSE, warning=FALSE, fig.alt="psychrometric_chart_example"}
-
-head(mydata, 100) |>
-  graph_psychrometric() + 
-  theme_bw()
-```
-
-### Psychrometric Chart Customisation
-
-Create tailored psychrometric charts by adjusting parameters such as temperature and humidity ranges, visual transparency, or y-axis metrics:
+Create psychrometric charts from temperature and humidity data. The functions from the 
+package can be used to change the calculations used. 
 
 ```{r psychrometric custom, message=FALSE, warning=FALSE, fig.alt="psychrometric_chart_custom"}
 
@@ -157,4 +150,4 @@ head(mydata, 100) |>
 
 ------------------------------------------------------------------------
 
-This vignette provides a practical introduction to the package’s core functionalities. For full details on all functions, see the package Reference manual or use `?function_name` within R.
+

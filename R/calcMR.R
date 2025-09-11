@@ -31,6 +31,7 @@
 #'
 #'
 #' @examples
+#' # Mixing ratio at 20°C (Temp) and 50% relative humidity (RH)
 #' calcMR(20, 50)
 #'
 #' # mydata file

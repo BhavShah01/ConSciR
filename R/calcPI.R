@@ -59,6 +59,7 @@
 #' @export
 #'
 #' @examples
+#' # Preservation Index at 20°C (Temp) and 50% relative humidity (RH)
 #' calcPI(20, 50)
 #'
 #'

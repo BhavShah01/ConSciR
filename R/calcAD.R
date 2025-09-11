@@ -21,6 +21,7 @@
 #'
 #'
 #' @examples
+#' # Air density at 20°C (Temp) and 50% relative humidity (RH)
 #' calcAD(20, 50)
 #'
 #'

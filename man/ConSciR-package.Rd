@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Provides data science tools for conservation science, including methods for environmental analysis applications, humidity calculations, sustainability metrics, engineering calculations, and data visualisation. Supports conservators, scientists, and engineers working with cultural heritage data. The package was motivated by the developing tools and frameworks outlined in Cosaert and Beltran et al. (2022) "Tools for the Analysis of Collection Environments" \url{https://www.getty.edu/conservation/publications_resources/pdf_publications/tools_for_the_analysis_of_collection_environments.html}.
+Provides data science tools for conservation science, including methods for environmental analysis applications, humidity calculations, sustainability metrics, engineering calculations, and data visualisation. Supports conservators, scientists, and engineers working with cultural heritage preventive conservation data. The package is motivated by the framework outlined in Cosaert and Beltran et al. (2022) "Tools for the Analysis of Collection Environments" \url{https://www.getty.edu/conservation/publications_resources/pdf_publications/tools_for_the_analysis_of_collection_environments.html}.
 }
 \seealso{
 Useful links:
@@ -32,6 +32,8 @@ Other contributors:
 \itemize{
   \item Emily R Long (\href{https://orcid.org/0000-0003-3162-4521}{ORCID}) [contributor]
   \item Marcin Zygmunt (\href{https://orcid.org/0000-0003-1304-8591}{ORCID}) [contributor]
+  \item Hebe Halstead [contributor]
+  \item Avery Bazemore (\href{https://orcid.org/0009-0007-9704-6759}{ORCID}) [contributor]
 }
 
 }

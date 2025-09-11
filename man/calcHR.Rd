@@ -32,6 +32,7 @@ Function uses \code{\link{calcMR}}
 This function requires the \code{\link{calcMR}} function to be available in the environment.
 }
 \examples{
+# Humidity ratio at 20°C (Temp) and 50\% relative humidity (RH)
 calcHR(20, 50)
 
 

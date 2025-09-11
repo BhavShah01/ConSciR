@@ -17,7 +17,7 @@
 #' @seealso \code{\link{calcDP}} for calculating dew point
 #'
 #'
-#' @param Abs Absolute Humidity (g/m³)
+#' @param AH Absolute Humidity (g/m³)
 #' @param Temp Temperature (°Celsius)
 #' @param P_atm Atmospheric pressure = 1013.25 (hPa)
 #'
@@ -25,7 +25,7 @@
 #' @export
 #'
 #' @examples
-#' # Calculate RH for temperature of 20°C and absolute humidity of 8.645471 g/m³
+#' # Relative humidity (RH) at temperature of 20°C (Temp) and absolute humidity of 8.645471 g/m³ (AH)
 #' calcRH_AH(20, 8.630534)
 #'
 #' calcRH_AH(20, calcAH(20, 50))
@@ -38,7 +38,7 @@
 #' mydata |> dplyr::mutate(Abs = calcAH(Temp, RH), RH2 = calcRH_AH(Temp, Abs))
 #'
 #'
-calcRH_AH <- function(Temp, Abs, P_atm = 1013.25) {
+calcRH_AH <- function(Temp, AH, P_atm = 1013.25) {
 
   # Constants
   T0 <- 373.15  # Reference temperature in Kelvin
@@ -65,7 +65,7 @@ calcRH_AH <- function(Temp, Abs, P_atm = 1013.25) {
   saturation_vapor_density <- 2165 * (vapor_pressure_kPa / 100) / TempK
 
   # Calculate relative humidity
-  RH <- 1 / (saturation_vapor_density / Abs)
+  RH <- 1 / (saturation_vapor_density / AH)
 
   return(RH)
 

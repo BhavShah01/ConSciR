@@ -10,6 +10,7 @@
 #' @export
 #'
 #' @examples
+#' # Fahrenheit from Celsius
 #' calcFtoC(32)
 #' calcFtoC(68)
 #'

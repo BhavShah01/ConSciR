@@ -23,9 +23,7 @@ knitr::opts_chunk$set(
 
 `ConSciR` is an R package that provides data science tools for conservation science.
 
-It includes functions for environmental applications, humidity calculations, sustainability metrics, engineering calculations, and data visualisations such as psychrometric charts. 
-The toolkit is designed to assist conservators, scientists, and engineers in performing 
-calculations, analysing data, and streamlining common tasks in cultural heritage conservation.
+It includes functions for environmental applications, humidity calculations, sustainability metrics, engineering calculations, and data visualisations such as psychrometric charts. The toolkit is designed to assist conservators, scientists, and engineers in performing calculations, analysing data, and streamlining common tasks in cultural heritage conservation.
 
 `ConSciR` is intended for:\
 - Conservators working in museums, galleries, and heritage sites\
@@ -36,7 +34,7 @@ calculations, analysing data, and streamlining common tasks in cultural heritage
 
 The package is also designed to be:\
 - **FAIR**: Findable, Accessible, Interoperable, and Reusable\
-- **Collaborative**: enabling contributions, feature requests, bug reports, and\
+- **Collaborative**: enabling contributions, feature requests, bug reports, and
 additions from the wider community
 
 If using R for the first time, read an article here: [Using R for the first time](https://bhavshah01.github.io/ConSciR/articles/ConSciR-FirstTimeR.html)
@@ -49,21 +47,26 @@ If using R for the first time, read an article here: [Using R for the first time
 -   Data tidying functions compatible with Meaco and Hanwell environmental monitoring devices.
 -   Interactive Shiny applications enabling dynamic data exploration and visualisation.
 
-## Installation
+## Install and load
 
-You can install the development version of ConSciR from [GitHub](https://github.com/BhavShah01/ConSciR) with:
+``` r
+install.packages("ConSciR")
+library(ConSciR)
+```
+
+You can install the development version of the package from GitHub using the `pak` package:
 
 ``` r
 install.packages("pak")
 pak::pak("BhavShah01/ConSciR")
-```
 
--or-
-
-``` r
+# Alternatively
 # install.packages("devtools")
-devtools::install_github("BhavShah01/ConSciR")
+# devtools::install_github("BhavShah01/ConSciR")
 ```
+
+For full details on all functions, see the package [Reference](https://bhavshah01.github.io/ConSciR/reference/index.html) manual.
+
 
 ## Examples
 
@@ -92,7 +95,7 @@ head(mydata)
 ```
 
 -   **Perform calculations on the data**\
-    Use ConSciR functions to add environmental metrics such as dew point (**`calcDP`**), absolute humidity (**`calcAH`**), lifetime multiplier (**`calcLM`**), and preservation index (**`calcPI`**) to the dataset. More functions are available; see the package Reference for details.
+    Use ConSciR functions to add environmental metrics such as dew point (`calcDP`), absolute humidity (`calcAH`), lifetime multiplier (`calcLM`), and preservation index (`calcPI`) to the dataset. More functions are available; see the package [Reference](https://bhavshah01.github.io/ConSciR/reference/index.html) for details.
 
 ```{r add_calcs, message=FALSE, warning=FALSE}
 # Peform calculations
@@ -112,13 +115,13 @@ head(mydata) |>
 mydata |>
   mutate(DewPoint = calcDP(Temp, RH)) |>
   graph_TRH() + 
-  geom_line(aes(Date, DewPoint), col = "cyan4") + # add dew point
+  geom_line(aes(Date, DewPoint), col = "cyan3") + # add dew point
   labs(title = "Room 1") +
   theme_bw()
 ```
 
 -   **Conservator tools: mould growth estimation**\
-    Calculate mould growth risk using **`calcMould_Zeng()`** and visualise it alongside humidity data.
+    Calculate mould growth risk using **`calcMould_Zeng()`** function and visualise it alongside humidity data.
 
 ```{r mould_risk, message=FALSE, warning=FALSE, fig.alt="mould"}
 mydata |>
@@ -132,15 +135,10 @@ mydata |>
   theme_classic(base_size = 14)
 ```
 
--   **Humidity functions: generate a psychrometric chart**\
-    Visualise the dataset using a psychrometric chart with the function `graph_psychrometric()`. The first example shows a basic plot, while the second demonstrates how to customise parameters such as data transparency, temperature and humidity ranges, and the y-axis function. See the full documentation with `?graph_psychrometric`.
+-   **Graphs: generate a psychrometric chart**\
+    Visualise the data using a psychrometric chart with the function `graph_psychrometric()`. The example shows how a basic plot can be customised; data transparency, temperature and humidity ranges, and the y-axis function. See the full documentation with `graph_psychrometric`.
 
 ```{r psychart, message=FALSE, warning=FALSE, fig.alt="psych_chart"}
-
-# Basic
-mydata |>
-  graph_psychrometric() 
-
 # Customise 
 mydata |>
   graph_psychrometric(

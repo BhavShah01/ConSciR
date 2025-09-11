@@ -2,7 +2,7 @@
 % Please edit documentation in R/run_ConSciR_app.R
 \name{run_ConSciR_app}
 \alias{run_ConSciR_app}
-\title{Run ConSciR Shiny Application}
+\title{Run ConSciR Shiny Application (TRH, Psychrometric, Bivariate charts)}
 \usage{
 run_ConSciR_app()
 }
@@ -10,7 +10,7 @@ run_ConSciR_app()
 Shiny object
 }
 \description{
-Run ConSciR Shiny Application
+Run ConSciR Shiny Application (TRH, Psychrometric, Bivariate charts)
 }
 \examples{
 if(interactive()) {

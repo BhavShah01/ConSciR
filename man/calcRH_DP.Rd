@@ -34,7 +34,7 @@ The Magnus method is chosen as the default because it is more stable
 when used with the \code{\link{calcDP}} and \code{\link{calcTemp}} functions.
 }
 \examples{
-# RH at air tempertaure of 20°C and dew point of 15°C
+# Relative humidity (RH) at tempertaure of 20°C (Temp) and dew point of 15°C (DewP)
 calcRH_DP(20, 15)
 calcRH_DP(20, 15, method = "Buck")
 

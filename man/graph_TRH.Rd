@@ -4,22 +4,51 @@
 \alias{graph_TRH}
 \title{Graph temperature and humidity data}
 \usage{
-graph_TRH(mydata, Date = "Date", Temp = "Temp", RH = "RH")
+graph_TRH(
+  mydata,
+  Date = "Date",
+  Temp = "Temp",
+  RH = "RH",
+  facet_by = "Sensor",
+  LowT = 16,
+  HighT = 25,
+  LowRH = 40,
+  HighRH = 60,
+  y_func = "none",
+  ...
+)
 }
 \arguments{
-\item{mydata}{A data frame containing the date, temperature, and relative humidity data.}
+\item{mydata}{A data frame containing date (Date), temperature (Temp), and relative humidity (RH) columns.}
 
-\item{Date}{The name of the column in mydata containing date information.}
+\item{Date}{The name of the column in mydata containing date information ("Date").}
 
-\item{Temp}{The name of the column in mydata containing temperature data.}
+\item{Temp}{The name of the column in mydata containing temperature data ("Temp").}
 
-\item{RH}{The name of the column in mydata containing relative humidity data.}
+\item{RH}{The name of the column in mydata containing relative humidity data ("RH").}
+
+\item{facet_by}{Name of categorical column to facet by; defaults to "Sensor".}
+
+\item{LowT}{Numeric lower bound of temperature range (default 16).}
+
+\item{HighT}{Numeric upper bound of temperature range (default 25).}
+
+\item{LowRH}{Numeric lower bound of relative humidity range (default 40).}
+
+\item{HighRH}{Numeric upper bound of relative humidity range (default 60).}
+
+\item{y_func}{Character string specifying a function to apply to temperature
+and humidity columns (e.g. "calcAH"). Default is "none".}
+
+\item{...}{Additional arguments passed to y_func.}
 }
 \value{
-A ggplot graph of temperature and relative humidity.
+A ggplot graph of temperature and relative humidity with optional background bands.
 }
 \description{
-Use this tool to produce a simple temperature and humidity plot
+Use this tool to produce a simple temperature and humidity plot with optional
+background bands showing target temperature and relative humidity ranges.
+Optionally, add a function to graph, e.g. `calcDP`, `calcAH`, etc.
 }
 \examples{
 
@@ -27,8 +56,10 @@ Use this tool to produce a simple temperature and humidity plot
 filepath <- data_file_path("mydata.xlsx")
 mydata <- readxl::read_excel(filepath, sheet = "mydata", n_max = 1000)
 
+# Basic use with background ranges
 graph_TRH(mydata)
 
-
+# Add dew point and customise
+graph_TRH(mydata, y_func = "calcDP", LowT = 6, HighT = 28)
 
 }

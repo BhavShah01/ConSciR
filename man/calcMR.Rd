@@ -33,6 +33,7 @@ Pw = Pws(40°C) = 73.75 hPa
 X = 621.9907 x 73.75 / (998 - 73.75) = 49.63 g/kg
 }
 \examples{
+# Mixing ratio at 20°C (Temp) and 50\% relative humidity (RH)
 calcMR(20, 50)
 
 # mydata file

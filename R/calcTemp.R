@@ -47,7 +47,8 @@
 #' @importFrom stats uniroot
 #'
 #' @examples
-#' # Calculate temperature for RH 50\% and Dew Point 15°C using Magnus method
+#' # Calculate temperature (Temp) at 50% relative humidity (RH) and dew point 15°C (DewP)
+#' # Using Magnus method
 #' calcTemp(50, 15)
 #'
 #' # Using Buck method

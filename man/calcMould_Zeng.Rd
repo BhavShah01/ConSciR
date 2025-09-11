@@ -45,6 +45,7 @@ LIM values represent different mould growth rates:
 }
 }
 \examples{
+# Lowest Isoline for Mould at 20°C (Temp) and 75\% relative humidity (RH)
 calcMould_Zeng(20, 75)
 calcMould_Zeng(20, 75, LIM = 0)
 calcMould_Zeng(20, 75, label = TRUE)

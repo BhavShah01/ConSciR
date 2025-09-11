@@ -63,6 +63,7 @@
 #' @export
 #'
 #' @examples
+#' # Water vapour pressure at 20°C (Temp) and 50% relative humidity (RH)
 #' calcPw(20, 50)
 #'
 #' # Calculate relative humidity at 50%RH

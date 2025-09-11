@@ -48,6 +48,7 @@
 #' @export
 #'
 #' @examples
+#' # Mould growth index at 25°C (Temp) and 85% relative humidity (RH)
 #' calcMould_VTT(Temp = 25, RH = 85)
 #'
 #' calcMould_VTT(Temp = 18, RH = 70, M_prev = 2, sensitivity = "medium", wood = 1, surface = 1)

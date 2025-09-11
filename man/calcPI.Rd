@@ -51,6 +51,7 @@ All lifetime multipliers give similar results between 20\% and 60\% RH.
 The results at very low and high RH can be unreliable.
 }
 \examples{
+# Preservation Index at 20°C (Temp) and 50\% relative humidity (RH)
 calcPI(20, 50)
 
 

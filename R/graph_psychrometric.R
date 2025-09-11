@@ -3,7 +3,8 @@
 #' @description
 #' This function generates a psychrometric chart based on input temperature and relative humidity data.
 #'
-#' Various psychrometric functions can be used for the y-axis.
+#' @details
+#' Humidity and conservation functions can be used for the y-axis.
 #'
 #' \itemize{
 #'    \item calcHR: Humidity Ratio (g/kg)
@@ -25,14 +26,14 @@
 #' @param mydata A data frame containing temperature and relative humidity data.
 #' @param Temp Column name in mydata for temperature values.
 #' @param RH Column name in mydata for relative humidity values.
-#' @param data_col Column name to use to colour the data points. Default is "RH".
+#' @param data_col Name of column to use for colouring points. Default is "Sensor" if present, otherwise "RH".
 #' @param data_alpha Value to supply for make points more or less transparent. Default is 0.5.
 #' @param LowT Numeric value for lower temperature limit of the target range. Default is 16°C.
 #' @param HighT Numeric value for upper temperature limit of the target range. Default is 25°C.
 #' @param LowRH Numeric value for lower relative humidity limit of the target range. Default is 40\%.
 #' @param HighRH Numeric value for upper relative humidity limit of the target range. Default is 60\%.
 #' @param Temp_range Numeric vector of length 2 specifying the overall temperature range for the chart. Default is c(0, 40).
-#' @param y_func Function to calculate y-axis values. See above for options, default is calcMR (mixing ratio).
+#' @param y_func Function to calculate y-axis values. See above for options, default is mixing ratio (`calcMR`).
 #' @param ... Additional arguments passed to y_func.
 #'
 #' @return A ggplot object representing the psychrometric chart.
@@ -41,7 +42,6 @@
 #' @importFrom ggplot2 ggplot geom_line geom_text geom_segment geom_point lims labs
 #' guides aes coord_cartesian annotate
 #' @importFrom dplyr rename mutate group_by filter
-#'
 #' @export
 #'
 #' @examples
@@ -66,135 +66,117 @@
 #'
 graph_psychrometric <- function(mydata,
                                 Temp = "Temp", RH = "RH",
-                                data_col = "RH",
+                                data_col = NULL,
                                 data_alpha = 0.5,
                                 LowT = 16, HighT = 25,
                                 LowRH = 40, HighRH = 60,
                                 Temp_range = c(0, 40),
-                                y_func = calcMR,
-                                 ...) {
-
-  # Check if required packages are installed
+                                y_func = "calcMR",
+                                ...) {
   if (!requireNamespace("ggplot2", quietly = TRUE) || !requireNamespace("dplyr", quietly = TRUE)) {
     stop("Packages 'ggplot2' and 'dplyr' are required to produce graph.
          Run `install.packages(c('ggplot2', 'dplyr'))` ")
   }
 
-  # Convert y_func to a function if it's a string
-  if (is.character(y_func)) {
-    y_func = match.fun(y_func)
+  # Default colour column
+  if (is.null(data_col)) {
+    if ("Sensor" %in% names(mydata)) {
+      data_col <- "Sensor"
+    } else {
+      data_col <- "RH"
+    }
   }
-  y_func_name = deparse(substitute(y_func)) # function name as string
 
-  # Column names are converted to symbols from the data
-  Temp = rlang::ensym(Temp)
-  RH = rlang::ensym(RH)
-  data_col = rlang::ensym(data_col)
+  # Convert y_func string to function
+  if (is.character(y_func)) {
+    y_func_name <- y_func
+    y_func <- match.fun(y_func)
+  } else {
+    # For safety if user passes function directly
+    y_func_name <- deparse(substitute(y_func))
+  }
 
-  # Calculate the variable for the y-axis
-  mydata = mydata |>
+  # Convert column names to symbols
+  Temp <- rlang::ensym(Temp)
+  RH <- rlang::ensym(RH)
+  data_col <- rlang::ensym(data_col)
+
+  # Calculate y axis values with selected function
+  mydata <- mydata |>
     dplyr::filter(!is.na(!!Temp) & !is.na(!!RH)) |>
     dplyr::mutate(y_Axis = y_func(!!Temp, !!RH, ...))
 
+  # Background grid and labels
+  ref_Temp <- seq(Temp_range[1], Temp_range[2], by = 1)
+  ref_RH <- seq(0, 100, by = 10)
 
-  # Create background grid 10-100RH with 10RH resolution
-  ref_Temp = seq(from = Temp_range[1], to = Temp_range[2], by = 1)
-  ref_RH = seq(from = 0, to = 100, by = 10)
-
-  background_df =
-    expand.grid(ref_Temp, ref_RH) |>
+  background_df <- expand.grid(ref_Temp, ref_RH) |>
     dplyr::rename("ref_Temp" = "Var1", "ref_RH" = "Var2") |>
     dplyr::mutate(y_Axis = y_func(ref_Temp, ref_RH, ...))
 
-  # Background labels
-  background_labels =
-    background_df |>
+  background_labels <- background_df |>
     dplyr::group_by(ref_RH) |>
-    dplyr::filter(ref_Temp == stats::quantile(ref_Temp, 0.10)) # label lines near start of Temp
+    dplyr::filter(ref_Temp == stats::quantile(ref_Temp, 0.10))
 
-  # Create a data frame for the envelope
-  envelope_df =
-    data.frame(Temp = seq(from = LowT, to = HighT, by = 1)) |>
+  envelope_df <- data.frame(Temp = seq(LowT, HighT, by = 1)) |>
     dplyr::mutate(
       y_Low = y_func(Temp, LowRH, ...),
       y_High = y_func(Temp, HighRH, ...)
     )
 
+  # Y limits for plot
+  y_limit_left_low <- y_func(LowT, LowRH, ...)
+  y_limit_left_high <- y_func(LowT, HighRH, ...)
+  y_limit_right_low <- y_func(HighT, LowRH, ...)
+  y_limit_right_high <- y_func(HighT, HighRH, ...)
+  y_limit_low <- y_func(Temp_range[1], 10, ...)
+  y_limit_high <- y_func(Temp_range[2], 50, ...)
 
-  # Calculate the bounds of the TRH envelope and the y-axis
-  y_limit_left_low = y_func(LowT, LowRH, ...)
-  y_limit_left_high = y_func(LowT, HighRH, ...)
-  y_limit_right_low = y_func(HighT, LowRH, ...)
-  y_limit_right_high = y_func(HighT, HighRH, ...)
-  y_limit_low = y_func(Temp_range[1], 10, ...)
-  y_limit_high = y_func(Temp_range[2], 50, ...) # Places 50\%RH line at top right corner
+  limit_description <- paste0("Envelope: ", LowT, "-", HighT, "C and ", LowRH, "-", HighRH, "%RH")
 
-  # Description of the envelope (for caption)
-  limit_description =
-    paste0("Envelope: ", LowT, " to ", HighT, "C and ", LowRH, " to ", HighRH, "%RH")
+  y_axis_label <- switch(
+    y_func_name,
+    "calcHR" = "Humidity Ratio (g/kg)",
+    "calcMR" = "Mixing Ratio (g/kg)",
+    "calcAH" = "Absolute Humidity (g/m^3)",
+    "calcSH" = "Specific Humidity (g/kg)",
+    "calcAD" = "Air Density (kg/m^3)",
+    "calcDP" = "Dew Point (C)",
+    "calcFP" = "Frost Point (C)",
+    "calcEnthalpy" = "Enthalpy (kJ/kg)",
+    "calcPws" = "Saturation vapor pressure (hPa)",
+    "calcPw" = "Water Vapour Pressure (hPa)",
+    "calcPI" = "Preservation Index",
+    "calcLM" = "Lifetime",
+    "calcEMC_wood" = "Equilibrium Moisture Content (wood)",
+    NULL
+  )
 
-  # y-axis label
-  y_axis_label =
-    switch(y_func_name,
-           "calcHR" = "Humidity Ratio (g/kg)",
-           "calcMR" = "Mixing Ratio (g/kg)",
-           "calcAH" = "Absolute Humidity (g/m^3)",
-           "calcSH" = "Specific Humidity (g/kg)",
-           "calcAD" = "Air Density (kg/m^3)",
-           "calcDP" = "Dew Point (C)",
-           "calcFP" = "Frost Point (C)",
-           "calcEnthalpy" = "Enthalpy (kJ/kg)",
-           "calcPws" = "Saturation vapor pressure (hPa)",
-           "calcPw" = "Water Vapour Pressure (hPa)",
-           "calcPI" = "Preservation Index",
-           "calcLM" = "Lifetime",
-           "calcEMC_wood" = "Equilibrium Moisture Content (wood)",
-           NULL)
-
-  # Create the plot
   p <-
     ggplot2::ggplot(mydata) +
-
-    # Add reference lines
+    ggplot2::geom_point(aes(x = !!Temp, y = y_Axis, col = !!data_col),
+                        alpha = data_alpha) +
     ggplot2::geom_line(aes(x = ref_Temp, y = y_Axis, group = ref_RH, alpha = ref_RH),
                        col = 'grey', data = background_df) +
-
-    # Label reference lines
-    ggplot2::geom_text(aes(x = ref_Temp, y = y_Axis, label = ref_RH), vjust = -0.5,
-                       check_overlap = TRUE, size = 2, data = background_labels) +
-
-    # Temperature left bounds of envelope
+    ggplot2::geom_text(aes(x = ref_Temp, y = y_Axis, label = ref_RH),
+                       vjust = -0.5, check_overlap = TRUE, size = 2,
+                       data = background_labels) +
     ggplot2::annotate("segment",
                       x = LowT, xend = LowT,
                       y = y_limit_left_low, yend = y_limit_left_high,
-                      alpha = 0.5, col = "red", size = 1) +
-
-    # Temperature right bounds of envelope
+                      alpha = 0.7, col = "darkred", size = 0.8) +
     ggplot2::annotate("segment",
                       x = HighT, xend = HighT,
                       y = y_limit_right_low, yend = y_limit_right_high,
-                      alpha = 0.5, col = "red", size = 1) +
-
-    # Humidity lower bounds of envelope
+                      alpha = 0.7, col = "darkred", size = 0.8) +
     ggplot2::geom_line(aes(x = Temp, y = y_Low),
-                       col = 'blue', alpha = 0.5, size = 1, data = envelope_df) +
-    # Humidity upper bounds of envelope
+                       col = "darkblue", alpha = 0.7, size = 0.8, data = envelope_df) +
     ggplot2::geom_line(aes(x = Temp, y = y_High),
-                       col = 'blue', alpha = 0.5, size = 1, data = envelope_df) +
-
-    # Overlay your TRH data
-    ggplot2::geom_point(aes(x = !!Temp, y = y_Axis, col = !!data_col),
-                        alpha = data_alpha) +
-
-    # Add limits to x and y axis
+                       col = "darkblue", alpha = 0.7, size = 0.8, data = envelope_df) +
     ggplot2::coord_cartesian(xlim = c(Temp_range[1], Temp_range[2]),
                              ylim = c(y_limit_low, y_limit_high)) +
-
-    # Add labels to the chart
     ggplot2::labs(x = "Temperature (C)", y = y_axis_label, caption = limit_description) +
-
-    # Turn off the legend
-    guides(alpha = "none")  # col = "none")
+    ggplot2::guides(alpha = "none")
 
   return(p)
 }

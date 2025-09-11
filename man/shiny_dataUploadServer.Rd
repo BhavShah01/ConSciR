@@ -23,7 +23,7 @@ A reactive expression containing the tidied data frame with the following column
 }
 \description{
 This function creates a Shiny module server for uploading CSV or Excel files,
-processing the data, and returning a tidied dataset.
+processing the data, optional hourly averaging and returning a tidied dataset.
 }
 \examples{
 if(interactive()) {

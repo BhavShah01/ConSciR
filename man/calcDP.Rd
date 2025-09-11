@@ -41,6 +41,7 @@ is more stable when used with the \code{\link{calcTemp}} and \code{\link{calcRH_
 More details of the equations are also available in the source R code.
 }
 \examples{
+# Dew point at 20°C and 50\% relative humidity (RH)
 # Default Magnus method
 calcDP(20, 50)
 

@@ -9,8 +9,6 @@ reference:
   contents:
   - run_ConSciR_app
   - run_Mould_app
-  - run_Psychrometric_app
-  - run_TRHbivariate_app
   - run_SilicaGel_app
   - run_TidyData_app
 - title: Tools for the analysis of conservation data
@@ -18,6 +16,7 @@ reference:
   contents:
   - graph_TRH
   - graph_psychrometric
+  - graph_TRHbivariate
   - add_conservation_calcs
   - add_humidity_calcs
   - add_humidity_adjustments

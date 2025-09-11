@@ -8,14 +8,14 @@ graph_psychrometric(
   mydata,
   Temp = "Temp",
   RH = "RH",
-  data_col = "RH",
+  data_col = NULL,
   data_alpha = 0.5,
   LowT = 16,
   HighT = 25,
   LowRH = 40,
   HighRH = 60,
   Temp_range = c(0, 40),
-  y_func = calcMR,
+  y_func = "calcMR",
   ...
 )
 }
@@ -26,7 +26,7 @@ graph_psychrometric(
 
 \item{RH}{Column name in mydata for relative humidity values.}
 
-\item{data_col}{Column name to use to colour the data points. Default is "RH".}
+\item{data_col}{Name of column to use for colouring points. Default is "Sensor" if present, otherwise "RH".}
 
 \item{data_alpha}{Value to supply for make points more or less transparent. Default is 0.5.}
 
@@ -40,7 +40,7 @@ graph_psychrometric(
 
 \item{Temp_range}{Numeric vector of length 2 specifying the overall temperature range for the chart. Default is c(0, 40).}
 
-\item{y_func}{Function to calculate y-axis values. See above for options, default is calcMR (mixing ratio).}
+\item{y_func}{Function to calculate y-axis values. See above for options, default is mixing ratio (`calcMR`).}
 
 \item{...}{Additional arguments passed to y_func.}
 }
@@ -49,8 +49,9 @@ A ggplot object representing the psychrometric chart.
 }
 \description{
 This function generates a psychrometric chart based on input temperature and relative humidity data.
-
-Various psychrometric functions can be used for the y-axis.
+}
+\details{
+Humidity and conservation functions can be used for the y-axis.
 
 \itemize{
    \item calcHR: Humidity Ratio (g/kg)

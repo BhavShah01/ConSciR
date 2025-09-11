@@ -16,6 +16,7 @@ TempC Temperature (Celsius)
 Convert temperature in Fahrenheit to temperature in Celsius
 }
 \examples{
+# Fahrenheit from Celsius
 calcFtoC(32)
 calcFtoC(68)
 

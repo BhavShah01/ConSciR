@@ -47,6 +47,7 @@ See Wikipedia for a discussion of the accuarcy of each approach:
 https://en.wikipedia.org/wiki/Vapour_pressure_of_water
 }
 \examples{
+# Water vapour pressure at 20°C (Temp) and 50\% relative humidity (RH)
 calcPw(20, 50)
 
 # Calculate relative humidity at 50\%RH

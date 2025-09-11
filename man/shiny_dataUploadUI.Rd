@@ -2,7 +2,7 @@
 % Please edit documentation in R/shiny_DataUploadUI.R
 \name{shiny_dataUploadUI}
 \alias{shiny_dataUploadUI}
-\title{UI Module for Data Upload in Shiny}
+\title{UI Module for Data Upload in Shiny with Averaging Option}
 \usage{
 shiny_dataUploadUI(id)
 }
@@ -10,13 +10,12 @@ shiny_dataUploadUI(id)
 \item{id}{A character string that defines the namespace for the module's UI elements.}
 }
 \value{
-A `tagList` containing a `uiOutput` for file upload. The specific elements
-  of this output (such as file input and upload button) are defined in the
-  corresponding server function.
+A `tagList` containing UI elements for file upload and averaging option.
 }
 \description{
-This function creates a Shiny UI module for uploading data files. It provides
-a file input interface that can be integrated into a larger Shiny application.
+This function creates a Shiny UI module for uploading data files and optionally
+selecting hourly averaging. It provides a file input interface and averaging
+selection that can be integrated into a larger Shiny application.
 }
 \examples{
 if(interactive()) {
@@ -31,6 +30,5 @@ server <- function(input, output, session) {
 }
 
 }
-
 
 }

@@ -61,6 +61,7 @@
 #' @export
 #'
 #' @examples
+#' # Saturation vapour pressure at 20°C
 #' calcPws(20)
 #' calcPws(20, method = "Buck")
 #' calcPws(20, method = "IAPWS")

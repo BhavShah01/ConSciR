@@ -47,6 +47,7 @@ can be used for the water vapour saturation pressure over water (and over ice):
 Pws = 6.116441 x 10^( (7.591386 x Temp) / (Temp + 240.7263) )
 }
 \examples{
+# Saturation vapour pressure at 20°C
 calcPws(20)
 calcPws(20, method = "Buck")
 calcPws(20, method = "IAPWS")

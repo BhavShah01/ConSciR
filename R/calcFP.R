@@ -24,6 +24,7 @@
 #' @export
 #'
 #' @examples
+#' # Frost point at 20°C (Temp) and 50% relative humidity (RH)
 #' calcFP(20, 50)
 #' calcFP(0, 50)
 #'

@@ -27,8 +27,7 @@ heritage conservation.
 The package is also designed to be:  
 - **FAIR**: Findable, Accessible, Interoperable, and Reusable  
 - **Collaborative**: enabling contributions, feature requests, bug
-reports, and  
-additions from the wider community
+reports, and additions from the wider community
 
 If using R for the first time, read an article here: [Using R for the
 first
@@ -45,22 +44,28 @@ time](https://bhavshah01.github.io/ConSciR/articles/ConSciR-FirstTimeR.html)
 - Interactive Shiny applications enabling dynamic data exploration and
   visualisation.
 
-## Installation
+## Install and load
 
-You can install the development version of ConSciR from
-[GitHub](https://github.com/BhavShah01/ConSciR) with:
+``` r
+install.packages("ConSciR")
+library(ConSciR)
+```
+
+You can install the development version of the package from GitHub using
+the `pak` package:
 
 ``` r
 install.packages("pak")
 pak::pak("BhavShah01/ConSciR")
-```
 
--or-
-
-``` r
+# Alternatively
 # install.packages("devtools")
-devtools::install_github("BhavShah01/ConSciR")
+# devtools::install_github("BhavShah01/ConSciR")
 ```
+
+For full details on all functions, see the package
+[Reference](https://bhavshah01.github.io/ConSciR/reference/index.html)
+manual.
 
 ## Examples
 
@@ -106,9 +111,11 @@ head(mydata)
 
 - **Perform calculations on the data**  
   Use ConSciR functions to add environmental metrics such as dew point
-  (**`calcDP`**), absolute humidity (**`calcAH`**), lifetime multiplier
-  (**`calcLM`**), and preservation index (**`calcPI`**) to the dataset.
-  More functions are available; see the package Reference for details.
+  (`calcDP`), absolute humidity (`calcAH`), lifetime multiplier
+  (`calcLM`), and preservation index (`calcPI`) to the dataset. More
+  functions are available; see the package
+  [Reference](https://bhavshah01.github.io/ConSciR/reference/index.html)
+  for details.
 
 ``` r
 # Peform calculations
@@ -138,7 +145,7 @@ head(mydata) |>
 mydata |>
   mutate(DewPoint = calcDP(Temp, RH)) |>
   graph_TRH() + 
-  geom_line(aes(Date, DewPoint), col = "cyan4") + # add dew point
+  geom_line(aes(Date, DewPoint), col = "cyan3") + # add dew point
   labs(title = "Room 1") +
   theme_bw()
 ```
@@ -146,8 +153,8 @@ mydata |>
 <img src="man/figures/README-graphTRH_DewPoint-1.png" alt="graphTRH" width="100%" />
 
 - **Conservator tools: mould growth estimation**  
-  Calculate mould growth risk using **`calcMould_Zeng()`** and visualise
-  it alongside humidity data.
+  Calculate mould growth risk using **`calcMould_Zeng()`** function and
+  visualise it alongside humidity data.
 
 ``` r
 mydata |>
@@ -163,24 +170,14 @@ mydata |>
 
 <img src="man/figures/README-mould_risk-1.png" alt="mould" width="100%" />
 
-- **Humidity functions: generate a psychrometric chart**  
-  Visualise the dataset using a psychrometric chart with the function
-  `graph_psychrometric()`. The first example shows a basic plot, while
-  the second demonstrates how to customise parameters such as data
-  transparency, temperature and humidity ranges, and the y-axis
-  function. See the full documentation with `?graph_psychrometric`.
+- **Graphs: generate a psychrometric chart**  
+  Visualise the data using a psychrometric chart with the function
+  `graph_psychrometric()`. The example shows how a basic plot can be
+  customised; data transparency, temperature and humidity ranges, and
+  the y-axis function. See the full documentation with
+  `graph_psychrometric`.
 
 ``` r
-
-# Basic
-mydata |>
-  graph_psychrometric() 
-```
-
-<img src="man/figures/README-psychart-1.png" alt="psych_chart" width="100%" />
-
-``` r
-
 # Customise 
 mydata |>
   graph_psychrometric(
@@ -194,4 +191,4 @@ mydata |>
   theme_classic()
 ```
 
-<img src="man/figures/README-psychart-2.png" alt="psych_chart" width="100%" />
+<img src="man/figures/README-psychart-1.png" alt="psych_chart" width="100%" />

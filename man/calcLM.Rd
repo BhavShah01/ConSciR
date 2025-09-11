@@ -44,6 +44,7 @@ about the period over the year when the object suffers most.
 The data is based on experiments on paper, synthetic films and dyes.
 }
 \examples{
+# Lifetime multiplier at 20°C (Temp) and 50\% relative humidity (RH)
 calcLM(20, 50)
 
 calcLM(20, 50, EA = 70)
