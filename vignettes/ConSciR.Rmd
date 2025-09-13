@@ -16,15 +16,13 @@ knitr::opts_chunk$set(
 )
 ```
 
-
 <!-- badges: start -->
 
 <!-- badges: end -->
 
-
 ## Introduction
 
-`ConSciR` is an R package that provides data science tools for conservation science. It is designed to support conservators, scientists, and engineers by streamlining common calculations and tasks encountered in heritage conservation workflows.
+`ConSciR` provides data science tools for conservation science, including methods for environmental analysis, humidity calculations, sustainability metrics, conservation calculations, and data visualisation. It is designed to support conservators, scientists, and engineers by streamlining common calculations and tasks encountered in heritage conservation workflows. The package was motivated by the developing tools and frameworks outlined in Cosaert and Beltran et al. (2022) ["Tools for the Analysis of Collection Environments"](https://www.getty.edu/conservation/publications_resources/pdf_publications/tools_for_the_analysis_of_collection_environments.html "Getty Tools publication").
 
 ## Install and load
 
@@ -44,7 +42,6 @@ pak::pak("BhavShah01/ConSciR")
 # devtools::install_github("BhavShah01/ConSciR")
 ```
 
-
 Visit the package GitHub page for updates and source code: [ConSciR Github](https://github.com/BhavShah01/ConSciR)
 
 This vignette provides a practical introduction to the package’s functionalities. For full details on all functions, see the package [Reference](https://bhavshah01.github.io/ConSciR/reference/index.html) manual or use `?function_name` within R.
@@ -60,7 +57,7 @@ library(dplyr)
 library(ggplot2)
 ```
 
-### Add calculated values 
+### Add calculated values
 
 Enrich your dataset with environmental metrics computed by ConSciR functions:
 
@@ -107,8 +104,7 @@ head(mydata) |>
 
 ```
 
-
-### Visualise and explore data 
+### Visualise and explore data
 
 Combine calculations and plotting to explore patterns visually:
 
@@ -131,7 +127,6 @@ mydata |>
 
 ```
 
-
 -   **Conservator tools: mould growth index**\
     Calculate mould growth index using **`calcMould_VTT()`** and visualise it alongside humidity data.
 
@@ -144,12 +139,9 @@ mydata |>
   theme_bw()
 ```
 
+### Psychrometric Chart
 
-
-### Psychrometric Chart 
-
-Create psychrometric charts from temperature and humidity data. The functions from the 
-package can be used to change the calculations used. 
+Create psychrometric charts from temperature and humidity data. The functions from the package can be used to change the calculations used.
 
 ```{r psychrometric custom, message=FALSE, warning=FALSE, fig.alt="psychrometric_chart_custom"}
 
@@ -166,5 +158,3 @@ head(mydata, 100) |>
 ```
 
 ------------------------------------------------------------------------
-
-
