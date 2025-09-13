@@ -12,10 +12,6 @@
 <url><loc>https://bhavshah01.github.io/ConSciR/news/index.html</loc></url>
 <url><loc>https://bhavshah01.github.io/ConSciR/reference/ConSciR-package.html</loc></url>
 <url><loc>https://bhavshah01.github.io/ConSciR/reference/TRHdata.html</loc></url>
-<url><loc>https://bhavshah01.github.io/ConSciR/reference/add_conservation_calcs.html</loc></url>
-<url><loc>https://bhavshah01.github.io/ConSciR/reference/add_humidity_adjustments.html</loc></url>
-<url><loc>https://bhavshah01.github.io/ConSciR/reference/add_humidity_calcs.html</loc></url>
-<url><loc>https://bhavshah01.github.io/ConSciR/reference/add_time_vars.html</loc></url>
 <url><loc>https://bhavshah01.github.io/ConSciR/reference/calcAD.html</loc></url>
 <url><loc>https://bhavshah01.github.io/ConSciR/reference/calcAH.html</loc></url>
 <url><loc>https://bhavshah01.github.io/ConSciR/reference/calcCoolingCapacity.html</loc></url>
@@ -42,13 +38,14 @@
 <url><loc>https://bhavshah01.github.io/ConSciR/reference/calcTotalHeating.html</loc></url>
 <url><loc>https://bhavshah01.github.io/ConSciR/reference/data_file_path.html</loc></url>
 <url><loc>https://bhavshah01.github.io/ConSciR/reference/graph_TRH.html</loc></url>
-<url><loc>https://bhavshah01.github.io/ConSciR/reference/graph_TRHbivariate.html</loc></url>
 <url><loc>https://bhavshah01.github.io/ConSciR/reference/graph_psychrometric.html</loc></url>
 <url><loc>https://bhavshah01.github.io/ConSciR/reference/index.html</loc></url>
 <url><loc>https://bhavshah01.github.io/ConSciR/reference/mydata.html</loc></url>
 <url><loc>https://bhavshah01.github.io/ConSciR/reference/run_ConSciR_app.html</loc></url>
 <url><loc>https://bhavshah01.github.io/ConSciR/reference/run_Mould_app.html</loc></url>
+<url><loc>https://bhavshah01.github.io/ConSciR/reference/run_Psychrometric_app.html</loc></url>
 <url><loc>https://bhavshah01.github.io/ConSciR/reference/run_SilicaGel_app.html</loc></url>
+<url><loc>https://bhavshah01.github.io/ConSciR/reference/run_TRHbivariate_app.html</loc></url>
 <url><loc>https://bhavshah01.github.io/ConSciR/reference/run_TidyData_app.html</loc></url>
 <url><loc>https://bhavshah01.github.io/ConSciR/reference/shiny_dataUploadServer.html</loc></url>
 <url><loc>https://bhavshah01.github.io/ConSciR/reference/shiny_dataUploadUI.html</loc></url>

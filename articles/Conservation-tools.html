@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ConSciR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -75,7 +75,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Conservation tools</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/BhavShah01/ConSciR/blob/master/vignettes/articles/Conservation-tools.Rmd" class="external-link"><code>vignettes/articles/Conservation-tools.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/BhavShah01/ConSciR/blob/v0.2.0/vignettes/articles/Conservation-tools.Rmd" class="external-link"><code>vignettes/articles/Conservation-tools.Rmd</code></a></small>
       <div class="d-none name"><code>Conservation-tools.Rmd</code></div>
     </div>
 
@@ -224,7 +224,6 @@ Building Services Engineering Research and Technology. 2023;44(1):63-79.
 <code class="sourceCode R"><span></span>
 <span><span class="va">TRHgrid</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Mould_LIM <span class="op">=</span> <span class="fu"><a href="../reference/calcMould_Zeng.html">calcMould_Zeng</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Mould_LIM</span> <span class="op">&lt;</span> <span class="fl">100</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span>, z <span class="op">=</span> <span class="va">Mould_LIM</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_contour.html" class="external-link">geom_contour_filled</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">15</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Temperature (°C)"</span>, y <span class="op">=</span> <span class="st">"Humidity (%)"</span>,</span>
@@ -442,7 +441,7 @@ Maintaining appropriate EMC levels prevents issues such as mold growth,
 warping, cracking, or dimensional changes in organic materials like
 wood, textiles, and paper.</p>
 <ul>
-<li>Wood: A safe EMC range for wood is typically between 6% and 20%.
+<li>Wood: The safe EMC range for wood is typically between 6% and 20%.
 This range helps to prevent issues such as warping, cracking, and mold
 growth, which can occur if the moisture content falls below or exceeds
 these levels.</li>
@@ -472,10 +471,7 @@ polymers.” Journal of the Society of Chemical Industry, 65(12),
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>EMC <span class="op">=</span> <span class="fu"><a href="../reference/calcEMC_wood.html">calcEMC_wood</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">EMC</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"hotpink"</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">20</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"mediumvioletred"</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Equilibrium Moisture Content (EMC)"</span>, </span>
-<span>       subtitle <span class="op">=</span> <span class="st">"6-20% lines - 'safe' EMC range"</span>,</span>
-<span>       x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="st">"EMC"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Equilibrium Moisture Content (EMC)"</span>, x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="st">"EMC"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Conservation-tools_files/figure-html/unnamed-chunk-8-2.png" width="700"></p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
@@ -484,9 +480,9 @@ polymers.” Journal of the Society of Chemical Industry, 65(12),
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>EMC <span class="op">=</span> <span class="fu"><a href="../reference/calcEMC_wood.html">calcEMC_wood</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html" class="external-link">geom_density</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">EMC</span><span class="op">)</span>, fill <span class="op">=</span> <span class="st">"hotpink"</span>, alpha <span class="op">=</span> <span class="fl">0.4</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_vline</a></span><span class="op">(</span>xintercept <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">20</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"mediumvioletred"</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_vline</a></span><span class="op">(</span>xintercept <span class="op">=</span> <span class="fu"><a href="../reference/calcEMC_wood.html">calcEMC_wood</a></span><span class="op">(</span><span class="fl">20</span>, <span class="fl">50</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"mediumvioletred"</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Equilibrium Moisture Content"</span>, x <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>       subtitle <span class="op">=</span> <span class="st">"6-20% lines - 'safe' EMC range"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>       subtitle <span class="op">=</span> <span class="st">"20C and 50%RH reference line"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Conservation-tools_files/figure-html/unnamed-chunk-8-3.png" width="700"></p>
 </div>
