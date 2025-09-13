@@ -24,7 +24,7 @@ server <- function(input, output) {
     req(mydata())
     mydata() |>
       graph_TRH(y_func = input$func_name) +
-      theme_bw(base_size = 14)
+      theme_minimal(base_size = 14)
   })
 
   output$gg_Psy <- renderPlot({

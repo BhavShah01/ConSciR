@@ -73,6 +73,8 @@ mydata <- mydata |> filter(Sensor == "Room 1")
 # Add calculated values using mutate
 head(mydata) |> 
   mutate(
+    
+    # Humidity functions
     Absolute_Humidity = calcAH(Temp, RH), 
     Dew_Point = calcDP(Temp, RH), 
     Mixing_Ratio = calcMR(Temp, RH), 
@@ -83,9 +85,25 @@ head(mydata) |>
     Air_Density = calcAD(Temp, RH),
     Temp_calc = calcTemp(RH, Dew_Point),
     RH_AH_calc = calcRH_AH(Temp, Absolute_Humidity),
-    RH_DP_calc = calcRH_DP(Temp, Dew_Point)
+    RH_DP_calc = calcRH_DP(Temp, Dew_Point),
+    
+    # Conservation functions
+    Mould_Growth = calcMould_Zeng(Temp, RH, label = TRUE),
+    Mould_Growth_Limit = calcMould_Zeng(Temp, RH), 
+    Mould_Growth_Index = calcMould_VTT(Temp, RH), 
+    Lifetime = calcLM(Temp, RH), 
+    Preservation_Index = calcPI(Temp, RH), 
+    EMC_Wood = calcEMC_wood(Temp, RH)
+    
   ) |>
   glimpse()
+
+
+head(mydata) |> 
+  add_time_vars() |> 
+  add_humidity_calcs() |> 
+  add_conservation_calcs() |> 
+  add_humidity_adjustments()
 
 ```
 
@@ -105,11 +123,11 @@ mydata |>
   # Create base plot using graph_TRH function
   graph_TRH() +
   # Add Absolute Humidity line
-  geom_line(aes(Date, AbsHum), color = "green") +
+  geom_line(aes(Date, AbsHum), color = "cyan4", alpha = 0.7) +
   # Add Dew Point line
-  geom_line(aes(Date, DewPoint), color = "purple") +
+  geom_line(aes(Date, DewPoint), color = "mediumvioletred", alpha = 0.7) +
   # Apply a theme
-  theme_bw()
+  theme_minimal()
 
 ```
 
@@ -122,9 +140,8 @@ mydata |>
   mutate(Mould = calcMould_VTT(Temp, RH)) |>
   ggplot() +
   geom_area(aes(Date, Mould), fill = "darkgreen", alpha = 0.5) +
-  labs(title = "Mould Growth Index", 
-       y = "Mould Index") + 
-  theme_classic()
+  labs(title = "Mould Growth Index", y = "Mould Index", x = NULL) + 
+  theme_bw()
 ```
 
 
@@ -138,10 +155,10 @@ package can be used to change the calculations used.
 
 head(mydata, 100) |>
   graph_psychrometric(
-    LowT = 10, 
+    LowT = 12, 
     HighT = 28,
-    LowRH = 20, 
-    HighRH = 80,
+    LowRH = 40, 
+    HighRH = 70,
     data_alpha = 0.3,
     y_func = calcAH
   ) + 
