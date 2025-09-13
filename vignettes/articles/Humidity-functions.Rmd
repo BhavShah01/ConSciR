@@ -115,7 +115,7 @@ head(mydata) |>
 
 **Principles of Humidity Adjustment**
 
-```{r eval=FALSE, include=FALSE}
+```{r echo=FALSE}
 library(Ternary)
 TernaryPlot(
   atip = "",
@@ -165,7 +165,6 @@ TernaryPlot(
   ticks.col = "#FFC0CB"
 )
 ```
-
 
 The following principles guide relative humidity adjustments under the assumption of constant atmospheric pressure:
 
@@ -392,10 +391,9 @@ mydata |>
   theme_bw()
 ```
 
+**Accuracy**
 
-**Accuracy** 
-
-The `calcPws` function is tested against The International Association for the Properties of Water and Steam (IAPWS) R package `IAPWS95`. 
+The `calcPws` function is tested against The International Association for the Properties of Water and Steam (IAPWS) R package `IAPWS95`.
 
 ```{r}
 # Load IAPWS95 package for standard water/steam property functions
@@ -427,8 +425,6 @@ Temp_data |>
        x = "Saturation Vapor Pressure (hPa)", y = "Density") + 
   theme_classic()
 ```
-
-
 
 ### Water Vapour Pressure
 
@@ -465,12 +461,11 @@ TRHgrid |>
 -   `calcTemp`
 
 The temperature calculation function, `calcTemp`, uses measurements of dew point and relative humidity to estimate the air temperature.
-This is useful to check how accurately temperature can be derived from humidity-related data. Dew point is calculated using `calcDP`.
+This is useful to check how accurately temperature can be derived from humidity-related data.
+Dew point is calculated using `calcDP`.
 
 The dew point is the temperature at which air becomes saturated and water vapour starts to condense.
 Using dew point and relative humidity together provides a way to calculate temperature indirectly.
-
-
 
 ```{r}
 
@@ -600,7 +595,8 @@ It basically tells us how much moisture is in the air.
 -   The closer the dew point is to the actual air temperature, the higher the relative humidity and the muggier or damper the air feels.
 -   Dew point stays the same even if the air temperature changes, making it a reliable indicator of moisture content.
 
-The function `calcDP` calculates the dew point temperature from measured air temperature and relative humidity. It offers two calculation methods:
+The function `calcDP` calculates the dew point temperature from measured air temperature and relative humidity.
+It offers two calculation methods:
 
 -   Magnus (default): August-Roche-Magnus approximation, suitable for temperatures 0°C to 60°C and humidity 1% to 100%.
 -   Buck: Arden Buck equation with Bögel modification, often providing greater accuracy, especially at low temperatures (down to -30°C).
@@ -630,6 +626,8 @@ It is relevant when air temperature and dew point fall below freezing, indicatin
 Frost point helps in understanding moisture behavior in cold environments, which is crucial for conservation, meteorology, and climate control.
 
 The calcFP function computes frost point temperature from measured air temperature and relative humidity, extending dew point calculations below 0°C by considering vapour pressure over ice.
+
+Note: The frost point function (`calcFP`) is currently under development and shows less stability in results, warranting caution in its use.
 
 ```{r}
 
@@ -801,3 +799,98 @@ TRHgrid |>
        fill = "log(kJ/kg)") + 
   theme_bw()
 ```
+
+### Accuracy checks
+
+Accuracy of the functions in ConSciR are performed by comparison against the VAISALA online humidity calculator (<https://humiditycalculator.vaisala.com/>),
+
+Density plots of each variable show the distributions of the ConSciR computed values alongside the VAISALA reference values. These plots highlight areas of agreement as well as any systematic deviations.
+
+The frost point function (`calcFP`) is currently under development and shows less stability in results, warranting caution in its use.
+
+
+```{r}
+vaisala_filepath <- data_file_path("mydata.xlsx")
+vaisala_data <- readxl::read_excel(vaisala_filepath, sheet = "VAISALA", skip = 1)
+
+vaisala <- 
+  vaisala_data |>
+  mutate(
+    calcPws = calcPws(Temp, RH),
+    calcPw = calcPw(Temp, RH),                
+    calcAH = calcAH(Temp, RH), 
+    calcDP = calcDP(Temp, RH), 
+    calcFP = calcFP(Temp, RH), 
+    calcMR = calcMR(Temp, RH), 
+    calcAD = calcAD(Temp, RH),
+    calcEnthalpy = calcEnthalpy(Temp, RH)
+  )
+
+vaisala |>
+  ggplot() +
+  geom_density(aes(Pws), color = "darkblue") +
+  geom_density(aes(calcPws), alpha = 0.5, color = "skyblue") +
+  labs(title = "calcPws", x = "Saturation vapor pressure (hPa)", y = "Density",
+       subtitle = "Difference between ConSciR calculated values and Vaisala Humidity Calculator") +
+  theme_bw()
+
+vaisala |>
+  ggplot() +
+  geom_density(aes(Pw), color = "darkblue") +
+  geom_density(aes(calcPw), alpha = 0.5, color = "skyblue") +
+  labs(title = "calcPw", x = "Water Vapour Pressure (hPa)", y = "Density",
+       subtitle = "Difference between ConSciR calculated values and Vaisala Humidity Calculator") +
+  theme_bw()
+
+vaisala |>
+  ggplot() +
+  geom_density(aes(AH), color = "darkblue") +
+  geom_density(aes(calcAH), alpha = 0.5, color = "skyblue") +
+  labs(title = "calcAH", x = "Absolute Humidity (g/m^3)", y = "Density",
+       subtitle = "Difference between ConSciR calculated values and Vaisala Humidity Calculator") +
+  theme_bw()
+
+vaisala |>
+  ggplot() +
+  geom_density(aes(DP), color = "darkblue") +
+  geom_density(aes(calcDP), alpha = 0.5, color = "skyblue") +
+  labs(title = "calcDP", x = "Dew Point (°C)", y = "Density",
+       subtitle = "Difference between ConSciR calculated values and Vaisala Humidity Calculator") +
+  theme_bw()
+
+vaisala |>
+  ggplot() +
+  geom_density(aes(FP), color = "darkblue") +
+  geom_density(aes(calcFP), color = "red") +
+  labs(title = "calcFP - Function is unstable and under development", 
+       x = "Frost Point (°C)", y = "Density",
+       subtitle = "Difference between ConSciR calculated values and Vaisala Humidity Calculator") +
+  theme_bw()
+
+vaisala |>
+  ggplot() +
+  geom_density(aes(MR), color = "darkblue") +
+  geom_density(aes(calcMR), alpha = 0.5, color = "skyblue") +
+  labs(title = "calcMR", x = "Mixing Ratio (g/kg)", y = "Density",
+       subtitle = "Difference between ConSciR calculated values and Vaisala Humidity Calculator") +
+  theme_bw()
+
+vaisala |>
+  ggplot() +
+  geom_density(aes(AD), color = "darkblue") +
+  geom_density(aes(calcAD), alpha = 0.5, color = "skyblue") +
+  labs(title = "calcAD", x = "Air Density (kg/m^3)", y = "Density",
+       subtitle = "Difference between ConSciR calculated values and Vaisala Humidity Calculator") +
+  theme_bw()
+
+vaisala |>
+  ggplot() +
+  geom_density(aes(Enthalpy), color = "darkblue") +
+  geom_density(aes(calcEnthalpy), alpha = 0.5, color = "skyblue") +
+  labs(title = "calcEnthalpy", x = "Enthalpy (kJ/kg)", y = "Density",
+       subtitle = "Difference between ConSciR calculated values and Vaisala Humidity Calculator") +
+  theme_bw()
+```
+
+
+
