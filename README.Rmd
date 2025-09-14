@@ -95,17 +95,28 @@ head(mydata)
 ```
 
 -   **Perform calculations on the data**\
-    Use ConSciR functions to add environmental metrics such as dew point (`calcDP`), absolute humidity (`calcAH`), lifetime multiplier (`calcLM`), and preservation index (`calcPI`) to the dataset. More functions are available; see the package [Reference](https://bhavshah01.github.io/ConSciR/reference/index.html) for details.
+    Use ConSciR functions to add metrics such as dew point, absolute humidity, mould, preservation index and others to the dataset. More functions are available; see the package [Reference](https://bhavshah01.github.io/ConSciR/reference/index.html) for details.
 
 ```{r add_calcs, message=FALSE, warning=FALSE}
 # Peform calculations
 head(mydata) |>
   mutate(
+    # Dew point
     DewP = calcDP(Temp, RH), 
+    
+    # Absolute humidity
     Abs = calcAH(Temp, RH), 
-    LifeTime = calcLM(Temp, RH, EA = 100), 
-    PI = calcPI(Temp, RH)
-    )
+    
+    # Mould risk 
+    Mould = ifelse(RH > calcMould_Zeng(Temp, RH), "Mould risk", "No mould"), 
+    
+    # Preservation Index, years to deterioration 
+    PI = calcPI(Temp, RH), 
+    
+    # Scenario: Humidity if the temperature was 2°C higher
+    RH_if_2C_higher = calcRH_AH(Temp + 2, Abs) 
+    ) |>
+  glimpse()
 ```
 
 -   **Combine analysis with visualisation**\
@@ -115,8 +126,7 @@ head(mydata) |>
 mydata |>
   mutate(DewPoint = calcDP(Temp, RH)) |>
   graph_TRH() + 
-  geom_line(aes(Date, DewPoint), col = "cyan3") + # add dew point
-  labs(title = "Room 1") +
+  geom_line(aes(Date, DewPoint), col = "cyan3") + # add dew point 
   theme_bw()
 ```
 
@@ -131,12 +141,13 @@ mydata |>
   geom_line(aes(Date, Mould), col = "darkorchid", size = 1) +
   labs(title = "Mould Growth Rate Limits", 
        subtitle = "Mould growth initiates when RH goes above threshold",
-       x = NULL, y = "%rh") + 
+       x = NULL, y = "Humidity (%)") +
+  facet_grid(~Sensor) + 
   theme_classic(base_size = 14)
 ```
 
 -   **Graphs: generate a psychrometric chart**\
-    Visualise the data using a psychrometric chart with the function `graph_psychrometric()`. The example shows how a basic plot can be customised; data transparency, temperature and humidity ranges, and the y-axis function. See the full documentation with `graph_psychrometric`.
+    Visualise the data using a psychrometric chart with the function `graph_psychrometric()`. The example shows how a basic plot can be customised; data transparency, temperature and humidity ranges, and the y-axis function. 
 
 ```{r psychart, message=FALSE, warning=FALSE, fig.alt="psych_chart"}
 # Customise 
@@ -149,5 +160,6 @@ mydata |>
     HighRH = 70,
     y_func = calcAH
     ) +
-  theme_classic()
+  theme_classic() + 
+  labs(title = "Psychrometric chart")
 ```

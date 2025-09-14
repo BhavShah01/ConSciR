@@ -2,7 +2,7 @@
 
 * Added humidity, time, adjustment functions - currently under development.
 * Added new contributors to package.
-* Modified and developed graphing functions. 
+* Modified and developed graphing and tidying functions. 
 * Added formulation options to `calcAH` function.
 * Removed ConSciR-TRHbivariate and ConSciR-Psychrometric Shiny applications. 
   Moved these functions to ConSciR-App: `run_ConSciR_app()`. 
