@@ -48,7 +48,7 @@ This vignette provides a practical introduction to the package’s functionaliti
 
 ## Examples
 
-Load the necessary packages:
+Load some useful packages:
 
 ```{r load packages, message=FALSE, warning=FALSE}
 # Load packages
@@ -59,7 +59,7 @@ library(ggplot2)
 
 ### Add calculated values
 
-Enrich your dataset with environmental metrics computed by ConSciR functions:
+Transform your dataset with the functions in ConSciR:
 
 ```{r table of calculated values, message=FALSE, warning=FALSE}
 filepath <- data_file_path("mydata.xlsx")
@@ -80,17 +80,21 @@ head(mydata) |>
     Saturation_Vapour_Pressure = calcPws(Temp), 
     Actual_Vapour_Pressure = calcPw(Temp, RH), 
     Air_Density = calcAD(Temp, RH),
-    Temp_calc = calcTemp(RH, Dew_Point),
-    RH_AH_calc = calcRH_AH(Temp, Absolute_Humidity),
-    RH_DP_calc = calcRH_DP(Temp, Dew_Point),
     
-    # Conservation functions
-    Mould_Growth = calcMould_Zeng(Temp, RH, label = TRUE),
+    # Conservation risks
+    Mould_Growth_Rate_mm_day = calcMould_Zeng(Temp, RH, label = TRUE),
     Mould_Growth_Limit = calcMould_Zeng(Temp, RH), 
+    Mould_Growth_Risk = ifelse(RH > Mould_Growth_Limit, "Mould risk", "No risk"),
     Mould_Growth_Index = calcMould_VTT(Temp, RH), 
     Lifetime = calcLM(Temp, RH), 
     Preservation_Index = calcPI(Temp, RH), 
-    EMC_Wood = calcEMC_wood(Temp, RH)
+    EMC_Wood = calcEMC_wood(Temp, RH),
+    
+    # Sustainability calculations 
+    Temp_from_DP = calcTemp(RH, Dew_Point),
+    RH_from_DP = calcRH_DP(Temp, Dew_Point),
+    RH_from_AH = calcRH_AH(Temp, Absolute_Humidity),
+    RH_if_2C_higher = calcRH_AH(Temp + 2, Absolute_Humidity)
     
   ) |>
   glimpse()
@@ -100,8 +104,8 @@ head(mydata) |>
   tidy_TRHdata() |> # tidy
   add_time_vars() |> # add time factors 
   add_humidity_calcs() |> # add humidity values 
-  add_conservation_calcs() |> # add risks
-  add_humidity_adjustments() # add zones and an adjustment algorithm
+  add_conservation_calcs() |> # add conservation risks
+  add_humidity_adjustments() # add environmental zones and RH adjustments
 
 ```
 
@@ -124,7 +128,7 @@ mydata |>
   # Add Dew Point line
   geom_line(aes(Date, DewPoint), color = "mediumvioletred", alpha = 0.7) +
   # Apply a theme
-  theme_minimal()
+  theme_bw()
 
 ```
 

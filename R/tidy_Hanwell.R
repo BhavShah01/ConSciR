@@ -51,11 +51,10 @@ tidy_Hanwell <- function(EMS_datapath,
                          Site = "Site",
                          MinMax = FALSE,
                          sheet = "Hanwell", ...) {
-
   ext <- tolower(file_ext(EMS_datapath))
 
   if (MinMax) {
-    # MinMax mode - only CSV supported
+    # MinMax mode is CSV only
     if (ext != "csv") stop("MinMax format processing currently supports only CSV files")
 
     ems <- readr::read_csv(EMS_datapath, na = c("", "-", "NA"), skip = 7)
@@ -86,10 +85,9 @@ tidy_Hanwell <- function(EMS_datapath,
     return(ems_tidy)
   }
 
-  # Non-MinMax (raw) mode - Excel or CSV
   if (ext %in% c("xls", "xlsx")) {
     raw_df <- readxl::read_excel(EMS_datapath, sheet = sheet, col_names = FALSE, ...)
-    # Find header row
+
     header_mask <- apply(raw_df, 1, function(row) {
       all(c("Date Time", "Temperature (C)", "Humidity (%RH)") %in% as.character(row))
     })
@@ -105,19 +103,19 @@ tidy_Hanwell <- function(EMS_datapath,
 
     colnames(raw_df) <- as.character(raw_df[header_row, ])
     data_sub <- raw_df[(header_row + 1):nrow(raw_df), ]
-    first_summary_row <- which(
-      is.na(data_sub[[1]]) |
-        str_detect(as.character(data_sub[[1]]),
-                   regex("Name:|Average|Minimum|Maximum|Standard Deviation|Exported Sensor Data",
-                         ignore_case = TRUE))
-    )
-    if (length(first_summary_row) > 0) {
-      data_sub <- data_sub[1:(min(first_summary_row) - 1), ]
+
+    # Remove lines after end-of-data marker minus 12 rows
+    end_marker_row <- which(str_detect(data_sub[[1]], fixed("---- END OF DATA ----")))
+    if (length(end_marker_row) > 0) {
+      data_end <- end_marker_row[1] - 13
+      if (data_end < 1) stop("Data end position before data start")
+      data_sub <- data_sub[1:data_end, ]
     }
+
     df <- data_sub |>
       select(`Date Time`, `Temperature (C)`, `Humidity (%RH)`)
-    date_col <- df$`Date Time`
 
+    date_col <- df$`Date Time`
     if (all(!is.na(as.numeric(as.character(date_col))))) {
       datevals <- as.POSIXct((as.numeric(as.character(date_col)) - 25569) * 86400,
                              origin = "1970-01-01", tz = "UTC")
@@ -132,12 +130,12 @@ tidy_Hanwell <- function(EMS_datapath,
              Site = Site,
              Sensor = sensor_name) |>
       select(Site, Sensor, Date, Temp, RH)
-
     return(df)
   }
 
   else if (ext == "csv") {
     lines <- readLines(EMS_datapath)
+
     header_idx <- which(
       str_detect(lines, fixed("Date Time")) &
         str_detect(lines, fixed("Temperature (C)")) &
@@ -145,6 +143,7 @@ tidy_Hanwell <- function(EMS_datapath,
     )
     if (length(header_idx) == 0) stop("Header line not found in CSV file")
     header_line <- header_idx[1]
+
     non_empty_before_header <- which(str_trim(lines[1:(header_line - 1)]) != "")
     sensor_line <- max(non_empty_before_header)
     sensor_name_raw <- str_trim(lines[sensor_line])
@@ -152,13 +151,17 @@ tidy_Hanwell <- function(EMS_datapath,
       str_remove_all('["]') |>
       str_remove_all(",+$") |>
       str_trim()
+
+    end_marker_idx <- which(str_detect(lines, fixed("---- END OF DATA ----")))
+    if (length(end_marker_idx) == 0) stop("End-of-data marker not found in CSV file")
+    data_end <- end_marker_idx[1] - 13
+
     data_start <- header_line + 1
-    blank_lines_after_data <- which(str_trim(lines) == "")
-    blank_lines_after_data <- blank_lines_after_data[blank_lines_after_data > data_start]
-    data_end <- ifelse(length(blank_lines_after_data) > 0, min(blank_lines_after_data) - 1, length(lines))
     data_lines <- lines[data_start:data_end]
+
     tmp_file <- tempfile(fileext = ".csv")
     writeLines(data_lines, tmp_file)
+
     df <- readr::read_csv(tmp_file,
                           col_names = c("Date", "Temp", "RH"),
                           col_types = readr::cols(
@@ -171,6 +174,7 @@ tidy_Hanwell <- function(EMS_datapath,
              Site = Site,
              Sensor = sensor_name) |>
       select(Site, Sensor, Date, Temp, RH)
+
     unlink(tmp_file)
     return(df)
   }

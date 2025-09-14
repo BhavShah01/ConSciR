@@ -18,12 +18,16 @@ add_conservation_calcs(mydata, Temp = "Temp", RH = "RH", ...)
 \value{
 Dataframe augmented with conservation variables:
 
-- Mould_LIM: Mould risk threshold humidity (numeric, from Zeng equation).
-- Mould_rate: Mould growth rate index (from Zeng equation, labelled output).
-- Mould_index: Mould risk index (continuous scale, VTT model).
-- PreservationIndex: Preservation Index for collection longevity.
-- Lifetime: Lifetime Multiplier for object material degradation risk.
-- EMC_wood: Wood equilibrium moisture content (%) under current climate conditions.
+\describe{
+  \item{Mould_LIM}{Mould risk threshold humidity from Zeng equation (numeric).}
+  \item{Mould_risk}{If there is a risk of mould from Zeng equation.
+     Adds label: "Mould risk" or "No risk".}
+  \item{Mould_rate}{Mould growth rate index from Zeng equation, labelled output.}
+  \item{Mould_index}{Mould risk index from VTT model (continuous scale).}
+  \item{PreservationIndex}{Preservation Index for collection longevity.}
+  \item{Lifetime}{Lifetime Multiplier for object material degradation risk.}
+  \item{EMC_wood}{Wood equilibrium moisture content (\%) under current climate conditions.}
+}
 }
 \description{
 Appends columns for conservation-risks: mould risk, preservation indices, equilibrium moisture,
@@ -38,4 +42,15 @@ mydata <- readxl::read_excel(filepath, sheet = "mydata", n_max = 5)
 mydata |> add_conservation_calcs() |> dplyr::glimpse()
 
 
+}
+\seealso{
+\code{\link{calcMould_Zeng}} for `Mould_LIM`, `Mould_risk`, `Mould_rate`
+
+\code{\link{calcMould_VTT}} for `Mould_index`
+
+\code{\link{calcPI}} for `PreservationIndex`
+
+\code{\link{calcLM}} for `Lifetime`
+
+\code{\link{calcEMC_wood}} for `EMC_wood`
 }

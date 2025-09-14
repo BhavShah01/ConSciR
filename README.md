@@ -110,9 +110,8 @@ head(mydata)
 ```
 
 - **Perform calculations on the data**  
-  Use ConSciR functions to add environmental metrics such as dew point
-  (`calcDP`), absolute humidity (`calcAH`), lifetime multiplier
-  (`calcLM`), and preservation index (`calcPI`) to the dataset. More
+  Use ConSciR functions to add metrics such as dew point, absolute
+  humidity, mould, preservation index and others to the dataset. More
   functions are available; see the package
   [Reference](https://bhavshah01.github.io/ConSciR/reference/index.html)
   for details.
@@ -121,20 +120,34 @@ head(mydata)
 # Peform calculations
 head(mydata) |>
   mutate(
+    # Dew point
     DewP = calcDP(Temp, RH), 
+    
+    # Absolute humidity
     Abs = calcAH(Temp, RH), 
-    LifeTime = calcLM(Temp, RH, EA = 100), 
-    PI = calcPI(Temp, RH)
-    )
-#> # A tibble: 6 × 9
-#>   Site   Sensor Date                 Temp    RH  DewP   Abs LifeTime    PI
-#>   <chr>  <chr>  <dttm>              <dbl> <dbl> <dbl> <dbl>    <dbl> <dbl>
-#> 1 London Room 1 2024-01-01 00:00:00  21.8  36.8  6.38  7.05     1.11  45.3
-#> 2 London Room 1 2024-01-01 00:15:00  21.8  36.7  6.34  7.03     1.11  45.4
-#> 3 London Room 1 2024-01-01 00:29:59  21.8  36.6  6.30  7.01     1.11  45.5
-#> 4 London Room 1 2024-01-01 00:44:59  21.7  36.6  6.22  6.97     1.11  46.1
-#> 5 London Room 1 2024-01-01 00:59:59  21.7  36.5  6.18  6.95     1.11  46.2
-#> 6 London Room 1 2024-01-01 01:14:59  21.7  36.2  6.06  6.90     1.11  46.6
+    
+    # Mould risk 
+    Mould = ifelse(RH > calcMould_Zeng(Temp, RH), "Mould risk", "No mould"), 
+    
+    # Preservation Index, years to deterioration 
+    PI = calcPI(Temp, RH), 
+    
+    # Scenario: Humidity if the temperature was 2°C higher
+    RH_if_2C_higher = calcRH_AH(Temp + 2, Abs) 
+    ) |>
+  glimpse()
+#> Rows: 6
+#> Columns: 10
+#> $ Site            <chr> "London", "London", "London", "London", "London", "Lon…
+#> $ Sensor          <chr> "Room 1", "Room 1", "Room 1", "Room 1", "Room 1", "Roo…
+#> $ Date            <dttm> 2024-01-01 00:00:00, 2024-01-01 00:15:00, 2024-01-01 …
+#> $ Temp            <dbl> 21.8, 21.8, 21.8, 21.7, 21.7, 21.7
+#> $ RH              <dbl> 36.8, 36.7, 36.6, 36.6, 36.5, 36.2
+#> $ DewP            <dbl> 6.383970, 6.344456, 6.304848, 6.216205, 6.176529, 6.05…
+#> $ Abs             <dbl> 7.052415, 7.033251, 7.014087, 6.973723, 6.954670, 6.89…
+#> $ Mould           <chr> "No mould", "No mould", "No mould", "No mould", "No mo…
+#> $ PI              <dbl> 45.25849, 45.38181, 45.50580, 46.07769, 46.20393, 46.5…
+#> $ RH_if_2C_higher <dbl> 32.81971, 32.73052, 32.64134, 32.63838, 32.54920, 32.2…
 ```
 
 - **Combine analysis with visualisation**  
@@ -145,8 +158,7 @@ head(mydata) |>
 mydata |>
   mutate(DewPoint = calcDP(Temp, RH)) |>
   graph_TRH() + 
-  geom_line(aes(Date, DewPoint), col = "cyan3") + # add dew point
-  labs(title = "Room 1") +
+  geom_line(aes(Date, DewPoint), col = "cyan3") + # add dew point 
   theme_bw()
 ```
 
@@ -164,7 +176,8 @@ mydata |>
   geom_line(aes(Date, Mould), col = "darkorchid", size = 1) +
   labs(title = "Mould Growth Rate Limits", 
        subtitle = "Mould growth initiates when RH goes above threshold",
-       x = NULL, y = "%rh") + 
+       x = NULL, y = "Humidity (%)") +
+  facet_grid(~Sensor) + 
   theme_classic(base_size = 14)
 ```
 
@@ -174,8 +187,7 @@ mydata |>
   Visualise the data using a psychrometric chart with the function
   `graph_psychrometric()`. The example shows how a basic plot can be
   customised; data transparency, temperature and humidity ranges, and
-  the y-axis function. See the full documentation with
-  `graph_psychrometric`.
+  the y-axis function.
 
 ``` r
 # Customise 
@@ -188,7 +200,8 @@ mydata |>
     HighRH = 70,
     y_func = calcAH
     ) +
-  theme_classic()
+  theme_classic() + 
+  labs(title = "Psychrometric chart")
 ```
 
 <img src="man/figures/README-psychart-1.png" alt="psych_chart" width="100%" />

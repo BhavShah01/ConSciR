@@ -1,5 +1,6 @@
 #' Add Conservation calculations to temperature and humidity data
 #'
+#' @description
 #' Appends columns for conservation-risks: mould risk, preservation indices, equilibrium moisture,
 #' and moisture content for wood to a dataframe with temperature and relative humidity columns.
 #'
@@ -11,13 +12,22 @@
 #'
 #' @return Dataframe augmented with conservation variables:
 #'
-#' - Mould_LIM: Mould risk threshold humidity (numeric, from Zeng equation).
-#' - Mould_rate: Mould growth rate index (from Zeng equation, labelled output).
-#' - Mould_index: Mould risk index (continuous scale, VTT model).
-#' - PreservationIndex: Preservation Index for collection longevity.
-#' - Lifetime: Lifetime Multiplier for object material degradation risk.
-#' - EMC_wood: Wood equilibrium moisture content (%) under current climate conditions.
+#' \describe{
+#'   \item{Mould_LIM}{Mould risk threshold humidity from Zeng equation (numeric).}
+#'   \item{Mould_risk}{If there is a risk of mould from Zeng equation.
+#'      Adds label: "Mould risk" or "No risk".}
+#'   \item{Mould_rate}{Mould growth rate index from Zeng equation, labelled output.}
+#'   \item{Mould_index}{Mould risk index from VTT model (continuous scale).}
+#'   \item{PreservationIndex}{Preservation Index for collection longevity.}
+#'   \item{Lifetime}{Lifetime Multiplier for object material degradation risk.}
+#'   \item{EMC_wood}{Wood equilibrium moisture content (\%) under current climate conditions.}
+#' }
 #'
+#' @seealso \code{\link{calcMould_Zeng}} for `Mould_LIM`, `Mould_risk`, `Mould_rate`
+#' @seealso \code{\link{calcMould_VTT}} for `Mould_index`
+#' @seealso \code{\link{calcPI}} for `PreservationIndex`
+#' @seealso \code{\link{calcLM}} for `Lifetime`
+#' @seealso \code{\link{calcEMC_wood}} for `EMC_wood`
 #'
 #' @importFrom dplyr mutate
 #' @importFrom rlang sym
@@ -39,6 +49,7 @@ add_conservation_calcs <- function(mydata, Temp = "Temp", RH = "RH", ...) {
   mydata |>
     dplyr::mutate(
       Mould_LIM = calcMould_Zeng(!!TempSym, !!RHSym, ...),
+      Mould_risk = ifelse(!!RHSym > Mould_LIM, "Mould risk", "No risk"),
       Mould_rate = calcMould_Zeng(!!TempSym, !!RHSym, label = TRUE),
       Mould_index = calcMould_VTT(!!TempSym, !!RHSym, ...),
       PreservationIndex = calcPI(!!TempSym, !!RHSym, ...),
