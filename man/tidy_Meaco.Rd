@@ -36,24 +36,23 @@ relative humidity data. Default is "HUMIDITY".}
 A tidied data frame with columns Site, Sensor, Date, Temp, and RH
 }
 \description{
-This function takes raw Meaco sensor data and performs several cleaning and processing steps:
-
-\itemize{
-   \item Filters out rows with missing dates
-   \item Renames column names for consistency
-   \item Converts temperature and relative humidity to numeric
-   \item Rounds dates down to the nearest hour
-   \item Calculates hourly averages for temperature and relative humidity
-   \item Pads the data to ensure hourly intervals using padr package
-   \item Filters out unrealistic temperature and humidity values
-         (outside -50°C to 50°C and 0 to 100\%RH)
-}
+This function takes raw Meaco sensor data and returns data with renamed columns.
 }
 \examples{
 
 \donttest{
 # Example usage: meaco_data <- tidy_Meaco("path/to/your/meaco_data.csv")
 }
+
+# mydata file
+filepath <- data_file_path("mydata.xlsx")
+mydata <- readxl::read_excel(filepath, sheet = "Meaco")
+
+head(mydata)
+
+mydata |> tidy_Meaco()
+
+mydata |> tidy_Meaco() |> tidy_TRHdata(avg_time = "hour")
 
 
 

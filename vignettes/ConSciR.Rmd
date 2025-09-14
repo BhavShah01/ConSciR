@@ -97,10 +97,11 @@ head(mydata) |>
 
 
 head(mydata) |> 
-  add_time_vars() |> 
-  add_humidity_calcs() |> 
-  add_conservation_calcs() |> 
-  add_humidity_adjustments()
+  tidy_TRHdata() |> # tidy
+  add_time_vars() |> # add time factors 
+  add_humidity_calcs() |> # add humidity values 
+  add_conservation_calcs() |> # add risks
+  add_humidity_adjustments() # add zones and an adjustment algorithm
 
 ```
 

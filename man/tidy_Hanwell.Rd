@@ -2,39 +2,58 @@
 % Please edit documentation in R/tidy_Hanwell.R
 \name{tidy_Hanwell}
 \alias{tidy_Hanwell}
-\title{Tidy Hanwell EMS Data (Min-Max report)}
+\title{Tidy Hanwell EMS Data}
 \usage{
-tidy_Hanwell(EMS_MinMax_datapath)
+tidy_Hanwell(
+  EMS_datapath,
+  Site = "Site",
+  MinMax = FALSE,
+  sheet = "Hanwell",
+  ...
+)
 }
 \arguments{
-\item{EMS_MinMax_datapath}{EMS_MinMax_datapath Character string specifying the
+\item{EMS_datapath}{Character string specifying the
 file path to the Hanwell EMS data file.}
+
+\item{Site}{Character string specifying site name to add as a column.
+Default is "Site".}
+
+\item{MinMax}{Logical flag; if TRUE, reads Min-Max format,
+otherwise reads raw data. Default is FALSE.}
+
+\item{sheet}{Optional, Excel sheet name for reading Excel files. The default is "Hanwell"}
+
+\item{...}{Additional arguments passed to \code{readxl::read_excel} for Excel reading.}
 }
 \value{
-A tibble containing the tidied Hanwell EMS data with the following columns:
-
-\itemize{
-  \item Date Time POSIXct datetime of the measurement
-  \item Sensor Character string identifying the sensor
-  \item TempMin Numeric minimum temperature (°C)
-  \item TempMax Numeric maximum temperature (°C)
-  \item Temp Numeric average temperature (°C)
-  \item RHMin Numeric minimum relative humidity (%)
-  \item RHMax Numeric maximum relative humidity (%)
-  \item RH Numeric average relative humidity (%)
-  \item Date Date of the measurement (duplicate of Date Time)
+A tibble containing tidied Hanwell EMS data, with columns including:
+\describe{
+  \item{Site}{Character, site name as specified by \code{Site} argument.}
+  \item{Sensor}{Character, sensor identifier extracted from the file or metadata.}
+  \item{Date}{POSIXct datetime of the measurement.}
+  \item{Temp}{Numeric temperature measurement in °C (average for MinMax).}
+  \item{RH}{Numeric relative humidity measurement in \% (average for MinMax).}
+  \item{TempMin, TempMax, RHMin, RHMax}{(Only for MinMax reports) Numeric min/max values of Temp and RH.}
 }
 }
 \description{
-This function reads and processes Hanwell Environmental Monitoring System (EMS) data,
-transforming it into a tidy format suitable for analysis.
+This function tidies Hanwell Environmental Monitoring System (EMS) data from either
+Excel sheets or CSV files.
+
+- Default mode (MinMax = FALSE): Reads raw date, temperature, and humidity data.
+- Min-Max mode (MinMax = TRUE): Under development to read min-max average data (CSV only).
 }
 \examples{
 
 \donttest{
-# Example usage: hanwell_data <- tidy_Hanwell("path/to/your/EMS_MinMax_data.csv")
+# Example usage: hanwell_data <- tidy_Hanwell("path/to/your/hanwell_data.csv")
 }
 
+# mydata file
+filepath <- data_file_path("mydata.xlsx")
+
+tidy_Hanwell(filepath, sheet = "Hanwell", Site = "London") |> head()
 
 
 }
