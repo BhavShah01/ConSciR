@@ -81,12 +81,37 @@ and moisture content for wood to a dataframe with temperature and relative humid
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>Dataframe augmented with conservation variables:</p>
-<p>- Mould_LIM: Mould risk threshold humidity (numeric, from Zeng equation).
-- Mould_rate: Mould growth rate index (from Zeng equation, labelled output).
-- Mould_index: Mould risk index (continuous scale, VTT model).
-- PreservationIndex: Preservation Index for collection longevity.
-- Lifetime: Lifetime Multiplier for object material degradation risk.
-- EMC_wood: Wood equilibrium moisture content (<!-- %) under current climate conditions. --></p>
+<dl><dt>Mould_LIM</dt>
+<dd><p>Mould risk threshold humidity from Zeng equation (numeric).</p></dd>
+
+  <dt>Mould_risk</dt>
+<dd><p>If there is a risk of mould from Zeng equation.
+     Adds label: "Mould risk" or "No risk".</p></dd>
+
+  <dt>Mould_rate</dt>
+<dd><p>Mould growth rate index from Zeng equation, labelled output.</p></dd>
+
+  <dt>Mould_index</dt>
+<dd><p>Mould risk index from VTT model (continuous scale).</p></dd>
+
+  <dt>PreservationIndex</dt>
+<dd><p>Preservation Index for collection longevity.</p></dd>
+
+  <dt>Lifetime</dt>
+<dd><p>Lifetime Multiplier for object material degradation risk.</p></dd>
+
+  <dt>EMC_wood</dt>
+<dd><p>Wood equilibrium moisture content (%) under current climate conditions.</p></dd>
+
+
+</dl></div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p><code><a href="calcMould_Zeng.html">calcMould_Zeng</a></code> for `Mould_LIM`, `Mould_risk`, `Mould_rate`</p>
+<p><code><a href="calcMould_VTT.html">calcMould_VTT</a></code> for `Mould_index`</p>
+<p><code><a href="calcPI.html">calcPI</a></code> for `PreservationIndex`</p>
+<p><code><a href="calcLM.html">calcLM</a></code> for `Lifetime`</p>
+<p><code><a href="calcEMC_wood.html">calcEMC_wood</a></code> for `EMC_wood`</p></div>
     </div>
 
     <div class="section level2">
@@ -98,13 +123,14 @@ and moisture content for wood to a dataframe with temperature and relative humid
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">mydata</span> <span class="op">|&gt;</span> <span class="fu">add_conservation_calcs</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Rows: 5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Columns: 11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Columns: 12</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ Site              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "London"<span style="color: #949494;">, </span>"London"<span style="color: #949494;">, </span>"London"<span style="color: #949494;">, </span>"London"<span style="color: #949494;">, </span>"London"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ Sensor            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Room 1"<span style="color: #949494;">, </span>"Room 1"<span style="color: #949494;">, </span>"Room 1"<span style="color: #949494;">, </span>"Room 1"<span style="color: #949494;">, </span>"Room 1"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ Date              <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span> 2024-01-01 00:00:00<span style="color: #949494;">, </span>2024-01-01 00:15:00<span style="color: #949494;">, </span>2024-01-01…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ Temp              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 21.8<span style="color: #949494;">, </span>21.8<span style="color: #949494;">, </span>21.8<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ RH                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 36.8<span style="color: #949494;">, </span>36.7<span style="color: #949494;">, </span>36.6<span style="color: #949494;">, </span>36.6<span style="color: #949494;">, </span>36.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ Mould_LIM         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 75.11542<span style="color: #949494;">, </span>75.11542<span style="color: #949494;">, </span>75.11542<span style="color: #949494;">, </span>75.14014<span style="color: #949494;">, </span>75.14014</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ Mould_risk        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "No risk"<span style="color: #949494;">, </span>"No risk"<span style="color: #949494;">, </span>"No risk"<span style="color: #949494;">, </span>"No risk"<span style="color: #949494;">, </span>"No risk"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ Mould_rate        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ Mould_index       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ PreservationIndex <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 45.25849<span style="color: #949494;">, </span>45.38181<span style="color: #949494;">, </span>45.50580<span style="color: #949494;">, </span>46.07769<span style="color: #949494;">, </span>46.20393</span>

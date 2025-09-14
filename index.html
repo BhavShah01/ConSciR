@@ -154,26 +154,40 @@ A pre-loaded dataset (<code>mydata</code>) is included for testing and demonstra
 <ul>
 <li>
 <strong>Perform calculations on the data</strong><br>
-Use ConSciR functions to add environmental metrics such as dew point (<code>calcDP</code>), absolute humidity (<code>calcAH</code>), lifetime multiplier (<code>calcLM</code>), and preservation index (<code>calcPI</code>) to the dataset. More functions are available; see the package <a href="https://bhavshah01.github.io/ConSciR/reference/index.html">Reference</a> for details.</li>
+Use ConSciR functions to add metrics such as dew point, absolute humidity, mould, preservation index and others to the dataset. More functions are available; see the package <a href="https://bhavshah01.github.io/ConSciR/reference/index.html">Reference</a> for details.</li>
 </ul>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Peform calculations</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mydata</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>    <span class="co"># Dew point</span></span>
 <span>    DewP <span class="op">=</span> <span class="fu"><a href="reference/calcDP.html">calcDP</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>, </span>
+<span>    </span>
+<span>    <span class="co"># Absolute humidity</span></span>
 <span>    Abs <span class="op">=</span> <span class="fu"><a href="reference/calcAH.html">calcAH</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>, </span>
-<span>    LifeTime <span class="op">=</span> <span class="fu"><a href="reference/calcLM.html">calcLM</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span>, EA <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>, </span>
-<span>    PI <span class="op">=</span> <span class="fu"><a href="reference/calcPI.html">calcPI</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span></span>
-<span>    <span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 6 × 9</span></span>
-<span><span class="co">#&gt;   Site   Sensor Date                 Temp    RH  DewP   Abs LifeTime    PI</span></span>
-<span><span class="co">#&gt;   &lt;chr&gt;  &lt;chr&gt;  &lt;dttm&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 London Room 1 2024-01-01 00:00:00  21.8  36.8  6.38  7.05     1.11  45.3</span></span>
-<span><span class="co">#&gt; 2 London Room 1 2024-01-01 00:15:00  21.8  36.7  6.34  7.03     1.11  45.4</span></span>
-<span><span class="co">#&gt; 3 London Room 1 2024-01-01 00:29:59  21.8  36.6  6.30  7.01     1.11  45.5</span></span>
-<span><span class="co">#&gt; 4 London Room 1 2024-01-01 00:44:59  21.7  36.6  6.22  6.97     1.11  46.1</span></span>
-<span><span class="co">#&gt; 5 London Room 1 2024-01-01 00:59:59  21.7  36.5  6.18  6.95     1.11  46.2</span></span>
-<span><span class="co">#&gt; 6 London Room 1 2024-01-01 01:14:59  21.7  36.2  6.06  6.90     1.11  46.6</span></span></code></pre></div>
+<span>    </span>
+<span>    <span class="co"># Mould risk </span></span>
+<span>    Mould <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">RH</span> <span class="op">&gt;</span> <span class="fu"><a href="reference/calcMould_Zeng.html">calcMould_Zeng</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>, <span class="st">"Mould risk"</span>, <span class="st">"No mould"</span><span class="op">)</span>, </span>
+<span>    </span>
+<span>    <span class="co"># Preservation Index, years to deterioration </span></span>
+<span>    PI <span class="op">=</span> <span class="fu"><a href="reference/calcPI.html">calcPI</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>, </span>
+<span>    </span>
+<span>    <span class="co"># Scenario: Humidity if the temperature was 2°C higher</span></span>
+<span>    RH_if_2C_higher <span class="op">=</span> <span class="fu"><a href="reference/calcRH_AH.html">calcRH_AH</a></span><span class="op">(</span><span class="va">Temp</span> <span class="op">+</span> <span class="fl">2</span>, <span class="va">Abs</span><span class="op">)</span> </span>
+<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Rows: 6</span></span>
+<span><span class="co">#&gt; Columns: 10</span></span>
+<span><span class="co">#&gt; $ Site            &lt;chr&gt; "London", "London", "London", "London", "London", "Lon…</span></span>
+<span><span class="co">#&gt; $ Sensor          &lt;chr&gt; "Room 1", "Room 1", "Room 1", "Room 1", "Room 1", "Roo…</span></span>
+<span><span class="co">#&gt; $ Date            &lt;dttm&gt; 2024-01-01 00:00:00, 2024-01-01 00:15:00, 2024-01-01 …</span></span>
+<span><span class="co">#&gt; $ Temp            &lt;dbl&gt; 21.8, 21.8, 21.8, 21.7, 21.7, 21.7</span></span>
+<span><span class="co">#&gt; $ RH              &lt;dbl&gt; 36.8, 36.7, 36.6, 36.6, 36.5, 36.2</span></span>
+<span><span class="co">#&gt; $ DewP            &lt;dbl&gt; 6.383970, 6.344456, 6.304848, 6.216205, 6.176529, 6.05…</span></span>
+<span><span class="co">#&gt; $ Abs             &lt;dbl&gt; 7.052415, 7.033251, 7.014087, 6.973723, 6.954670, 6.89…</span></span>
+<span><span class="co">#&gt; $ Mould           &lt;chr&gt; "No mould", "No mould", "No mould", "No mould", "No mo…</span></span>
+<span><span class="co">#&gt; $ PI              &lt;dbl&gt; 45.25849, 45.38181, 45.50580, 46.07769, 46.20393, 46.5…</span></span>
+<span><span class="co">#&gt; $ RH_if_2C_higher &lt;dbl&gt; 32.81971, 32.73052, 32.64134, 32.63838, 32.54920, 32.2…</span></span></code></pre></div>
 <ul>
 <li>
 <strong>Combine analysis with visualisation</strong><br>
@@ -183,8 +197,7 @@ Add a dew point line to the temperature-relative humidity graph using the packag
 <code class="sourceCode R"><span><span class="va">mydata</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>DewPoint <span class="op">=</span> <span class="fu"><a href="reference/calcDP.html">calcDP</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="reference/graph_TRH.html">graph_TRH</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">DewPoint</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"cyan3"</span><span class="op">)</span> <span class="op">+</span> <span class="co"># add dew point</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Room 1"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">DewPoint</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"cyan3"</span><span class="op">)</span> <span class="op">+</span> <span class="co"># add dew point </span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-graphTRH_DewPoint-1.png" alt="graphTRH" width="100%"></p>
 <ul>
@@ -200,13 +213,14 @@ Calculate mould growth risk using <strong><code><a href="reference/calcMould_Zen
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">Mould</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"darkorchid"</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Mould Growth Rate Limits"</span>, </span>
 <span>       subtitle <span class="op">=</span> <span class="st">"Mould growth initiates when RH goes above threshold"</span>,</span>
-<span>       x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="st">"%rh"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>       x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="st">"Humidity (%)"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html" class="external-link">facet_grid</a></span><span class="op">(</span><span class="op">~</span><span class="va">Sensor</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-mould_risk-1.png" alt="mould" width="100%"></p>
 <ul>
 <li>
 <strong>Graphs: generate a psychrometric chart</strong><br>
-Visualise the data using a psychrometric chart with the function <code><a href="reference/graph_psychrometric.html">graph_psychrometric()</a></code>. The example shows how a basic plot can be customised; data transparency, temperature and humidity ranges, and the y-axis function. See the full documentation with <code>graph_psychrometric</code>.</li>
+Visualise the data using a psychrometric chart with the function <code><a href="reference/graph_psychrometric.html">graph_psychrometric()</a></code>. The example shows how a basic plot can be customised; data transparency, temperature and humidity ranges, and the y-axis function.</li>
 </ul>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Customise </span></span>
@@ -219,7 +233,8 @@ Visualise the data using a psychrometric chart with the function <code><a href="
 <span>    HighRH <span class="op">=</span> <span class="fl">70</span>,</span>
 <span>    y_func <span class="op">=</span> <span class="va">calcAH</span></span>
 <span>    <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Psychrometric chart"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-psychart-1.png" alt="psych_chart" width="100%"></p>
 </div>
 </div>

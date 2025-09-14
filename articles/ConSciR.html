@@ -119,7 +119,7 @@ manual or use <code>?function_name</code> within R.</p>
 <div class="section level2">
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h2>
-<p>Load the necessary packages:</p>
+<p>Load some useful packages:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load packages</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bhavshah01.github.io/ConSciR/">ConSciR</a></span><span class="op">)</span></span>
@@ -128,8 +128,7 @@ manual or use <code>?function_name</code> within R.</p>
 <div class="section level3">
 <h3 id="add-calculated-values">Add calculated values<a class="anchor" aria-label="anchor" href="#add-calculated-values"></a>
 </h3>
-<p>Enrich your dataset with environmental metrics computed by ConSciR
-functions:</p>
+<p>Transform your dataset with the functions in ConSciR:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">filepath</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/data_file_path.html">data_file_path</a></span><span class="op">(</span><span class="st">"mydata.xlsx"</span><span class="op">)</span></span>
 <span><span class="va">mydata</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html" class="external-link">read_excel</a></span><span class="op">(</span><span class="va">filepath</span>, sheet <span class="op">=</span> <span class="st">"mydata"</span><span class="op">)</span></span>
@@ -149,22 +148,26 @@ functions:</p>
 <span>    Saturation_Vapour_Pressure <span class="op">=</span> <span class="fu"><a href="../reference/calcPws.html">calcPws</a></span><span class="op">(</span><span class="va">Temp</span><span class="op">)</span>, </span>
 <span>    Actual_Vapour_Pressure <span class="op">=</span> <span class="fu"><a href="../reference/calcPw.html">calcPw</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>, </span>
 <span>    Air_Density <span class="op">=</span> <span class="fu"><a href="../reference/calcAD.html">calcAD</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>,</span>
-<span>    Temp_calc <span class="op">=</span> <span class="fu"><a href="../reference/calcTemp.html">calcTemp</a></span><span class="op">(</span><span class="va">RH</span>, <span class="va">Dew_Point</span><span class="op">)</span>,</span>
-<span>    RH_AH_calc <span class="op">=</span> <span class="fu"><a href="../reference/calcRH_AH.html">calcRH_AH</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">Absolute_Humidity</span><span class="op">)</span>,</span>
-<span>    RH_DP_calc <span class="op">=</span> <span class="fu"><a href="../reference/calcRH_DP.html">calcRH_DP</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">Dew_Point</span><span class="op">)</span>,</span>
 <span>    </span>
-<span>    <span class="co"># Conservation functions</span></span>
-<span>    Mould_Growth <span class="op">=</span> <span class="fu"><a href="../reference/calcMould_Zeng.html">calcMould_Zeng</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span>, label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    <span class="co"># Conservation risks</span></span>
+<span>    Mould_Growth_Rate_mm_day <span class="op">=</span> <span class="fu"><a href="../reference/calcMould_Zeng.html">calcMould_Zeng</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span>, label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>    Mould_Growth_Limit <span class="op">=</span> <span class="fu"><a href="../reference/calcMould_Zeng.html">calcMould_Zeng</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>, </span>
+<span>    Mould_Growth_Risk <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">RH</span> <span class="op">&gt;</span> <span class="va">Mould_Growth_Limit</span>, <span class="st">"Mould risk"</span>, <span class="st">"No risk"</span><span class="op">)</span>,</span>
 <span>    Mould_Growth_Index <span class="op">=</span> <span class="fu"><a href="../reference/calcMould_VTT.html">calcMould_VTT</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>, </span>
 <span>    Lifetime <span class="op">=</span> <span class="fu"><a href="../reference/calcLM.html">calcLM</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>, </span>
 <span>    Preservation_Index <span class="op">=</span> <span class="fu"><a href="../reference/calcPI.html">calcPI</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>, </span>
-<span>    EMC_Wood <span class="op">=</span> <span class="fu"><a href="../reference/calcEMC_wood.html">calcEMC_wood</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span></span>
+<span>    EMC_Wood <span class="op">=</span> <span class="fu"><a href="../reference/calcEMC_wood.html">calcEMC_wood</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">RH</span><span class="op">)</span>,</span>
+<span>    </span>
+<span>    <span class="co"># Sustainability calculations </span></span>
+<span>    Temp_from_DP <span class="op">=</span> <span class="fu"><a href="../reference/calcTemp.html">calcTemp</a></span><span class="op">(</span><span class="va">RH</span>, <span class="va">Dew_Point</span><span class="op">)</span>,</span>
+<span>    RH_from_DP <span class="op">=</span> <span class="fu"><a href="../reference/calcRH_DP.html">calcRH_DP</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">Dew_Point</span><span class="op">)</span>,</span>
+<span>    RH_from_AH <span class="op">=</span> <span class="fu"><a href="../reference/calcRH_AH.html">calcRH_AH</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="va">Absolute_Humidity</span><span class="op">)</span>,</span>
+<span>    RH_if_2C_higher <span class="op">=</span> <span class="fu"><a href="../reference/calcRH_AH.html">calcRH_AH</a></span><span class="op">(</span><span class="va">Temp</span> <span class="op">+</span> <span class="fl">2</span>, <span class="va">Absolute_Humidity</span><span class="op">)</span></span>
 <span>    </span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 6</span></span>
-<span><span class="co">#&gt; Columns: 22</span></span>
+<span><span class="co">#&gt; Columns: 24</span></span>
 <span><span class="co">#&gt; $ Site                       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "London"<span style="color: #949494;">, </span>"London"<span style="color: #949494;">, </span>"London"<span style="color: #949494;">, </span>"London"<span style="color: #949494;">, </span>"Lo…</span></span>
 <span><span class="co">#&gt; $ Sensor                     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Room 1"<span style="color: #949494;">, </span>"Room 1"<span style="color: #949494;">, </span>"Room 1"<span style="color: #949494;">, </span>"Room 1"<span style="color: #949494;">, </span>"Ro…</span></span>
 <span><span class="co">#&gt; $ Date                       <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span> 2024-01-01 00:00:00<span style="color: #949494;">, </span>2024-01-01 00:15:00<span style="color: #949494;">, </span>…</span></span>
@@ -178,23 +181,25 @@ functions:</p>
 <span><span class="co">#&gt; $ Saturation_Vapour_Pressure <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 26.12119<span style="color: #949494;">, </span>26.12119<span style="color: #949494;">, </span>26.12119<span style="color: #949494;">, </span>25.96205<span style="color: #949494;">, </span>25.…</span></span>
 <span><span class="co">#&gt; $ Actual_Vapour_Pressure     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 9.612598<span style="color: #949494;">, </span>9.586477<span style="color: #949494;">, </span>9.560356<span style="color: #949494;">, </span>9.502110<span style="color: #949494;">, </span>9.4…</span></span>
 <span><span class="co">#&gt; $ Air_Density                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1.192445<span style="color: #949494;">, </span>1.192457<span style="color: #949494;">, </span>1.192469<span style="color: #949494;">, </span>1.192899<span style="color: #949494;">, </span>1.1…</span></span>
-<span><span class="co">#&gt; $ Temp_calc                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 21.8<span style="color: #949494;">, </span>21.8<span style="color: #949494;">, </span>21.8<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.7</span></span>
-<span><span class="co">#&gt; $ RH_AH_calc                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 36.8<span style="color: #949494;">, </span>36.7<span style="color: #949494;">, </span>36.6<span style="color: #949494;">, </span>36.6<span style="color: #949494;">, </span>36.5<span style="color: #949494;">, </span>36.2</span></span>
-<span><span class="co">#&gt; $ RH_DP_calc                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 36.8<span style="color: #949494;">, </span>36.7<span style="color: #949494;">, </span>36.6<span style="color: #949494;">, </span>36.6<span style="color: #949494;">, </span>36.5<span style="color: #949494;">, </span>36.2</span></span>
-<span><span class="co">#&gt; $ Mould_Growth               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0</span></span>
+<span><span class="co">#&gt; $ Mould_Growth_Rate_mm_day   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0</span></span>
 <span><span class="co">#&gt; $ Mould_Growth_Limit         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 75.11542<span style="color: #949494;">, </span>75.11542<span style="color: #949494;">, </span>75.11542<span style="color: #949494;">, </span>75.14014<span style="color: #949494;">, </span>75.…</span></span>
+<span><span class="co">#&gt; $ Mould_Growth_Risk          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "No risk"<span style="color: #949494;">, </span>"No risk"<span style="color: #949494;">, </span>"No risk"<span style="color: #949494;">, </span>"No risk"<span style="color: #949494;">,</span>…</span></span>
 <span><span class="co">#&gt; $ Mould_Growth_Index         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0<span style="color: #949494;">, </span>0</span></span>
 <span><span class="co">#&gt; $ Lifetime                   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 1.107855<span style="color: #949494;">, </span>1.108860<span style="color: #949494;">, </span>1.109869<span style="color: #949494;">, </span>1.109854<span style="color: #949494;">, </span>1.1…</span></span>
 <span><span class="co">#&gt; $ Preservation_Index         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 45.25849<span style="color: #949494;">, </span>45.38181<span style="color: #949494;">, </span>45.50580<span style="color: #949494;">, </span>46.07769<span style="color: #949494;">, </span>46.…</span></span>
 <span><span class="co">#&gt; $ EMC_Wood                   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 7.201471<span style="color: #949494;">, </span>7.186361<span style="color: #949494;">, </span>7.171247<span style="color: #949494;">, </span>7.173308<span style="color: #949494;">, </span>7.1…</span></span>
+<span><span class="co">#&gt; $ Temp_from_DP               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 21.8<span style="color: #949494;">, </span>21.8<span style="color: #949494;">, </span>21.8<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.7<span style="color: #949494;">, </span>21.7</span></span>
+<span><span class="co">#&gt; $ RH_from_DP                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 36.8<span style="color: #949494;">, </span>36.7<span style="color: #949494;">, </span>36.6<span style="color: #949494;">, </span>36.6<span style="color: #949494;">, </span>36.5<span style="color: #949494;">, </span>36.2</span></span>
+<span><span class="co">#&gt; $ RH_from_AH                 <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 36.8<span style="color: #949494;">, </span>36.7<span style="color: #949494;">, </span>36.6<span style="color: #949494;">, </span>36.6<span style="color: #949494;">, </span>36.5<span style="color: #949494;">, </span>36.2</span></span>
+<span><span class="co">#&gt; $ RH_if_2C_higher            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 32.81971<span style="color: #949494;">, </span>32.73052<span style="color: #949494;">, </span>32.64134<span style="color: #949494;">, </span>32.63838<span style="color: #949494;">, </span>32.…</span></span>
 <span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mydata</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/tidy_TRHdata.html">tidy_TRHdata</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># tidy</span></span>
 <span>  <span class="fu"><a href="../reference/add_time_vars.html">add_time_vars</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># add time factors </span></span>
 <span>  <span class="fu"><a href="../reference/add_humidity_calcs.html">add_humidity_calcs</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># add humidity values </span></span>
-<span>  <span class="fu"><a href="../reference/add_conservation_calcs.html">add_conservation_calcs</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># add risks</span></span>
-<span>  <span class="fu"><a href="../reference/add_humidity_adjustments.html">add_humidity_adjustments</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># add zones and an adjustment algorithm</span></span>
+<span>  <span class="fu"><a href="../reference/add_conservation_calcs.html">add_conservation_calcs</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># add conservation risks</span></span>
+<span>  <span class="fu"><a href="../reference/add_humidity_adjustments.html">add_humidity_adjustments</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># add environmental zones and RH adjustments</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 62</span></span></span>
 <span><span class="co">#&gt;   Site   Sensor date                 Temp    RH seasonyear      season monthyear</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;ord&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;ord&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;ord&gt;</span>    </span></span>
@@ -207,10 +212,10 @@ functions:</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 54 more variables: daylight &lt;fct&gt;, day &lt;dttm&gt;, hour &lt;int&gt;, dayhour &lt;dttm&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   daymonth &lt;int&gt;, month &lt;ord&gt;, year &lt;dbl&gt;, DayYear &lt;date&gt;, Season &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   Period &lt;chr&gt;, Pws &lt;dbl&gt;, Pw &lt;dbl&gt;, DP &lt;dbl&gt;, AH &lt;dbl&gt;, AD &lt;dbl&gt;, MR &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   SH &lt;dbl&gt;, FP &lt;dbl&gt;, Enthalpy &lt;dbl&gt;, Mould_LIM &lt;dbl&gt;, Mould_rate &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   Mould_index &lt;dbl&gt;, PreservationIndex &lt;dbl&gt;, Lifetime &lt;dbl&gt;, EMC_wood &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   TRH_within &lt;lgl&gt;, T_lower &lt;lgl&gt;, T_higher &lt;lgl&gt;, RH_lower &lt;lgl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   RH_higher &lt;lgl&gt;, zone &lt;chr&gt;, TRH_zone &lt;chr&gt;, T_zone &lt;chr&gt;, RH_zone &lt;chr&gt;, …</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;">#   SH &lt;dbl&gt;, Enthalpy &lt;dbl&gt;, Mould_LIM &lt;dbl&gt;, Mould_risk &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Mould_rate &lt;dbl&gt;, Mould_index &lt;dbl&gt;, PreservationIndex &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Lifetime &lt;dbl&gt;, EMC_wood &lt;dbl&gt;, TRH_within &lt;lgl&gt;, T_lower &lt;lgl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   T_higher &lt;lgl&gt;, RH_lower &lt;lgl&gt;, RH_higher &lt;lgl&gt;, zone &lt;chr&gt;, …</span></span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="visualise-and-explore-data">Visualise and explore data<a class="anchor" aria-label="anchor" href="#visualise-and-explore-data"></a>
@@ -231,7 +236,7 @@ functions:</p>
 <span>  <span class="co"># Add Dew Point line</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Date</span>, <span class="va">DewPoint</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">"mediumvioletred"</span>, alpha <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># Apply a theme</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="ConSciR_files/figure-html/calculations%20to%20visualise%20the%20data-1.png" alt="visualisations" width="700"></p>
 <ul>
 <li>
