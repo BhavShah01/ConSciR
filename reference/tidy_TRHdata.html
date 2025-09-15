@@ -8,21 +8,16 @@ If the site or sensor columns are not present in the data, the function
 defaults to adding columns named "Site" and "Sensor".
 This can be changed in the arguments.
 When an averaging option of "hour", "day", "month" is selected,
-it uses openair::timeAverage() to floor datetimes and calculate averages,
+it uses dplyr and lubridate functions to floor datetimes and calculate averages,
 the default is median average.
-See openair::timeAverage() for more options for averaging windows and statistics.
-Missing time points are padded with NA.
-
+See lubridate::floor_date() for rounding intervals.
 
 Filters out rows with missing dates.
 Renames columns for consistency.
 Converts temperature and relative humidity to numeric.
 Adds default columns "Site" and "Sensor" when missing or not supplied in args.
-Rounds dates down to the nearest hour, day, or month as per `avg_time`.
-         See openair::timeAverage() for more options. Default is "none".
-Calculates averages for temperature and relative humidity according to `avg_statistic`.
-         See openair::timeAverage() for more options. Default is "median".
-Pads data with missing datetime rows having NA values for other columns if `avg_time` is chosen.
+Rounds dates down to the nearest hour, day, or month as per avg_time.
+Calculates averages for temperature and relative humidity according to avg_statistic.
 Filters out implausible temperature and humidity values (outside -50-80°C and 0-100%RH).
 
 '><meta property="og:description" content='This function tidies and processes temperature, relative humidity, and date data
@@ -34,21 +29,16 @@ If the site or sensor columns are not present in the data, the function
 defaults to adding columns named "Site" and "Sensor".
 This can be changed in the arguments.
 When an averaging option of "hour", "day", "month" is selected,
-it uses openair::timeAverage() to floor datetimes and calculate averages,
+it uses dplyr and lubridate functions to floor datetimes and calculate averages,
 the default is median average.
-See openair::timeAverage() for more options for averaging windows and statistics.
-Missing time points are padded with NA.
-
+See lubridate::floor_date() for rounding intervals.
 
 Filters out rows with missing dates.
 Renames columns for consistency.
 Converts temperature and relative humidity to numeric.
 Adds default columns "Site" and "Sensor" when missing or not supplied in args.
-Rounds dates down to the nearest hour, day, or month as per `avg_time`.
-         See openair::timeAverage() for more options. Default is "none".
-Calculates averages for temperature and relative humidity according to `avg_statistic`.
-         See openair::timeAverage() for more options. Default is "median".
-Pads data with missing datetime rows having NA values for other columns if `avg_time` is chosen.
+Rounds dates down to the nearest hour, day, or month as per avg_time.
+Calculates averages for temperature and relative humidity according to avg_statistic.
 Filters out implausible temperature and humidity values (outside -50-80°C and 0-100%RH).
 
 '><meta property="og:image" content="https://bhavshah01.github.io/ConSciR/logo.png"></head><body>
@@ -108,20 +98,15 @@ Sensor, and Date based on the averaging interval.</p>
 defaults to adding columns named "Site" and "Sensor".
 This can be changed in the arguments.</p>
 <p>When an averaging option of "hour", "day", "month" is selected,
-it uses <code><a href="https://openair-project.github.io/openair/reference/timeAverage.html" class="external-link">openair::timeAverage()</a></code> to floor datetimes and calculate averages,
+it uses <code>dplyr</code> and <code>lubridate</code> functions to floor datetimes and calculate averages,
 the default is median average.
-See <code><a href="https://openair-project.github.io/openair/reference/timeAverage.html" class="external-link">openair::timeAverage()</a></code> for more options for averaging windows and statistics.
-Missing time points are padded with NA.</p>
-
+See <code><a href="https://lubridate.tidyverse.org/reference/round_date.html" class="external-link">lubridate::floor_date()</a></code> for rounding intervals.</p>
 <ul><li><p>Filters out rows with missing dates.</p></li>
 <li><p>Renames columns for consistency.</p></li>
 <li><p>Converts temperature and relative humidity to numeric.</p></li>
 <li><p>Adds default columns "Site" and "Sensor" when missing or not supplied in args.</p></li>
-<li><p>Rounds dates down to the nearest hour, day, or month as per `avg_time`.
-         See <code><a href="https://openair-project.github.io/openair/reference/timeAverage.html" class="external-link">openair::timeAverage()</a></code> for more options. Default is "none".</p></li>
-<li><p>Calculates averages for temperature and relative humidity according to `avg_statistic`.
-         See <code><a href="https://openair-project.github.io/openair/reference/timeAverage.html" class="external-link">openair::timeAverage()</a></code> for more options. Default is "median".</p></li>
-<li><p>Pads data with missing datetime rows having NA values for other columns if `avg_time` is chosen.</p></li>
+<li><p>Rounds dates down to the nearest hour, day, or month as per <code>avg_time</code>.</p></li>
+<li><p>Calculates averages for temperature and relative humidity according to <code>avg_statistic</code>.</p></li>
 <li><p>Filters out implausible temperature and humidity values (outside -50-80°C and 0-100%RH).</p></li>
 </ul></div>
 
@@ -154,41 +139,40 @@ columns named "Site" and "Sensor" respectively with values below.</p></dd>
 
 
 <dt id="arg-site">Site<a class="anchor" aria-label="anchor" href="#arg-site"></a></dt>
-<dd><p>A string specifying the name of the column in `mydata` that contains
+<dd><p>A string specifying the name of the column in <code>mydata</code> that contains
 location information. If missing, defaults to "Site".</p></dd>
 
 
 <dt id="arg-sensor">Sensor<a class="anchor" aria-label="anchor" href="#arg-sensor"></a></dt>
-<dd><p>A string specifying the name of the column in `mydata` that contains
+<dd><p>A string specifying the name of the column in <code>mydata</code> that contains
 sensor information. If missing, defaults to "Sensor".</p></dd>
 
 
 <dt id="arg-date">Date<a class="anchor" aria-label="anchor" href="#arg-date"></a></dt>
-<dd><p>A string specifying the name of the column in `mydata` that contains
+<dd><p>A string specifying the name of the column in <code>mydata</code> that contains
 date information. Default is "Date". The column should ideally contain ISO 8601
 date-time formatted strings (e.g. "2025-01-01 00:00:00"), but the function will try to
 parse a variety of common datetime formats.</p></dd>
 
 
 <dt id="arg-temp">Temp<a class="anchor" aria-label="anchor" href="#arg-temp"></a></dt>
-<dd><p>A string specifying the name of the column in `mydata` that contains
+<dd><p>A string specifying the name of the column in <code>mydata</code> that contains
 temperature data. Default is "Temp".</p></dd>
 
 
 <dt id="arg-rh">RH<a class="anchor" aria-label="anchor" href="#arg-rh"></a></dt>
-<dd><p>A string specifying the name of the column in `mydata` that contains
+<dd><p>A string specifying the name of the column in <code>mydata</code> that contains
 relative humidity data. Default is "RH".</p></dd>
 
 
 <dt id="arg-avg-time">avg_time<a class="anchor" aria-label="anchor" href="#arg-avg-time"></a></dt>
 <dd><p>Character string specifying the averaging interval.
 One of "none" (no averaging), "hour", "day", or "month", etc.
-See <code><a href="https://openair-project.github.io/openair/reference/timeAverage.html" class="external-link">openair::timeAverage()</a></code> for more options.</p></dd>
+See <code><a href="https://lubridate.tidyverse.org/reference/round_date.html" class="external-link">lubridate::floor_date()</a></code> for rounding intervals.</p></dd>
 
 
 <dt id="arg-avg-statistic">avg_statistic<a class="anchor" aria-label="anchor" href="#arg-avg-statistic"></a></dt>
-<dd><p>Statistic for averaging; default is "median".
-See <code><a href="https://openair-project.github.io/openair/reference/timeAverage.html" class="external-link">openair::timeAverage()</a></code> for more options.</p></dd>
+<dd><p>Statistic for averaging; default is "median".</p></dd>
 
 
 <dt id="arg-avg-groups">avg_groups<a class="anchor" aria-label="anchor" href="#arg-avg-groups"></a></dt>
@@ -197,14 +181,14 @@ These are then returned as factors. Default is c("Site", "Sensor").</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Additional arguments to supply to <code><a href="https://openair-project.github.io/openair/reference/timeAverage.html" class="external-link">openair::timeAverage()</a></code>.</p></dd>
+<dd><p>Additional arguments (currently unused).</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A tidy data frame with processed TRH data. When averaging,
-  date times are floored, Temp and RH are averaged, groups are factored,
-  and missing date times are padded with NA rows.</p>
+date times are floored, temperature and humidity are averaged,
+groups are factored, and implausible values filtered.</p>
     </div>
 
     <div class="section level2">
@@ -231,19 +215,19 @@ These are then returned as factors. Default is c("Site", "Sensor").</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">tidy_TRHdata</span><span class="op">(</span><span class="va">mydata</span>, avg_time <span class="op">=</span> <span class="st">"hour"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 5</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Site   Sensor Date                 Temp    RH</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> London Room 1 2024-01-01 <span style="color: #949494;">00:00:00</span>  21.8  36.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> London Room 1 2024-01-01 <span style="color: #949494;">01:00:00</span>  21.7  36.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> London Room 1 2024-01-01 <span style="color: #949494;">02:00:00</span>  21.6  36  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Date                Site   Sensor  Temp    RH</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2024-01-01 <span style="color: #949494;">00:00:00</span> London Room 1  21.8  36.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2024-01-01 <span style="color: #949494;">01:00:00</span> London Room 1  21.7  36.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2024-01-01 <span style="color: #949494;">02:00:00</span> London Room 1  21.6  36  </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">mydata</span> <span class="op">|&gt;</span> <span class="fu"><a href="add_humidity_calcs.html">add_humidity_calcs</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">tidy_TRHdata</span><span class="op">(</span>avg_time <span class="op">=</span> <span class="st">"hour"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 13</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Site   Sensor Date                 Temp    RH   Pws    Pw    DP    AH    AD</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> London Room 1 2024-01-01 <span style="color: #949494;">00:00:00</span>  21.8  36.6  26.1  9.56  6.30  7.01  1.19</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> London Room 1 2024-01-01 <span style="color: #949494;">01:00:00</span>  21.7  36.2  26.0  9.41  6.08  6.91  1.19</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> London Room 1 2024-01-01 <span style="color: #949494;">02:00:00</span>  21.6  36    25.8  9.29  5.89  6.82  1.19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Date                Site   Sensor  Temp    RH   Pws    Pw    DP    AH    AD</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2024-01-01 <span style="color: #949494;">00:00:00</span> London Room 1  21.8  36.6  26.1  9.56  6.30  7.01  1.19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2024-01-01 <span style="color: #949494;">01:00:00</span> London Room 1  21.7  36.2  26.0  9.41  6.08  6.91  1.19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2024-01-01 <span style="color: #949494;">02:00:00</span> London Room 1  21.6  36    25.8  9.29  5.89  6.82  1.19</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 3 more variables: MR &lt;dbl&gt;, SH &lt;dbl&gt;, Enthalpy &lt;dbl&gt;</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
