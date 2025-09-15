@@ -4,7 +4,7 @@ utils::globalVariables(
     "mouldtable", "days_mould", "time_diff", "mould_prob",
     "AbsLow", "AbsHigh", "AbsUpper", "Abs",
     "AH", "DP",
-    "Mould_LIM",
+    "Mould_LIM", "Date_floor", "all_of",
     "Temperature (C)", "Humidity (%RH)",
     "y_Axis", "y_Low", "y_High", "y_func_val",
     "DATE", "RECEIVER", "TRANSMITTER", "TEMPERATURE", "HUMIDITY",

@@ -2,53 +2,44 @@
 #'
 #' @description
 #' This function creates a Shiny module server for uploading CSV or Excel files,
-#' processing the data, optional hourly averaging and returning a tidied dataset.
-#'
+#' processing the data, optional time averaging as specified by the user,
+#' and returning a tidied dataset.
 #'
 #' @param id A character string that corresponds to the ID used in the UI function
 #'  for this module.
 #'
-#' @return A reactive expression containing the tidied data frame with the following columns:
-#'
-#'   \itemize{
-#'     \item Date: Date and time, floored to the hour
-#'     \item Sensor: Sensor identifier
-#'     \item Site: Site identifier
-#'     \item Temp: Median average temperature for each hour
-#'     \item RH: Median average relative humidity for each hour
-#'   }
+#' @return The returned reactive expression is a tidied data frame containing columns including Site and Sensor identifiers,
+#' a Date column rounded down (floored) to the user-selected averaging interval,
+#' median or chosen average temperature and relative humidity for each group,
+#' and any other numeric variables that were averaged if present in the input data.
+
 #'
 #' @export
 #'
 #' @import shiny
 #' @importFrom readxl read_excel excel_sheets
+#' @importFrom readr write_excel_csv
 #' @importFrom tools file_ext
 #' @importFrom dplyr rename_with case_when mutate group_by across summarise
 #' @importFrom lubridate parse_date_time floor_date
 #' @importFrom stats median
 #'
-#'
 #' @examples
 #' if(interactive()) {
-#'
-#' # In a Shiny app:
-#' ui <- fluidPage(
-#'   shiny_dataUploadUI("dataUpload")
-#' )
-#'
-#' server <- function(input, output, session) {
-#'   data <- shiny_dataUploadServer("dataUpload")
-#' }
-#'
+#'   ui <- fluidPage(
+#'     shiny_dataUploadUI("dataUpload")
+#'   )
+#'   server <- function(input, output, session) {
+#'     data <- shiny_dataUploadServer("dataUpload")
+#'   }
 #' }
 #'
 #'
 shiny_dataUploadServer <- function(id) {
   moduleServer(id, function(input, output, session) {
-
     raw_data <- reactiveVal(NULL)
+    csv_cache <- reactiveVal(NULL)
 
-    # Dynamically generate file upload UI
     output$file_upload <- renderUI({
       tagList(
         fileInput(session$ns("file"), "Choose CSV or Excel File",
@@ -58,30 +49,30 @@ shiny_dataUploadServer <- function(id) {
       )
     })
 
-    # Update sheet selector if Excel file selected
     observeEvent(input$file, {
       req(input$file)
-      file_ext <- tools::file_ext(input$file$name)
-      if (file_ext %in% c("xls", "xlsx")) {
+      ext <- tools::file_ext(input$file$name)
+      if (ext %in% c("xls", "xlsx")) {
         sheets <- readxl::excel_sheets(input$file$datapath)
         output$sheet_selector <- renderUI({
           selectInput(session$ns("sheet"), "Select Sheet", choices = sheets)
         })
       } else {
-        output$sheet_selector <- renderUI(NULL) # Hide for CSV
+        output$sheet_selector <- renderUI(NULL)
       }
     })
 
-    # File upload reactive process triggered by button
     observeEvent(input$upload, {
       req(input$file)
-      file_ext <- tools::file_ext(input$file$name)
+      ext <- tools::file_ext(input$file$name)
       tryCatch({
-        data <- switch(file_ext,
-                       "csv" = read.csv(input$file$datapath),
-                       "xls" = readxl::read_excel(input$file$datapath, sheet = input$sheet),
-                       "xlsx" = readxl::read_excel(input$file$datapath, sheet = input$sheet),
-                       stop("Unsupported file type"))
+        data <- switch(
+          ext,
+          "csv" = read.csv(input$file$datapath, stringsAsFactors = FALSE),
+          "xls" = readxl::read_excel(input$file$datapath, sheet = input$sheet),
+          "xlsx" = readxl::read_excel(input$file$datapath, sheet = input$sheet),
+          stop("Unsupported file type")
+        )
         raw_data(data)
         showNotification("Data uploaded successfully!", type = "message")
       }, error = function(e) {
@@ -89,38 +80,39 @@ shiny_dataUploadServer <- function(id) {
       })
     })
 
-    # Reactive data processing depending on averaging option
     tidied_data <- reactive({
       req(raw_data())
-      dat <- raw_data() |>
-        dplyr::rename_with(~dplyr::case_when(
-          . == "DATE" ~ "Date",
-          . == "TEMPERATURE" ~ "Temp",
-          . == "HUMIDITY" ~ "RH",
-          . == "RECEIVER" ~ "Site",
-          . == "TRANSMITTER" ~ "Sensor",
-          TRUE ~ .
-        )) |>
-        dplyr::mutate(
-          Date = lubridate::parse_date_time(
-            Date,
-            orders = c("ymd HMS", "ymd HM", "ymd", "dmy HMS", "dmy HM", "dmy", "mdy HMS", "mdy HM", "mdy"),
-            quiet = TRUE),
-          RH = as.numeric(RH)
-        )
-
-      if (is.null(input$avg_option) || input$avg_option == "hourly") {
-        dat <- dat |>
-          dplyr::mutate(Date = lubridate::floor_date(Date, unit = "hour")) |>
-          dplyr::group_by(Date, Sensor, Site) |>
-          dplyr::summarise(
-            Temp = median(Temp, na.rm = TRUE),
-            RH = median(RH, na.rm = TRUE),
-            .groups = "drop"
-          )
-      }
-      dat
+      interval <- tolower(trimws(input$avg_interval %||% "none"))
+      stat <- tolower(trimws(input$avg_statistic %||% "median"))
+      tidy_TRHdata(
+        raw_data(),
+        avg_time = interval,
+        avg_statistic = stat,
+        avg_groups = c("Site", "Sensor")
+      )
     })
+
+    observeEvent(tidied_data(), {
+      df <- tidied_data()
+      if (is.null(df) || nrow(df) == 0) {
+        csv_cache(NULL)
+        return()
+      }
+      csv_file <- tempfile(fileext = ".csv")
+      readr::write_excel_csv(df, csv_file)
+      csv_cache(csv_file)
+    }, ignoreInit = TRUE)
+
+    # Download handler serves cached CSV file
+    output$download_csv <- downloadHandler(
+      filename = function() paste0("tidied_data_", Sys.Date(), ".csv"),
+      content = function(file) {
+        req(csv_cache())
+        file.copy(csv_cache(), file)
+      }
+    )
+    # Prevent suspension when hidden
+    outputOptions(output, "download_csv", suspendWhenHidden = FALSE)
 
     return(tidied_data)
   })

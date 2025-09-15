@@ -24,39 +24,38 @@ The function requires at least the date, temperature, and relative humidity colu
 Site and sensor columns are optional; if missing, the function will add default
 columns named "Site" and "Sensor" respectively with values below.}
 
-\item{Site}{A string specifying the name of the column in `mydata` that contains
+\item{Site}{A string specifying the name of the column in \code{mydata} that contains
 location information. If missing, defaults to "Site".}
 
-\item{Sensor}{A string specifying the name of the column in `mydata` that contains
+\item{Sensor}{A string specifying the name of the column in \code{mydata} that contains
 sensor information. If missing, defaults to "Sensor".}
 
-\item{Date}{A string specifying the name of the column in `mydata` that contains
+\item{Date}{A string specifying the name of the column in \code{mydata} that contains
 date information. Default is "Date". The column should ideally contain ISO 8601
 date-time formatted strings (e.g. "2025-01-01 00:00:00"), but the function will try to
 parse a variety of common datetime formats.}
 
-\item{Temp}{A string specifying the name of the column in `mydata` that contains
+\item{Temp}{A string specifying the name of the column in \code{mydata} that contains
 temperature data. Default is "Temp".}
 
-\item{RH}{A string specifying the name of the column in `mydata` that contains
+\item{RH}{A string specifying the name of the column in \code{mydata} that contains
 relative humidity data. Default is "RH".}
 
 \item{avg_time}{Character string specifying the averaging interval.
 One of "none" (no averaging), "hour", "day", or "month", etc.
-See \code{openair::timeAverage()} for more options.}
+See \code{lubridate::floor_date()} for rounding intervals.}
 
-\item{avg_statistic}{Statistic for averaging; default is "median".
-See \code{openair::timeAverage()} for more options.}
+\item{avg_statistic}{Statistic for averaging; default is "median".}
 
 \item{avg_groups}{Character vector specifying grouping columns for time-averaging.
 These are then returned as factors. Default is c("Site", "Sensor").}
 
-\item{...}{Additional arguments to supply to \code{openair::timeAverage()}.}
+\item{...}{Additional arguments (currently unused).}
 }
 \value{
 A tidy data frame with processed TRH data. When averaging,
-  date times are floored, Temp and RH are averaged, groups are factored,
-  and missing date times are padded with NA rows.
+date times are floored, temperature and humidity are averaged,
+groups are factored, and implausible values filtered.
 }
 \description{
 This function tidies and processes temperature, relative humidity, and date data
@@ -71,22 +70,17 @@ defaults to adding columns named "Site" and "Sensor".
 This can be changed in the arguments.
 
 When an averaging option of "hour", "day", "month" is selected,
-it uses \code{openair::timeAverage()} to floor datetimes and calculate averages,
+it uses \code{dplyr} and \code{lubridate} functions to floor datetimes and calculate averages,
 the default is median average.
-See \code{openair::timeAverage()} for more options for averaging windows and statistics.
-Missing time points are padded with NA.
-
+See \code{lubridate::floor_date()} for rounding intervals.
 
 \itemize{
   \item Filters out rows with missing dates.
   \item Renames columns for consistency.
   \item Converts temperature and relative humidity to numeric.
   \item Adds default columns "Site" and "Sensor" when missing or not supplied in args.
-  \item Rounds dates down to the nearest hour, day, or month as per `avg_time`.
-         See \code{openair::timeAverage()} for more options. Default is "none".
-  \item Calculates averages for temperature and relative humidity according to `avg_statistic`.
-         See \code{openair::timeAverage()} for more options. Default is "median".
-  \item Pads data with missing datetime rows having NA values for other columns if `avg_time` is chosen.
+  \item Rounds dates down to the nearest hour, day, or month as per \code{avg_time}.
+  \item Calculates averages for temperature and relative humidity according to \code{avg_statistic}.
   \item Filters out implausible temperature and humidity values (outside -50-80°C and 0-100\%RH).
 }
 }
