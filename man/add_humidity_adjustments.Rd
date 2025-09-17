@@ -2,7 +2,7 @@
 % Please edit documentation in R/add_humidity_adjustments.R
 \name{add_humidity_adjustments}
 \alias{add_humidity_adjustments}
-\title{Adjust Humidity with temperature and/or absolute humidity, RH zones and Energy costs}
+\title{Adjust Humidity and add RH zones}
 \usage{
 add_humidity_adjustments(
   mydata,
@@ -72,9 +72,9 @@ The input dataframe augmented with multiple humidity and temperature adjustment 
 }
 }
 \description{
-This function processes a dataframe with temperature and relative humidity data,
-computes humidity-related variables, and classifies the data into climate control zones.
-It generates adjusted temperature and humidity values based on specified thresholds.
+This function processes a dataframe with temperature and relative humidity data
+and classifies the data into climate control zones.
+It generates adjusted temperature and humidity values based on thresholds.
 }
 \examples{
 

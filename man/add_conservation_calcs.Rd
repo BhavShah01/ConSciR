@@ -2,7 +2,7 @@
 % Please edit documentation in R/add_conservation_calcs.R
 \name{add_conservation_calcs}
 \alias{add_conservation_calcs}
-\title{Add Conservation calculations to temperature and humidity data}
+\title{Add Conservation Risks}
 \usage{
 add_conservation_calcs(mydata, Temp = "Temp", RH = "RH", ...)
 }

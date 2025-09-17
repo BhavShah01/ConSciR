@@ -93,17 +93,18 @@ add_time_vars <- function(
       ...
     ) |>
     mutate(
-      day = floor_date(date, unit = "day"),
-      hour = hour(date),
-      dayhour = floor_date(date, unit = "hour"),
-      weekday = wday(date, label = TRUE, abbr = TRUE),
-      Month = month(date),
-      month = month(date, label = TRUE, abbr = TRUE),
-      year = year(date),
+      Date = date,
+      day = floor_date(Date, unit = "day"),
+      hour = hour(Date),
+      dayhour = floor_date(Date, unit = "hour"),
+      weekday = wday(Date, label = TRUE, abbr = TRUE),
+      Month = month(Date),
+      month = month(Date, label = TRUE, abbr = TRUE),
+      year = year(Date),
       DayYear = make_date(
         year = year(now()),
-        month = month(date),
-        day = day(date)
+        month = month(Date),
+        day = day(Date)
       ),
       Summer = if_else(
         DayYear >= as_date(paste(year(now()), summer_start, sep = "-")) &

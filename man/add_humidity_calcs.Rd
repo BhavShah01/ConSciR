@@ -2,7 +2,7 @@
 % Please edit documentation in R/add_humidity_calcs.R
 \name{add_humidity_calcs}
 \alias{add_humidity_calcs}
-\title{Add Humidity calculations to temperature and humidity data}
+\title{Add Humidity calculations}
 \usage{
 add_humidity_calcs(mydata, Temp = "Temp", RH = "RH", P_atm = 1013.25, ...)
 }

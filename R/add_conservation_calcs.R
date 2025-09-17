@@ -1,4 +1,4 @@
-#' Add Conservation calculations to temperature and humidity data
+#' Add Conservation Risks
 #'
 #' @description
 #' Appends columns for conservation-risks: mould risk, preservation indices, equilibrium moisture,

@@ -1,4 +1,4 @@
-#' Add Humidity calculations to temperature and humidity data
+#' Add Humidity calculations
 #'
 #' @description
 #' This function adds several humidity variables

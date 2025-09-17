@@ -1,9 +1,9 @@
-#' Adjust Humidity with temperature and/or absolute humidity, RH zones and Energy costs
+#' Adjust Humidity and add RH zones
 #'
 #' @description
-#' This function processes a dataframe with temperature and relative humidity data,
-#' computes humidity-related variables, and classifies the data into climate control zones.
-#' It generates adjusted temperature and humidity values based on specified thresholds.
+#' This function processes a dataframe with temperature and relative humidity data
+#' and classifies the data into climate control zones.
+#' It generates adjusted temperature and humidity values based on thresholds.
 #'
 #'
 #' @param mydata A dataframe containing temperature and relative humidity data.
