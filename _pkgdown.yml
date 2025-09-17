@@ -8,10 +8,7 @@ reference:
   desc: Interactive applications to use and demonstrate tools in the package.
   contents:
   - run_ConSciR_app
-  - run_Mould_app
-  - run_SilicaGel_app
-  - run_TidyData_app
-- title: Tools for the analysis of conservation data
+- title: Useful tools for conservation data
   desc: Tidying, adding variables, summaries and graphing.
   contents:
   - graph_TRH
@@ -25,7 +22,7 @@ reference:
   - tidy_Meaco
   - tidy_Hanwell
 - title: Conservation tools
-  desc: Tools for the analysis of data for conservators.
+  desc: Risk calculations; mould, preservation, lifetime, moisture equilibrium.
   contents:
   - calcMould_Zeng
   - calcMould_VTT

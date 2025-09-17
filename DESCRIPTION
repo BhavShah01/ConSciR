@@ -18,7 +18,7 @@ Authors@R: c(
   )
 Maintainer: Bhavesh Shah <bhaveshshah01@gmail.com>
 Description: Provides data science tools for conservation science, including
-    methods for environmental analysis applications, humidity calculations,
+    methods for environmental data analysis, humidity calculations,
     sustainability metrics, engineering calculations, and data
     visualisation. Supports conservators, scientists, and engineers
     working with cultural heritage preventive conservation data.

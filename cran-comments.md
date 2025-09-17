@@ -11,3 +11,4 @@
 - Corrected bugs and improved calculations in existing functions ("tidy_", "calc_" and "graph_").
 - Cleaned up documentation and clarified examples for the user manual.
 - Package passes checks and is ready for resubmission.
+- New logo.

@@ -8,7 +8,7 @@ graph_TRHbivariate(
   mydata,
   Temp = "Temp",
   RH = "RH",
-  z_func = "calcAH",
+  z_func = "none",
   facet_by = "Sensor",
   LowT = 16,
   HighT = 25,
@@ -27,7 +27,7 @@ graph_TRHbivariate(
 
 \item{RH}{The name of the column in mydata containing relative humidity data ("RH").}
 
-\item{z_func}{A character string specifying which environmental metric function to use. See details for options (default `calcAH`).}
+\item{z_func}{A character string specifying which environmental metric function to use. See details for options (default `none`).}
 
 \item{facet_by}{Name of categorical column to facet by; defaults to "Sensor".}
 

@@ -30,15 +30,17 @@ shiny_dataUploadUI <- function(id) {
   ns <- NS(id)
   tagList(
     uiOutput(ns("file_upload")),
-    textInput(
+    selectInput(
       ns("avg_interval"),
-      label = "Time averaging interval (e.g. 'hour', 'day', 'month'):",
-      value = "none"
+      label = "Time averaging interval",
+      choices = c("none", "hour", "day", "week", "month"),
+      selected = "none"
     ),
-    textInput(
+    selectInput(
       ns("avg_statistic"),
-      label = "Averaging statistic (e.g. 'median', 'mean'):",
-      value = "median"
+      label = "Averaging statistic",
+      choices = c("median", "mean", "sd"),
+      selected = "median"
     ),
     downloadButton(ns("download_csv"), "Download Tidied CSV")
   )

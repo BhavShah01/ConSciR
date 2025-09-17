@@ -231,7 +231,7 @@ tidy_TRHdata <- function(mydata,
       dplyr::summarise(across(all_of(avg_cols),
                               ~ match.fun(avg_statistic)(., na.rm = TRUE)),
                        .groups = "drop")
-    # Rename Date_floor back to Date
+    # Rename back to Date
     dat <- dat |> dplyr::rename(Date = Date_floor)
   }
 
@@ -242,9 +242,8 @@ tidy_TRHdata <- function(mydata,
 
   # if (avg_time != "none") {
   #   dat <- dat |>
-  #     dplyr::group_by(across(all_of(avg_groups))) |>
-  #     padr::pad("Date") |>
-  #     dplyr::ungroup()
+  #     # dplyr::group_by(across(all_of(avg_groups))) |>
+  #     padr::pad("Date", interval = avg_time, group = c(avg_groups)) # |> dplyr::ungroup()
   # }
 
   return(dat)

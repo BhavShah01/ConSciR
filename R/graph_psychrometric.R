@@ -136,6 +136,7 @@ graph_psychrometric <- function(mydata,
 
   y_axis_label <- switch(
     y_func_name,
+    "none" = NA_real_,
     "calcHR" = "Humidity Ratio (g/kg)",
     "calcMR" = "Mixing Ratio (g/kg)",
     "calcAH" = "Absolute Humidity (g/m^3)",

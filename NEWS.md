@@ -6,6 +6,7 @@
 * Added formulation options to `calcAH` function.
 * Removed ConSciR-TRHbivariate and ConSciR-Psychrometric Shiny applications. 
   Moved these functions to ConSciR-App: `run_ConSciR_app()`. 
+* Updated logo. 
 
 # ConSciR 0.2.0
 

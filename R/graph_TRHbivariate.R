@@ -26,7 +26,7 @@
 #' @param mydata A data frame containing temperature (Temp) and relative humidity (RH) columns.
 #' @param Temp The name of the column in mydata containing temperature data ("Temp").
 #' @param RH The name of the column in mydata containing relative humidity data ("RH").
-#' @param z_func A character string specifying which environmental metric function to use. See details for options (default `calcAH`).
+#' @param z_func A character string specifying which environmental metric function to use. See details for options (default `none`).
 #' @param facet_by Name of categorical column to facet by; defaults to "Sensor".
 #' @param LowT Numeric value for lower temperature limit of the target range. Default is 16°C.
 #' @param HighT Numeric value for upper temperature limit of the target range. Default is 25°C.
@@ -66,7 +66,7 @@
 graph_TRHbivariate <- function(mydata,
                                Temp = "Temp",
                                RH = "RH",
-                               z_func = "calcAH",
+                               z_func = "none",
                                facet_by = "Sensor",
                                LowT = 16, HighT = 25,
                                LowRH = 40, HighRH = 60,
@@ -79,6 +79,7 @@ graph_TRHbivariate <- function(mydata,
     mydata |>
     dplyr::mutate(
       ColorValue = dplyr::case_when(
+        z_func == "none" ~ NA_real_,
         z_func == "calcMR" ~ calcMR(.data[[Temp]], .data[[RH]]),
         z_func == "calcHR" ~ calcHR(.data[[Temp]], .data[[RH]]),
         z_func == "calcAH" ~ calcAH(.data[[Temp]], .data[[RH]]),

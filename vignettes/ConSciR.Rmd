@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-`ConSciR` provides data science tools for conservation science, including methods for environmental analysis, humidity calculations, sustainability metrics, conservation calculations, and data visualisation. It is designed to support conservators, scientists, and engineers by streamlining common calculations and tasks encountered in heritage conservation workflows. The package was motivated by the developing tools and frameworks outlined in Cosaert and Beltran et al. (2022) ["Tools for the Analysis of Collection Environments"](https://www.getty.edu/conservation/publications_resources/pdf_publications/tools_for_the_analysis_of_collection_environments.html "Getty Tools publication").
+`ConSciR` provides tools for the analysis of cultural heritage preventive conservation data. It includes functions for environmental data analysis, humidity calculations, sustainability metrics, conservation risks, and data visualisations such as psychrometric charts. It is designed to support conservators, scientists, and engineers by streamlining common calculations and tasks encountered in heritage conservation workflows. The package is motivated by the framework outlined in Cosaert and Beltran et al. (2022) "Tools for the Analysis of Collection Environments" ["Tools for the Analysis of Collection Environments"](https://www.getty.edu/conservation/publications_resources/pdf_publications/tools_for_the_analysis_of_collection_environments.html "Getty Tools publication").
 
 ## Install and load
 
@@ -139,7 +139,7 @@ mydata |>
 mydata |>
   mutate(Mould = calcMould_VTT(Temp, RH)) |>
   ggplot() +
-  geom_area(aes(Date, Mould), fill = "darkgreen", alpha = 0.5) +
+  geom_area(aes(Date, Mould), fill = "lightseagreen") +
   labs(title = "Mould Growth Index", y = "Mould Index", x = NULL) + 
   theme_bw()
 ```

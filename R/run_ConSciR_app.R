@@ -1,7 +1,21 @@
 # R/run_ConSciR_app.R
-#' Run ConSciR Shiny Application (TRH, Psychrometric, Bivariate charts)
+#' Run the ConSciR Shiny Application
 #'
-#' @return Shiny object
+#' @description
+#' Launch the ConSciR Shiny app which includes tools for temperature and
+#' relative humidity monitoring such as TRH charts, psychrometric charts,
+#' bivariate plots, mould growth predictions, and a silica gel calculator.
+#'
+#' Users can upload CSV or Excel files formatted with "Date", "Temp",
+#' and "RH" columns. The app provides data tidying functions and
+#' downloadable cleaned CSV files.
+#'
+#' The silica gel calculator estimates the required amount of silica gel
+#' based on temperature, humidity data, case dimensions, and
+#' air exchange rate (AER) if known.
+#'
+#' @return
+#' A Shiny application object that runs interactively.
 #' @export
 #'
 #' @importFrom shiny runApp

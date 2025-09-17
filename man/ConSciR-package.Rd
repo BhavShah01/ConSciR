@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Provides data science tools for conservation science, including methods for environmental analysis applications, humidity calculations, sustainability metrics, engineering calculations, and data visualisation. Supports conservators, scientists, and engineers working with cultural heritage preventive conservation data. The package is motivated by the framework outlined in Cosaert and Beltran et al. (2022) "Tools for the Analysis of Collection Environments" \url{https://www.getty.edu/conservation/publications_resources/pdf_publications/tools_for_the_analysis_of_collection_environments.html}.
+Provides data science tools for conservation science, including methods for environmental data analysis, humidity calculations, sustainability metrics, engineering calculations, and data visualisation. Supports conservators, scientists, and engineers working with cultural heritage preventive conservation data. The package is motivated by the framework outlined in Cosaert and Beltran et al. (2022) "Tools for the Analysis of Collection Environments" \url{https://www.getty.edu/conservation/publications_resources/pdf_publications/tools_for_the_analysis_of_collection_environments.html}.
 }
 \seealso{
 Useful links:
