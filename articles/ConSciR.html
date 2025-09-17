@@ -201,7 +201,7 @@ manual or use <code>?function_name</code> within R.</p>
 <span>  <span class="fu"><a href="../reference/add_humidity_calcs.html">add_humidity_calcs</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># add humidity values </span></span>
 <span>  <span class="fu"><a href="../reference/add_conservation_calcs.html">add_conservation_calcs</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># add conservation risks</span></span>
 <span>  <span class="fu"><a href="../reference/add_humidity_adjustments.html">add_humidity_adjustments</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># add environmental zones and RH adjustments</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 63</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 64</span></span></span>
 <span><span class="co">#&gt;   Site   Sensor date                 Temp    RH seasonyear      season monthyear</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;ord&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;ord&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;ord&gt;</span>    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> London Room 1 2024-01-01 <span style="color: #949494;">00:00:00</span>  21.8  36.8 winter (DJF) -… winte… January …</span></span>
@@ -210,10 +210,10 @@ manual or use <code>?function_name</code> within R.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> London Room 1 2024-01-01 <span style="color: #949494;">00:44:59</span>  21.7  36.6 winter (DJF) -… winte… January …</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> London Room 1 2024-01-01 <span style="color: #949494;">00:59:59</span>  21.7  36.5 winter (DJF) -… winte… January …</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> London Room 1 2024-01-01 <span style="color: #949494;">01:14:59</span>  21.7  36.2 winter (DJF) -… winte… January …</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 55 more variables: daylight &lt;fct&gt;, day &lt;dttm&gt;, hour &lt;int&gt;, dayhour &lt;dttm&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   weekday &lt;ord&gt;, Month &lt;dbl&gt;, month &lt;ord&gt;, year &lt;dbl&gt;, DayYear &lt;date&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   Summer &lt;chr&gt;, Period &lt;chr&gt;, Pws &lt;dbl&gt;, Pw &lt;dbl&gt;, DP &lt;dbl&gt;, AH &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   AD &lt;dbl&gt;, MR &lt;dbl&gt;, SH &lt;dbl&gt;, Enthalpy &lt;dbl&gt;, Mould_LIM &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 56 more variables: daylight &lt;fct&gt;, Date &lt;dttm&gt;, day &lt;dttm&gt;, hour &lt;int&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   dayhour &lt;dttm&gt;, weekday &lt;ord&gt;, Month &lt;dbl&gt;, month &lt;ord&gt;, year &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   DayYear &lt;date&gt;, Summer &lt;chr&gt;, Period &lt;chr&gt;, Pws &lt;dbl&gt;, Pw &lt;dbl&gt;, DP &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   AH &lt;dbl&gt;, AD &lt;dbl&gt;, MR &lt;dbl&gt;, SH &lt;dbl&gt;, Enthalpy &lt;dbl&gt;, Mould_LIM &lt;dbl&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   Mould_risk &lt;chr&gt;, Mould_rate &lt;dbl&gt;, Mould_index &lt;dbl&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   PreservationIndex &lt;dbl&gt;, Lifetime &lt;dbl&gt;, EMC_wood &lt;dbl&gt;, TRH_within &lt;lgl&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   T_lower &lt;lgl&gt;, T_higher &lt;lgl&gt;, RH_lower &lt;lgl&gt;, RH_higher &lt;lgl&gt;, …</span></span></span></code></pre></div>
