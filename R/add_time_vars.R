@@ -1,8 +1,16 @@
-#' Add Time Variables to a dataframe
+#' Add Time Variables
 #'
 #' This function adds multiple time-related variables to a dataframe with a Date column.
-#' It creates standard factors such as season, month-year, day-hour, and determines summer/winter seasonality.
-#' It also allows flexible specification of summer and winter start/end dates, and a custom time period.
+#' It creates standard factors such as season, month-year, day-hour, and determines summer/winter.
+#' It also allows flexible specification of summer and winter start/end dates,
+#' and a custom time period.
+#'
+#' @details
+#' The variables \code{seasonyear}, \code{season}, \code{monthyear}, and \code{daylight}
+#' are created using the \code{openair::cutData()}
+#' function internally and rely on geographic coordinates (latitude, longitude)
+#' to calculate daylight status.
+#' Be sure \code{openair} is installed and loaded for these variables.
 #'
 #' @param mydata A dataframe containing a date/time column labelled "Date" and "Sensor" column.
 #' @param Date The name of the date/time column in `mydata` (default "Date").
@@ -16,17 +24,34 @@
 #' @param longitude Longitude for daylight calculations (default -0.5).
 #' @param ... Additional arguments passed to `openair::cutData()`.
 #'
-#' @return Dataframe with appended columns:
-#'   \describe{
-#'     \item{seasonyear, season, monthyear, daylight}{Standard time factors as used in \code{openair::cutData()}.}
-#'     \item{day, hour, dayhour, daymonth, month, year}{Time breakdowns for aggregation and analysis.}
-#'     \item{Season}{Categorises row as "Summer" or "Winter" using user-specified thresholds.}
-#'     \item{Period}{Flags whether each date falls within custom period (e.g. exhibition), with assigned label.}
-#'   }
+#' @return A data frame with additional time-related columns appended:
+#' \describe{
+#'   \item{seasonyear}{Combined year and season factor created by \code{openair::cutData()};
+#'          useful for seasonal analyses.}
+#'   \item{season}{Season factor (e.g., Spring, Summer) from \code{openair::cutData()}.}
+#'   \item{monthyear}{Factor combining month and year, created by \code{openair::cutData()}
+#'          to assist month-based grouping.}
+#'   \item{daylight}{Boolean or factor indicating daylight presence/absence,
+#'          derived using \code{openair::cutData()} with latitude and longitude inputs.}
+#'   \item{day}{Date part of the timestamp, rounded down to day boundary, useful for daily aggregation.}
+#'   \item{hour}{Hour of the day extracted from the datetime.}
+#'   \item{dayhour}{Datetime floored to the hour; useful for hourly time series analysis.}
+#'   \item{weekday}{Weekday name/factor, abbreviated, extracted from the date.}
+#'   \item{month}{Month number and its labelled factor version; useful for calendar-based grouping.}
+#'   \item{year}{Year extracted from the datetime for annual analyses.}
+#'   \item{DayYear}{Date with the current year but month and day taken from the
+#'          original date; used to assign seasons and periods relative to current year.}
+#'   \item{Summer}{A factor ("Summer" or "Winter") determined by comparison of \code{DayYear}
+#'          with user-defined \code{summer_start} and \code{summer_end} dates,
+#'          for custom seasonality modelling.}
+#'   \item{Period}{Character flag identifying whether the date falls within a user-defined
+#'          custom period (e.g., an exhibition), labelled by \code{period_label}.
+#'          Returns \code{NA} if no period defined.}
+#' }
 #'
 #'
-#' @importFrom lubridate floor_date hour month year day minute make_datetime make_date now as_date
-#' @importFrom dplyr mutate if_else
+#' @importFrom lubridate floor_date hour month year day make_date now as_date wday
+#' @importFrom dplyr mutate if_else rename
 #' @import openair
 #' @export
 #'
@@ -51,7 +76,6 @@ add_time_vars <- function(
     ...
 ){
 
-  # Ensure Date column is POSIXct
   mydata[[Date]] <- as.POSIXct(mydata[[Date]])
 
   # Rename Date column to 'date' to match openair expectation
@@ -72,7 +96,8 @@ add_time_vars <- function(
       day = floor_date(date, unit = "day"),
       hour = hour(date),
       dayhour = floor_date(date, unit = "hour"),
-      daymonth = day(date),
+      weekday = wday(date, label = TRUE, abbr = TRUE),
+      Month = month(date),
       month = month(date, label = TRUE, abbr = TRUE),
       year = year(date),
       DayYear = make_date(
@@ -80,7 +105,7 @@ add_time_vars <- function(
         month = month(date),
         day = day(date)
       ),
-      Season = if_else(
+      Summer = if_else(
         DayYear >= as_date(paste(year(now()), summer_start, sep = "-")) &
           DayYear < as_date(paste(year(now()), summer_end, sep = "-")),
         "Summer", "Winter"
