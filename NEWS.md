@@ -1,4 +1,4 @@
-# ConSciR 0.3.0 (development version)
+# ConSciR 0.3.0
 
 * Added humidity, time, adjustment functions - currently under development.
 * Added new contributors to package.

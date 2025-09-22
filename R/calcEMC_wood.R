@@ -12,7 +12,7 @@
 #' environment and is no longer gaining or losing moisture under specific
 #' temperature and relative humidity.
 #'
-#' A safe EMC range for wood is typically between 6% and 20%.
+#' A safe EMC range for wood is typically between 6\% and 20\%.
 #' This range helps to prevent issues such as warping, cracking, and mold growth,
 #' which can occur if the moisture content falls below or exceeds these levels.
 #'
