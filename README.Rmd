@@ -26,7 +26,7 @@ knitr::opts_chunk$set(
 
 `ConSciR` provides tools for the analysis of cultural heritage preventive conservation data. 
 
-It includes functions for environmental data analysis, humidity calculations, sustainability metrics, conservation risks, and data visualisations such as psychrometric charts. It is designed to support conservators, scientists, and engineers by streamlining common calculations and tasks encountered in heritage conservation workflows. The package is motivated by the framework outlined in Cosaert and Beltran et al. (2022) "Tools for the Analysis of Collection Environments" ["Tools for the Analysis of Collection Environments"](https://www.getty.edu/conservation/publications_resources/pdf_publications/tools_for_the_analysis_of_collection_environments.html "Getty Tools publication").
+It includes functions for environmental data analysis, humidity calculations, sustainability metrics, conservation risks, and data visualisations such as psychrometric charts. It is designed to support conservators, scientists, and engineers by streamlining common calculations and tasks encountered in heritage conservation workflows. The package is motivated by the framework outlined in Cosaert and Beltran et al. (2022) ["Tools for the Analysis of Collection Environments"](https://www.getty.edu/conservation/publications_resources/pdf_publications/tools_for_the_analysis_of_collection_environments.html "Getty Tools publication").
 
 `ConSciR` is intended for:\
 - Conservators working in museums, galleries, and heritage sites\

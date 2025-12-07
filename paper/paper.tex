@@ -1,0 +1,591 @@
+\documentclass[10pt,a4paper,onecolumn]{article}
+\usepackage{marginnote}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{authblk,etoolbox}
+\usepackage{titlesec}
+\usepackage{calc}
+\usepackage{tikz}
+\usepackage{hyperref}
+\hypersetup{colorlinks,breaklinks,
+            urlcolor=[rgb]{0.0, 0.5, 1.0},
+            linkcolor=[rgb]{0.0, 0.5, 1.0}}
+\usepackage{caption}
+\usepackage{tcolorbox}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{seqsplit}
+\usepackage{fixltx2e} % provides \textsubscript
+\usepackage[
+  backend=biber,
+%  style=alphabetic,
+%  citestyle=numeric
+]{biblatex}
+\bibliography{paper.bib}
+
+
+
+% --- Page layout -------------------------------------------------------------
+\usepackage[top=3.5cm, bottom=3cm, right=1.5cm, left=1.0cm,
+            headheight=2.2cm, reversemp, includemp, marginparwidth=4.5cm]{geometry}
+
+% --- Default font ------------------------------------------------------------
+% \renewcommand\familydefault{\sfdefault}
+
+% --- Style -------------------------------------------------------------------
+\renewcommand{\bibfont}{\small \sffamily}
+\renewcommand{\captionfont}{\small\sffamily}
+\renewcommand{\captionlabelfont}{\bfseries}
+
+% --- Section/SubSection/SubSubSection ----------------------------------------
+\titleformat{\section}
+  {\normalfont\sffamily\Large\bfseries}
+  {}{0pt}{}
+\titleformat{\subsection}
+  {\normalfont\sffamily\large\bfseries}
+  {}{0pt}{}
+\titleformat{\subsubsection}
+  {\normalfont\sffamily\bfseries}
+  {}{0pt}{}
+\titleformat*{\paragraph}
+  {\sffamily\normalsize}
+
+
+% --- Header / Footer ---------------------------------------------------------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+%\renewcommand{\headrulewidth}{0.50pt}
+\renewcommand{\headrulewidth}{0pt}
+\fancyhead[L]{\hspace{-0.75cm}\includegraphics[width=5.5cm]{C:/Users/bhave/AppData/Local/R/win-library/4.5/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png}}
+\fancyhead[C]{}
+\fancyhead[R]{}
+\renewcommand{\footrulewidth}{0.25pt}
+
+\fancyfoot[L]{\footnotesize{\sffamily Shah et. al., (2025). ConSciR: An
+R package for Conservation Science
+data. \textit{Journal of Open Source Software}, (), . \href{https://doi.org/}{https://doi.org/}}}
+
+
+\fancyfoot[R]{\sffamily \thepage}
+\makeatletter
+\let\ps@plain\ps@fancy
+\fancyheadoffset[L]{4.5cm}
+\fancyfootoffset[L]{4.5cm}
+
+% --- Macros ---------
+
+\definecolor{linky}{rgb}{0.0, 0.5, 1.0}
+
+\newtcolorbox{repobox}
+   {colback=red, colframe=red!75!black,
+     boxrule=0.5pt, arc=2pt, left=6pt, right=6pt, top=3pt, bottom=3pt}
+
+\newcommand{\ExternalLink}{%
+   \tikz[x=1.2ex, y=1.2ex, baseline=-0.05ex]{%
+       \begin{scope}[x=1ex, y=1ex]
+           \clip (-0.1,-0.1)
+               --++ (-0, 1.2)
+               --++ (0.6, 0)
+               --++ (0, -0.6)
+               --++ (0.6, 0)
+               --++ (0, -1);
+           \path[draw,
+               line width = 0.5,
+               rounded corners=0.5]
+               (0,0) rectangle (1,1);
+       \end{scope}
+       \path[draw, line width = 0.5] (0.5, 0.5)
+           -- (1, 1);
+       \path[draw, line width = 0.5] (0.6, 1)
+           -- (1, 1) -- (1, 0.6);
+       }
+   }
+
+% --- Title / Authors ---------------------------------------------------------
+% patch \maketitle so that it doesn't center
+\patchcmd{\@maketitle}{center}{flushleft}{}{}
+\patchcmd{\@maketitle}{center}{flushleft}{}{}
+% patch \maketitle so that the font size for the title is normal
+\patchcmd{\@maketitle}{\LARGE}{\LARGE\sffamily}{}{}
+% patch the patch by authblk so that the author block is flush left
+\def\maketitle{{%
+  \renewenvironment{tabular}[2][]
+    {\begin{flushleft}}
+    {\end{flushleft}}
+  \AB@maketitle}}
+\makeatletter
+\renewcommand\AB@affilsepx{ \protect\Affilfont}
+%\renewcommand\AB@affilnote[1]{{\bfseries #1}\hspace{2pt}}
+\renewcommand\AB@affilnote[1]{{\bfseries #1}\hspace{3pt}}
+\makeatother
+\renewcommand\Authfont{\sffamily\bfseries}
+\renewcommand\Affilfont{\sffamily\small\mdseries}
+\setlength{\affilsep}{1em}
+
+
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={ConSciR: An R package for Conservation Science data},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+% Pandoc syntax highlighting
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+
+% tightlist command for lists without linebreak
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+% Pandoc citation processing
+%From Pandoc 3.1.8
+% definitions for citeproc citations
+\NewDocumentCommand\citeproctext{}{}
+\NewDocumentCommand\citeproc{mm}{%
+  \begingroup\def\citeproctext{#2}\cite{#1}\endgroup}
+\makeatletter
+ % allow citations to break across lines
+ \let\@cite@ofmt\@firstofone
+ % avoid brackets around text for \cite:
+ \def\@biblabel#1{}
+ \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
+\makeatother
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+ {\begin{list}{}{%
+  \setlength{\itemindent}{0pt}
+  \setlength{\leftmargin}{0pt}
+  \setlength{\parsep}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+   \setlength{\leftmargin}{\cslhangindent}
+   \setlength{\itemindent}{-1\cslhangindent}
+  \fi
+  % set entry spacing
+  \setlength{\itemsep}{#2\baselineskip}}}
+ {\end{list}}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+
+
+
+\title{ConSciR: An R package for Conservation Science data}
+
+        \author[1]{Bhavesh Shah}
+          \author[2]{Annelies Cosaert}
+          \author[3]{Vincent Beltran}
+    
+      \affil[1]{English Heritage, Rangers House, London, UK}
+      \affil[2]{Royal Institute for Cultural Heritage, KIK-IRPA,
+Brussels, Belgium}
+      \affil[3]{Getty Conservation Institute, Los Angeles, CA, USA}
+  \date{\vspace{-5ex}}
+
+\begin{document}
+\maketitle
+
+\marginpar{
+  %\hrule
+  \sffamily\small
+
+  {\bfseries DOI:} \href{https://doi.org/}{\color{linky}{}}
+
+  \vspace{2mm}
+
+  {\bfseries Software}
+  \begin{itemize}
+    \setlength\itemsep{0em}
+    \item \href{}{\color{linky}{Review}} \ExternalLink
+    \item \href{}{\color{linky}{Repository}} \ExternalLink
+    \item \href{}{\color{linky}{Archive}} \ExternalLink
+  \end{itemize}
+
+  \vspace{2mm}
+
+  {\bfseries Submitted:} \\
+  {\bfseries Published:} 
+
+  \vspace{2mm}
+  {\bfseries License}\\
+  Authors of papers retain copyright and release the work under a Creative Commons Attribution 4.0 International License (\href{http://creativecommons.org/licenses/by/4.0/}{\color{linky}{CC-BY}}).
+}
+
+\section{Summary}\label{summary}
+
+\texttt{ConSciR} is an R package (Team, 2024) designed for cultural
+heritage conservation, providing tools for preventive conservation data
+analysis (Cosaert \& Beltran, 2022). \texttt{ConSciR} streamlines
+workflows across museums, galleries, and heritage sites by offering
+humidity calculations, conservation risk assessments, and sustainability
+metrics (Cosaert, Gérard, Mayer, \& Deparis, 2023). The package contains
+a useful set of calculations for conservators, engineers, scientists,
+and data scientists to manage environmental data, assess collection
+risks, and develop custom analytical and communication tools in the R
+environment. In line with the FAIR principles (Larsson, Bornsäter, \&
+Hacke, 2025), \texttt{ConSciR} is intended to evolve alongside emerging
+conservation science research and user feedback.
+
+\section{Statement of need}\label{statement-of-need}
+
+Preventive conservation relies on managing environmental risks such as
+humidity, temperature, light, pests, and pollutants. Modern heritage
+management increasingly involves analysing large time-series
+environmental datasets to make sound data-driven decisions (Cosaert,
+2021). Existing workflows typically require manual data tidying and
+knowledge of how to encode, often tedious, physical chemistry,
+mechanical, biology and thermodynamic calculations (Cosaert et al.,
+2023). Pre-compiled tools have been developed for these tasks, but these
+are either paid-for services, have been deprecated, provide only single
+data point calculations or are not open-source ({``Dew point
+calculator,''} n.d.; {``eClimateNotebook,''} n.d.; Kupczak et al., 2018;
+Padfield, 2010; Pretzel, 2023; Smulders, 2014; Vaisala, n.d.). There is
+a gap for an open-source package of commonly used calculations for
+conservation to create their own bespoke tools to adhere to preventive
+conservation standards (Taylor et al., 2023). This is highlighted in the
+2022 Getty Conservation Institute's Tools paper (Cosaert \& Beltran,
+2022), for the need for practical, user-friendly, cost-efficient, and
+decision-oriented tools for environmental monitoring. \texttt{ConSciR}
+is a step towards meeting conservation needs by consolidating
+environmental data cleaning, preservation metrics and calculations into
+a single R package. Interactive Shiny applications (Chang et al., 2024)
+are included for quick data visualisation for users without prior
+training in coding.
+
+\section{Features}\label{features}
+
+The functions in \texttt{ConSciR} are grouped into three themes:
+humidity calculations, conservation tools, and sustainability metrics.
+These address heritage needs for environmental analysis, risk assessment
+for material damage, and estimating the costs of mitigation, especially
+at a time when energy efficiency is important for heritage
+organisations. Humidity functions are used to determine the relationship
+between temperature and moisture in air, helping conservators,
+scientists, and engineers understand and manage damage to
+moisture-sensitive materials and air-conditioning systems. Humidity
+calculations for dew point, absolute humidity, humidity ratio, air
+density, and vapour pressure (Buck, 1981; Wagner \& Pruß, 2002) accept
+time-series datasets in formats commonly collected by heritage
+organisations (Date, Temperature and Humidity in columns). While some
+but not all of these calculations are currently available in R using the
+humidity (Cai, 2019) and IAPWS95 (Baptista, 2025) packages, calculating
+these variables typically requires knowledge of physical chemistry when
+using these packages. Humidity calculations have been checked for
+accuracy and stability against the IAPWS95 dataset (Baptista, 2025),
+VAISALA online calculator (Vaisala, n.d.) and testthat framework
+(Wickham, 2011).
+
+To facilitate workflow integration, tidying functions are also provided
+for formatting industry-standard sensor outputs. Psychrometric charts
+and graphical outputs are included for visualisation of the humidity
+functions. The conservation tools offer object damage calculations, for
+example, models for mould growth (Hukka \& Viitanen, 1999; Viitanen,
+Krus, Ojanen, Eitner, \& Zirkelbach, 2015; Zeng et al., 2023) and
+lifetime estimates for organic materials (Michalski, 2013).
+Sustainability metrics are being added through consultation and as they
+are being developed through research.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ConSciR)}
+\NormalTok{mydata }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{graph\_psychrometric}\NormalTok{(}\AttributeTok{LowT =} \DecValTok{10}\NormalTok{, }\AttributeTok{HighT =} \DecValTok{28}\NormalTok{, }\AttributeTok{LowRH =} \DecValTok{30}\NormalTok{, }\AttributeTok{HighRH =} \DecValTok{70}\NormalTok{, }\AttributeTok{y\_func =}\NormalTok{ calcAH) }
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{paper_files/figure-latex/unnamed-chunk-2-1.pdf}}
+
+\section{Usage}\label{usage}
+
+A small but growing group of coders in cultural heritage conservation
+includes environmental monitoring specialists, scientists, preventive
+conservators, and building engineers. These users benefit from the tools
+provided by \texttt{ConSciR}, which is designed for two key user groups:
+research data managers and domain-specific coders (Cosaert et al.,
+2025). Research data managers, who typically have advanced coding
+experience, can use the package's functions to build large-scale
+applications on complex datasets. Domain-specific coders have a toolset
+for answering conservation-related questions and automating routine data
+processing tasks. To support users, worked examples are available online
+as articles (\url{https://bhavshah01.github.io/ConSciR}). These examples
+provide conservation educators and trainers with resources to teach both
+coding and conservation theory (Beltran, Linden, \& Cosaert, 2025).
+
+The structure of \texttt{ConSciR} enables users to address a range of
+preventive conservation questions within a single, reproducible
+analytical framework, benefiting from the full array of tools available
+in R. The package's functions support queries such as calculating dew
+point, comparing environmental risks between spaces, scenario analysis
+for changing HVAC setpoints, and evaluating climate change impacts (Shah
+\& Long, 2025). By integrating these functions, \texttt{ConSciR} helps
+data-driven decision-making and promotes best practice in collection
+care and preventive conservation.
+
+\section{Acknowledgements}\label{acknowledgements}
+
+We acknowledge contributions from Emily R. Long, Marcin Zygmunt, Hebe
+Halstead and Avery Bazemore for the development of the \texttt{ConSciR}
+package.
+
+\section*{References}\label{references}
+\addcontentsline{toc}{section}{References}
+
+\phantomsection\label{refs}
+\begin{CSLReferences}{1}{0}
+\bibitem[\citeproctext]{ref-IAPWS95}
+Baptista, B. (2025). \emph{IAPWS95: Thermophysical properties of water
+and steam}.
+doi:\href{https://doi.org/10.32614/CRAN.package.IAPWS95}{10.32614/CRAN.package.IAPWS95}
+
+\bibitem[\citeproctext]{ref-beltran_2025}
+Beltran, V. L., Linden, J., \& Cosaert, A. (2025). Developing
+conservation-focused curriculum to advance analysis of temperature and
+relative humidity data. In Á. F. Perles-Ivars, L. Fuster-López, \& E.
+Bosco (Eds.), \emph{Collection care: Environmental monitoring, risk
+assessment and risk management}, Springer proceedings in archaeology and
+heritage (pp. 3--13). Cham: Springer Nature Switzerland.
+doi:\href{https://doi.org/10.1007/978-3-031-85655-6/_1}{10.1007/978-3-031-85655-6\textbackslash\_1}
+
+\bibitem[\citeproctext]{ref-Buck_1981}
+Buck, A. L. (1981). New equations for computing vapor pressure and
+enhancement factor. \emph{Journal of Applied Meteorology},
+\emph{20}(12), 1527--1532.
+doi:\href{https://doi.org/10.1175/1520-0450(1981)020\%3C1527:NEFCVP\%3E2.0.CO;2}{10.1175/1520-0450(1981)020\textless1527:NEFCVP\textgreater2.0.CO;2}
+
+\bibitem[\citeproctext]{ref-humidity_R}
+Cai, J. (2019). \emph{Humidity: Calculate water vapor measures from
+temperature and dew point}. Retrieved from
+\url{https://github.com/caijun/humidity}
+
+\bibitem[\citeproctext]{ref-chang_2024}
+Chang, W., Cheng, J., Allaire, J., Sievert, C., Schloerke, B., Xie, Y.,
+Allen, J., et al. (2024). Shiny: Web application framework for r.
+\emph{The R Foundation}.
+doi:\href{https://doi.org/10.32614/cran.package.shiny}{10.32614/cran.package.shiny}
+
+\bibitem[\citeproctext]{ref-cosaert_2021}
+Cosaert, A. (2021). Comparison of temperature and relative humidity
+analysis tools to address practitioner needs and improve
+decision-making. In J. Bridgland (Ed.), \emph{{ICOM}-{CC}
+{19thTriennial} conference preprints, beijing}. Paris: International
+Council of Museums. Retrieved from
+\url{https://www.icom-cc-publications-online.org/4433/Comparison-of-temperature-and-relative-humidity-analysis-tools-to-address-practitioner-needs-and-improve-decision-making}
+
+\bibitem[\citeproctext]{ref-Cosaert_Beltran_2022}
+Cosaert, A., \& Beltran, V. L. (2022). \emph{Tools for the analysis of
+collection environments: Lessons learned and future development}. Getty
+Conservation Institute.
+
+\bibitem[\citeproctext]{ref-Cosaert_etal_2023}
+Cosaert, A., Gérard, R., Mayer, A., \& Deparis, O. (2023). A comparison
+of preservation metrics expressing mechanical, chemical and biological
+damages. In Je. Bridgland (Ed.), \emph{ICOM-CC 20th triennial conference
+: Working towards a sustainable past preprints} (p. 1406). International
+Council of Museums.
+
+\bibitem[\citeproctext]{ref-Cosaert_Shah_2025}
+Cosaert, A., Shah, B., Penagos, C., Fremout, W., Nadisic, N., Hayen, R.,
+Godts, S., et al. (2025). Preserving for eternity, coding for today: The
+role of pseudo-developers in cultural heritage institutions. In M. Ma \&
+Y. Li (Eds.), \emph{Proceedings of international speakers} (pp.
+81--141). National Museum of China.
+
+\bibitem[\citeproctext]{ref-dpcalc_website_nd}
+Dew point calculator. (n.d.). WEBSITE. Retrieved from
+\url{https://www.dpcalc.org/}
+
+\bibitem[\citeproctext]{ref-eClimateNotebook}
+eClimateNotebook. (n.d.). WEBSITE. Retrieved from
+\url{https://www.imagepermanenceinstitute.org/environmental-management/eclimatenotebook}
+
+\bibitem[\citeproctext]{ref-hukka_1999}
+Hukka, A., \& Viitanen, H. A. (1999). A mathematical model of mould
+growth on wooden material. \emph{Wood science and technology},
+\emph{33}(6), 475--485.
+doi:\href{https://doi.org/10.1007/s002260050131}{10.1007/s002260050131}
+
+\bibitem[\citeproctext]{ref-kupczak_2018}
+Kupczak, A., Jędrychowski, M., Strojecki, M., Krzemień, L., Bratasz, Ł.,
+Łukomski, M., \& Kozłowski, R. (2018). {HERIe}: A web-based
+decision-supporting tool for assessing risk of physical damage using
+various failure criteria. \emph{Studies in Conservation},
+\emph{63}(sup1), 151--155.
+doi:\href{https://doi.org/10.1080/00393630.2018.1504447}{10.1080/00393630.2018.1504447}
+
+\bibitem[\citeproctext]{ref-larsson_2025}
+Larsson, M., Bornsäter, B., \& Hacke, M. (2025). Developing practices
+for {FAIR} and linked data in heritage science. \emph{npj Heritage
+Science}, \emph{13}(1), 53.
+doi:\href{https://doi.org/10.1038/s40494-025-01598-x}{10.1038/s40494-025-01598-x}
+
+\bibitem[\citeproctext]{ref-michalski_2013}
+Michalski, S. (2013). Stuffing everything we know about mechanical
+properties into one collection simulation. In J. Ashley-Smith, A.
+Burmester, \& M. Eibl (Eds.), (pp. 349--62). London, {UK}: Archetype.
+Retrieved from
+\url{https://archetype.co.uk/our-titles/climate-for-collections-standards-and-uncertainties/?id=185}
+
+\bibitem[\citeproctext]{ref-Padfield_2010}
+Padfield, T. (2010). Conservation physics: Calculator for energy use in
+museums. \emph{Calculator for energy use in museums}. Retrieved from
+\url{https://www.conservationphysics.org/atmcalc/energyusecalc.html}
+
+\bibitem[\citeproctext]{ref-pretzel_2023}
+Pretzel, B. (2023). The climate
+toolbox\textemdasha microsoft\textregistered excel\textregistered based
+tool for assessing and comparing the effects of internal climates on
+museum artefacts. \emph{Heritage}, \emph{6}(4), 3745--3756.
+doi:\href{https://doi.org/10.3390/heritage6040198}{10.3390/heritage6040198}
+
+\bibitem[\citeproctext]{ref-shah_2025}
+Shah, B., \& Long, E. R. (2025). Harnessing data science technology for
+environmental monitoring at the v\&a. In Á. F. Perles-Ivars, L.
+Fuster-López, \& E. Bosco (Eds.), \emph{Collection care: Environmental
+monitoring, risk assessment and risk management}, Springer proceedings
+in archaeology and heritage (pp. 45--56). Cham: Springer Nature
+Switzerland.
+doi:\href{https://doi.org/10.1007/978-3-031-85655-6/_5}{10.1007/978-3-031-85655-6\textbackslash\_5}
+
+\bibitem[\citeproctext]{ref-Smulders_2014}
+Smulders, H. (2014). Physics of monuments: Online applications. (M.
+Martens, Ed.)\emph{Technical University of Eindhoven}. Retrieved from
+\url{http://www.monumenten.bwk.tue.nl/Algemeen/Applicaties.aspx}
+
+\bibitem[\citeproctext]{ref-Taylor_Beltran_2023}
+Taylor, J., Henry, M. C., Beltran, V. L., Crimm, W., Eckelman, M.,
+Henderson, J., Linden, J., et al. (2023). \emph{Managing collection
+environments: Technical notes and guidance}. (J. Taylor \& V. L.
+Beltran, Eds.)Guidelines. Getty Conservation Institute.
+
+\bibitem[\citeproctext]{ref-RCoreTeam_2024}
+Team, R. C. (2024). R: A language and environment for statistical
+computing. OTHER, Vienna, Austria. Retrieved from
+\url{https://www.R-project.org/}
+
+\bibitem[\citeproctext]{ref-vaisala_website_nd}
+Vaisala. (n.d.). Vaisala humidity calculator. \emph{Vaisala Humidity
+Calculator}. WEBSITE. Retrieved from
+\url{https://www.vaisala.com/en/calculators/humidity-calculator}
+
+\bibitem[\citeproctext]{ref-viitanen_2015}
+Viitanen, H., Krus, M., Ojanen, T., Eitner, V., \& Zirkelbach, D.
+(2015). Mold risk classification based on comparative evaluation of two
+established growth models. \emph{Energy Procedia}, \emph{78},
+1425--1430.
+doi:\href{https://doi.org/10.1016/j.egypro.2015.11.165}{10.1016/j.egypro.2015.11.165}
+
+\bibitem[\citeproctext]{ref-Wagner_2002}
+Wagner, W., \& Pruß, A. (2002). The IAPWS formulation 1995 for the
+thermodynamic properties of ordinary water substance for general and
+scientific use. \emph{Journal of Physical and Chemical Reference Data},
+\emph{31}(2), 387--535.
+doi:\href{https://doi.org/10.1063/1.1461829}{10.1063/1.1461829}
+
+\bibitem[\citeproctext]{ref-testthat}
+Wickham, H. (2011). Testthat: Get started with testing. \emph{The R
+Journal}, \emph{3}, 5--10. Retrieved from
+\url{https://journal.r-project.org/archive/2011-1/RJournal_2011-1_Wickham.pdf}
+
+\bibitem[\citeproctext]{ref-zeng_2023}
+Zeng, L., Chen, Y., Ma, M., Du, B., Gao, J., Cao, G., \& Li, J. (2023).
+Prediction of mould growth rate within building envelopes: Development
+and validation of an improved model. \emph{Building Services Engineering
+Research and Technology}, \emph{44}(1), 63--79.
+doi:\href{https://doi.org/10.1177/01436244221137846}{10.1177/01436244221137846}
+
+\end{CSLReferences}
+
+\end{document}
