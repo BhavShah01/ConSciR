@@ -40,7 +40,8 @@ Suggests:
     testthat (>= 3.0.0),
     bslib,
     IAPWS95,
-    Ternary
+    Ternary,
+    hrbrthemes
 Imports:
     stats,
     tools,
