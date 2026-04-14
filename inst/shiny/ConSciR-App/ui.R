@@ -82,6 +82,7 @@ ui <- page_sidebar(
     nav_panel(
       "Mould",
       full_screen = TRUE,
+      card_title("Mould plots ('calcMould_VTT', 'calcMould_Zeng')"),
       fluidRow(
         column(12, plotOutput("mdata_Mouldplot_VTT")),
         column(12, plotOutput("mdata_Mouldplot_Zeng"))

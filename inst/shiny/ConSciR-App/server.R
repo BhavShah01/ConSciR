@@ -230,9 +230,12 @@ server <- function(input, output) {
       geom_area(aes(Date, calcMould_VTT(Temp, RH), group = Sensor),
                 fill = "violetred3", alpha = 0.9) +
       geom_hline(yintercept = 0.01, col = "darkred", linewidth = 0.8) +
+      annotate("text", x = Inf, y = 0.01, label = "Mould limit",
+               hjust = 1.1, vjust = 0.5, size = 4,
+               colour = "darkred", fontface = "bold") +
       labs(x = NULL, y = "M Mould Growth Index value",
            title = "Mould growth index (M)",
-           subtitle = "VTT model: calcMould_VTT") +
+           subtitle = "VTT model") +
       ylim(0, 0.05) +
       facet_wrap(~Sensor) +
       theme_minimal(base_size = 14) +
@@ -268,7 +271,7 @@ server <- function(input, output) {
                         name = "Mould growth\n(mm/day)") +
       labs(x = NULL, y = "Mould Predicted (RH above threshold)",
            title = "Lowest Isoline for Mould (LIM)",
-           subtitle = "Zeng model: calcMould_Zeng") +
+           subtitle = "Zeng model") +
       theme_minimal(base_size = 14) +
       theme(
         plot.title = element_text(size = 16, face = "bold", margin = margin(b = 8)),
@@ -431,6 +434,4 @@ server <- function(input, output) {
       readr::write_excel_csv(mdata(), file, row.names = FALSE)
     }
   )
-
-
 }
