@@ -21,6 +21,9 @@ downloadable cleaned CSV files.
 The silica gel calculator estimates the required amount of silica gel
 based on temperature, humidity data, case dimensions, and
 air exchange rate (AER) if known.
+
+Latest version of the ConSciApp is found online at:
+https://oceanonline.shinyapps.io/ConSciR/
 }
 \examples{
 if(interactive()) {

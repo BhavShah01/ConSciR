@@ -13,53 +13,83 @@ ui <- page_sidebar(
             height = "100px", width = "100px"))
     ),
     shiny_dataUploadUI("dataupload"),
+    downloadButton("downloadCalcData", "Download Results"),
+    hr(),
     uiOutput("func_name"),
-    downloadButton("downloadCalcData", "Download Results")
+    h6("Envelope"),
+    fluidRow(
+      column(6, numericInput("envelope_TempLow",  "Temp Min (°C)",
+                             value = 16, min = 0, max = 100, step = 1)),
+      column(6, numericInput("envelope_TempHigh", "Temp Max (°C)",
+                             value = 25, min = 0, max = 100, step = 1))
+    ),
+    fluidRow(
+      column(6, numericInput("envelope_RHLow",    "RH Min (%)",
+                             value = 40, min = 0, max = 100, step = 1)),
+      column(6, numericInput("envelope_RHHigh",   "RH Max (%)",
+                             value = 60, min = 0, max = 100, step = 1))
+    )
   ),
 
   navset_card_tab(
     title = "ConSciR Tools",
     nav_panel(
-      "TRH plot",
-      card_title("Temperature and Humidity plot"),
+      "Calculator",
+      full_screen = TRUE,
+      card_title("Temperature and Humidity Calculator"),
       card(
-        full_screen = TRUE, plotOutput("gg_TRHplot"))
+        full_screen = TRUE,
+        layout_sidebar(
+          sidebar = sidebar(
+            width = 280,
+            uiOutput("select_CalcTemp"),
+            uiOutput("select_CalcRH"),
+            hr(),
+            h6("Adjustments"),
+            uiOutput("select_CalcTempAdj"),
+            uiOutput("select_CalcDewPAdj"),
+            uiOutput("select_CalcAHAdj")
+          ),
+          tableOutput("tbl_CalcMetrics"),
+          plotOutput("gg_PsyPoint", height = "600px")
+        )
+      )
+    ),
+    nav_panel(
+      "TRH plot",
+      full_screen = TRUE,
+      card_title("Temperature and Humidity plot ('graph_TRH')"),
+      card(
+        full_screen = TRUE,
+        plotOutput("gg_TRHplot"))
     ),
     nav_panel(
       "Psychrometric",
       full_screen = TRUE,
-      card_title("Psychrometric plot"),
+      card_title("Psychrometric plot ('graph_psychrometric')"),
       card(
-        full_screen = TRUE, plotOutput("gg_Psy"))
+        full_screen = TRUE,
+        plotOutput("gg_Psy"))
     ),
     nav_panel(
       "Bivariate",
       full_screen = TRUE,
-      card_title("Bivariate plot"),
+      card_title("Bivariate plot ('graph_TRHbivariate')"),
       card(
-        full_screen = TRUE, plotOutput("gg_Bivar"))
+        full_screen = TRUE,
+        plotOutput("gg_Bivar"))
     ),
     nav_panel(
+      "Mould",
       full_screen = TRUE,
-      "Mould VTT",
-      "M Mould growth index: 0-6",
-      plotOutput("mdata_Mouldplot_VTT")
+      fluidRow(
+        column(12, plotOutput("mdata_Mouldplot_VTT")),
+        column(12, plotOutput("mdata_Mouldplot_Zeng"))
+      )
     ),
     nav_panel(
-      full_screen = TRUE,
-      "Mould LIM",
-      "Zeng model: Mould Predicted (RH > LIM0)",
-      plotOutput("mdata_Mouldplot_Zeng")
-    ),
-    nav_panel(
-      full_screen = TRUE,
-      "Mould Growth",
-      "Zeng model: Growth limit mm/day",
-      plotOutput("mdata_Mouldplot_limit")
-    ),
-    nav_panel(
-      full_screen = TRUE,
       "Silica gel calc",
+      full_screen = TRUE,
       fluidRow(
         column(6,
                h4("Case Details"),
@@ -84,5 +114,5 @@ ui <- page_sidebar(
       plotOutput("mdata_plot"),
       downloadButton("downloadSilicaData", "Download Results")
     )
-    )
+  )
 )

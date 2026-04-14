@@ -14,6 +14,9 @@
 #' based on temperature, humidity data, case dimensions, and
 #' air exchange rate (AER) if known.
 #'
+#' Latest version of the ConSciApp is found online at:
+#' https://oceanonline.shinyapps.io/ConSciR/
+#'
 #' @return
 #' A Shiny application object that runs interactively.
 #' @export
