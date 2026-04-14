@@ -40,8 +40,7 @@ Suggests:
     testthat (>= 3.0.0),
     bslib,
     IAPWS95,
-    Ternary,
-    hrbrthemes
+    Ternary
 Imports:
     stats,
     tools,
@@ -57,4 +56,4 @@ Imports:
     padr,
     openair
 Depends: 
-    R (>= 3.5)
+    R (>= 4.1.0)
