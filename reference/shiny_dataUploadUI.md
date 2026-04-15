@@ -1,0 +1,38 @@
+# Shiny Module UI for Data Upload and Processing
+
+Creates a Shiny UI module for uploading CSV or Excel files, and
+specifying flexible time averaging interval and statistic via text
+inputs. This UI includes the file upload control, a text box for
+entering the time averaging interval (e.g., "hour", "day", "month"), a
+text box for specifying the averaging statistic (e.g., "median",
+"mean"), and a download button for the tidied data.
+
+## Usage
+
+``` r
+shiny_dataUploadUI(id)
+```
+
+## Arguments
+
+- id:
+
+  Namespace ID for the module UI elements.
+
+## Value
+
+A tagList containing UI output placeholders and inputs for averaging
+interval, averaging statistic, and data download.
+
+## Examples
+
+``` r
+if(interactive()) {
+  ui <- fluidPage(
+    shiny_dataUploadUI("dataUpload")
+  )
+  server <- function(input, output, session) {
+    data <- shiny_dataUploadServer("dataUpload")
+  }
+}
+```
