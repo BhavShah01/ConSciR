@@ -6,19 +6,25 @@
 #' @param directory A directory of files from a single brand, .csv or .xls only for Rotronic.
 #' @param Site Character string specifying site name when not recoverable from the file.
 #'   Default is "Site".
+#' @param Sensor Character string specifying sensor name. Default is "Sensor".
 #' @param brand The logger brand as a string.
 #'
 #' @returns dat, a data frame containing the raw TRH data, with columns
 #' for site, sensor, date, temperature, and relative humidity.
 #' @export
 #'
-#' @examples parse_brand(dir("logfiles/tinytag", full.names = TRUE), "Anonymous Library", "tinytag")
+#' @importFrom purrr keep
+#'
+#' @examples
+#' \donttest{
+#' # Example usage:
+#' # parse_brand(dir("logfiles/tinytag", full.names = TRUE), "Anonymous Library", "tinytag")
+#' }
 #'
 parse_brand <- function (directory,
                          Site = "Site",
                          Sensor = "Sensor",
-                         brand = FALSE,
-                         ...) {
+                         brand = FALSE) {
   dirlist <- dir(directory, full.names = TRUE)
 
   if (brand %in% c(
@@ -112,7 +118,7 @@ parse_hanwell <- function(filepath, Site = "Site", Sensor = "Sensor") {
 #'
 #' @param filepath path to logfile as a string
 #'
-#' @inherit parse_hanwell returns
+#' @unherit parse_hanwell returns
 #'
 
 #' @noRd
@@ -454,7 +460,7 @@ parse_trendBMS <- function(filepath, Site = "Site") {
 #'
 #' @examples
 #' \donttest{
-#' all_data <- combine_data(datalist)
+#' ## Example usage: all_data <- combine_data(datalist)
 #' }
 #'
 combine_data <- function(datalist) {

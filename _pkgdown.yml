@@ -21,6 +21,8 @@ reference:
   - tidy_TRHdata
   - tidy_Meaco
   - tidy_Hanwell
+  - parse_brand
+  - combine_data
 - title: Conservation tools
   desc: Risk calculations; mould, preservation, lifetime, moisture equilibrium.
   contents:

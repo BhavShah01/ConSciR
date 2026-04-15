@@ -52,6 +52,7 @@ Imports:
     shiny,
     ggplot2,
     dplyr, 
+    purrr,
     lubridate,
     padr,
     openair

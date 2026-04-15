@@ -21,7 +21,8 @@ utils::globalVariables(
     "newAH_Tadj", "dAH_Tadj", "newTemp_AHadj", "dTemp_AHadj",
     "RH_withincurve", "New_AHrhmax", "New_AHrhmin", "RH_abovecurve",
     "RH_belowcurve", "RH_withincurve", "Temp_toCurvemax", "Temp_toCurvemin",
-    "Temp_toRHmax", "Temp_toRHmin"
+    "Temp_toRHmax", "Temp_toRHmin",
+    "parse_previous", "Timestamp", "Temperature", "Humidity", "Time", "any_of"
   ))
 
 
