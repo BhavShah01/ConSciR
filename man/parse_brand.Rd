@@ -3,6 +3,9 @@
 \name{parse_brand}
 \alias{parse_brand}
 \title{Parse datalogger files}
+\source{
+["Datalogger summary and graphs"](https://abazemore.shinyapps.io/dataloggergraphs/)
+}
 \usage{
 parse_brand(directory, Site = "Site", Sensor = "Sensor", brand = FALSE)
 }

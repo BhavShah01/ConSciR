@@ -15,6 +15,8 @@
 #'
 #' @importFrom purrr keep
 #'
+#' @source ["Datalogger summary and graphs"](https://abazemore.shinyapps.io/dataloggergraphs/)
+#'
 #' @examples
 #' \donttest{
 #' # Example usage:
@@ -456,7 +458,8 @@ parse_trendBMS <- function(filepath, Site = "Site") {
 #' @param datalist A list of parsed dataframes
 #'
 #' @returns A dataframe containing all timestamped rows in `datalist`
-#' @export
+#'
+#' @keywords internal
 #'
 #' @examples
 #' \donttest{

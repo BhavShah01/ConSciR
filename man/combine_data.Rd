@@ -21,3 +21,4 @@ Combines a list of parsed logfiles and returns a
 }
 
 }
+\keyword{internal}
