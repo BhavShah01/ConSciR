@@ -8,6 +8,11 @@ Extracts temperature and humidity data from a directory of logfiles.
 parse_brand(directory, Site = "Site", Sensor = "Sensor", brand = FALSE)
 ```
 
+## Source
+
+\["Datalogger summary and
+graphs"\](https://abazemore.shinyapps.io/dataloggergraphs/)
+
 ## Arguments
 
 - directory:

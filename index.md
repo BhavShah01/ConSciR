@@ -43,6 +43,7 @@ time](https://bhavshah01.github.io/ConSciR/articles/ConSciR-FirstTimeR.html)
 ## Install and load
 
 ``` r
+
 install.packages("ConSciR")
 library(ConSciR)
 ```
@@ -51,6 +52,7 @@ You can install the development version of the package from GitHub using
 the `pak` package:
 
 ``` r
+
 install.packages("pak")
 pak::pak("BhavShah01/ConSciR")
 
@@ -73,6 +75,7 @@ ConSciR package.
   manipulation and plotting.
 
 ``` r
+
 library(ConSciR)
 library(dplyr)
 library(ggplot2)
@@ -88,6 +91,7 @@ library(ggplot2)
   names.
 
 ``` r
+
 # My TRH data
 filepath <- data_file_path("mydata.xlsx")
 mydata <- readxl::read_excel(filepath, sheet = "mydata")
@@ -113,6 +117,7 @@ head(mydata)
   for details.
 
 ``` r
+
 # Peform calculations
 head(mydata) |>
   mutate(
@@ -152,6 +157,7 @@ head(mydata) |>
   **[`graph_TRH()`](https://bhavshah01.github.io/ConSciR/reference/graph_TRH.md)**.
 
 ``` r
+
 mydata |>
   mutate(DewPoint = calcDP(Temp, RH)) |>
   graph_TRH() + 
@@ -167,6 +173,7 @@ mydata |>
   function and visualise it alongside humidity data.
 
 ``` r
+
 mydata |>
   mutate(Mould = calcMould_Zeng(Temp, RH)) |>
   ggplot() +
@@ -189,6 +196,7 @@ mydata |>
   function.
 
 ``` r
+
 # Customise 
 mydata |>
   graph_psychrometric(

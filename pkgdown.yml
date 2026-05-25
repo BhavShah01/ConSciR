@@ -1,4 +1,4 @@
-pandoc: 3.1.11
+pandoc: 3.8.3
 pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
@@ -7,7 +7,7 @@ articles:
   articles/Conservation-tools: Conservation-tools.html
   articles/Humidity-functions: Humidity-functions.html
   articles/Sustainability: Sustainability.html
-last_built: 2026-04-15T11:42Z
+last_built: 2026-05-25T23:14Z
 urls:
   reference: https://bhavshah01.github.io/ConSciR/reference
   article: https://bhavshah01.github.io/ConSciR/articles

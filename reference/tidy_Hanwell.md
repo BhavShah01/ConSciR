@@ -78,6 +78,7 @@ A tibble containing tidied Hanwell EMS data, with columns including:
 ## Examples
 
 ``` r
+
 # \donttest{
 # Example usage: hanwell_data <- tidy_Hanwell("path/to/your/hanwell_data.csv")
 # }

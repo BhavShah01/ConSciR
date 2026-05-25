@@ -33,8 +33,6 @@ Tidying, adding variables, summaries and graphing.
   : Tidy Hanwell EMS Data
 - [`parse_brand()`](https://bhavshah01.github.io/ConSciR/reference/parse_brand.md)
   : Parse datalogger files
-- [`combine_data()`](https://bhavshah01.github.io/ConSciR/reference/combine_data.md)
-  : Combine TRH data from a list
 
 ## Conservation tools
 

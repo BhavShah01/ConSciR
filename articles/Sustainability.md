@@ -1,6 +1,7 @@
 # Sustainability
 
 ``` r
+
 library(ConSciR)
 library(dplyr)
 library(ggplot2)
@@ -37,6 +38,7 @@ recorded by sensors over time.
 Example usage to load the dataset from the package:
 
 ``` r
+
 filepath <- data_file_path("mydata.xlsx")
 mydata <- readxl::read_excel(filepath, sheet = "mydata")
 
@@ -70,6 +72,7 @@ temperature adjustement (heating and coooling). Adjustment of humdity by
 humidification and dehumidification is being developed.
 
 ``` r
+
 mydata_adj <- 
   mydata |> 
   group_by(Sensor) |>
@@ -127,6 +130,7 @@ Adjustment before and after applying calculations in the
 `add_humidity_adjustments` function.
 
 ``` r
+
 graph_psychrometric(mydata_adj, y_func = calcAH, data_col = "TRH_zone",
                     LowT = 16, HighT = 25, LowRH = 45, HighRH = 55) +  
   facet_wrap(~Sensor) + 
@@ -137,6 +141,7 @@ graph_psychrometric(mydata_adj, y_func = calcAH, data_col = "TRH_zone",
 ![](Sustainability_files/figure-html/unnamed-chunk-4-1.png)
 
 ``` r
+
 
 mydata_adj |>
   graph_psychrometric(Temp = "newTemp_TRHadj", RH = "newRH_TRHadj", 
@@ -159,6 +164,7 @@ temperature levels.
 
 ``` r
 
+
 # Plot the temperature changes required to achieve target conditions 
 mydata_adj |>
   ggplot() +
@@ -175,6 +181,7 @@ mydata_adj |>
 
 ``` r
 
+
 mydata_adj |>
   ggplot() +
   geom_line(aes(Date, SensibleHeating), col = "deeppink") + 
@@ -187,6 +194,7 @@ mydata_adj |>
 ![](Sustainability_files/figure-html/unnamed-chunk-5-2.png)
 
 ``` r
+
   
 mydata_adj |>
   ggplot() +
@@ -208,6 +216,7 @@ both energy consumption and heritage risks.
 - Broader specification: 12-28°C and 30-70%rh
 
 ``` r
+
 mydata_adj2 <- 
   mydata |> 
   group_by(Sensor) |>
@@ -231,6 +240,7 @@ mydata_adj2 |>
 ![](Sustainability_files/figure-html/unnamed-chunk-6-1.png)
 
 ``` r
+
 mydata_adj2 |>
   ggplot() +
   geom_line(aes(Date, SensibleHeating), col = "deeppink") + 
@@ -243,6 +253,7 @@ mydata_adj2 |>
 ![](Sustainability_files/figure-html/unnamed-chunk-7-1.png)
 
 ``` r
+
   
 mydata_adj2 |>
   ggplot() +
@@ -258,6 +269,7 @@ mydata_adj2 |>
 Combine datasets for comparison and add conservation risk metrics.
 
 ``` r
+
 mydata_no_adj <- 
   mydata |>
   # Doing nothing costs no energy
@@ -285,6 +297,7 @@ Comparison of the risks and energy savings made by making the
 specification broader.
 
 ``` r
+
 mydata_bind |>
   ggplot() +
   geom_col(aes(fct_rev(Specification), CoolingPower), fill = "dodgerblue3") +
@@ -298,6 +311,7 @@ mydata_bind |>
 ![](Sustainability_files/figure-html/unnamed-chunk-9-1.png)
 
 ``` r
+
 
 mydata_bind |>
   ggplot() +
@@ -327,6 +341,7 @@ environmental control strategies.
 - Mould growth risk - lower values are better.
 
 ``` r
+
 mydata_summary <- 
   mydata_bind |>
   group_by(Sensor, Specification) |>

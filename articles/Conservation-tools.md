@@ -1,6 +1,7 @@
 # Conservation tools
 
 ``` r
+
 library(ConSciR)
 library(ggplot2)
 library(dplyr)
@@ -37,6 +38,7 @@ recorded by sensors over time.
 Example usage to load the dataset from the package:
 
 ``` r
+
 filepath <- data_file_path("mydata.xlsx")
 mydata <- readxl::read_excel(filepath, sheet = "mydata")
 mydata <- mydata |> filter(Sensor == "Room 1")
@@ -74,6 +76,7 @@ understand relationships among the functions.
 Example R code to generate the dataset:
 
 ``` r
+
 Temp <- seq(0, 100, 0.25)
 RH <- seq(0, 100, 1)
 
@@ -134,6 +137,7 @@ Building Services Engineering Research and Technology. 2023;44(1):63-79.
 
 ``` r
 
+
 TRHgrid |>
   mutate(Mould_LIM = calcMould_Zeng(Temp, RH)) |>
   filter(Mould_LIM < 100) |>
@@ -147,6 +151,7 @@ TRHgrid |>
 ![](Conservation-tools_files/figure-html/unnamed-chunk-4-1.png)
 
 ``` r
+
 
 head(mydata) |>
   mutate(
@@ -208,6 +213,7 @@ growth on wooden material. Wood Science and Technology, 33(6), 475-485.
 
 ``` r
 
+
 TRHgrid |>
   mutate(Mould_Index = calcMould_VTT(Temp, RH)) |>
   filter(Mould_Index > 0) |>
@@ -221,6 +227,7 @@ TRHgrid |>
 ![](Conservation-tools_files/figure-html/unnamed-chunk-5-1.png)
 
 ``` r
+
 
 head(mydata) |>
   mutate(Mould_VTT = calcMould_VTT(Temp, RH))
@@ -269,6 +276,7 @@ de Janeiro (Vol. I, pp. 66-72). London: James & James.
 
 ``` r
 
+
 TRHgrid |>
   mutate(LifeTime = calcLM(Temp, RH)) |>
   ggplot(aes(Temp, RH, z = LifeTime)) +
@@ -282,6 +290,7 @@ TRHgrid |>
 ![](Conservation-tools_files/figure-html/unnamed-chunk-6-1.png)
 
 ``` r
+
 
 mydata |>
   mutate(Lifetime = calcLM(Temp, RH)) |>
@@ -299,6 +308,7 @@ mydata |>
 ![](Conservation-tools_files/figure-html/unnamed-chunk-6-2.png)
 
 ``` r
+
 
 mydata |>
   mutate(Lifetime = calcLM(Temp, RH)) |>
@@ -329,6 +339,7 @@ More information on the Preservation Index can be found here:
 <https://s3.cad.rit.edu/ipi-assets/publications/understanding_preservation_metrics.pdf>
 
 ``` r
+
 # Log-Preservation Index 
 TRHgrid |>
   mutate(PI_log10 = calcPI(Temp, RH) |> log10()) |>
@@ -342,6 +353,7 @@ TRHgrid |>
 ![](Conservation-tools_files/figure-html/unnamed-chunk-7-1.png)
 
 ``` r
+
 
 # Applying the Preservation Index on `mydata`
 mydata |>
@@ -358,6 +370,7 @@ mydata |>
 ![](Conservation-tools_files/figure-html/unnamed-chunk-7-2.png)
 
 ``` r
+
 
 mydata |>
   mutate(PI = calcPI(Temp, RH)) |>
@@ -398,6 +411,7 @@ polymers.” Journal of the Society of Chemical Industry, 65(12), 499-502.
 
 ``` r
 
+
 # EMC plotted at different temperature and relative humidity
 TRHgrid |>
   mutate(EMC = calcEMC_wood(Temp, RH)) |>
@@ -411,6 +425,7 @@ TRHgrid |>
 ![](Conservation-tools_files/figure-html/unnamed-chunk-8-1.png)
 
 ``` r
+
 
 # EMC on `mydata`
 mydata |>
@@ -427,6 +442,7 @@ mydata |>
 ![](Conservation-tools_files/figure-html/unnamed-chunk-8-2.png)
 
 ``` r
+
 
 mydata |>
   mutate(EMC = calcEMC_wood(Temp, RH)) |>

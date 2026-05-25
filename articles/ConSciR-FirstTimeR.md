@@ -29,6 +29,7 @@ To load a package in R for the first time, follow these two steps:
 1.  **Installing a package:** Open the Console in RStudio and type:
 
     ``` r
+
     install.packages("tidyverse")
     ```
 
@@ -37,6 +38,7 @@ To load a package in R for the first time, follow these two steps:
     [`library()`](https://rdrr.io/r/base/library.html) function:
 
     ``` r
+
     library(tidyverse)
     ```
 
@@ -53,6 +55,7 @@ To load a package in R for the first time, follow these two steps:
 4.  **Getting help:** Type `?function_name` in the Console. For example:
 
     ``` r
+
     ?mean
     ```
 

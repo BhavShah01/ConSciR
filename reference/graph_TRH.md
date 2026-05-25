@@ -80,6 +80,7 @@ background bands.
 ## Examples
 
 ``` r
+
 # mydata file
 filepath <- data_file_path("mydata.xlsx")
 mydata <- readxl::read_excel(filepath, sheet = "mydata", n_max = 1000)

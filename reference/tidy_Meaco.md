@@ -55,6 +55,7 @@ A tidied data frame with columns Site, Sensor, Date, Temp, and RH
 ## Examples
 
 ``` r
+
 # \donttest{
 # Example usage: meaco_data <- tidy_Meaco("path/to/your/meaco_data.csv")
 # }

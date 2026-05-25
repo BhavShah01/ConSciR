@@ -1,6 +1,7 @@
 # Humidity functions
 
 ``` r
+
 library(ConSciR)
 library(dplyr)
 library(ggplot2)
@@ -49,6 +50,7 @@ recorded by sensors over time.
 Example usage to load the dataset from the package:
 
 ``` r
+
 filepath <- data_file_path("mydata.xlsx")
 mydata <- readxl::read_excel(filepath, sheet = "mydata")
 mydata <- mydata |> filter(Sensor == "Room 1")
@@ -86,6 +88,7 @@ understand relationships among the functions.
 Example R code to generate the dataset:
 
 ``` r
+
 Temp <- seq(0, 100, 0.25)
 RH <- seq(0, 100, 1)
 
@@ -112,6 +115,7 @@ Starting with measurements of temperature (`Temp`) and relative humidity
 (`RH`), several derived variables commonly used can be calculated:
 
 ``` r
+
 # Functions applied on the mydata dataset
 head(mydata) |> 
   mutate(
@@ -181,6 +185,7 @@ measured temperature, and computing the effects on RH:
 
 ``` r
 
+
 # Psychrometric chart of mydata
 mydata |>
   filter(Sensor == "Room 1") |>
@@ -192,6 +197,7 @@ mydata |>
 ![](Humidity-functions_files/figure-html/unnamed-chunk-6-1.png)
 
 ``` r
+
 
 # Changing Absolute Humidity 
 using_calcAH <- 
@@ -252,6 +258,7 @@ using_calcAH |>
 ``` r
 
 
+
 # Psychrometric chart of new data (using_calcAH) after adjustment 
 using_calcAH |>
   filter(Sensor == "Room 1") |>
@@ -265,6 +272,7 @@ using_calcAH |>
 **Changing Temperature**
 
 ``` r
+
 
 # Changing Temperature
 using_calcTemp <- 
@@ -321,6 +329,7 @@ using_calcTemp |>
 
 ``` r
 
+
 using_calcTemp |>
   graph_psychrometric(RH = "RHstarT", y_func = calcAH) +
   labs(title = "Room 1 After Temperature Adjustment",
@@ -334,6 +343,7 @@ using_calcTemp |>
 
 ``` r
 
+
 # Graph Dew Point
 mydata |>
   graph_psychrometric(y_func = calcDP) +
@@ -345,6 +355,7 @@ mydata |>
 ![](Humidity-functions_files/figure-html/unnamed-chunk-8-1.png)
 
 ``` r
+
 
 # Using Dew Point
 
@@ -399,6 +410,7 @@ using_calcDP |>
 ``` r
 
 
+
 using_calcDP |>
   graph_psychrometric(RH = "RHstarDP", y_func = calcDP) +
   labs(title = "Room 1 After Dew Point Adjustment",
@@ -439,6 +451,7 @@ each equation can be found on Wikipedia:
 
 ``` r
 
+
 # Psychrometric graph of Saturation vapour Pressure calculated via `calcPws` 
 mydata |>
   graph_psychrometric(y_func = calcPws) +
@@ -448,6 +461,7 @@ mydata |>
 ![](Humidity-functions_files/figure-html/unnamed-chunk-9-1.png)
 
 ``` r
+
 
 # Contour plot of saturation vapour pressure over temperature and humidity grid
 TRHgrid |>
@@ -462,6 +476,7 @@ TRHgrid |>
 ![](Humidity-functions_files/figure-html/unnamed-chunk-9-2.png)
 
 ``` r
+
 
 # Comparison of saturation vapour pressure calculated using different methods
 mydata |>
@@ -490,6 +505,7 @@ The `calcPws` function is tested against The International Association
 for the Properties of Water and Steam (IAPWS) R package `IAPWS95`.
 
 ``` r
+
 # Load IAPWS95 package for standard water/steam property functions
 library(IAPWS95)
 
@@ -539,6 +555,7 @@ temperature and relative humidity.
 
 ``` r
 
+
 # Psychrometric graph of Water Vapour Pressure calculated via `calcPw`, Buck method
 mydata |>
   graph_psychrometric(y_func = calcPw) +
@@ -548,6 +565,7 @@ mydata |>
 ![](Humidity-functions_files/figure-html/unnamed-chunk-11-1.png)
 
 ``` r
+
 
 # # Contour plot of water vapour pressure over temperature and humidity grid
 TRHgrid |>
@@ -578,6 +596,7 @@ together provides a way to calculate temperature indirectly.
 
 ``` r
 
+
 # Calculate Dew Point and Temperature from dataset
 head(mydata) |> 
   dplyr::mutate(
@@ -602,6 +621,7 @@ relative humidity in the TRHgrid dataset. Smaller values mean less
 error.
 
 ``` r
+
 
 # Error plot to visualise difference between calculated and original temperature
 TRHgrid |>
@@ -645,6 +665,7 @@ they match, and where errors or differences occur.
 
 ``` r
 
+
 # Calculate RH from Dew Point
 head(mydata) |> 
   dplyr::mutate(
@@ -680,6 +701,7 @@ TRHgrid |>
 ![](Humidity-functions_files/figure-html/unnamed-chunk-14-1.png)
 
 ``` r
+
 
 # Calculate RH from Absolute Humidity
 head(mydata) |> 
@@ -725,6 +747,7 @@ The function `calcAH` calculates absolute humidity from temperature and
 relative humidity measurements.
 
 ``` r
+
 # Graph Absolute Humidity 
 mydata |>
   graph_psychrometric(y_func = calcAH) +
@@ -734,6 +757,7 @@ mydata |>
 ![](Humidity-functions_files/figure-html/unnamed-chunk-16-1.png)
 
 ``` r
+
 
 # Contour plot over temperature-relative humidity grid
 TRHgrid |>
@@ -773,6 +797,7 @@ methods:
   greater accuracy, especially at low temperatures (down to -30°C).
 
 ``` r
+
 # Psychrometric graph of dew point
 mydata |>   
   graph_psychrometric(y_func = calcDP) +   
@@ -782,6 +807,7 @@ mydata |>
 ![](Humidity-functions_files/figure-html/unnamed-chunk-17-1.png)
 
 ``` r
+
 
 # Contour plot of dew point over temperature and RH
 TRHgrid |>   
@@ -815,6 +841,7 @@ and shows less stability in results, warranting caution in its use.
 
 ``` r
 
+
 # Calculate Frost Point and add to mydata
 mydata |>
   mutate(FP = calcFP(Temp, RH)) |>
@@ -827,6 +854,7 @@ mydata |>
 ![](Humidity-functions_files/figure-html/unnamed-chunk-18-1.png)
 
 ``` r
+
 
 # Contour plot of frost point temperature over temperature and relative humidity grid
 TRHgrid |>
@@ -868,6 +896,7 @@ amount in air regardless of changes in temperature.
 
 ``` r
 
+
 # Psychrometric graph of specific humidity
 mydata |>
   graph_psychrometric(y_func = calcSH) +
@@ -877,6 +906,7 @@ mydata |>
 ![](Humidity-functions_files/figure-html/unnamed-chunk-19-1.png)
 
 ``` r
+
 
 # Contour plot of specific humidity over temperature and RH
 TRHgrid |>
@@ -920,6 +950,7 @@ relative humidity data.
 
 ``` r
 
+
 # Psychrometric graph of mixing ratio
 mydata |>
   graph_psychrometric(y_func = calcMR) +
@@ -929,6 +960,7 @@ mydata |>
 ![](Humidity-functions_files/figure-html/unnamed-chunk-20-1.png)
 
 ``` r
+
 
 # Contour plot of mixing ratio over temperature and RH
 TRHgrid |>
@@ -966,6 +998,7 @@ relative humidity data.
 
 ``` r
 
+
 # Psychrometric graph of humidity ratio
 mydata |>
   graph_psychrometric(y_func = calcHR) +
@@ -975,6 +1008,7 @@ mydata |>
 ![](Humidity-functions_files/figure-html/unnamed-chunk-21-1.png)
 
 ``` r
+
 
 # Contour plot of humidity ratio over temperature and RH
 TRHgrid |>
@@ -1008,6 +1042,7 @@ and relative humidity values.
 
 ``` r
 
+
 # Psychrometric graph of air density
 mydata |>
   graph_psychrometric(y_func = calcAD) +
@@ -1017,6 +1052,7 @@ mydata |>
 ![](Humidity-functions_files/figure-html/unnamed-chunk-22-1.png)
 
 ``` r
+
 
 # Contour plot of air density over temperature and RH
 TRHgrid |>
@@ -1050,6 +1086,7 @@ relative humidity.
 
 ``` r
 
+
 # Psychrometric graph of enthalpy
 mydata |>
   graph_psychrometric(y_func = calcEnthalpy) +
@@ -1059,6 +1096,7 @@ mydata |>
 ![](Humidity-functions_files/figure-html/unnamed-chunk-23-1.png)
 
 ``` r
+
 
 # Contour plot of enthalpy over temperature and RH
 TRHgrid |>
@@ -1086,6 +1124,7 @@ The frost point function (`calcFP`) is currently under development and
 shows less stability in results, warranting caution in its use.
 
 ``` r
+
 vaisala_filepath <- data_file_path("mydata.xlsx")
 vaisala_data <- readxl::read_excel(vaisala_filepath, sheet = "VAISALA", skip = 1)
 
@@ -1115,6 +1154,7 @@ vaisala |>
 
 ``` r
 
+
 vaisala |>
   ggplot() +
   geom_density(aes(Pw), color = "darkblue") +
@@ -1127,6 +1167,7 @@ vaisala |>
 ![](Humidity-functions_files/figure-html/unnamed-chunk-24-2.png)
 
 ``` r
+
 
 vaisala |>
   ggplot() +
@@ -1141,6 +1182,7 @@ vaisala |>
 
 ``` r
 
+
 vaisala |>
   ggplot() +
   geom_density(aes(DP), color = "darkblue") +
@@ -1153,6 +1195,7 @@ vaisala |>
 ![](Humidity-functions_files/figure-html/unnamed-chunk-24-4.png)
 
 ``` r
+
 
 vaisala |>
   ggplot() +
@@ -1168,6 +1211,7 @@ vaisala |>
 
 ``` r
 
+
 vaisala |>
   ggplot() +
   geom_density(aes(MR), color = "darkblue") +
@@ -1181,6 +1225,7 @@ vaisala |>
 
 ``` r
 
+
 vaisala |>
   ggplot() +
   geom_density(aes(AD), color = "darkblue") +
@@ -1193,6 +1238,7 @@ vaisala |>
 ![](Humidity-functions_files/figure-html/unnamed-chunk-24-7.png)
 
 ``` r
+
 
 vaisala |>
   ggplot() +

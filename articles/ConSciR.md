@@ -16,6 +16,7 @@ Environments”](https://www.getty.edu/conservation/publications_resources/pdf_p
 ## Install and load
 
 ``` r
+
 install.packages("ConSciR")
 library(ConSciR)
 ```
@@ -24,6 +25,7 @@ You can install the development version of the package from GitHub using
 the `pak` package:
 
 ``` r
+
 install.packages("pak")
 pak::pak("BhavShah01/ConSciR")
 
@@ -45,6 +47,7 @@ manual or use `?function_name` within R.
 Load some useful packages:
 
 ``` r
+
 # Load packages
 library(ConSciR)
 library(dplyr)
@@ -56,6 +59,7 @@ library(ggplot2)
 Transform your dataset with the functions in ConSciR:
 
 ``` r
+
 filepath <- data_file_path("mydata.xlsx")
 mydata <- readxl::read_excel(filepath, sheet = "mydata")
 mydata <- mydata |> filter(Sensor == "Room 1")
@@ -150,6 +154,7 @@ Combine calculations and plotting to explore patterns visually:
 
 ``` r
 
+
 mydata |>
   # Calculate Absolute Humidity and Dew Point
   mutate(
@@ -174,6 +179,7 @@ mydata |>
   and visualise it alongside humidity data.
 
 ``` r
+
 mydata |>
   mutate(Mould = calcMould_VTT(Temp, RH)) |>
   ggplot() +
@@ -190,6 +196,7 @@ Create psychrometric charts from temperature and humidity data. The
 functions from the package can be used to change the calculations used.
 
 ``` r
+
 
 head(mydata, 100) |>
   graph_psychrometric(
