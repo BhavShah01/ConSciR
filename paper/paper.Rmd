@@ -71,6 +71,6 @@ The structure of `ConSciR` enables users to address a range of preventive conser
 
 # Acknowledgements
 
-We acknowledge contributions from Emily R. Long, Marcin Zygmunt, Hebe Halstead, Avery Bazemore, Josep Grau-Bové, Scott Allan Orr, Seka Seneviratne, Jenny Kim and David Thickett for the development of the `ConSciR` package.
+We acknowledge contributions from Emily R. Long, Marcin Zygmunt, Hebe Halstead, Avery Bazemore, Josep Grau-Bové, Scott Allan Orr, Seka Seneviratne, Jenny Kim, Èlia Batlle, Rose King and David Thickett for the development of the `ConSciR` package.
 
 # References
