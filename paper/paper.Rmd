@@ -1,36 +1,38 @@
 ---
 title: 'ConSciR: An R package for Conservation Science data'
 tags:
-  - R
-  - conservation science
-  - cultural heritage
-  - sustainability
-  - humidity
-authors:
-  - name: Bhavesh Shah
-    orcid: 0000-0001-8673-0589
-    equal-contrib: true
-    affiliation: 1
-  - name: Annelies Cosaert
-    orcid: 0009-0004-1269-4465
-    equal-contrib: true
-    affiliation: 2
-  - name: Vincent Beltran
-    corresponding: true
-    equal-contrib: true
-    affiliation: 3
-affiliations:
-  - name: English Heritage, Rangers House, London, UK
-    index: 1
-  - name: Royal Institute for Cultural Heritage, KIK-IRPA, Brussels, Belgium
-    index: 2
-  - name: Getty Conservation Institute, Los Angeles, CA, USA
-    index: 3
+- R
+- conservation science
+- cultural heritage
+- sustainability
+- humidity
+date: "14 April 2026"
+output:
+  pdf_document: default
+  word_document: default
 citation_author: Shah et. al.
-date: 14 April 2026
+authors:
+- name: Bhavesh Shah
+  orcid: "0000-0001-8673-0589"
+  equal-contrib: true
+  affiliation: 1
+- name: Annelies Cosaert
+  orcid: "0009-0004-1269-4465"
+  equal-contrib: true
+  affiliation: 2
+- name: Vincent Beltran
+  corresponding: true
+  equal-contrib: true
+  affiliation: 3
 year: 2026
 bibliography: paper.bib
-output: word_document
+affiliations:
+- name: English Heritage, Rangers House, London, UK
+  index: 1
+- name: "Royal Institute for Cultural Heritage, KIK-IRPA, Brussels, Belgium"
+  index: 2
+- name: Getty Conservation Institute, Los Angeles, CA, USA
+  index: 3
 csl: apa.csl
 journal: JOSS
 ---

@@ -1,184 +1,42 @@
-\documentclass[10pt,a4paper,onecolumn]{article}
-\usepackage{marginnote}
-\usepackage{graphicx}
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
 \usepackage{xcolor}
-\usepackage{authblk,etoolbox}
-\usepackage{titlesec}
-\usepackage{calc}
-\usepackage{tikz}
-\usepackage{hyperref}
-\hypersetup{colorlinks,breaklinks,
-            urlcolor=[rgb]{0.0, 0.5, 1.0},
-            linkcolor=[rgb]{0.0, 0.5, 1.0}}
-\usepackage{caption}
-\usepackage{tcolorbox}
-\usepackage{amssymb,amsmath}
-\usepackage{ifxetex,ifluatex}
-\usepackage{seqsplit}
-\usepackage{fixltx2e} % provides \textsubscript
-\usepackage[
-  backend=biber,
-%  style=alphabetic,
-%  citestyle=numeric
-]{biblatex}
-\bibliography{paper.bib}
-
-
-
-% --- Page layout -------------------------------------------------------------
-\usepackage[top=3.5cm, bottom=3cm, right=1.5cm, left=1.0cm,
-            headheight=2.2cm, reversemp, includemp, marginparwidth=4.5cm]{geometry}
-
-% --- Default font ------------------------------------------------------------
-% \renewcommand\familydefault{\sfdefault}
-
-% --- Style -------------------------------------------------------------------
-\renewcommand{\bibfont}{\small \sffamily}
-\renewcommand{\captionfont}{\small\sffamily}
-\renewcommand{\captionlabelfont}{\bfseries}
-
-% --- Section/SubSection/SubSubSection ----------------------------------------
-\titleformat{\section}
-  {\normalfont\sffamily\Large\bfseries}
-  {}{0pt}{}
-\titleformat{\subsection}
-  {\normalfont\sffamily\large\bfseries}
-  {}{0pt}{}
-\titleformat{\subsubsection}
-  {\normalfont\sffamily\bfseries}
-  {}{0pt}{}
-\titleformat*{\paragraph}
-  {\sffamily\normalsize}
-
-
-% --- Header / Footer ---------------------------------------------------------
-\usepackage{fancyhdr}
-\pagestyle{fancy}
-\fancyhf{}
-%\renewcommand{\headrulewidth}{0.50pt}
-\renewcommand{\headrulewidth}{0pt}
-\fancyhead[L]{\hspace{-0.75cm}\includegraphics[width=5.5cm]{C:/Users/bhave/AppData/Local/R/win-library/4.5/rticles/rmarkdown/templates/joss/resources/JOSS-logo.png}}
-\fancyhead[C]{}
-\fancyhead[R]{}
-\renewcommand{\footrulewidth}{0.25pt}
-
-\fancyfoot[L]{\footnotesize{\sffamily Shah et. al., (2026). ConSciR: An
-R package for Conservation Science
-data. \textit{Journal of Open Source Software}, (), . \href{https://doi.org/}{https://doi.org/}}}
-
-
-\fancyfoot[R]{\sffamily \thepage}
-\makeatletter
-\let\ps@plain\ps@fancy
-\fancyheadoffset[L]{4.5cm}
-\fancyfootoffset[L]{4.5cm}
-
-% --- Macros ---------
-
-\definecolor{linky}{rgb}{0.0, 0.5, 1.0}
-
-\newtcolorbox{repobox}
-   {colback=red, colframe=red!75!black,
-     boxrule=0.5pt, arc=2pt, left=6pt, right=6pt, top=3pt, bottom=3pt}
-
-\newcommand{\ExternalLink}{%
-   \tikz[x=1.2ex, y=1.2ex, baseline=-0.05ex]{%
-       \begin{scope}[x=1ex, y=1ex]
-           \clip (-0.1,-0.1)
-               --++ (-0, 1.2)
-               --++ (0.6, 0)
-               --++ (0, -0.6)
-               --++ (0.6, 0)
-               --++ (0, -1);
-           \path[draw,
-               line width = 0.5,
-               rounded corners=0.5]
-               (0,0) rectangle (1,1);
-       \end{scope}
-       \path[draw, line width = 0.5] (0.5, 0.5)
-           -- (1, 1);
-       \path[draw, line width = 0.5] (0.6, 1)
-           -- (1, 1) -- (1, 0.6);
-       }
-   }
-
-% --- Title / Authors ---------------------------------------------------------
-% patch \maketitle so that it doesn't center
-\patchcmd{\@maketitle}{center}{flushleft}{}{}
-\patchcmd{\@maketitle}{center}{flushleft}{}{}
-% patch \maketitle so that the font size for the title is normal
-\patchcmd{\@maketitle}{\LARGE}{\LARGE\sffamily}{}{}
-% patch the patch by authblk so that the author block is flush left
-\def\maketitle{{%
-  \renewenvironment{tabular}[2][]
-    {\begin{flushleft}}
-    {\end{flushleft}}
-  \AB@maketitle}}
-\makeatletter
-\renewcommand\AB@affilsepx{ \protect\Affilfont}
-%\renewcommand\AB@affilnote[1]{{\bfseries #1}\hspace{2pt}}
-\renewcommand\AB@affilnote[1]{{\bfseries #1}\hspace{3pt}}
-\makeatother
-\renewcommand\Authfont{\sffamily\bfseries}
-\renewcommand\Affilfont{\sffamily\small\mdseries}
-\setlength{\affilsep}{1em}
-
-
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
-
-\else % if luatex or xelatex
-  \ifxetex
-    \usepackage{mathspec}
-  \else
-    \usepackage{fontspec}
-  \fi
-  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
-
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
 \fi
-% use upquote if available, for straight quotes in verbatim environments
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-% use microtype if available
-\IfFileExists{microtype.sty}{%
-\usepackage{microtype}
-\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
-
-\usepackage{hyperref}
-\hypersetup{unicode=true,
-            pdftitle={ConSciR: An R package for Conservation Science data},
-            pdfborder={0 0 0},
-            breaklinks=true}
-\urlstyle{same}  % don't use monospace font for urls
-\usepackage{graphicx,grffile}
 \makeatletter
-\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
-\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
 \makeatother
-% Scale images if necessary, so that they will not overflow the page
-% margins by default, and it is still possible to overwrite the defaults
-% using explicit options in \includegraphics[width, height, ...]{}
-\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
-\IfFileExists{parskip.sty}{%
-\usepackage{parskip}
-}{% else
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{6pt plus 2pt minus 1pt}
-}
-\setlength{\emergencystretch}{3em}  % prevent overfull lines
-\setcounter{secnumdepth}{0}
-% Redefines (sub)paragraphs to behave more like sections
-\ifx\paragraph\undefined\else
-\let\oldparagraph\paragraph
-\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
-\fi
-\ifx\subparagraph\undefined\else
-\let\oldsubparagraph\subparagraph
-\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
-\fi
-
-% Pandoc syntax highlighting
 \usepackage{color}
 \usepackage{fancyvrb}
 \newcommand{\VerbBar}{|}
@@ -219,14 +77,21 @@ data. \textit{Journal of Open Source Software}, (), . \href{https://doi.org/}{ht
 \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
 \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
 \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-
-% tightlist command for lists without linebreak
-\providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-
-
-% Pandoc citation processing
-%From Pandoc 3.1.8
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
 % definitions for citeproc citations
 \NewDocumentCommand\citeproctext{}{}
 \NewDocumentCommand\citeproc{mm}{%
@@ -256,53 +121,27 @@ data. \textit{Journal of Open Source Software}, (), . \href{https://doi.org/}{ht
   \setlength{\itemsep}{#2\baselineskip}}}
  {\end{list}}
 \usepackage{calc}
-\newcommand{\CSLBlock}[1]{#1\hfill\break}
-\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
-\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
-
-
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={ConSciR: An R package for Conservation Science data},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
 
 \title{ConSciR: An R package for Conservation Science data}
-
-        \author[1]{Bhavesh Shah}
-          \author[2]{Annelies Cosaert}
-          \author[3]{Vincent Beltran}
-    
-      \affil[1]{English Heritage, Rangers House, London, UK}
-      \affil[2]{Royal Institute for Cultural Heritage, KIK-IRPA,
-Brussels, Belgium}
-      \affil[3]{Getty Conservation Institute, Los Angeles, CA, USA}
-  \date{\vspace{-5ex}}
+\author{}
+\date{\vspace{-2.5em}14 April 2026}
 
 \begin{document}
 \maketitle
-
-\marginpar{
-  %\hrule
-  \sffamily\small
-
-  {\bfseries DOI:} \href{https://doi.org/}{\color{linky}{}}
-
-  \vspace{2mm}
-
-  {\bfseries Software}
-  \begin{itemize}
-    \setlength\itemsep{0em}
-    \item \href{}{\color{linky}{Review}} \ExternalLink
-    \item \href{}{\color{linky}{Repository}} \ExternalLink
-    \item \href{}{\color{linky}{Archive}} \ExternalLink
-  \end{itemize}
-
-  \vspace{2mm}
-
-  {\bfseries Submitted:} \\
-  {\bfseries Published:} 
-
-  \vspace{2mm}
-  {\bfseries License}\\
-  Authors of papers retain copyright and release the work under a Creative Commons Attribution 4.0 International License (\href{http://creativecommons.org/licenses/by/4.0/}{\color{linky}{CC-BY}}).
-}
 
 \section{Summary}\label{summary}
 
@@ -387,6 +226,8 @@ are being developed through research.
 \end{Highlighting}
 \end{Shaded}
 
+\pandocbounded{\includegraphics[keepaspectratio]{paper_files/figure-latex/unnamed-chunk-2-1.pdf}}
+
 \section{Usage}\label{usage}
 
 A small but growing group of coders in cultural heritage conservation
@@ -418,8 +259,8 @@ care and preventive conservation.
 
 We acknowledge contributions from Emily R. Long, Marcin Zygmunt, Hebe
 Halstead, Avery Bazemore, Josep Grau-Bové, Scott Allan Orr, Seka
-Seneviratne, Jenny Kim and David Thickett for the development of the
-\texttt{ConSciR} package.
+Seneviratne, Jenny Kim, Èlia Batlle, Rose King and David Thickett for
+the development of the \texttt{ConSciR} package.
 
 \section*{References}\label{references}
 \addcontentsline{toc}{section}{References}
