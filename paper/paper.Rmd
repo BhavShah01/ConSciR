@@ -8,8 +8,8 @@ tags:
 - humidity
 date: "14 April 2026"
 output:
-  pdf_document: default
   word_document: default
+  pdf_document: default
 citation_author: Shah et. al.
 authors:
 - name: Bhavesh Shah
@@ -69,7 +69,7 @@ A small but growing group of coders in cultural heritage conservation includes e
 
 The structure of `ConSciR` enables users to address a range of preventive conservation questions within a single, reproducible analytical framework, benefiting from the full array of tools available in R. The package’s functions support queries such as calculating dew point, comparing environmental risks between spaces, scenario analysis for changing HVAC setpoints, and evaluating climate change impacts [@shah_2025]. By integrating these functions, `ConSciR` helps data-driven decision-making and promotes best practice in collection care and preventive conservation.
 
-
+A Shiny application for users also accompanies the package https://oceanonline.shinyapps.io/ConSciR/ 
 
 # Acknowledgements
 
