@@ -30,7 +30,6 @@ citation_author: Shah et. al.
 date: 14 April 2026
 year: 2026
 bibliography: paper.bib
-output: word_document
 csl: apa.csl
 journal: JOSS
 ---
