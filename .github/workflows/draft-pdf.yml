@@ -4,6 +4,7 @@ on:
     paths:
       - "paper/paper.md"
       - "paper/paper.bib"
+      - "paper/images/**"
       - ".github/workflows/draft-pdf.yml"
 
 jobs:
