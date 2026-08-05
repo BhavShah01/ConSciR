@@ -1,5 +1,5 @@
 ---
-title: 'ConSciR: An R package for Conservation Science data'
+title: 'ConSciR: An R package for Conservation Science'
 tags:
   - R
   - conservation science
