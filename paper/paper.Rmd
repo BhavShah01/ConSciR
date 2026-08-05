@@ -36,11 +36,6 @@ journal: JOSS
 ---
 
 
-```{r, include=FALSE}
-options(tinytex.verbose = TRUE)
-```
-
-
 # Summary
 
 `ConSciR` is an R package [@RCoreTeam_2024] designed for cultural heritage conservation, providing tools for preventive conservation data analysis [@Cosaert_Beltran_2022]. `ConSciR` streamlines workflows across museums, galleries, and heritage sites by offering humidity calculations, conservation risk assessments, and sustainability metrics [@Cosaert_etal_2023]. The package contains a useful set of calculations for conservators, engineers, scientists, and data scientists to manage environmental data, understand risks to heritage collections, and develop custom analytical communication tools in the R environment. In line with the FAIR principles, `ConSciR` is intended to evolve alongside emerging conservation science research and user feedback.
