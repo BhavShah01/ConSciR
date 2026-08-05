@@ -26,11 +26,8 @@ affiliations:
     index: 2
   - name: Getty Conservation Institute, Los Angeles, CA, USA
     index: 3
-citation_author: Shah et. al.
 date: 14 April 2026
-year: 2026
 bibliography: paper.bib
-journal: JOSS
 ---
 
 
