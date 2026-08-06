@@ -9,15 +9,13 @@ tags:
 authors:
   - name: Bhavesh Shah
     orcid: 0000-0001-8673-0589
-    equal-contrib: true
+    corresponding: true
     affiliation: 1
   - name: Annelies Cosaert
     orcid: 0009-0004-1269-4465
-    equal-contrib: true
     affiliation: 2
   - name: Vincent Beltran
     corresponding: true
-    equal-contrib: true
     affiliation: 3
 affiliations:
   - name: English Heritage, Rangers House, London, UK
@@ -26,7 +24,7 @@ affiliations:
     index: 2
   - name: Getty Conservation Institute, Los Angeles, CA, USA
     index: 3
-date: 14 April 2026
+date: 2026-04-14
 bibliography: paper.bib
 ---
 
