@@ -4,7 +4,7 @@ on:
     paths:
       - 'paper/paper.md'
       - 'paper/paper.bib'
-      - 'paper/img1_psychart.png'
+      - 'paper/images/img1_psychart.png'
       - '.github/workflows/draft-pdf.yml'
 
 jobs:
