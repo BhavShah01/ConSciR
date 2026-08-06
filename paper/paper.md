@@ -23,7 +23,7 @@ affiliations:
     index: 2
   - name: Getty Conservation Institute, Los Angeles, CA, USA
     index: 3
-date: 2026-04-14
+date: 2026-08-06
 bibliography: paper.bib
 ---
 
