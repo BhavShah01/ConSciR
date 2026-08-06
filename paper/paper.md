@@ -48,7 +48,7 @@ To facilitate workflow integration, tidying functions are also provided for form
 ![Psychrometric chart](img1_psychart.png){ width=70% }
 
 
-# Usage
+# Usage 
 
 A small but growing group of coders in cultural heritage conservation includes environmental monitoring specialists, scientists, preventive conservators, and building engineers. These users benefit from the tools provided by `ConSciR`, which is designed for two key user groups: research data managers and domain-specific coders [@Cosaert_Shah_2025]. Research data managers, who typically have advanced coding experience, can use the package’s functions to build large-scale applications on complex datasets. Domain-specific coders can use the functions as a toolset for answering conservation-related questions and automating routine data tasks. To support users, articles are available online (https://bhavshah01.github.io/ConSciR). These examples provide conservation educators and trainers with resources to teach coding alongside conservation theory [@beltran_2025].
 
