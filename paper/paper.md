@@ -47,7 +47,7 @@ The functions in `ConSciR` are grouped into three themes: humidity calculations,
 To facilitate workflow integration, tidying functions are also provided for formatting industry-standard sensor outputs. Psychrometric charts and graphical outputs are included for visualisation of the humidity functions. The conservation tools offer object damage calculations, for example, models for mould growth [@hukka_1999; @viitanen_2015; @zeng_2023] and lifetime estimates for organic materials [@michalski_2013]. Sustainability metrics are being added through consultation and as they are being developed through research.
 
 
-![Psychrometric chart](images/img1_psychart.png){ width=70% }
+![Psychrometric chart](img1_psychart.png){ width=70% }
 
 
 # Usage
