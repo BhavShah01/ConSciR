@@ -15,7 +15,6 @@ authors:
     orcid: 0009-0004-1269-4465
     affiliation: 2
   - name: Vincent Beltran
-    corresponding: true
     affiliation: 3
 affiliations:
   - name: English Heritage, Rangers House, London, UK
